@@ -28,6 +28,7 @@ const UNKNOWN_LEVEL_ID: String = "--unknown--"
         __SignalBus.on_change_player.emit(self, value)
 
 var grid_entities: Array[GridEntity]
+var _nodes_ready: bool
 
 var paused: bool:
     set(value):
@@ -94,6 +95,9 @@ func get_grid_node_by_position(pos: Vector3) -> GridNode:
     return get_grid_node(coords)
 
 func get_grid_node(coordinates: Vector3i, warn_missing: bool = false) -> GridNode:
+    if !_nodes_ready:
+        _sync_nodes()
+
     if _nodes.has(coordinates):
         return _nodes[coordinates]
 
@@ -104,9 +108,13 @@ func get_grid_node(coordinates: Vector3i, warn_missing: bool = false) -> GridNod
     return null
 
 func has_grid_node(coordinates: Vector3i) -> bool:
+    if !_nodes_ready:
+        _sync_nodes()
     return _nodes.has(coordinates)
 
 func nodes() -> Array[GridNode]:
+    if !_nodes_ready:
+        _sync_nodes()
     return _nodes.values()
 
 func _sync_nodes() -> void:
@@ -115,6 +123,8 @@ func _sync_nodes() -> void:
     for node: Node in find_children("*", "GridNode"):
         if node is GridNode:
             sync_node(node as GridNode)
+
+    _nodes_ready = true
 
 func remove_node(node: GridNode) -> bool:
     if _nodes.has(node.coordinates):
@@ -139,6 +149,9 @@ func get_closest_grid_node_side_by_position(pos: Vector3) -> CardinalDirections.
 
 #region Features
 func illusory_sides() -> Array[GridNodeSide]:
+    if !_nodes_ready:
+        _sync_nodes()
+
     if _nodes.is_empty():
         return []
 

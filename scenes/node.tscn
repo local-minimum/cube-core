@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://6rt1quqs30co"]
+
+[ext_resource type="Script" uid="uid://vhd085que0kg" path="res://scripts/gridded_level/level_features/grid_node.gd" id="1_6r00q"]
+
+[node name="Node" type="Node3D"]
+script = ExtResource("1_6r00q")
+metadata/_custom_type_script = "uid://vhd085que0kg"

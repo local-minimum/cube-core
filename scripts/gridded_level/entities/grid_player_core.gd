@@ -137,7 +137,10 @@ func hold_movement(movement: Movement.MovementType) -> void:
         if !_repeat_movement.has(movement):
             _repeat_movement.append(movement)
     else:
-        _repeat_movement[0] = movement
+        if _repeat_movement.is_empty():
+            _repeat_movement = [movement]
+        else:
+            _repeat_movement[0] = movement
 
     _next_move_repeat = Time.get_ticks_msec() + repeat_move_delay
 
