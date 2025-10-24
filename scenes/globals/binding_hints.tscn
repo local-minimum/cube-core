@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b34ow1t4fm5kb"]
+
+[ext_resource type="Script" uid="uid://dn88c6xiunk4h" path="res://addons/minimum_convenience/scripts/utils/binding_hints.gd" id="1_lasa4"]
+
+[node name="BindingHints" type="Node"]
+script = ExtResource("1_lasa4")

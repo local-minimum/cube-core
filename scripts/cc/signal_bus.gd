@@ -1,0 +1,2 @@
+extends SignalBusCore
+class_name SignalBus

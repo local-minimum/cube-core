@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4rk0n157xvnj"]
+
+[ext_resource type="Script" uid="uid://b8gh51cd7x7lq" path="res://scripts/cc/global_game_state.gd" id="1_e05ku"]
+
+[node name="GlobalGameState" type="Node"]
+script = ExtResource("1_e05ku")
+metadata/_custom_type_script = "uid://b8gh51cd7x7lq"

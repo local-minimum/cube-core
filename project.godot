@@ -13,3 +13,11 @@ config_version=5
 config/name="Cube Core"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+__SignalBus="*res://scripts/cc/signal_bus.gd"
+__GlobalGameState="*res://scenes/globals/global_game_state.tscn"
+__SaveSystemWrapper="*res://scenes/globals/save_system_wrapper.tscn"
+__SceneSwapper="*res://scenes/globals/scene_swapper.tscn"
+__BindingHints="*res://scenes/globals/binding_hints.tscn"

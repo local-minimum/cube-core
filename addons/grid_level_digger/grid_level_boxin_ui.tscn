@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://klpqec737dwe"]
+
+[ext_resource type="Script" uid="uid://dqop2w0hpti0j" path="res://addons/grid_level_digger/grid_level_boxin.gd" id="1_o0nc0"]
+[ext_resource type="PackedScene" uid="uid://b8ubdi65g1kxb" path="res://addons/grid_level_digger/controls/navigation_buttons.tscn" id="2_35omx"]
+
+[node name="GridLevelDigoutUi" type="Control" node_paths=PackedStringArray("_x_size", "_y_size", "_z_size", "_nav", "_preserve")]
+custom_minimum_size = Vector2(400, 600)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 400.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_o0nc0")
+_x_size = NodePath("MarginContainer/VBoxContainer/HBoxContainer/X Size")
+_y_size = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Y Size")
+_z_size = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Z Size")
+_nav = NodePath("MarginContainer/VBoxContainer/Navigation Buttons")
+_highligh_color = Color(0, 0.727667, 0.74, 0.458824)
+_preserve = NodePath("MarginContainer/VBoxContainer/Preserve Existing")
+metadata/_custom_type_script = "uid://dqop2w0hpti0j"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Navigation Buttons" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_35omx")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Dig-out Size"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="X Size" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 3.0
+rounded = true
+allow_greater = true
+alignment = 3
+prefix = "X:"
+custom_arrow_step = 1.0
+
+[node name="Y Size" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+rounded = true
+allow_greater = true
+alignment = 3
+prefix = "Y:"
+custom_arrow_step = 1.0
+
+[node name="Z Size" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 3.0
+rounded = true
+allow_greater = true
+alignment = 3
+prefix = "Z:"
+custom_arrow_step = 1.0
+
+[node name="Preserve Existing" type="CheckButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "If true, leaves existing geometry  intact"
+text = "Preserve Existing Sides"
+
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Box In" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Box In!"
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/X Size" to="." method="_on_x_size_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/Y Size" to="." method="_on_y_size_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/Z Size" to="." method="_on_z_size_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/Preserve Existing" to="." method="_on_preserve_existing_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Box In" to="." method="_on_box_in_pressed"]
