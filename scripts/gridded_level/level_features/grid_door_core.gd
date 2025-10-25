@@ -42,6 +42,9 @@ static func lock_state_name(state: LockState) -> String:
         _:
             return __GlobalGameState.tr("DOOR_UNKNOWN")
 
+func get_lock_state(_interaction: GridDoorInteraction) -> LockState:
+    return lock_state
+
 func get_side() -> CardinalDirections.CardinalDirection:
     return _door_face
 
@@ -279,10 +282,23 @@ func toggle_door() -> void:
         close_door()
 
 ## Attempts to unlokc and returns true if handled (only false if locked and key is missing)
-func attempt_door_unlock(_puller: CameraPuller) -> bool:
+func attempt_door_unlock(_interaction: GridDoorInteraction, _puller: CameraPuller) -> bool:
     if lock_state != LockState.LOCKED:
         return true
 
+    if !_check_key_and_consume():
+        return false
+
+    _do_unlock()
+    return true
+
+func _do_unlock() -> void:
+    var prev_state: LockState = lock_state
+    lock_state = LockState.CLOSED
+    __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
+    open_door()
+
+func _check_key_and_consume() -> bool:
     var player: GridPlayerCore = get_level().player
 
     var key_ring: KeyRingCore = player.key_ring
@@ -296,16 +312,11 @@ func attempt_door_unlock(_puller: CameraPuller) -> bool:
             NotificationsManager.important(tr("NOTICE_DOOR_UNLOCKED"), tr("LOST_ITEM").format({"item": KeyMasterCore.instance.get_description(key_id)}))
         else:
             NotificationsManager.warn(tr("NOTICE_DOOR_LOCKED"), tr("UNLOCK_FAILED").format({"item": KeyMasterCore.instance.get_description(key_id)}))
-            return true
+            return false
     else:
         NotificationsManager.info(tr("NOTICE_DOOR_UNLOCKED"), tr("USED_ITEM").format({"item": KeyMasterCore.instance.get_description(key_id)}))
 
-    var prev_state: LockState = lock_state
-    lock_state = LockState.CLOSED
-    __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
-    open_door()
     return true
-
 
 func needs_saving() -> bool:
     return true

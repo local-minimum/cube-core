@@ -1,0 +1,187 @@
+[gd_scene load_steps=18 format=3 uid="uid://barowjo1ksf6a"]
+
+[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_3ml6f"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_uwi1w"]
+[ext_resource type="Texture2D" uid="uid://bag3lln0wqyuk" path="res://sprites/walls/door-frame.png" id="3_svsqe"]
+[ext_resource type="Texture2D" uid="uid://dl1b105nal6r7" path="res://sprites/walls/door.png" id="4_svsqe"]
+[ext_resource type="PackedScene" uid="uid://bdldnhqxkbw20" path="res://scenes/sides/grid_door_lock.tscn" id="5_1n88m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwi1w"]
+render_priority = 0
+shader = ExtResource("2_uwi1w")
+shader_parameter/main_tex = ExtResource("3_svsqe")
+shader_parameter/dark_color = Color(0.12826079, 0.42920536, 0.38444266, 1)
+shader_parameter/light_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_dcpc0"]
+material = SubResource("ShaderMaterial_uwi1w")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1n88m"]
+render_priority = 0
+shader = ExtResource("2_uwi1w")
+shader_parameter/main_tex = ExtResource("4_svsqe")
+shader_parameter/dark_color = Color(0.80474263, 0.36399606, 0.3003994, 1)
+shader_parameter/light_color = Color(0.27205428, 0.2594958, 0.023803543, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_dme2g"]
+material = SubResource("ShaderMaterial_1n88m")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_svsqe"]
+render_priority = 0
+shader = ExtResource("2_uwi1w")
+shader_parameter/main_tex = ExtResource("3_svsqe")
+shader_parameter/dark_color = Color(0.55, 0.55, 0.55, 1)
+shader_parameter/light_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_1n88m"]
+material = SubResource("ShaderMaterial_svsqe")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcpc0"]
+render_priority = 0
+shader = ExtResource("2_uwi1w")
+shader_parameter/main_tex = ExtResource("4_svsqe")
+shader_parameter/dark_color = Color(0.6414647, 0.4378292, 0.7465528, 1)
+shader_parameter/light_color = Color(0.3775101, 0.078252874, 0.09447395, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_h7icv"]
+material = SubResource("ShaderMaterial_dcpc0")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="Animation" id="Animation_dcpc0"]
+resource_name = "Close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_svsqe"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1n88m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcpc0"]
+_data = {
+&"Close": SubResource("Animation_dcpc0"),
+&"Open": SubResource("Animation_svsqe"),
+&"RESET": SubResource("Animation_1n88m")
+}
+
+[node name="Door" type="Node3D" node_paths=PackedStringArray("positive_side_interactions", "animator")]
+script = ExtResource("1_3ml6f")
+locks = Array[int]([0, 1, 2])
+positive_side_interactions = [NodePath("Door Visuals/Grid Door Lock"), NodePath("Door Visuals/Grid Door Lock2"), NodePath("Door Visuals/Grid Door Lock3")]
+animator = NodePath("Door Visuals/Door Animations")
+_door_face = 1
+_inital_lock_state = 0
+key_id = "key"
+_consumes_key = true
+_opened_animation = "Open"
+_closed_animation = "Close"
+metadata/_custom_type_script = "uid://bbfredkbuiffj"
+
+[node name="Door Visuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+
+[node name="DoorFrame" type="MeshInstance3D" parent="Door Visuals"]
+mesh = SubResource("QuadMesh_dcpc0")
+skeleton = NodePath("../..")
+
+[node name="Door" type="MeshInstance3D" parent="Door Visuals"]
+mesh = SubResource("QuadMesh_dme2g")
+
+[node name="DoorFrame Back" type="MeshInstance3D" parent="Door Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_1n88m")
+
+[node name="Door Back" type="MeshInstance3D" parent="Door Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_h7icv")
+
+[node name="Door Animations" type="AnimationPlayer" parent="Door Visuals"]
+libraries = {
+&"": SubResource("AnimationLibrary_dcpc0")
+}
+
+[node name="Grid Door Lock" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_1n88m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.037500024)
+door = NodePath("../..")
+
+[node name="Grid Door Lock2" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_1n88m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, -0.25, 0.037500024)
+door = NodePath("../..")
+
+[node name="Grid Door Lock3" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_1n88m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, -0.25, 0.037500024)
+door = NodePath("../..")

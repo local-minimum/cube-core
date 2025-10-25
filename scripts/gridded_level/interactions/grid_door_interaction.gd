@@ -1,11 +1,18 @@
 extends Interactable
 class_name GridDoorInteraction
 
+enum Mode { FULL, UNLOCK_ONLY }
+enum TextureMode { SWAPPING, ONLY_VISIBLE_LOCKED }
+
 @export var door: GridDoorCore
+
+@export var mode: Mode = Mode.FULL
 
 @export var is_negative_side: bool
 
 @export var mesh: MeshInstance3D
+
+@export var texture_mode: TextureMode = TextureMode.SWAPPING
 
 @export var display_material_idx: int = 2
 
@@ -52,23 +59,26 @@ func _get_locked_texture() -> Texture:
             return locked_door_tex_model1
 
 func _get_needed_texture() -> Texture:
+    if texture_mode != TextureMode.SWAPPING:
+        return null
+
     match door.get_opening_automation(self):
         GridDoorCore.OpenAutomation.NONE:
             is_interactable = false
-            match door.lock_state:
+            match door.get_lock_state(self):
                 GridDoorCore.LockState.OPEN:
                     return open_door_tex
                 _:
                     return no_entry_door_tex
         GridDoorCore.OpenAutomation.WALK_INTO:
             is_interactable = true
-            match door.lock_state:
+            match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
                     return _get_locked_texture()
                 _:
                     return walk_into_door_tex
         GridDoorCore.OpenAutomation.PROXIMITY:
-            match door.lock_state:
+            match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
                     is_interactable = true
                     return _get_locked_texture()
@@ -77,7 +87,7 @@ func _get_needed_texture() -> Texture:
                     return automatic_door_tex
         GridDoorCore.OpenAutomation.INTERACT:
             is_interactable = true
-            match door.lock_state:
+            match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
                     return _get_locked_texture()
                 _:
@@ -94,22 +104,39 @@ func _sync_reader_display(_level: GridLevelCore = null) -> void:
     if mesh == null:
         return
 
-    var mat: StandardMaterial3D = mesh.get_surface_override_material(display_material_idx)
+    if texture_mode == TextureMode.ONLY_VISIBLE_LOCKED:
+        mesh.visible = door.get_lock_state(self) == GridDoorCore.LockState.LOCKED
+        return
+
+    var mat: Material = mesh.get_surface_override_material(display_material_idx)
     if mat == null:
-        mat = StandardMaterial3D.new()
+        var default_mat: Material = mesh.get_active_material(display_material_idx)
+        if default_mat == null || default_mat is StandardMaterial3D:
+            mat = StandardMaterial3D.new()
+        elif default_mat is ShaderMaterial:
+            mat = ShaderMaterial.new()
+            mat.shader = (default_mat as ShaderMaterial).shader.duplicate(true)
 
     var tex: Texture = _get_needed_texture()
-    mat.albedo_texture = tex
+    if mat is StandardMaterial3D:
+        mat.albedo_texture = tex
 
-    if emission_intensity > 0:
-        mat.emission_texture = tex
-        mat.emission_enabled = true
-        mat.emission_operator = BaseMaterial3D.EMISSION_OP_MULTIPLY
-        mat.emission_intensity = emission_intensity
+        if emission_intensity > 0:
+            mat.emission_texture = tex
+            mat.emission_enabled = true
+            mat.emission_operator = BaseMaterial3D.EMISSION_OP_MULTIPLY
+            mat.emission_intensity = emission_intensity
+    elif mat is ShaderMaterial:
+        #TODO: This is bugged, doesn't really set the texture at all
+        mat.set_shader_parameter("main_tex", tex)
+        print_debug("[Grid Door Interaction] Updated shader to use %s" % tex)
 
     mesh.set_surface_override_material(display_material_idx, mat)
 
 func _in_range(event_position: Vector3) -> bool:
+    if mode == Mode.UNLOCK_ONLY && door.get_lock_state(self) != GridDoorCore.LockState.LOCKED:
+        return false
+
     var level: GridLevelCore = door.get_level()
     var player: GridPlayerCore = level.player
 
@@ -140,9 +167,9 @@ func _in_range(event_position: Vector3) -> bool:
     )
 
 func execute_interation() -> void:
-    if door.lock_state == GridDoorCore.LockState.LOCKED:
+    if door.get_lock_state(self) == GridDoorCore.LockState.LOCKED:
         @warning_ignore_start("return_value_discarded")
-        door.attempt_door_unlock(camera_puller)
+        door.attempt_door_unlock(self, camera_puller)
         @warning_ignore_restore("return_value_discarded")
     else:
         door.toggle_door()
