@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=15 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_klq6b"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://barowjo1ksf6a" path="res://scenes/sides/door.tscn" id="6_olg7q"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/brick_floor.tscn" id="6_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/brick_ceiling.tscn" id="7_8iemx"]
+[ext_resource type="PackedScene" uid="uid://cxvlvdddfobpd" path="res://scenes/enemy.tscn" id="7_64w2a"]
 [ext_resource type="Script" uid="uid://dlbq7x82ejv6e" path="res://scripts/gridded_level/entities/grid_player_core.gd" id="8_8c41q"]
 [ext_resource type="Script" uid="uid://v5vk4n110r8p" path="res://scripts/gridded_level/key_ring_core.gd" id="9_olg7q"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="9_t1rx8"]
@@ -618,3 +619,9 @@ metadata/_custom_type_script = "uid://meibvvwp8mvg"
 
 [node name="Eyes" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.6)
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="Enemy" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -5)
+spawn_node = NodePath("../../Geometry/Elevation 0/Node (0, 0, -2)")

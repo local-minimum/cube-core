@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7hiwvbnfft3n"
-path.s3tc="res://.godot/imported/heart-0.png-69d82e7554e241a6d92e1633dc676395.s3tc.ctex"
+uid="uid://ctt812akp5slj"
+path.s3tc="res://.godot/imported/tiles-56.png-2ed537398f416f602e79d03823343122.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://sprites/walls/heart-0.png"
-dest_files=["res://.godot/imported/heart-0.png-69d82e7554e241a6d92e1633dc676395.s3tc.ctex"]
+source_file="res://sprites/tiles-56.png"
+dest_files=["res://.godot/imported/tiles-56.png-2ed537398f416f602e79d03823343122.s3tc.ctex"]
 
 [params]
 

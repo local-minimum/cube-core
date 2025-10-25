@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7hiwvbnfft3n"
-path.s3tc="res://.godot/imported/heart-0.png-69d82e7554e241a6d92e1633dc676395.s3tc.ctex"
+uid="uid://cm35vdl4hc60a"
+path.s3tc="res://.godot/imported/monsters2-84.png-f2e027f4f54a13467fbe6db2cc33a3e5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://sprites/walls/heart-0.png"
-dest_files=["res://.godot/imported/heart-0.png-69d82e7554e241a6d92e1633dc676395.s3tc.ctex"]
+source_file="res://sprites/monsters2-84.png"
+dest_files=["res://.godot/imported/monsters2-84.png-f2e027f4f54a13467fbe6db2cc33a3e5.s3tc.ctex"]
 
 [params]
 
