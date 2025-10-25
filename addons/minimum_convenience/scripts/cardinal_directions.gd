@@ -78,15 +78,74 @@ static func principal_direction(vector: Vector3) -> CardinalDirection:
             1:
                 return CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN
             2:
-                return CardinalDirection.NORTH if vector.z > 0 else CardinalDirection.SOUTH
+                return CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH
     elif avec.x > avec.y:
         if avec.x > avec.z || randf() >= 0.5:
             return CardinalDirection.EAST if vector.x > 0 else CardinalDirection.WEST
-        return CardinalDirection.NORTH if vector.z > 0 else CardinalDirection.SOUTH
+        return CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH
     elif avec.y > avec.z:
         return CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN
 
-    return CardinalDirection.NORTH if vector.z > 0 else CardinalDirection.SOUTH
+    return CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH
+
+static func secondary_directions(vector: Vector3) -> Array[CardinalDirection]:
+    var avec: Vector3 = vector.abs()
+    if avec.x == avec.y && avec.y == avec.z:
+        return []
+
+    elif avec.y > avec.x && avec.y > avec.z:
+        if avec.x > 0  && avec.z > 0:
+            return [
+                CardinalDirection.EAST if vector.x > 0 else CardinalDirection.WEST,
+                CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH,
+            ]
+
+        if avec.x > 0:
+            return [
+                CardinalDirection.EAST if vector.x > 0 else CardinalDirection.WEST,
+            ]
+
+        if avec.z > 0:
+            return [CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH]
+
+        return []
+
+    elif avec.x > avec.z:
+        if avec.y > 0  && avec.z > 0:
+            return [
+                CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN,
+                CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH,
+            ]
+
+        if avec.y > 0:
+            return [
+                CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN,
+            ]
+
+        if avec.z > 0:
+            return [
+                CardinalDirection.NORTH if vector.z < 0 else CardinalDirection.SOUTH,
+            ]
+
+        return []
+
+    if avec.x > 0 && avec.y > 0:
+            return [
+                CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN,
+                CardinalDirection.EAST if vector.x > 0 else CardinalDirection.WEST,
+            ]
+
+    if avec.x > 0:
+            return [
+                CardinalDirection.EAST if vector.x > 0 else CardinalDirection.WEST,
+            ]
+
+    if avec.y > 0:
+            return [
+                CardinalDirection.UP if vector.y > 0 else CardinalDirection.DOWN,
+            ]
+
+    return []
 
 static func node_planar_rotation_to_direction(node: Node3D) -> CardinalDirection:
     var y_rotation: int = roundi(node.global_rotation_degrees.y / 90) * 90
