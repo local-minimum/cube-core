@@ -58,20 +58,34 @@ func _get_locked_texture() -> Texture:
             push_warning("Key %s has model id %s which we don't know how to draw" % [key, KeyMasterCore.instance.get_key_model_id(key)])
             return locked_door_tex_model1
 
+func _set_interaction() -> void:
+    match door.get_opening_automation(self):
+        GridDoorCore.OpenAutomation.NONE:
+            is_interactable = false
+        GridDoorCore.OpenAutomation.WALK_INTO:
+            is_interactable = true
+        GridDoorCore.OpenAutomation.PROXIMITY:
+            match door.get_lock_state(self):
+                GridDoorCore.LockState.LOCKED:
+                    is_interactable = true
+                _:
+                    is_interactable = false
+        GridDoorCore.OpenAutomation.INTERACT:
+            is_interactable = true
+
+
 func _get_needed_texture() -> Texture:
     if texture_mode != TextureMode.SWAPPING:
         return null
 
     match door.get_opening_automation(self):
         GridDoorCore.OpenAutomation.NONE:
-            is_interactable = false
             match door.get_lock_state(self):
                 GridDoorCore.LockState.OPEN:
                     return open_door_tex
                 _:
                     return no_entry_door_tex
         GridDoorCore.OpenAutomation.WALK_INTO:
-            is_interactable = true
             match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
                     return _get_locked_texture()
@@ -80,13 +94,10 @@ func _get_needed_texture() -> Texture:
         GridDoorCore.OpenAutomation.PROXIMITY:
             match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
-                    is_interactable = true
                     return _get_locked_texture()
                 _:
-                    is_interactable = false
                     return automatic_door_tex
         GridDoorCore.OpenAutomation.INTERACT:
-            is_interactable = true
             match door.get_lock_state(self):
                 GridDoorCore.LockState.LOCKED:
                     return _get_locked_texture()
@@ -101,6 +112,8 @@ func _handle_door_state_chage(grid_door: GridDoorCore, _from: GridDoorCore.LockS
         _sync_reader_display()
 
 func _sync_reader_display(_level: GridLevelCore = null) -> void:
+    _set_interaction()
+
     if mesh == null:
         return
 

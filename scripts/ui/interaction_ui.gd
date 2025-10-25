@@ -204,8 +204,10 @@ func _input(event: InputEvent) -> void:
     if event.is_action_pressed("crawl_search"):
         if _moving:
             _requested = true
+            print_debug("[Interaction UI] Requested %s" % _requested)
         else:
             _interacting = !_interacting
+            print_debug("[Interaction UI] Interaction %s" % _interacting)
             queue_redraw()
 
     elif _interacting:

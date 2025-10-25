@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwvhld6uu1ngc"]
+
+[ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
+[ext_resource type="Script" uid="uid://bvqfk07xb2q3f" path="res://scripts/ui/interaction_ui.gd" id="2_wreoo"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="3_7s1ja"]
+[ext_resource type="Script" uid="uid://ksorj7viigop" path="res://scripts/key_master_core.gd" id="4_pte0f"]
+
+[node name="PlayableLevel" type="Node"]
+
+[node name="Level" parent="." instance=ExtResource("1_vpfqi")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="InteractionUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_wreoo")
+_color = Color(0, 0.56046015, 0.5700106, 1)
+_font = ExtResource("3_7s1ja")
+_font_size = 28
+_hint_y_offset = -0.3999999999999999
+_max_interactables = 4
+metadata/_custom_type_script = "uid://bvqfk07xb2q3f"
+
+[node name="KeyMasterCore" type="Node" parent="."]
+script = ExtResource("4_pte0f")
+_key_descriptions = Dictionary[String, String]({
+"key": "key"
+})
+metadata/_custom_type_script = "uid://ksorj7viigop"

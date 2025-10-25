@@ -21,8 +21,8 @@ size = Vector2(2.5, 2.5)
 render_priority = 0
 shader = ExtResource("2_uwi1w")
 shader_parameter/main_tex = ExtResource("4_svsqe")
-shader_parameter/dark_color = Color(0.80474263, 0.36399606, 0.3003994, 1)
-shader_parameter/light_color = Color(0.27205428, 0.2594958, 0.023803543, 1)
+shader_parameter/dark_color = Color(0.3650311, 0.48118448, 0.51517284, 1)
+shader_parameter/light_color = Color(0.10099953, 0.09537295, 0.004105162, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_dme2g"]
 material = SubResource("ShaderMaterial_1n88m")
@@ -147,6 +147,8 @@ _door_face = 1
 _inital_lock_state = 0
 key_id = "key"
 _consumes_key = true
+_automation = 3
+_back_automation = 3
 _opened_animation = "Open"
 _closed_animation = "Close"
 metadata/_custom_type_script = "uid://bbfredkbuiffj"
