@@ -46,13 +46,17 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
     if !node.may_exit(self, direction, true, false):
         print_debug("[Grid Enemy] may not go %s checking secondary" % [CardinalDirections.name(direction)])
 
-        for direction_2: CardinalDirections.CardinalDirection in CardinalDirections.secondary_directions(delta):
+        var secondary: Array[CardinalDirections.CardinalDirection] = CardinalDirections.secondary_directions(delta)
+        secondary.shuffle()
+        for direction_2: CardinalDirections.CardinalDirection in secondary:
             if node.may_exit(self, direction_2, true, false):
                 print_debug("[Grid Enemy] using seconday direction %s " % [CardinalDirections.name(direction_2)])
                 return direction_2
 
 
-        for direction_3: CardinalDirections.CardinalDirection in CardinalDirections.ALL_DIRECTIONS:
+        var fallback: Array[CardinalDirections.CardinalDirection] = CardinalDirections.ALL_DIRECTIONS.duplicate()
+        fallback.shuffle()
+        for direction_3: CardinalDirections.CardinalDirection in fallback:
             if node.may_exit(self, direction_3, true, false):
                 print_debug("[Grid Enemy] using random direction %s " % [CardinalDirections.name(direction_3)])
                 return direction_3
