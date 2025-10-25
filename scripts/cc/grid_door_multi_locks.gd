@@ -29,11 +29,11 @@ func _get_interaction_index(interaction: GridDoorInteraction) -> int:
     else:
         idx = positive_side_interactions.find(interaction)
 
-    print_debug("[Multi Lock Door] lock %s has index %s and should be used %s" % [
-        self,
-        idx,
-        locks.has(idx),
-    ])
+    # print_debug("[Multi Lock Door] lock %s has index %s and should be used %s" % [
+    #    self,
+    #    idx,
+    #    locks.has(idx),
+    #])
 
     if locks.has(idx):
         return idx
@@ -48,6 +48,8 @@ func attempt_door_unlock(interaction: GridDoorInteraction, _puller: CameraPuller
         return false
 
     _locks_opened.append(_get_interaction_index(interaction))
+
+    print_debug("[Multi Lock Door] %s locks out of %s opened" % [_locks_opened.size(), maxi(positive_side_interactions.size(), negative_side_interactions.size())])
 
     if _locks_opened.size() == maxi(positive_side_interactions.size(), negative_side_interactions.size()):
         _do_unlock()

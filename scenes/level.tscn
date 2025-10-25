@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=14 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_klq6b"]
 [ext_resource type="PackedScene" uid="uid://cmqap1n7p47a" path="res://scenes/sides/brick_wall.tscn" id="4_8c41q"]
+[ext_resource type="PackedScene" uid="uid://cdgq6usntnddv" path="res://scenes/key_loot.tscn" id="6_8iemx"]
 [ext_resource type="PackedScene" uid="uid://barowjo1ksf6a" path="res://scenes/sides/door.tscn" id="6_olg7q"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/brick_floor.tscn" id="6_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/brick_ceiling.tscn" id="7_8iemx"]
@@ -196,6 +197,9 @@ coordinates = Vector3i(0, 0, -1)
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (0, 0, 0)" instance=ExtResource("6_t1rx8")]
 
+[node name="KeyLoot" parent="Geometry/Elevation 0/Node (0, 0, 0)" instance=ExtResource("6_8iemx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
 [node name="Node (0, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
 coordinates = Vector3i(0, 0, 1)
@@ -354,6 +358,8 @@ direction = 2
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-3, 0, -6)" instance=ExtResource("6_t1rx8")]
 
+[node name="KeyLoot" parent="Geometry/Elevation 0/Node (-3, 0, -6)" instance=ExtResource("6_8iemx")]
+
 [node name="Node (-4, 0, -6)" parent="Geometry/Elevation 0" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -15)
 coordinates = Vector3i(-4, 0, -6)
@@ -415,6 +421,10 @@ direction = 3
 [node name="Side UP" parent="Geometry/Elevation 0/Node (-4, 0, -3)" instance=ExtResource("7_8iemx")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-4, 0, -3)" instance=ExtResource("6_t1rx8")]
+
+[node name="KeyLoot" parent="Geometry/Elevation 0/Node (-4, 0, -3)" instance=ExtResource("6_8iemx")]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1, 1.25, 0)
+_trigger_sides = Array[int]([3])
 
 [node name="Node (-3, 0, -3)" parent="Geometry/Elevation 0" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, -7.5)

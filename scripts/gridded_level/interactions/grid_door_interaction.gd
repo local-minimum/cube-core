@@ -184,5 +184,6 @@ func execute_interation() -> void:
         @warning_ignore_start("return_value_discarded")
         door.attempt_door_unlock(self, camera_puller)
         @warning_ignore_restore("return_value_discarded")
+        _sync_reader_display()
     else:
         door.toggle_door()

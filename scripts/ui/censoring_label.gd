@@ -48,6 +48,11 @@ class_name CensoringLabel
 
 @export var live: bool = true
 
+@export var y_alignment_offset: int = 0:
+    set (value):
+        y_alignment_offset = value
+        queue_redraw()
+
 var _last_draw: int
 var _last_censor: Dictionary[int, int]
 
@@ -55,7 +60,9 @@ func _get_minimum_size() -> Vector2:
     return Vector2(font_size * text.length() + letter_spacing * (text.length() - 1), font_size)
 
 func _draw() -> void:
-    var pos: Vector2 = Vector2.ZERO
+    var pos: Vector2 = Vector2.UP * y_alignment_offset
+
+    print_debug(get_rect().size)
     for idx: int in range(text.length()):
         var letter: String = text[idx]
 

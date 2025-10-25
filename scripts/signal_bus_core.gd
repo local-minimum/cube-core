@@ -44,6 +44,11 @@ signal on_stay_zone(zone: LevelZone, entity: GridEntity)
 # -> Grid Door
 signal on_door_state_chaged(door: GridDoorCore, from: GridDoorCore.LockState, to: GridDoorCore.LockState)
 
+# -> Keys
+signal on_gain_key(id: String, gained: int, total: int)
+signal on_consume_key(id: String, remaining: int)
+signal on_sync_keys(keys: Dictionary[String, int])
+
 # -> Exploration Message
 ## General purpose messaging to any who may be interested
 signal on_broadcast_message(id: String, message: String)

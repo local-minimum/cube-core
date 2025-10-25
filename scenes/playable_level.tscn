@@ -1,18 +1,71 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=9 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
+[ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
+[ext_resource type="Texture2D" uid="uid://7hiwvbnfft3n" path="res://sprites/walls/heart-0.png" id="2_rgu53"]
 [ext_resource type="Script" uid="uid://bvqfk07xb2q3f" path="res://scripts/ui/interaction_ui.gd" id="2_wreoo"]
 [ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="3_7s1ja"]
+[ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_ohew3"]
 [ext_resource type="Script" uid="uid://ksorj7viigop" path="res://scripts/key_master_core.gd" id="4_pte0f"]
+[ext_resource type="Texture2D" uid="uid://b1ft2oiorgoym" path="res://sprites/walls/keys-0.png" id="5_f4dbq"]
 
 [node name="PlayableLevel" type="Node"]
 
 [node name="Level" parent="." instance=ExtResource("1_vpfqi")]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Core Stats UI" type="GridContainer" parent="HUD" node_paths=PackedStringArray("health", "keys")]
+custom_minimum_size = Vector2(200, 0)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 20.0
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 8
+columns = 2
+script = ExtResource("2_ohew3")
+health = NodePath("Health Value")
+keys = NodePath("Keys Count")
+
+[node name="Health Icon" type="TextureRect" parent="HUD/Core Stats UI"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("2_rgu53")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Health Value" type="Control" parent="HUD/Core Stats UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_ohew3")
+text = "100"
+font_size = 32
+font = ExtResource("3_7s1ja")
+y_alignment_offset = -28
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Key Icon" type="TextureRect" parent="HUD/Core Stats UI"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("5_f4dbq")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Keys Count" type="Control" parent="HUD/Core Stats UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_ohew3")
+text = "0"
+font_size = 32
+font = ExtResource("3_7s1ja")
+y_alignment_offset = -28
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Interactions UI" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="InteractionUI" type="Control" parent="CanvasLayer"]
+[node name="InteractionUI" type="Control" parent="Interactions UI"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

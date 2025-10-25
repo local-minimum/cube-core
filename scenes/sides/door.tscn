@@ -151,6 +151,7 @@ _automation = 3
 _back_automation = 3
 _opened_animation = "Open"
 _closed_animation = "Close"
+_animation_blend = -1.0
 metadata/_custom_type_script = "uid://bbfredkbuiffj"
 
 [node name="Door Visuals" type="Node3D" parent="."]

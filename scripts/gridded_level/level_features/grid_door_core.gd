@@ -24,6 +24,8 @@ enum LockState { LOCKED, CLOSED, OPEN }
 @export var _close_animation: String = "Close"
 @export var _opened_animation: String = "Opened"
 @export var _closed_animation: String = "Closed"
+@export var _animation_blend: float = 0.5
+@export var _wait_before_state_toggle: float = 0.5
 
 var lock_state: LockState
 
@@ -211,7 +213,7 @@ func _check_walk_onto_closed_door(
         return
 
     if from == coordinates() && translation_direction == _door_face:
-        print_debug("Door opens %s" % self)
+        print_debug("[Grid Door] Door opens %s" % self)
         open_door()
 
 func _check_traversing_door_should_autoclose(
@@ -257,19 +259,19 @@ func _check_autoclose(entity: GridEntity) -> void:
     print_debug("%s don't close door %s" % [self, proximate_entitites])
 
 func close_door() -> void:
-    print_debug("Close %s" % self)
+    print_debug("[Grid Door] Close %s" % self)
     var prev_state: LockState = lock_state
     lock_state = LockState.CLOSED
-    animator.play(_close_animation, 0.5)
-    await get_tree().create_timer(0.5).timeout
+    animator.play(_close_animation, _animation_blend)
+    await get_tree().create_timer(_wait_before_state_toggle).timeout
     __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
 
 func open_door() -> void:
-    print_debug("Open %s" % self)
+    print_debug("[Grid Door] Open %s" % self)
     var prev_state: LockState = lock_state
     lock_state = LockState.OPEN
-    animator.play(_open_animation, 0.5)
-    await get_tree().create_timer(0.5).timeout
+    animator.play(_open_animation, _animation_blend)
+    await get_tree().create_timer(_wait_before_state_toggle).timeout
     __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
 
 func toggle_door() -> void:
@@ -293,9 +295,11 @@ func attempt_door_unlock(_interaction: GridDoorInteraction, _puller: CameraPulle
     return true
 
 func _do_unlock() -> void:
+    # Unlocking
     var prev_state: LockState = lock_state
     lock_state = LockState.CLOSED
     __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
+
     open_door()
 
 func _check_key_and_consume() -> bool:

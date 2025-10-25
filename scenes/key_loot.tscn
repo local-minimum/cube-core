@@ -1,0 +1,151 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdgq6usntnddv"]
+
+[ext_resource type="Script" uid="uid://rk23e82clyk6" path="res://scripts/cc/key_loot.gd" id="1_vlpbf"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_v3yei"]
+[ext_resource type="Texture2D" uid="uid://b1ft2oiorgoym" path="res://sprites/walls/keys-0.png" id="3_1cvub"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wc255"]
+render_priority = 0
+shader = ExtResource("2_v3yei")
+shader_parameter/main_tex = ExtResource("3_1cvub")
+shader_parameter/dark_color = Color(0, 0, 0, 1)
+shader_parameter/light_color = Color(0.85048944, 0.47791618, 0.73877347, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_64w2a"]
+material = SubResource("ShaderMaterial_wc255")
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_vlpbf"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeyFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.3, 0), Vector3(0, 0.55, 0), Vector3(0, 0.3, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KeyFront:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.50098825, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0), Vector3(0, 12.566371, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v3yei"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeyFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.3, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KeyFront:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KeyFront:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1cvub"]
+resource_name = "Gain"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KeyFront:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6022961),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.3, 0), Vector3(0, 0.925, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KeyFront:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2969847),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KeyFront:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.005551116, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.5, 1.5, 1.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v3yei"]
+_data = {
+&"Gain": SubResource("Animation_1cvub"),
+&"Idle": SubResource("Animation_vlpbf"),
+&"RESET": SubResource("Animation_v3yei")
+}
+
+[node name="KeyLoot" type="Node3D" node_paths=PackedStringArray("anim")]
+script = ExtResource("1_vlpbf")
+anim = NodePath("AnimationPlayer")
+_repeatable = false
+_trigger_sides = Array[int]([6])
+metadata/_custom_type_script = "uid://rk23e82clyk6"
+
+[node name="KeyFront" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("QuadMesh_64w2a")
+
+[node name="KeyBack" type="MeshInstance3D" parent="KeyFront"]
+transform = Transform3D(1, 0, -8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_64w2a")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_v3yei")
+}
+speed_scale = 0.7
+next/Idle = &"Idle"
