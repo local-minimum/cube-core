@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=12 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_ohew3"]
 [ext_resource type="Script" uid="uid://ksorj7viigop" path="res://scripts/key_master_core.gd" id="4_pte0f"]
 [ext_resource type="Texture2D" uid="uid://b1ft2oiorgoym" path="res://sprites/walls/keys-0.png" id="5_f4dbq"]
+[ext_resource type="Script" uid="uid://c6y34q8mpc0kt" path="res://scripts/cc/exclude_word_game.gd" id="9_7cjp0"]
+[ext_resource type="PackedScene" uid="uid://cwytvcufiujf4" path="res://scenes/word_button.tscn" id="9_f4dbq"]
+[ext_resource type="Script" uid="uid://d36qkt746r2ga" path="res://scripts/cc/container_button_group.gd" id="9_usws8"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -92,3 +95,39 @@ _key_descriptions = Dictionary[String, String]({
 "key": "key"
 })
 metadata/_custom_type_script = "uid://ksorj7viigop"
+
+[node name="Word Game 1" type="CanvasLayer" parent="." node_paths=PackedStringArray("button_group")]
+layer = 10
+script = ExtResource("9_7cjp0")
+button_group = NodePath("GridContainer")
+words_resource = "res://resources/word_groups.txt"
+
+[node name="GridContainer" type="GridContainer" parent="Word Game 1" node_paths=PackedStringArray("buttons")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 24
+columns = 2
+script = ExtResource("9_usws8")
+buttons = [NodePath("Word Button 1"), NodePath("Word Button 2"), NodePath("Word Button 3"), NodePath("Word Button 4")]
+
+[node name="Word Button 1" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
+layout_mode = 2
+
+[node name="Word Button 2" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
+layout_mode = 2
+
+[node name="Word Button 3" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
+layout_mode = 2
+
+[node name="Word Button 4" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
+layout_mode = 2

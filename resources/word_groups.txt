@@ -1,0 +1,53 @@
+# Lines that starts with # are comments and will be disregarded
+#
+# Each category of words should be preceded by a category title row, the category title should be unique:
+# - Round things
+#
+# Then all words that apply should be on a single line, comma separated, and each word must be 12 characters or less (including hyphens and spaces)
+#
+# ball,death star,...
+#
+# Note: If "Round things" contains "ball" if we later add a "Football" category, then "ball" must be included in that one too!
+# 
+# Note: The category title (e.g. Weapons, emotions) is not limited to 11 characters, and is only for clarity / logging.
+
+- Weapons
+gun,sword,pistol,crossbow,bow,baton,javelin
+
+- Emotions
+happy,sad,angry,frustrated,upset,edgy,
+
+- Eurovision Winners
+Nemo,Loreen,Maneskin,Jamala,Netta,Lordi,Celine Dion,Abba
+
+- Rugby Union
+maul,line-out,ruck,scrum,tackle,try
+
+- Athletics Events
+hurdle,sprint,javelin,discus,relay,marathon
+
+- Greek Deities
+Zeus,Apollo,Ares,Artemis,Athena,Demeter,Hera,Hermes
+
+- Harry Potter Characters
+Harry,Hermione,Ron,Snape,Hagrid,Voldemort,Dumbledore,Luna,Dudley
+
+- Palindromes
+Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
+
+- Scientists
+Planck,Einstein,Euler,Curie,Newton,Darwin,Fleming,Tesla
+
+- Car Brands
+Tesla,Ford,Toyota,Vauxhall,Skoda,Audi,Mercedes,Ferrari,Ssangyong
+
+- Unusual / Small Countries
+Vatican,Moldova,Lesotho,Monaco,Nauru,Tuvalu,Palau,Andorra,Kiribati
+
+- Gamer Food
+Pizza,Burger,Hot Dog,Red Bull,Pot Noodle,Doritos,Popcorn,Jerky
+
+- Brainrot (Generation Alpha) Phrases
+Skibidi,gyatt,rizz,six seven,mew,sigma,bussin,gooning,fanum tax,aura farming
+
+-

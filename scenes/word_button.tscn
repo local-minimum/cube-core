@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwytvcufiujf4"]
+
+[ext_resource type="Script" uid="uid://bv1ceubowg00e" path="res://scripts/cc/container_button.gd" id="1_7shjm"]
+[ext_resource type="Texture2D" uid="uid://bkqlswvbga8rd" path="res://sprites/nine_rect_ui.png" id="2_kg6nb"]
+[ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_dxonn"]
+[ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="4_6tgct"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="4_bmpsh"]
+[ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="5_lrn36"]
+[ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="6_w72wn"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="7_2bllg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
+
+[node name="Word Button" type="PanelContainer" node_paths=PackedStringArray("_focus_target")]
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
+script = ExtResource("1_7shjm")
+_focus_target = NodePath("NinePatchRect")
+_managed_unfocus = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_kg6nb")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_dxonn")
+censoring_textures = Array[Texture2D]([ExtResource("4_6tgct"), ExtResource("5_lrn36"), ExtResource("6_w72wn"), ExtResource("7_2bllg")])
+censored_letters = "AE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("4_bmpsh")
+color = Color(0.580248, 0.14899763, 0.7808647, 1)
+y_alignment_offset = -64
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

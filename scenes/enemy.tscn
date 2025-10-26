@@ -247,8 +247,11 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_otmr2")
 size = Vector2(0.2, 0.2)
 
-[node name="Enemy" type="Node3D" node_paths=PackedStringArray("planner")]
+[node name="Enemy" type="Node3D" node_paths=PackedStringArray("_mushrooms", "particles", "self_center", "planner")]
 script = ExtResource("1_4ra3w")
+_mushrooms = [NodePath("Mushroom 1"), NodePath("Mushroom 2"), NodePath("Mushroom 3")]
+particles = [NodePath("Tier 1"), NodePath("Tier 2"), NodePath("Tier 3"), NodePath("Tier 4")]
+self_center = NodePath("Tier 1")
 look_direction = 1
 transportation_abilities = SubResource("Resource_fpun6")
 transportation_mode = SubResource("Resource_wc255")
@@ -323,7 +326,7 @@ _rotation_axis_max_speed = 0.01
 visible = false
 texture = ExtResource("8_md484")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Mushroom 1" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0)
 texture_filter = 0
 texture = ExtResource("9_ipns3")
@@ -331,14 +334,14 @@ script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
 
-[node name="PlayerFacer" type="Node3D" parent="Sprite3D" node_paths=PackedStringArray("subject")]
+[node name="PlayerFacer" type="Node3D" parent="Mushroom 1" node_paths=PackedStringArray("subject")]
 script = ExtResource("10_w8i8w")
 subject = NodePath("..")
 use_look_direction_for_rotation = true
 use_parent_for_down = false
 metadata/_custom_type_script = "uid://dexigkhejxn1h"
 
-[node name="Sprite3D2" type="Sprite3D" parent="."]
+[node name="Mushroom 2" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
 texture_filter = 0
 texture = ExtResource("9_ipns3")
@@ -346,14 +349,14 @@ script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
 
-[node name="PlayerFacer" type="Node3D" parent="Sprite3D2" node_paths=PackedStringArray("subject")]
+[node name="PlayerFacer" type="Node3D" parent="Mushroom 2" node_paths=PackedStringArray("subject")]
 script = ExtResource("10_w8i8w")
 subject = NodePath("..")
 use_look_direction_for_rotation = true
 use_parent_for_down = false
 metadata/_custom_type_script = "uid://dexigkhejxn1h"
 
-[node name="Sprite3D3" type="Sprite3D" parent="."]
+[node name="Mushroom 3" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0625, 0.375, 0)
 texture_filter = 0
 texture = ExtResource("9_ipns3")
@@ -361,7 +364,7 @@ script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
 
-[node name="PlayerFacer" type="Node3D" parent="Sprite3D3" node_paths=PackedStringArray("subject")]
+[node name="PlayerFacer" type="Node3D" parent="Mushroom 3" node_paths=PackedStringArray("subject")]
 script = ExtResource("10_w8i8w")
 subject = NodePath("..")
 use_look_direction_for_rotation = true

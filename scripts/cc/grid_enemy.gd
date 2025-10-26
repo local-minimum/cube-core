@@ -3,6 +3,11 @@ class_name GridEnemy
 
 @export var move_on_turn: bool = false
 @export var spawn_node: GridNode
+@export var _lives: int = 3
+@export var _mushrooms: Array[Node3D]
+@export var particles: Array[GPUParticles3D]
+@export var self_center: Node3D
+@export var gives_key: bool
 
 func _enter_tree() -> void:
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
@@ -65,7 +70,23 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
     return direction
 
 func _handle_move_end(entity: GridEntity) -> void:
-    if entity is not GridPlayerCore || !_may_move:
+    if entity == self:
+        if entity.coordinates() == get_level().player.coordinates():
+            print_debug("[Grid Enemy] play game!")
+            __SignalBus.on_play_exclude_word_game.emit(self, get_level().player)
+        return
+
+    if entity is not GridPlayerCore:
+        return
+
+    print_debug("[Grid Enemy] %s vs %s" % [entity.coordinates(), coordinates()])
+
+    if entity.coordinates() == coordinates():
+        print_debug("[Grid Enemy] play game voluntarily!")
+        __SignalBus.on_play_exclude_word_game.emit(self, get_level().player)
+        return
+
+    if !_may_move:
         return
 
     var direction: CardinalDirections.CardinalDirection = _get_wanted_direct(entity)
@@ -88,3 +109,29 @@ func _handle_move_end(entity: GridEntity) -> void:
     ])
     force_movement(movement)
     _may_move = false
+
+func hurt() -> void:
+    _lives -= 1
+    for shroom: Node3D in _mushrooms.slice(_lives):
+        shroom.visible = false
+
+var _killed: bool = false
+func kill() -> void:
+    if _killed:
+        return
+
+    _killed = true
+    _lives = 0
+    for particle: GPUParticles3D in particles:
+        particle.emitting = false
+
+    if gives_key:
+        __SignalBus.on_award_key.emit(self_center.global_position)
+
+    await get_tree().create_timer(5).timeout
+
+    get_level().grid_entities.erase(self)
+    queue_free()
+
+func is_alive() -> bool:
+    return _lives > 0
