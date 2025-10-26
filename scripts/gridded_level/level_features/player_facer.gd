@@ -1,6 +1,12 @@
 extends GridNodeFeature
 class_name PlayerFacer
 
+@export var subject: Node3D:
+    get():
+        if subject == null:
+            return self
+        return subject
+
 @export var use_look_direction_for_rotation: bool
 
 @export var offset_if_on_same_tile: bool
@@ -16,7 +22,7 @@ class_name PlayerFacer
 var _local_anchor_position: Vector3
 
 func _ready() -> void:
-    _local_anchor_position = position
+    _local_anchor_position = subject.position
 
     if __SignalBus.on_move_start.connect(_track_player) != OK:
         push_error("%s cannot track player during movement" % name)
@@ -71,11 +77,11 @@ func _process(_delta: float) -> void:
     _update_position_and_rotation()
 
 func _calculate_down() -> CardinalDirections.CardinalDirection:
-    var entity: GridEntity = GridEntity.find_entity_parent(self, true)
+    var entity: GridEntity = GridEntity.find_entity_parent(subject, true)
     if entity != null:
         return entity.down
 
-    var anchor: GridAnchor = GridAnchor.find_anchor_parent(self, false)
+    var anchor: GridAnchor = GridAnchor.find_anchor_parent(subject, false)
     if anchor != null:
         return anchor.direction
 
@@ -84,13 +90,13 @@ func _calculate_down() -> CardinalDirections.CardinalDirection:
         return CardinalDirections.CardinalDirection.DOWN
 
     if use_parent_for_down:
-        var parent: Node = get_parent()
+        var parent: Node = subject.get_parent()
         if parent is Node3D:
             return level.get_closest_grid_node_side_by_position(
                 (parent as Node3D).global_position
             )
 
-    return level.get_closest_grid_node_side_by_position(global_position)
+    return level.get_closest_grid_node_side_by_position(subject.global_position)
 
 func _update_position_and_rotation(interpolate: bool = true) -> void:
     var level: GridLevelCore = get_level()
@@ -100,28 +106,28 @@ func _update_position_and_rotation(interpolate: bool = true) -> void:
     if offset_if_on_same_tile && level.player.coordinates() == coordinates():
         var target: Vector3 = _local_anchor_position - offset_amount * level.node_size * level.player.camera.global_basis.z
         if interpolate:
-            position = lerp(position, target, interpoation_fraction)
+            subject.position = lerp(subject.position, target, interpoation_fraction)
         else:
-            position = target
-    elif position != _local_anchor_position:
+            subject.position = target
+    elif subject.position != _local_anchor_position:
         if interpolate:
-            position = lerp(position, _local_anchor_position, interpoation_fraction)
+            subject.position = lerp(subject.position, _local_anchor_position, interpoation_fraction)
         else:
-            position = _local_anchor_position
+            subject.position = _local_anchor_position
 
     if use_look_direction_for_rotation:
         if maintain_down:
             var down: CardinalDirections.CardinalDirection = _calculate_down()
             if !CardinalDirections.is_parallell(down, level.player.look_direction):
-                global_rotation = CardinalDirections.direction_to_rotation(
+                subject.global_rotation = CardinalDirections.direction_to_rotation(
                     CardinalDirections.invert(down),
                     level.player.look_direction,
                 ).get_euler()
         else:
-            global_basis = level.player.camera.global_transform.basis
+            subject.global_basis = level.player.camera.global_transform.basis
     else:
         var player_pos: Vector3 = level.player.camera.global_position
         player_pos.y = global_position.y
 
         if player_pos != global_position:
-            look_at(player_pos, Vector3.UP, true)
+            subject.look_at(player_pos, Vector3.UP, true)

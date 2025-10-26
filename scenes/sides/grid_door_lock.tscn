@@ -24,7 +24,6 @@ mode = 1
 mesh = NodePath("Lock")
 texture_mode = 1
 display_material_idx = 0
-locked_door_tex_model1 = ExtResource("2_fmvfg")
 emission_intensity = 0.0
 _collission_shape = NodePath("StaticBody3D/CollisionShape3D")
 metadata/_custom_type_script = "uid://y52tibb7romd"
@@ -36,3 +35,5 @@ mesh = SubResource("QuadMesh_75ieb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_60xik")
+
+[connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]

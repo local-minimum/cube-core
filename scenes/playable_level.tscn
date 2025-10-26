@@ -21,6 +21,7 @@ offset_left = 20.0
 offset_top = 20.0
 offset_right = 220.0
 offset_bottom = 20.0
+mouse_filter = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 8
 columns = 2
@@ -31,6 +32,7 @@ keys = NodePath("Keys Count")
 [node name="Health Icon" type="TextureRect" parent="HUD/Core Stats UI"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("2_rgu53")
 expand_mode = 4
 stretch_mode = 4
@@ -38,6 +40,7 @@ stretch_mode = 4
 [node name="Health Value" type="Control" parent="HUD/Core Stats UI"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 script = ExtResource("3_ohew3")
 text = "100"
 font_size = 32
@@ -48,6 +51,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Key Icon" type="TextureRect" parent="HUD/Core Stats UI"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("5_f4dbq")
 expand_mode = 4
 stretch_mode = 4
@@ -55,6 +59,7 @@ stretch_mode = 4
 [node name="Keys Count" type="Control" parent="HUD/Core Stats UI"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 script = ExtResource("3_ohew3")
 text = "0"
 font_size = 32
@@ -72,6 +77,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("2_wreoo")
 _color = Color(0, 0.56046015, 0.5700106, 1)
 _font = ExtResource("3_7s1ja")

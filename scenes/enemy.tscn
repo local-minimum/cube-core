@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cxvlvdddfobpd"]
+[gd_scene load_steps=40 format=3 uid="uid://cxvlvdddfobpd"]
 
 [ext_resource type="Script" uid="uid://dtno4tesfhnck" path="res://scripts/cc/grid_enemy.gd" id="1_4ra3w"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="2_5uy6h"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="8_md484"]
 [ext_resource type="Texture2D" uid="uid://cm35vdl4hc60a" path="res://sprites/monsters2-84.png" id="9_ipns3"]
 [ext_resource type="Script" uid="uid://meibvvwp8mvg" path="res://scripts/gridded_level/entities/movement_planner.gd" id="10_8qclf"]
+[ext_resource type="Script" uid="uid://dexigkhejxn1h" path="res://scripts/gridded_level/level_features/player_facer.gd" id="10_w8i8w"]
 
 [sub_resource type="Resource" id="Resource_fpun6"]
 script = ExtResource("2_5uy6h")
@@ -330,6 +331,13 @@ script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
 
+[node name="PlayerFacer" type="Node3D" parent="Sprite3D" node_paths=PackedStringArray("subject")]
+script = ExtResource("10_w8i8w")
+subject = NodePath("..")
+use_look_direction_for_rotation = true
+use_parent_for_down = false
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
+
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
 texture_filter = 0
@@ -338,6 +346,13 @@ script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
 
+[node name="PlayerFacer" type="Node3D" parent="Sprite3D2" node_paths=PackedStringArray("subject")]
+script = ExtResource("10_w8i8w")
+subject = NodePath("..")
+use_look_direction_for_rotation = true
+use_parent_for_down = false
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
+
 [node name="Sprite3D3" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0625, 0.375, 0)
 texture_filter = 0
@@ -345,6 +360,13 @@ texture = ExtResource("9_ipns3")
 script = ExtResource("7_nenq2")
 _rotation_speed_variation = 0.1
 _rotation_axis_max_speed = 0.01
+
+[node name="PlayerFacer" type="Node3D" parent="Sprite3D3" node_paths=PackedStringArray("subject")]
+script = ExtResource("10_w8i8w")
+subject = NodePath("..")
+use_look_direction_for_rotation = true
+use_parent_for_down = false
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
 
 [node name="MovementPlanner" type="Node3D" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("10_8qclf")
