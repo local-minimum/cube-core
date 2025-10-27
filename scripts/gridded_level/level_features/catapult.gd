@@ -2,12 +2,15 @@ extends GridEvent
 class_name Catapult
 
 enum Phase { NONE, CENTERING, ORIENTING, FLYING, CRASHING }
+# TODO: Remove targets because we have it in events
 enum Targets { EVERYONE, PLAYER, ENEMY }
 @export var _targets: Targets
 
 @export var _orient_entity: bool = false
 @export var _prefer_orient_down_down: bool = true
 
+# TODO: Crash forward seems problematic at times
+# TODO: Crash relative down?
 @export var _crashes_forward: bool = false
 @export var _crash_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
 

@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_klq6b"]
 [ext_resource type="PackedScene" uid="uid://cmqap1n7p47a" path="res://scenes/sides/brick_wall.tscn" id="4_8c41q"]
 [ext_resource type="PackedScene" uid="uid://cdgq6usntnddv" path="res://scenes/key_loot.tscn" id="6_8iemx"]
-[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="6_fpun6"]
 [ext_resource type="PackedScene" uid="uid://barowjo1ksf6a" path="res://scenes/sides/door.tscn" id="6_olg7q"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/brick_floor.tscn" id="6_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/brick_ceiling.tscn" id="7_8iemx"]
@@ -21,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dg0flk5rkayts" path="res://scenes/sides/fence.tscn" id="12_gunhw"]
 [ext_resource type="Script" uid="uid://cjhediv47ntbx" path="res://scripts/gridded_level/level_features/level_portal.gd" id="13_gunhw"]
 [ext_resource type="PackedScene" uid="uid://dm46vsjkl2dw3" path="res://scenes/sides/pressure_plate_wall.tscn" id="13_h6wmr"]
+[ext_resource type="Script" uid="uid://bsq3w1gkh4e0j" path="res://scripts/gridded_level/level_features/catapult.gd" id="13_pqd0y"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -901,6 +901,15 @@ coordinates = Vector3i(-6, -3, -3)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
+[node name="Catapult" type="Node3D" parent="Geometry/Elevation -3/Node (-6, -3, -3)"]
+script = ExtResource("13_pqd0y")
+_targets = 1
+_orient_entity = true
+_crash_direction = 6
+_activator = 2
+_trigger_sides = Array[int]([3])
+metadata/_custom_type_script = "uid://bsq3w1gkh4e0j"
+
 [node name="Node (-6, -3, -2)" parent="Geometry/Elevation -3" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -7.5, -5)
 coordinates = Vector3i(-6, -3, -2)
@@ -909,12 +918,9 @@ coordinates = Vector3i(-6, -3, -2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -7.5, -2.5)
 coordinates = Vector3i(-6, -3, -1)
 
-[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -3/Node (-6, -3, -1)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_h6wmr")]
+[node name="Side SOUTH" parent="Geometry/Elevation -3/Node (-6, -3, -1)" instance=ExtResource("13_h6wmr")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-script = ExtResource("6_fpun6")
 direction = 2
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Node (-5, -3, -4)" parent="Geometry/Elevation -3" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -7.5, -10)

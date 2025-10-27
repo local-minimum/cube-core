@@ -8,8 +8,10 @@
 render_priority = 0
 shader = ExtResource("2_qn5xb")
 shader_parameter/main_tex = ExtResource("3_qn5xb")
-shader_parameter/dark_color = Color(0.12826079, 0.42920536, 0.38444266, 1)
+shader_parameter/dark_color = Color(0.72034836, 0.60830003, 0.79, 1)
 shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough = Color(0.24313726, 0.5372549, 0.28235295, 1)
+shader_parameter/precision = 0.15000000223518
 
 [sub_resource type="QuadMesh" id="QuadMesh_uimt5"]
 lightmap_size_hint = Vector2i(8, 8)
@@ -23,6 +25,8 @@ shader = ExtResource("2_qn5xb")
 shader_parameter/main_tex = ExtResource("3_qn5xb")
 shader_parameter/dark_color = Color(0.55, 0.55, 0.55, 1)
 shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough = Color(0.24313726, 0.5372549, 0.28235295, 1)
+shader_parameter/precision = 0.15000000223518
 
 [sub_resource type="QuadMesh" id="QuadMesh_qn5xb"]
 material = SubResource("ShaderMaterial_ycwyr")
