@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/brick_floor.tscn" id="6_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/brick_ceiling.tscn" id="7_8iemx"]
 [ext_resource type="PackedScene" uid="uid://cxvlvdddfobpd" path="res://scenes/enemy.tscn" id="7_64w2a"]
-[ext_resource type="Script" uid="uid://dlbq7x82ejv6e" path="res://scripts/gridded_level/entities/grid_player_core.gd" id="8_8c41q"]
+[ext_resource type="Script" uid="uid://c4ukgkpo6y1is" path="res://scripts/cc/grid_player.gd" id="8_8iemx"]
 [ext_resource type="Script" uid="uid://v5vk4n110r8p" path="res://scripts/gridded_level/key_ring_core.gd" id="9_olg7q"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="9_t1rx8"]
 [ext_resource type="Script" uid="uid://meibvvwp8mvg" path="res://scripts/gridded_level/entities/movement_planner.gd" id="11_t1rx8"]
@@ -600,7 +600,7 @@ direction = 4
 [node name="Broadcasts" type="Node3D" parent="."]
 
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("camera", "key_ring", "planner")]
-script = ExtResource("8_8c41q")
+script = ExtResource("8_8iemx")
 camera = NodePath("Eyes")
 key_ring = NodePath("KeyRingCore")
 transportation_abilities = SubResource("Resource_8iemx")

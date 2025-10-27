@@ -8,6 +8,7 @@ class_name GridEnemy
 @export var particles: Array[GPUParticles3D]
 @export var self_center: Node3D
 @export var gives_key: bool
+@export var hurt_on_fight_start: int = 3
 
 func _enter_tree() -> void:
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
@@ -70,26 +71,34 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
     return direction
 
 func _handle_move_end(entity: GridEntity) -> void:
+    if _killed:
+        return
+
+    var player: GridPlayer
     if entity == self:
-        if entity.coordinates() == get_level().player.coordinates():
+        player = get_level().player
+        if entity.coordinates() == player.coordinates():
             print_debug("[Grid Enemy] play game!")
-            __SignalBus.on_play_exclude_word_game.emit(self, get_level().player)
+            player.hurt(hurt_on_fight_start)
+            __SignalBus.on_play_exclude_word_game.emit(self, player)
         return
 
-    if entity is not GridPlayerCore:
+    if entity is not GridPlayer:
         return
 
-    print_debug("[Grid Enemy] %s vs %s" % [entity.coordinates(), coordinates()])
+    player = entity
+    print_debug("[Grid Enemy] %s vs %s" % [player.coordinates(), coordinates()])
 
-    if entity.coordinates() == coordinates():
+    if player.coordinates() == coordinates():
         print_debug("[Grid Enemy] play game voluntarily!")
-        __SignalBus.on_play_exclude_word_game.emit(self, get_level().player)
+        player.hurt(hurt_on_fight_start)
+        __SignalBus.on_play_exclude_word_game.emit(self, player)
         return
 
     if !_may_move:
         return
 
-    var direction: CardinalDirections.CardinalDirection = _get_wanted_direct(entity)
+    var direction: CardinalDirections.CardinalDirection = _get_wanted_direct(player)
 
     if direction == CardinalDirections.CardinalDirection.NONE:
         return
@@ -103,7 +112,7 @@ func _handle_move_end(entity: GridEntity) -> void:
     print_debug("[Grid Enemy] Want to go direction %s from %s to %s which results in movement %s on mode %s" % [
         CardinalDirections.name(direction),
         coordinates(),
-        entity.coordinates(),
+        player.coordinates(),
         Movement.name(movement),
         transportation_mode.get_flag_names(),
     ])

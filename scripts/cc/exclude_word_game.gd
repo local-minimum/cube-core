@@ -4,9 +4,10 @@ const _MAX_WORD_LENGTH: int = 12
 
 @export var button_group: ContainerButtonGroup
 @export var words_resource: String
+@export var hurt_on_fail: int = 10
 
 var _enemy: GridEnemy
-var _player: GridPlayerCore
+var _player: GridPlayer
 var _groups: Array[WordGroup]
 var _group_history: Array[String]
 
@@ -78,7 +79,7 @@ func _load_words() -> void:
 
     print_debug("[Exclude Word Game] loaded %s groups" % _groups.size())
 
-func _play_game(enemy: GridEnemy, player: GridPlayerCore) -> void:
+func _play_game(enemy: GridEnemy, player: GridPlayer) -> void:
     print_debug("[Exclude Word Game] playing %s vs %s" % [enemy, player])
     _enemy = enemy
     _player = player
@@ -112,7 +113,7 @@ func _pick_random_group() -> WordGroup:
             var count_b: int = _group_history.count(b.title)
 
             if count_a == count_b:
-                return true
+                return ordered.find(a) < ordered.find(b)
 
             return count_a < count_b
     )
@@ -226,7 +227,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
 
         button_group.select_next()
 
-        # TODO: hurt player
+        _player.hurt(5)
 
         _guessed = false
 

@@ -13,6 +13,15 @@ func _enter_tree() -> void:
     if __SignalBus.on_sync_keys.connect(_handle_sync_keys) != OK:
         push_error("Failed to connect sync keys")
 
+    if __SignalBus.on_hurt_player.connect(_handle_player_health) != OK:
+        push_error("Failed to connect hurt player")
+
+    if __SignalBus.on_heal_player.connect(_handle_player_health) != OK:
+        push_error("Failed to connect heal player")
+
+
+func _handle_player_health(player: GridPlayer, _amount: int) -> void:
+    health.text = "%s" % player.health
 
 func _handle_gain_key(_key: String, _amount: int, total: int) -> void:
     keys.text = "%s" % total
