@@ -1,6 +1,7 @@
 extends GridEntity
 class_name GridEnemy
 
+@export var hunting: bool
 @export var move_on_turn: bool = false
 @export var spawn_node: GridNode
 @export var _lives: int = 3
@@ -95,7 +96,8 @@ func _handle_move_end(entity: GridEntity) -> void:
         __SignalBus.on_play_exclude_word_game.emit(self, player)
         return
 
-    if !_may_move:
+    # TODO: We should still move when not hunting probably... but that's for later
+    if !_may_move || !hunting:
         return
 
     var direction: CardinalDirections.CardinalDirection = _get_wanted_direct(player)

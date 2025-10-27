@@ -15,6 +15,7 @@
 [node name="PlayableLevel" type="Node"]
 
 [node name="Level" parent="." instance=ExtResource("1_vpfqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0011098385, -0.0027908087, 0.0007236004)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

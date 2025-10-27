@@ -59,15 +59,15 @@ func _ready() -> void:
         push_error("Failed to conntect on move end")
 
     lock_state = _inital_lock_state
-    if lock_state == LockState.OPEN:
-        animator.play(_opened_animation)
-    else:
-        animator.play(_closed_animation)
+    if animator != null:
+        if lock_state == LockState.OPEN:
+            animator.play(_opened_animation)
+        else:
+            animator.play(_closed_animation)
 
     get_grid_node().add_grid_event(self)
 
-    if _back_automation != OpenAutomation.NONE:
-        _add_back_sentinel.call_deferred()
+    _add_back_sentinel.call_deferred()
 
 
 func _handle_on_move_start(
@@ -119,17 +119,20 @@ func _add_back_sentinel() -> void:
 
     var sentinel: GridDoorSentinel = GridDoorSentinel.new()
 
+    sentinel.name = "%s Sentinel" % name
     sentinel.door = self
     sentinel.door_face = CardinalDirections.invert(_door_face)
 
     sentinel.automation = _back_automation
     sentinel.close_automation = _close_automation
 
-    sentinel._repeatable = true
-    sentinel._trigger_entire_node = true
+    # Don't know but looks more reasonable to copy, else we should explain why not here
+    sentinel._repeatable = _repeatable
+    sentinel._trigger_entire_node = _trigger_entire_node
 
     neighbour.add_child(sentinel)
     neighbour.add_grid_event(sentinel)
+    print_debug("[Grid Door %s] Added sentinell %s to %s" % [name, sentinel.name, neighbour])
 
 func get_opening_automation(reader: GridDoorInteraction) -> OpenAutomation:
     if reader.is_negative_side:
@@ -154,9 +157,20 @@ func blocks_entry_translation(
     _to_side: CardinalDirections.CardinalDirection,
     _silent: bool = false,
 ) -> bool:
-    return CardinalDirections.invert(move_direction) == _door_face && (
+    var block: bool = CardinalDirections.invert(move_direction) == _door_face && (
         lock_state != LockState.OPEN || block_traversal_anchor_sides.has(entity.get_grid_anchor_direction())
     )
+
+    print_debug("[Grid Door %s] %s going %s checks door direction %s and anchorage %s: %s" % [
+        name,
+        entity,
+        CardinalDirections.name(move_direction),
+        CardinalDirections.name(_door_face),
+        CardinalDirections.name(entity.get_grid_anchor_direction()),
+        block,
+    ])
+
+    return block
 
 func blocks_exit_translation(
     exit_direction: CardinalDirections.CardinalDirection,
@@ -262,7 +276,8 @@ func close_door() -> void:
     print_debug("[Grid Door] Close %s" % self)
     var prev_state: LockState = lock_state
     lock_state = LockState.CLOSED
-    animator.play(_close_animation, _animation_blend)
+    if animator != null:
+        animator.play(_close_animation, _animation_blend)
     await get_tree().create_timer(_wait_before_state_toggle).timeout
     __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
 
@@ -270,7 +285,8 @@ func open_door() -> void:
     print_debug("[Grid Door] Open %s" % self)
     var prev_state: LockState = lock_state
     lock_state = LockState.OPEN
-    animator.play(_open_animation, _animation_blend)
+    if animator != null:
+        animator.play(_open_animation, _animation_blend)
     await get_tree().create_timer(_wait_before_state_toggle).timeout
     __SignalBus.on_door_state_chaged.emit(self, prev_state, lock_state)
 
@@ -354,10 +370,11 @@ func load_save_data(data: Dictionary) -> void:
     lock_state = _deserialize_lockstate(lock_state_int)
 
     print_debug("Door %s loads with state %s" % [self, lock_state_name(lock_state)])
-    if lock_state == LockState.OPEN:
-        animator.play(_opened_animation)
-    else:
-        animator.play(_closed_animation)
+    if animator != null:
+        if lock_state == LockState.OPEN:
+            animator.play(_opened_animation)
+        else:
+            animator.play(_closed_animation)
 
     if _close_automation == CloseAutomation.PROXIMITY:
         var coords: Vector3i = coordinates()

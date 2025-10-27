@@ -3,6 +3,7 @@ class_name GridDoorSentinel
 
 var door: GridDoorCore
 
+## Door face is the inverted face to the face of the door
 var door_face: CardinalDirections.CardinalDirection
 
 var automation: GridDoorCore.OpenAutomation
@@ -51,10 +52,22 @@ func blocks_entry_translation(
     _to_side: CardinalDirections.CardinalDirection,
     _silent: bool = false,
 ) -> bool:
-    return CardinalDirections.invert(move_direction) == door_face && (
+    # Note: The door face of the sentinel is inverted from that of the door's when created
+    var block: bool = CardinalDirections.invert(move_direction) == door_face && (
         door.lock_state != GridDoorCore.LockState.OPEN ||
         door.block_traversal_anchor_sides.has(entity.get_grid_anchor_direction())
     )
+
+    print_debug("[Grid Door Sentinell %s] %s going %s checks door direction %s and anchorage %s: %s" % [
+        name,
+        entity,
+        CardinalDirections.name(move_direction),
+        CardinalDirections.name(door_face),
+        CardinalDirections.name(entity.get_grid_anchor_direction()),
+        block,
+    ])
+
+    return block
 
 func blocks_exit_translation(
     exit_direction: CardinalDirections.CardinalDirection,
