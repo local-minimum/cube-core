@@ -79,7 +79,7 @@ func _handle_feature_move(feature: GridNodeFeature) -> void:
 
 func _sync_swapping_material() -> void:
     if _swapping_mesh != null:
-        var mat: Material = _swapping_mesh.get_surface_override_material(0)
+        var mat: Material = _swapping_mesh.get_active_material(0)
         if mat is StandardMaterial3D:
             var std_mat: StandardMaterial3D = mat
             if _triggering.is_empty():

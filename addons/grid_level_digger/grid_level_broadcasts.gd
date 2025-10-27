@@ -416,11 +416,11 @@ func _sync_protocol_highlight() -> void:
     if caster != null:
         caster_bounds = _draw_highlight_caster(caster, level, broadcast_color)
     elif _selected_contract._broadcaster != null:
+        print_debug("[GLD Broadcasts] couldn't find a broadcaster class in the broadcaster %s " % _selected_contract._broadcaster)
         caster_bounds = _draw_highlight_caster(caster, level, faulty_color)
-        caster = _selected_contract._broadcaster
         faulty_caster = true
     else:
-        print_debug("[GLD Broadcasts] couldn't find the broadcaster of caster %s " % _selected_contract._broadcaster)
+        print_debug("[GLD Broadcasts] couldn't find the broadcaster of caster")
 
     for receiver: BroadcastReceiver in BroadcastContract.get_receivers(_selected_contract):
         _draw_highlight_target(receiver, level, caster, caster_bounds, receiver_color, faulty_color if faulty_caster else broadcast_color)
