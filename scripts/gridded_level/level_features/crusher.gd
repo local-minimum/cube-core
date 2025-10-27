@@ -12,13 +12,12 @@ static func phase_from_int(phase_value: int) -> Phase:
         3: return Phase.RETRACTING
         _: return Phase.RETRACTED
 
+## Overridden by adding "managed" as meta to the grid node side
+## If managed it will not trigger by walking
 @export var _managed: bool
 @export var _side: GridNodeSide
 
-## If managed and the used via broadcast receiver this will be set by the reciever
-@export var _managed_message_id: String
-@export var _managed_crush_message: String = "crush"
-@export var _managed_retract_message: String = "retract"
+
 
 ## Note: This has no effect when managed
 @export var _rest_crushed_ticks: int = 2
@@ -45,8 +44,10 @@ static func phase_from_int(phase_value: int) -> Phase:
 @export var _crush_anim: String = "Crush"
 @export var _retract_anim: String = "Retract"
 
+## In many cases you want this live, especially when managed
 @export var _live: LiveMode = LiveMode.TURN_BASED
 @export var _live_tick_duration_msec: int = 500
+## Overriden by adding "add_anchors_when_exhausted" as meta to the grid node side
 @export var _add_anchors_when_exhausted: bool = false
 @export var _anchor_position_overshoot: float
 
@@ -81,20 +82,36 @@ var _exposed: Array[GridEntity]
 var _last_tick: int
 var _anchored: bool
 
+func register_receiver_contract(contract: BroadcastContract, broadcaster_type: Broadcaster.BroadcasterType) -> void:
+    match broadcaster_type:
+        Broadcaster.BroadcasterType.PRESSURE_PLATE:
+            if contract.messages.size() == 2:
+                contract.register_receiver(0, self, _handle_crush)
+                contract.register_receiver(1, self, _handle_retract)
+                print_debug("[Broadcast Receiver] Configured Crusher %s as managed to receive %s crush/retract messages'" % [
+                    BroadcastContract.get_broadcaster_name(contract),
+                    Broadcaster.name(broadcaster_type),
+                ])
+            elif contract.messages.size() == 1:
+                contract.register_receiver(0, self, _handle_toggle)
+                print_debug("[Broadcast Receiver] Configured Crusher %s as managed to receive %s toggle mode message'" % [
+                    BroadcastContract.get_broadcaster_name(contract),
+                    Broadcaster.name(broadcaster_type),
+                ])
+
+
 func _ready() -> void:
     super._ready()
 
     var side: GridNodeSide = GridNodeSide.find_node_side_parent(self, true)
     _add_anchors_when_exhausted = get_bool_override(side, "add_anchors_when_exhausted", _add_anchors_when_exhausted)
+    _managed = get_bool_override(side, "managed", _managed)
 
     if __SignalBus.on_change_node.connect(_handle_change_node) != OK:
         push_error("Failed to connect change node")
 
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
         push_error("Failed to connect move end")
-
-    if __SignalBus.on_broadcast_message.connect(_handle_broadcast_message) != OK:
-        push_error("Failed to connect broadcast message")
 
     _phase = Phase.RETRACTED
     _phase_ticks = _start_delay_ticks
@@ -105,23 +122,37 @@ func _process(_delta: float) -> void:
             _progress_phase_cycle()
             _last_tick = Time.get_ticks_msec()
 
-func _handle_broadcast_message(id: String, message: String) -> void:
-    if !available() || !_managed || (id != _managed_message_id && !_managed_message_id.is_empty()):
+
+func _handle_toggle() -> void:
+    if !available():
         return
 
-    match message:
-        _managed_crush_message:
-            if _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
-                _phase = Phase.CRUSHING
-                _check_crushing()
-                _anim.play(get_animation())
-                _last_tick = Time.get_ticks_msec()
-        _managed_retract_message:
-            if _live != LiveMode.LIVE_ONE_SHOT && (_phase == Phase.CRUSHING || _phase == Phase.CRUSHED):
-                if _repeatable || !_triggered:
-                    _phase = Phase.RETRACTING
-        _:
-            print_debug("[Crusher %s] Got unhandled message %s from %s" % [coordinates(), message, id])
+    if _live != LiveMode.LIVE_ONE_SHOT && (_phase == Phase.CRUSHING || _phase == Phase.CRUSHED):
+        if _repeatable || !_triggered:
+            _phase = Phase.RETRACTING
+    elif _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
+        _phase = Phase.CRUSHING
+        _check_crushing()
+        _anim.play(get_animation())
+        _last_tick = Time.get_ticks_msec()
+
+func _handle_retract() -> void:
+    if !available():
+        return
+
+    if _live != LiveMode.LIVE_ONE_SHOT && (_phase == Phase.CRUSHING || _phase == Phase.CRUSHED):
+        if _repeatable || !_triggered:
+            _phase = Phase.RETRACTING
+
+func _handle_crush() -> void:
+    if !available():
+        return
+
+    if _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
+        _phase = Phase.CRUSHING
+        _check_crushing()
+        _anim.play(get_animation())
+        _last_tick = Time.get_ticks_msec()
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
     if feature is not GridEntity:

@@ -8,16 +8,13 @@ static func name(type: BroadcasterType) -> String:
 
 @export var sender: Node
 
-func configure(message_id: String, messages: Array[String]) -> BroadcasterType:
+func configure(contract: BroadcastContract) -> BroadcasterType:
     if sender is PressurePlate:
         var plate: PressurePlate = sender
-        plate._broadcast_id = message_id
-        if messages.size() >= 2:
-            plate._broadcast_activate_message = messages[0]
-            plate._broadcast_deactivate_message = messages[1]
-            print_debug("[Broadcaster] Configured pressure plates %s to send messages with id '%s'" % [plate.name, message_id])
+        if plate.register_broadcasts(contract):
+            print_debug("[Broadcaster] Configured pressure plates %s to send boradcast %s" % [plate.name, contract])
         else:
-            push_warning("Cannot configure broadcasting of pressure plate %s, expected 2 messages, got: %s" % [sender.name, messages])
+            push_error("[Broadcaster] Failed to register contract %s to %s" % [contract, plate.name])
 
         return BroadcasterType.PRESSURE_PLATE
 

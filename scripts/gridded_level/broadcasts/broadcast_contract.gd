@@ -3,8 +3,26 @@ class_name BroadcastContract
 
 @export var _broadcaster: Node
 @export var _receivers: Array[Node]
-@export var _message_id: String
 @export var _messages: Array[String]
+
+
+class Broadcast:
+    var message_idx: int
+    var receiver: Node
+    var callback: Callable
+
+    @warning_ignore_start("shadowed_variable")
+    func _init(message_idx: int, receiver: Node, callback: Callable) -> void:
+        @warning_ignore_restore("shadowed_variable")
+        self.message_idx = message_idx
+        self.receiver = receiver
+        self.callback = callback
+
+var _casts: Array[Broadcast]
+
+var messages: Array[String]:
+    get():
+        return _messages
 
 func _ready() -> void:
     var type: Broadcaster.BroadcasterType = Broadcaster.BroadcasterType.NONE
@@ -12,18 +30,22 @@ func _ready() -> void:
 
     var caster: Broadcaster = get_broadcaster(self)
     if caster != null:
-        type = caster.configure(_message_id, _messages)
+        type = caster.configure(self)
 
     if type == Broadcaster.BroadcasterType.NONE:
-        push_error("No broadcast was configured for contract %s with id '%s'" % [name, _message_id])
+        push_error("No broadcast was configured for contract %s with broadcaster %s" % [name, _broadcaster])
 
     for reciever: BroadcastReceiver in get_receivers(self):
-        reciever.configure(type, _message_id, _messages)
+        reciever.configure(self, type)
 
-static func get_message_id_text(contract: BroadcastContract) -> String:
-    if contract._message_id.is_empty():
-        return "[NO MESSAGE]"
-    return contract._message_id
+func register_receiver(message_idx: int, receiver: Node, callback: Callable) -> void:
+    _casts.append(Broadcast.new(message_idx, receiver, callback))
+
+func broadcast(message_idx: int) -> void:
+    if message_idx >= 0 || message_idx < messages.size():
+        for cast: Broadcast in _casts:
+            if cast.message_idx == message_idx && cast.receiver != null:
+                cast.callback.call()
 
 static func get_broadcaster_name(contract: BroadcastContract) -> String:
     if contract._broadcaster != null:

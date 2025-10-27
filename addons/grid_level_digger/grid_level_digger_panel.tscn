@@ -67,7 +67,7 @@ vertical_alignment = 1
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 3
+current_tab = 5
 
 [node name="About" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
@@ -301,6 +301,7 @@ layout_mode = 2
 theme_override_constants/margin_left = 8
 
 [node name="Update" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 4
@@ -315,10 +316,11 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Manipulator" type="VBoxContainer" parent="VBoxContainer/TabContainer/Update/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("panel", "node_type_label", "coordinates_label", "sync_position_btn", "infer_coordinates_btn", "style", "remove_neighbour_in_front_button", "swap_wall_button", "variant_wall_button", "style_wall_button", "add_wall_button", "remove_wall_button", "remove_neighbour_up_button", "swap_ceiling_button", "style_ceiling_button", "add_ceiling_button", "remove_ceiling_button", "remove_neighbour_down_button", "swap_floor_button", "style_floor_button", "add_floor_button", "remove_floor_button", "own_nav")]
+[node name="Manipulator" type="VBoxContainer" parent="VBoxContainer/TabContainer/Update/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("panel", "own_nav", "node_type_label", "coordinates_label", "sync_position_btn", "infer_coordinates_btn", "style", "remove_neighbour_in_front_button", "swap_wall_button", "variant_wall_button", "style_wall_button", "add_wall_button", "remove_wall_button", "remove_neighbour_up_button", "swap_ceiling_button", "style_ceiling_button", "add_ceiling_button", "remove_ceiling_button", "remove_neighbour_down_button", "swap_floor_button", "style_floor_button", "add_floor_button", "remove_floor_button")]
 layout_mode = 2
 script = ExtResource("12_veu6e")
 panel = NodePath("../../../../../..")
+own_nav = NodePath("Navigation Buttons")
 node_type_label = NodePath("Current Node/Title")
 coordinates_label = NodePath("Current Node/Coordinates")
 sync_position_btn = NodePath("Current Node/Sync Position")
@@ -340,7 +342,6 @@ swap_floor_button = NodePath("Floor/Swap Floor")
 style_floor_button = NodePath("Floor/Style Floor")
 add_floor_button = NodePath("Floor/Add Floor")
 remove_floor_button = NodePath("Floor/Remove Floor")
-own_nav = NodePath("Navigation Buttons")
 
 [node name="Current Node" type="HBoxContainer" parent="VBoxContainer/TabContainer/Update/ScrollContainer/VBoxContainer/Manipulator"]
 layout_mode = 2
@@ -568,7 +569,6 @@ disabled = true
 text = "Delete Zone"
 
 [node name="Coms" type="MarginContainer" parent="VBoxContainer/TabContainer" node_paths=PackedStringArray("panel", "new_help", "create_new_info", "create_new", "broadcasts_lister", "selected_container", "message_id", "change_broadcaster", "selected_is_broadcaster", "receivers", "new_receiver", "messages", "new_message")]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 4
@@ -579,7 +579,7 @@ create_new_info = NodePath("ScrollContainer/VBoxContainer/Create New/New Broadca
 create_new = NodePath("ScrollContainer/VBoxContainer/Create New")
 broadcasts_lister = NodePath("ScrollContainer/VBoxContainer/Broadcast Selector")
 selected_container = NodePath("ScrollContainer/VBoxContainer/Selected Details")
-message_id = NodePath("ScrollContainer/VBoxContainer/Selected Details/Message ID/Message ID")
+message_id = NodePath("")
 change_broadcaster = NodePath("ScrollContainer/VBoxContainer/Selected Details/Change Broadcaster")
 selected_is_broadcaster = NodePath("ScrollContainer/VBoxContainer/Selected Details/Selected Is broadcaster")
 receivers = NodePath("ScrollContainer/VBoxContainer/Selected Details/Receivers")
@@ -629,18 +629,6 @@ text = "Current scene not a grid level"
 [node name="Selected Details" type="VBoxContainer" parent="VBoxContainer/TabContainer/Coms/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-
-[node name="Message ID" type="HBoxContainer" parent="VBoxContainer/TabContainer/Coms/ScrollContainer/VBoxContainer/Selected Details"]
-layout_mode = 2
-
-[node name="Message ID Label" type="Label" parent="VBoxContainer/TabContainer/Coms/ScrollContainer/VBoxContainer/Selected Details/Message ID"]
-layout_mode = 2
-text = "Message ID"
-
-[node name="Message ID" type="LineEdit" parent="VBoxContainer/TabContainer/Coms/ScrollContainer/VBoxContainer/Selected Details/Message ID"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 2
 
 [node name="Selected Is broadcaster" type="Label" parent="VBoxContainer/TabContainer/Coms/ScrollContainer/VBoxContainer/Selected Details"]
 layout_mode = 2

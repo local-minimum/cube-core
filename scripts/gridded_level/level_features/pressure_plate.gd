@@ -1,16 +1,26 @@
 extends GridEvent
 class_name PressurePlate
 
+const _ACTIVATE_OR_TOGGLE_PLATE: int = 0
+const _DEACTIVATE_PLATE: int = 1
+
+## Overrides the event trigger settings and base them on the node side
+@export var infer_trigger_side: bool
+
+@export_group("Texture swapping")
+@export var _swapping_mesh: MeshInstance3D
+@export var _swap_active_texture: Texture
+@export var _swap_inactive_texture: Texture
+
+
+@export_group("Animation")
 @export var _anim: AnimationPlayer
 @export var _anim_activate: String = "Activate"
 @export var _anim_active: String = "Active"
 @export var _anim_deactivate: String = "Deactivate"
 @export var _anim_deactivated: String = "Deactivated"
 
-## This will be set by the broadcaster if such point here
-@export var _broadcast_id: String
-@export var _broadcast_activate_message: String = "activate"
-@export var _broadcast_deactivate_message: String = "deactivate"
+var _contracts: Array[BroadcastContract]
 
 var _triggering: Array[GridNodeFeature]
 
@@ -23,6 +33,27 @@ func _ready() -> void:
     if __SignalBus.on_change_anchor.connect(_handle_feature_move) != OK:
         push_warning("Failed to connect change anchor")
 
+    if infer_trigger_side:
+        var side: GridNodeSide = GridNodeSide.find_node_side_parent(self, true)
+        if side != null:
+            _trigger_entire_node = false
+            _trigger_sides = [side.direction]
+
+    # Uniqify mesh and material
+    if _swapping_mesh != null:
+        _swapping_mesh.mesh = _swapping_mesh.mesh.duplicate()
+        _swapping_mesh.mesh.surface_set_material(0, _swapping_mesh.mesh.surface_get_material(0).duplicate())
+
+        _sync_swapping_material()
+
+func register_broadcasts(contract: BroadcastContract) -> bool:
+    var messages: int = contract.messages.size()
+    if messages > 0 && messages <= 2:
+        _contracts.append(contract)
+        return true
+
+    return false
+
 func _handle_feature_move(feature: GridNodeFeature) -> void:
     if !available() || !activates(feature):
         return
@@ -33,16 +64,34 @@ func _handle_feature_move(feature: GridNodeFeature) -> void:
         if _triggering.size() == 1:
             if _anim != null:
                 _anim.play(_anim_activate)
-            if !_broadcast_id.is_empty():
-                __SignalBus.on_broadcast_message.emit(_broadcast_id, _broadcast_activate_message)
+            _sync_swapping_material()
+            for contract: BroadcastContract in _contracts:
+                contract.broadcast(_ACTIVATE_OR_TOGGLE_PLATE)
 
     elif _triggering.has(feature) && (coordinates() != feature.coordinates() || !is_triggering_side(feature.get_grid_anchor_direction())):
         _triggering.erase(feature)
         if _triggering.is_empty():
             if _anim != null:
                 _anim.play(_anim_deactivate)
-            if !_broadcast_id.is_empty():
-                __SignalBus.on_broadcast_message.emit(_broadcast_id, _broadcast_deactivate_message)
+            _sync_swapping_material()
+            for contract: BroadcastContract in _contracts:
+                contract.broadcast(_DEACTIVATE_PLATE)
+
+func _sync_swapping_material() -> void:
+    if _swapping_mesh != null:
+        var mat: Material = _swapping_mesh.get_surface_override_material(0)
+        if mat is StandardMaterial3D:
+            var std_mat: StandardMaterial3D = mat
+            if _triggering.is_empty():
+                std_mat.albedo_texture = _swap_inactive_texture
+            else:
+                std_mat.albedo_texture = _swap_active_texture
+        elif mat is ShaderMaterial:
+            var s_mat: ShaderMaterial = mat
+            if _triggering.is_empty():
+                s_mat.set_shader_parameter("main_tex", _swap_inactive_texture)
+            else:
+                s_mat.set_shader_parameter("main_tex", _swap_active_texture)
 
 
 func trigger(_entity: GridEntity, _movement: Movement.MovementType) -> void:
@@ -73,6 +122,8 @@ func load_save_data(_data: Dictionary) -> void:
     for entity: GridEntity in level.grid_entities:
         if entity.coordinates() == coords && _trigger_sides.has(entity.get_grid_anchor_direction()):
             _triggering.append(entity)
+
+    _sync_swapping_material()
 
     if _anim != null:
         if _triggering.is_empty():

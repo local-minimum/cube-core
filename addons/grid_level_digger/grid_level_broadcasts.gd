@@ -155,8 +155,7 @@ func _sync_broadcasts_lister() -> void:
         popup.add_radio_check_item(_name_contract(_known_contracts[idx]), idx)
 
 func _name_contract(contract: BroadcastContract) -> String:
-    return "'%s' from %s to %s" % [
-        BroadcastContract.get_message_id_text(contract),
+    return "%s -> %s" % [
         BroadcastContract.get_broadcaster_name(contract),
         BroadcastContract.get_reciever_count(contract),
     ]
@@ -184,7 +183,6 @@ func _sync_selected_contract() -> void:
         _sync_protocol_highlight()
         return
 
-    message_id.text = _selected_contract._message_id
     selected_container.show()
 
     _sync_change_broadcaster()
