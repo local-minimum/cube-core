@@ -11,14 +11,6 @@ class_name KeyLoot
 func _ready() -> void:
     anim.play(idle)
 
-func should_trigger(
-    entity: GridEntity,
-    from: GridNode,
-    from_side: CardinalDirections.CardinalDirection,
-    to_side: CardinalDirections.CardinalDirection,
-) -> bool:
-    return super.should_trigger(entity, from, from_side, to_side) && entity is GridPlayerCore
-
 func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
     if !available():
         return

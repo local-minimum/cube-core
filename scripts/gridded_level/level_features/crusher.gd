@@ -13,7 +13,9 @@ static func phase_from_int(phase_value: int) -> Phase:
         _: return Phase.RETRACTED
 
 @export var _managed: bool
-## If managed and left empty, then it listens to all messages irrespective of id
+@export var _side: GridNodeSide
+
+## If managed and the used via broadcast receiver this will be set by the reciever
 @export var _managed_message_id: String
 @export var _managed_crush_message: String = "crush"
 @export var _managed_retract_message: String = "retract"
@@ -24,9 +26,17 @@ static func phase_from_int(phase_value: int) -> Phase:
 @export var _rest_retracted_ticks: int = 3
 @export var _start_delay_ticks: int = 0
 
+## When retracted should crusher side be blocked
 @export var _always_block_crusher_side: bool = true
+
 @export var _block_retracting_seconds: float = 0.3
-@export var _crusher_side: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.UP
+## The side the crusher is anchored on. Note that if grid node side is set then it overrides this value
+@export var _crusher_side: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.UP:
+    get():
+        if _side != null:
+            return _side.direction
+        return _crusher_side
+
 @export var _crush_check_delay: float = 0.05
 @export var _anim: AnimationPlayer
 

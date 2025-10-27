@@ -17,14 +17,19 @@ static func box_corners(box: AABB) -> Array[Vector3]:
         end,
     ]
 
-static func bounding_box(node: Node3D) -> AABB:
+static func bounding_box(node: Node3D, no_geometry_size: Vector3 = Vector3.ONE) -> AABB:
+    var has_mesh: bool
     var bounding: AABB
     for child: MeshInstance3D in node.find_children("", "MeshInstance3D", true, false):
+        has_mesh = true
         var box: AABB = child.global_transform * child.get_aabb()
         if bounding.size.length_squared() == 0:
             bounding = box
         else:
             bounding = bounding.merge(box)
+
+    if !has_mesh:
+        return AABB(node.global_position - no_geometry_size / 2.0, no_geometry_size)
 
     return bounding
 

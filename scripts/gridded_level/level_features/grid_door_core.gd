@@ -129,6 +129,7 @@ func _add_back_sentinel() -> void:
     # Don't know but looks more reasonable to copy, else we should explain why not here
     sentinel._repeatable = _repeatable
     sentinel._trigger_entire_node = _trigger_entire_node
+    sentinel._activator = _activator
 
     neighbour.add_child(sentinel)
     neighbour.add_grid_event(sentinel)
@@ -143,7 +144,7 @@ func get_opening_automation(reader: GridDoorInteraction) -> OpenAutomation:
     return _automation
 
 func should_trigger(
-    _entity: GridEntity,
+    _feature: GridNodeFeature,
     _from: GridNode,
     _from_side: CardinalDirections.CardinalDirection,
     _to_side: CardinalDirections.CardinalDirection,

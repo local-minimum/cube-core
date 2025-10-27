@@ -1,19 +1,22 @@
-[gd_scene load_steps=17 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=20 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_klq6b"]
 [ext_resource type="PackedScene" uid="uid://cmqap1n7p47a" path="res://scenes/sides/brick_wall.tscn" id="4_8c41q"]
 [ext_resource type="PackedScene" uid="uid://cdgq6usntnddv" path="res://scenes/key_loot.tscn" id="6_8iemx"]
-[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="6_fpun6"]
 [ext_resource type="PackedScene" uid="uid://barowjo1ksf6a" path="res://scenes/sides/door.tscn" id="6_olg7q"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/brick_floor.tscn" id="6_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/brick_ceiling.tscn" id="7_8iemx"]
 [ext_resource type="PackedScene" uid="uid://cxvlvdddfobpd" path="res://scenes/enemy.tscn" id="7_64w2a"]
 [ext_resource type="PackedScene" uid="uid://p0a5tl6yy8tf" path="res://scenes/sides/window.tscn" id="7_fpun6"]
+[ext_resource type="PackedScene" uid="uid://cmuo3pqtyhbe3" path="res://scenes/sides/crusher_wall.tscn" id="7_wc255"]
 [ext_resource type="Script" uid="uid://c4ukgkpo6y1is" path="res://scripts/cc/grid_player.gd" id="8_8iemx"]
 [ext_resource type="Script" uid="uid://v5vk4n110r8p" path="res://scripts/gridded_level/key_ring_core.gd" id="9_olg7q"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="9_t1rx8"]
+[ext_resource type="Script" uid="uid://huxje2j21g1c" path="res://scripts/gridded_level/broadcasts/broadcast_contract.gd" id="11_arp2o"]
 [ext_resource type="Script" uid="uid://meibvvwp8mvg" path="res://scripts/gridded_level/entities/movement_planner.gd" id="11_t1rx8"]
+[ext_resource type="Script" uid="uid://dbu1ha67elq8" path="res://scripts/gridded_level/broadcasts/broadcaster.gd" id="11_ux5qa"]
+[ext_resource type="Script" uid="uid://xomgxrqjqsyd" path="res://scripts/gridded_level/level_features/pressure_plate.gd" id="12_82cfe"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -106,12 +109,7 @@ direction = 2
 
 [node name="Side DOWN" parent="Geometry/Elevation -1/Node (0, -1, 1)" instance=ExtResource("6_t1rx8")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (0, -1, 1)" node_paths=PackedStringArray("anchor") instance=ExtResource("7_8iemx")]
-script = ExtResource("6_fpun6")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation -1/Node (0, -1, 1)" instance=ExtResource("7_8iemx")]
 
 [node name="Node (1, -1, -1)" parent="Geometry/Elevation -1" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, -2.5)
@@ -155,15 +153,15 @@ coordinates = Vector3i(-2, -1, -4)
 
 [node name="Side NORTH" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("4_8c41q")]
 
-[node name="Side SOUTH" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("4_8c41q")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-direction = 2
-
 [node name="Side WEST" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("4_8c41q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side EAST" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("4_8c41q")]
+[node name="Side SOUTH" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("4_8c41q")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation -1/Node (-2, -1, -4)" instance=ExtResource("7_wc255")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
@@ -223,11 +221,7 @@ coordinates = Vector3i(0, 0, 1)
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
-[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, 1)" node_paths=PackedStringArray("anchor") instance=ExtResource("6_t1rx8")]
-script = ExtResource("6_fpun6")
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side DOWN" parent="Geometry/Elevation 0/Node (0, 0, 1)" instance=ExtResource("6_t1rx8")]
 
 [node name="Node (1, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -2.5)
@@ -616,9 +610,28 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation -2/Node (-2, -2, -4)" instance=ExtResource("6_t1rx8")]
 
+[node name="Invisible Trigger" type="Node3D" parent="Geometry/Elevation -2/Node (-2, -2, -4)"]
+script = ExtResource("12_82cfe")
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://xomgxrqjqsyd"
+
+[node name="Broadcaster" type="Node" parent="Geometry/Elevation -2/Node (-2, -2, -4)/Invisible Trigger" node_paths=PackedStringArray("sender")]
+script = ExtResource("11_ux5qa")
+sender = NodePath("..")
+metadata/_custom_type_script = "uid://dbu1ha67elq8"
+
 [node name="Zones" type="Node3D" parent="."]
 
 [node name="Broadcasts" type="Node3D" parent="."]
+
+[node name="Node" type="Node" parent="Broadcasts" node_paths=PackedStringArray("_broadcaster", "_receivers")]
+script = ExtResource("11_arp2o")
+_broadcaster = NodePath("../../Geometry/Elevation -2/Node (-2, -2, -4)")
+_receivers = [NodePath("../../Geometry/Elevation -1/Node (-2, -1, -4)/Side EAST")]
+_message_id = "crush-1"
+_messages = Array[String](["crush", "retract"])
 
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("camera", "key_ring", "planner")]
 script = ExtResource("8_8iemx")
@@ -645,4 +658,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.6)
 
 [node name="Enemy" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -5)
-spawn_node = NodePath("../../Geometry/Elevation 0/Node (0, 0, -2)")
+spawn_node = NodePath("../../Geometry/Elevation -1/Node (1, -1, -1)")

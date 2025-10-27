@@ -135,7 +135,11 @@ func _init_events() -> void:
         return
 
     for event: GridEvent in find_children("", "GridEvent"):
-        _events.append(event)
+        if event.available():
+            _events.append(event)
+            print_debug("[Grid Node] Added event %s to %s" % [event, self])
+
+    _events_inited = true
 
 
 func add_grid_event(event: GridEvent) -> void:

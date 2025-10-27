@@ -22,6 +22,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
     if spawn_node != null:
         set_grid_node(spawn_node)
+        sync_position()
 
     super._ready()
 

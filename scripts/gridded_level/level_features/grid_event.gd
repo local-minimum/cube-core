@@ -3,8 +3,13 @@ class_name GridEvent
 
 const GRID_EVENT_GROUP: String = "grid-events"
 
+enum Activator { EVERYTHING, ENTITIES, PLAYER }
+@export var _activator: Activator = Activator.EVERYTHING
+
+## Can be overridden by grid node side parent meta "repeatable"
 @export var _repeatable: bool = true
 
+## Can be overridden by grid node side parent meta "trigger_entire_node"
 @export var _trigger_entire_node: bool
 
 @export var _trigger_sides: Array[CardinalDirections.CardinalDirection]
@@ -35,14 +40,31 @@ func get_bool_override(side: GridNodeSide, key: String, default: bool) -> bool:
 
 func available() -> bool: return _repeatable || !_triggered
 
+func is_triggering_side(side: CardinalDirections.CardinalDirection) -> bool:
+    if _trigger_entire_node:
+        return true
+
+    return _trigger_sides.has(side)
+
+func activates(feature: GridNodeFeature) -> bool:
+    match _activator:
+        Activator.EVERYTHING:
+            return true
+        Activator.PLAYER:
+            return feature is GridPlayerCore
+        Activator.ENTITIES:
+            return feature is GridEntity
+        _:
+            return false
+
 ## If a translation should trigger the event
 func should_trigger(
-    _entity: GridEntity,
+    feature: GridNodeFeature,
     from: GridNode,
     from_side: CardinalDirections.CardinalDirection,
     to_side: CardinalDirections.CardinalDirection,
 ) -> bool:
-    if !_repeatable && _triggered:
+    if !available() || !activates(feature):
         return false
 
     if _trigger_entire_node:

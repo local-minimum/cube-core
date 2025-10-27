@@ -3,9 +3,6 @@ class_name GridTeleporter
 
 @export var exit: GridTeleporter
 
-@export var teleports_player: bool = true
-@export var teleports_non_players: bool
-
 @export var look_direction: CardinalDirections.CardinalDirection
 @export var anchor_direction: CardinalDirections.CardinalDirection
 @export var instant: bool
@@ -54,17 +51,15 @@ func active_for_side(side: CardinalDirections.CardinalDirection) -> bool:
     return anchor_direction == side || _trigger_sides.has(side)
 
 func should_trigger(
-    _entity: GridEntity,
+    feature: GridNodeFeature,
     _from: GridNode,
     _from_side: CardinalDirections.CardinalDirection,
     _to_side: CardinalDirections.CardinalDirection,
 ) -> bool:
-    if exit == null || _triggered && !_repeatable:
+    if exit == null || !available() || !activates(feature):
         return false
 
-    if _entity is GridPlayerCore:
-        return teleports_player
-    return teleports_non_players
+    return true
 
 ## If event blocks entry translation
 func blocks_entry_translation(

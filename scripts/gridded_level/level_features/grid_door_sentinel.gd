@@ -38,7 +38,7 @@ func _handle_entity_move_start(
         _check_traversing_door_should_autoclose(entity, from, translation_direction)
 
 func should_trigger(
-    _entity: GridEntity,
+    _feature: GridNodeFeature,
     _from: GridNode,
     _from_side: CardinalDirections.CardinalDirection,
     _to_side: CardinalDirections.CardinalDirection,

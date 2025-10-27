@@ -1,0 +1,179 @@
+[gd_scene load_steps=19 format=3 uid="uid://cmuo3pqtyhbe3"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_evhj2"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_s46lk"]
+[ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="3_15ity"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_g0miv"]
+[ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="4_s46lk"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_juioo"]
+[ext_resource type="Script" uid="uid://coe1i68jqote4" path="res://scripts/gridded_level/broadcasts/broadcast_receiver.gd" id="7_15ity"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a605k"]
+render_priority = 0
+shader = ExtResource("2_s46lk")
+shader_parameter/main_tex = ExtResource("3_15ity")
+shader_parameter/dark_color = Color(0.17108878, 0.022582948, 0.13546178, 1)
+shader_parameter/light_color = Color(0.14267296, 0.40233573, 0.6492776, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
+material = SubResource("ShaderMaterial_a605k")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_evhj2"]
+render_priority = 0
+shader = ExtResource("2_s46lk")
+shader_parameter/main_tex = ExtResource("3_15ity")
+shader_parameter/dark_color = Color(0.35691008, 0.083862536, 0.29311097, 1)
+shader_parameter/light_color = Color(0.17004833, 0.07547446, 0.06541817, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_s46lk"]
+material = SubResource("ShaderMaterial_evhj2")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("5_juioo")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[sub_resource type="Animation" id="Animation_15ity"]
+resource_name = "Retracted"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25), Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_g0miv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_juioo"]
+resource_name = "Crushed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 1.25), Vector3(0, 0, 1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_hm2bs"]
+resource_name = "Crush"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25), Vector3(0, 0, 1.25), Vector3(0, 0, 1), Vector3(0, 0, 1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_ptcn8"]
+resource_name = "Retract"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 1.25), Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0miv"]
+_data = {
+&"Crush": SubResource("Animation_hm2bs"),
+&"Crushed": SubResource("Animation_juioo"),
+&"RESET": SubResource("Animation_g0miv"),
+&"Retract": SubResource("Animation_ptcn8"),
+&"Retracted": SubResource("Animation_15ity")
+}
+
+[node name="Wall" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_evhj2")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("_side", "_anim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+script = ExtResource("4_s46lk")
+_managed = true
+_side = NodePath("..")
+_always_block_crusher_side = false
+_anim = NodePath("../AnimationPlayer")
+_live = 2
+_add_anchors_when_exhausted = true
+_repeatable = false
+
+[node name="Crush Side East" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.25, 0, -1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+skeleton = NodePath("../..")
+
+[node name="Crush Side West" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -1.25, 0, -1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.371139e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.5, 0)
+mesh = SubResource("QuadMesh_s46lk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Ceiling" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(-1, 4.371138e-08, -4.371138e-08, 4.371138e-08, 4.3711392e-08, -1, -4.371138e-08, -1, -4.3711395e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_s46lk")
+skeleton = NodePath("../..")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+script = ExtResource("4_g0miv")
+direction = 1
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_g0miv")
+}
+
+[node name="BroadcastReceiver" type="Node" parent="." node_paths=PackedStringArray("receiver")]
+script = ExtResource("7_15ity")
+receiver = NodePath("../Side Mesh")
+metadata/_custom_type_script = "uid://coe1i68jqote4"

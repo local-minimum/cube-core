@@ -7,6 +7,7 @@ class_name PressurePlate
 @export var _anim_deactivate: String = "Deactivate"
 @export var _anim_deactivated: String = "Deactivated"
 
+## This will be set by the broadcaster if such point here
 @export var _broadcast_id: String
 @export var _broadcast_activate_message: String = "activate"
 @export var _broadcast_deactivate_message: String = "deactivate"
@@ -23,21 +24,23 @@ func _ready() -> void:
         push_warning("Failed to connect change anchor")
 
 func _handle_feature_move(feature: GridNodeFeature) -> void:
-    if _triggered && !_repeatable:
+    if !available() || !activates(feature):
         return
 
-    if !_triggering.has(feature) && coordinates() == feature.coordinates() &&  _trigger_sides.has(feature.get_grid_anchor_direction()):
+    if !_triggering.has(feature) && coordinates() == feature.coordinates() &&  is_triggering_side(feature.get_grid_anchor_direction()):
         _triggered = true
         _triggering.append(feature)
         if _triggering.size() == 1:
-            _anim.play(_anim_activate)
+            if _anim != null:
+                _anim.play(_anim_activate)
             if !_broadcast_id.is_empty():
                 __SignalBus.on_broadcast_message.emit(_broadcast_id, _broadcast_activate_message)
 
-    elif _triggering.has(feature) && (coordinates() != feature.coordinates() || !_trigger_sides.has(feature.get_grid_anchor_direction())):
+    elif _triggering.has(feature) && (coordinates() != feature.coordinates() || !is_triggering_side(feature.get_grid_anchor_direction())):
         _triggering.erase(feature)
         if _triggering.is_empty():
-            _anim.play(_anim_deactivate)
+            if _anim != null:
+                _anim.play(_anim_deactivate)
             if !_broadcast_id.is_empty():
                 __SignalBus.on_broadcast_message.emit(_broadcast_id, _broadcast_deactivate_message)
 
@@ -71,7 +74,8 @@ func load_save_data(_data: Dictionary) -> void:
         if entity.coordinates() == coords && _trigger_sides.has(entity.get_grid_anchor_direction()):
             _triggering.append(entity)
 
-    if _triggering.is_empty():
-        _anim.play(_anim_deactivated)
-    else:
-        _anim.play(_anim_active)
+    if _anim != null:
+        if _triggering.is_empty():
+            _anim.play(_anim_deactivated)
+        else:
+            _anim.play(_anim_active)
