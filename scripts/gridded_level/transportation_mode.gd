@@ -21,8 +21,14 @@ var mode: int = 0
 func set_flag(flag: int) -> void:
     mode = mode | flag
 
+func adopt(other: TransportationMode) -> void:
+    mode = other.mode
+
 func remove_flag(flag: int) -> void:
     mode = mode & ~flag
+
+func supports(other: TransportationMode) -> bool:
+    return (mode & other.mode) == mode
 
 func has_flag(flag: int) -> bool:
     return (mode & flag) == flag

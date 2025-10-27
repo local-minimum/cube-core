@@ -903,9 +903,8 @@ direction = 3
 
 [node name="Catapult" type="Node3D" parent="Geometry/Elevation -3/Node (-6, -3, -3)"]
 script = ExtResource("13_pqd0y")
-_targets = 1
 _orient_entity = true
-_crash_direction = 6
+_crashes_entity_down = true
 _activator = 2
 _trigger_sides = Array[int]([3])
 metadata/_custom_type_script = "uid://bsq3w1gkh4e0j"

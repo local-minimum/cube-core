@@ -3,7 +3,7 @@ class_name GridEvent
 
 const GRID_EVENT_GROUP: String = "grid-events"
 
-enum Activator { EVERYTHING, ENTITIES, PLAYER }
+enum Activator { EVERYTHING, ENTITIES, PLAYER, ENEMY }
 @export var _activator: Activator = Activator.EVERYTHING
 
 ## Can be overridden by grid node side parent meta "repeatable"
@@ -46,12 +46,17 @@ func is_triggering_side(side: CardinalDirections.CardinalDirection) -> bool:
 
     return _trigger_sides.has(side)
 
+## If the event applies to the feature/entity
 func activates(feature: GridNodeFeature) -> bool:
     match _activator:
         Activator.EVERYTHING:
             return true
         Activator.PLAYER:
             return feature is GridPlayerCore
+        Activator.ENEMY:
+            # TODO: Do a general enemy thing!
+            # return feature is not GridPlayerCore and feature is GridEntity
+            return feature is GridEnemy
         Activator.ENTITIES:
             return feature is GridEntity
         _:

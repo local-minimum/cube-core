@@ -80,6 +80,7 @@ func kill() -> void:
 
 func _input(event: InputEvent) -> void:
     if transportation_mode.mode == TransportationMode.NONE:
+        print_debug("[Grid Player %s] Lacking transportation mode!" % [name])
         return
 
     if !event.is_echo():

@@ -2,9 +2,6 @@ extends GridEvent
 class_name Catapult
 
 enum Phase { NONE, CENTERING, ORIENTING, FLYING, CRASHING }
-# TODO: Remove targets because we have it in events
-enum Targets { EVERYONE, PLAYER, ENEMY }
-@export var _targets: Targets
 
 @export var _orient_entity: bool = false
 @export var _prefer_orient_down_down: bool = true
@@ -12,6 +9,7 @@ enum Targets { EVERYONE, PLAYER, ENEMY }
 # TODO: Crash forward seems problematic at times
 # TODO: Crash relative down?
 @export var _crashes_forward: bool = false
+@export var _crashes_entity_down: bool = false
 @export var _crash_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
 
 static var _managed_entities: Dictionary[GridEntity, Catapult]
@@ -47,22 +45,29 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false) ->
     if !_entry_look_direction.erase(entity):
         push_warning("Could not clear entity '%s' entry look direction" % entity.name)
 
-    var node: GridNode = entity.get_grid_node()
-    if node.may_exit(entity, entity.look_direction) && _crashes_forward:
-        print_debug("[Catapult %s] %s may exit %s forward %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.look_direction)])
-        if !entity.force_movement(Movement.MovementType.FORWARD):
-            push_warning("Failed to crash entity %s forward" % entity.name)
-
-    elif _crash_direction != CardinalDirections.CardinalDirection.NONE:
-        var movement: Movement.MovementType = Movement.from_directions(_crash_direction, entity.look_direction, entity.down)
-        print_debug("[Catapult %s] %s may exit %s default (%s) %s" % [coordinates(), entity.name, node.coordinates, Movement.name(movement), CardinalDirections.name(_crash_direction)])
-        if !entity.force_movement(movement):
-            push_warning("Failed to crash entity %s %s" % [entity.name, _crash_direction])
-
     if _orient_entity:
         if entity is GridPlayerCore:
             var player: GridPlayerCore = entity
             player.stand_up()
+
+    var crash_anchor: GridAnchor = _get_release_anchor(entity)
+    if crash_anchor != null:
+        print_debug("[Catapult %s] Attempting to anchor to %s" % [coordinates(), crash_anchor])
+        # TODO: Animate this
+        entity.set_grid_anchor(crash_anchor)
+        entity.sync_position()
+        if entity.look_direction == crash_anchor.direction:
+            entity.look_direction = CardinalDirections.invert(entity.down)
+        elif entity.look_direction == CardinalDirections.invert(crash_anchor.direction):
+            entity.look_direction = entity.down
+        entity.down = crash_anchor.direction
+
+        entity.orient()
+        entity.transportation_mode.adopt(crash_anchor.required_transportation_mode)
+    elif entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+        entity.transportation_mode.mode = TransportationMode.FALLING
+    else:
+        entity.transportation_mode.mode = TransportationMode.NONE
 
     if immediate_uncinematic:
         _cleanup_entity(entity)
@@ -70,10 +75,53 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false) ->
         print_debug("[Catapult %s] %s delayed cledanup" % [coordinates(), entity.name])
         _cleanup_entity.call_deferred(entity)
 
-func _cleanup_entity(entity: GridEntity) -> void:
-        if !entity.transportation_abilities.has_flag(TransportationMode.FLYING):
-            entity.transportation_mode.mode = TransportationMode.NONE
+func _get_release_anchor(entity: GridEntity) -> GridAnchor:
+    print_debug("[Catapult %s] %s getting release anchors" % [coordinates(), entity.name])
+    var node: GridNode = entity.get_grid_node()
+    if _crashes_forward:
+        if node.may_exit(entity, entity.look_direction) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+            print_debug("[Catapult %s] %s may exit %s forward %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.look_direction)])
+            if !entity.force_movement(Movement.MovementType.FORWARD):
+                push_warning("Failed to crash entity %s forward" % entity.name)
+            else:
+                return null
 
+        elif node.has_side(entity.look_direction) == GridNode.NodeSideState.SOLID:
+            var anchor: GridAnchor = node.get_grid_anchor(entity.look_direction)
+            if anchor != null && anchor.can_anchor(entity):
+                return anchor
+
+    if _crashes_entity_down:
+        if node.may_exit(entity, entity.down) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+            print_debug("[Catapult %s] %s may exit %s entity down %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.down)])
+            # TODO: Figure out movement down for entity...
+            var movement: Movement.MovementType = Movement.from_directions(entity.down, entity.look_direction, entity.down)
+            if !entity.force_movement(movement):
+                push_warning("Failed to crash entity %s down" % entity.name)
+            else:
+                return null
+
+        var anchor: GridAnchor = node.get_grid_anchor(entity.down)
+        if anchor != null && anchor.can_anchor(entity):
+            return anchor
+
+    if _crash_direction != CardinalDirections.CardinalDirection.NONE:
+        if node.may_exit(entity, _crash_direction) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+            print_debug("[Catapult %s] %s may exit %s default direction %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(_crash_direction)])
+            # TODO: Figure out movement down for entity...
+            var movement: Movement.MovementType = Movement.from_directions(_crash_direction, entity.look_direction, entity.down)
+            if !entity.force_movement(movement):
+                push_warning("Failed to crash entity %s down" % entity.name)
+            else:
+                return null
+
+        var anchor: GridAnchor = node.get_grid_anchor(_crash_direction)
+        if anchor != null && anchor.can_anchor(entity):
+            return anchor
+
+    return null
+
+func _cleanup_entity(entity: GridEntity) -> void:
         entity.cinematic = false
         entity.clear_queue()
         print_debug("[Catapult %s] Cleaned up %s, transportation %s, moving %s, cinematic %s" % [
@@ -194,7 +242,7 @@ func _fly(entity: GridEntity) -> bool:
 func trigger(entity: GridEntity, _movement: Movement.MovementType) -> void:
     _triggered = true
 
-    if !_managed_entity(entity):
+    if !_should_be_managed(entity):
         return
 
     print_debug("[Catapult %s] Grabbing %s" % [coordinates(), entity.name])
@@ -213,14 +261,11 @@ func _claim_entity(entity: GridEntity) -> void:
 
     entity.transportation_mode.mode = TransportationMode.FLYING
 
-func _managed_entity(entity: GridEntity) -> bool:
+func _should_be_managed(entity: GridEntity) -> bool:
     if _managed_entities.get(entity) == self:
         return false
 
-    if entity is GridPlayerCore:
-        return _targets != Targets.ENEMY
-    else:
-        return _targets != Targets.PLAYER
+    return activates(entity)
 
 func _tick() -> void:
     pass
