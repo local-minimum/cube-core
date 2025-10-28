@@ -1,7 +1,7 @@
 extends GridEvent
 class_name Crusher
 
-enum LiveMode { TURN_BASED, FULL_LIVE, LIVE_ONE_SHOT }
+enum LiveMode { TURN_BASED, FULL_LIVE, LIVE_ONE_SHOT, LIVE_HALF_SHOT }
 
 enum Phase { RETRACTED, CRUSHING, CRUSHED, RETRACTING }
 static func phase_from_int(phase_value: int) -> Phase:
@@ -16,8 +16,7 @@ static func phase_from_int(phase_value: int) -> Phase:
 ## If managed it will not trigger by walking
 @export var _managed: bool
 @export var _side: GridNodeSide
-
-
+@export var _moving_part_root: Node3D
 
 ## Note: This has no effect when managed
 @export var _rest_crushed_ticks: int = 2
@@ -47,8 +46,8 @@ static func phase_from_int(phase_value: int) -> Phase:
 ## In many cases you want this live, especially when managed
 @export var _live: LiveMode = LiveMode.TURN_BASED
 @export var _live_tick_duration_msec: int = 500
-## Overriden by adding "add_anchors_when_exhausted" as meta to the grid node side
-@export var _add_anchors_when_exhausted: bool = false
+## Overriden by adding "add_anchors_when_extended" as meta to the grid node side
+@export var _add_anchors_when_extended: bool = false
 @export var _anchor_position_overshoot: float
 
 var _phase: Phase = Phase.RETRACTED:
@@ -80,7 +79,8 @@ var _phase: Phase = Phase.RETRACTED:
 var _phase_ticks: int
 var _exposed: Array[GridEntity]
 var _last_tick: int
-var _anchored: bool
+var _extended_anchors_active: bool
+var _extended_anchors: Array[GridAnchor]
 
 func register_receiver_contract(contract: BroadcastContract, broadcaster_type: Broadcaster.BroadcasterType) -> void:
     match broadcaster_type:
@@ -104,7 +104,7 @@ func _ready() -> void:
     super._ready()
 
     var side: GridNodeSide = GridNodeSide.find_node_side_parent(self, true)
-    _add_anchors_when_exhausted = get_bool_override(side, "add_anchors_when_exhausted", _add_anchors_when_exhausted)
+    _add_anchors_when_extended = get_bool_override(side, "add_anchors_when_extended", _add_anchors_when_extended)
     _managed = get_bool_override(side, "managed", _managed)
 
     if __SignalBus.on_change_node.connect(_handle_change_node) != OK:
@@ -117,11 +117,10 @@ func _ready() -> void:
     _phase_ticks = _start_delay_ticks
 
 func _process(_delta: float) -> void:
-    if !_managed && _live == LiveMode.FULL_LIVE || _live == LiveMode.LIVE_ONE_SHOT && _phase != Phase.RETRACTED:
+    if !_managed && _live == LiveMode.FULL_LIVE || _live == LiveMode.LIVE_ONE_SHOT && _phase != Phase.RETRACTED || _live == LiveMode.LIVE_HALF_SHOT && _phase !=  Phase.CRUSHED && _phase != Phase.RETRACTED:
         if Time.get_ticks_msec() - _last_tick > _live_tick_duration_msec:
             _progress_phase_cycle()
             _last_tick = Time.get_ticks_msec()
-
 
 func _handle_toggle() -> void:
     if !available():
@@ -130,10 +129,16 @@ func _handle_toggle() -> void:
     if _live != LiveMode.LIVE_ONE_SHOT && (_phase == Phase.CRUSHING || _phase == Phase.CRUSHED):
         if _repeatable || !_triggered:
             _phase = Phase.RETRACTING
+            if _extended_anchors_active:
+                _disable_extended_anchors()
+            _anim.play(get_animation())
+            _last_tick = Time.get_ticks_msec()
     elif _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
         _phase = Phase.CRUSHING
-        _check_crushing()
+        if _add_anchors_when_extended && !_extended_anchors_active:
+            _add_extended_anchors()
         _anim.play(get_animation())
+        _check_crushing()
         _last_tick = Time.get_ticks_msec()
 
 func _handle_retract() -> void:
@@ -143,6 +148,10 @@ func _handle_retract() -> void:
     if _live != LiveMode.LIVE_ONE_SHOT && (_phase == Phase.CRUSHING || _phase == Phase.CRUSHED):
         if _repeatable || !_triggered:
             _phase = Phase.RETRACTING
+            if _extended_anchors_active:
+                _disable_extended_anchors()
+            _anim.play(get_animation())
+            _last_tick = Time.get_ticks_msec()
 
 func _handle_crush() -> void:
     if !available():
@@ -150,8 +159,10 @@ func _handle_crush() -> void:
 
     if _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
         _phase = Phase.CRUSHING
-        _check_crushing()
+        if _add_anchors_when_extended && !_extended_anchors_active:
+            _add_extended_anchors()
         _anim.play(get_animation())
+        _check_crushing()
         _last_tick = Time.get_ticks_msec()
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
@@ -176,6 +187,7 @@ func _progress_phase_cycle() -> void:
         _phase_ticks -= 1
         if _phase_ticks <= 0:
             _phase = get_next_phase()
+
             _anim.play(get_animation())
             if _phase == Phase.CRUSHING:
                 _check_crushing()
@@ -223,19 +235,24 @@ func _sync_blocking_retracted() -> void:
 func get_next_phase() -> Phase:
     match _phase:
         Phase.RETRACTED:
+            if !available():
+                return Phase.RETRACTED
+
             return Phase.CRUSHING
         Phase.CRUSHING:
-            if !available() && _add_anchors_when_exhausted && !_anchored:
-                _add_anchors()
+            if _add_anchors_when_extended && !_extended_anchors_active:
+                _add_extended_anchors()
             return Phase.CRUSHED
         Phase.CRUSHED:
-            if !available():
-                if _add_anchors_when_exhausted && !_anchored:
-                    _add_anchors()
+            if _add_anchors_when_extended && !_extended_anchors_active:
+                _add_extended_anchors()
 
+            if !available():
                 return Phase.CRUSHED
             return Phase.RETRACTING
         Phase.RETRACTING:
+            if _extended_anchors_active:
+                _disable_extended_anchors()
             return Phase.RETRACTED
         _:
             push_error("Unknown phase %s" % _phase)
@@ -255,8 +272,19 @@ func get_animation() -> String:
             push_error("Unknown phase %s" % _phase)
             return _retracted_resting_anim
 
-func _add_anchors() -> void:
-    _anchored = true
+func _disable_extended_anchors() -> void:
+    _extended_anchors_active = false
+    for anchor: GridAnchor in _extended_anchors:
+        anchor.disabled = true
+
+func _add_extended_anchors() -> void:
+    _extended_anchors_active = true
+    if !_extended_anchors.is_empty():
+        for anchor: GridAnchor in _extended_anchors:
+            anchor.disabled = false
+
+        return
+
     var grid_node: GridNode = GridNode.find_node_parent(self, true)
     for direction: CardinalDirections.CardinalDirection in CardinalDirections.ALL_DIRECTIONS:
         var inv_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(direction)
@@ -279,10 +307,41 @@ func _add_anchors() -> void:
         anchor.required_transportation_mode = TransportationMode.create_from_direction(inv_direction)
         if neighbour.add_anchor(anchor):
             anchor.global_position = (
-                neighbour.get_center_pos() +
-                _anchor_position_overshoot * CardinalDirections.direction_to_vector(inv_direction) +
-                CardinalDirections.direction_to_vector(inv_direction) * grid_node.get_level().node_size * 0.5
+                # We are placing them as if they were on ourselves because we are doing it before we extend
+                grid_node.get_center_pos() +
+                CardinalDirections.direction_to_vector(_crusher_side) * grid_node.get_level().node_size +
+                _anchor_position_overshoot * CardinalDirections.direction_to_vector(direction) +
+                CardinalDirections.direction_to_vector(direction) * grid_node.get_level().node_size * 0.5
             )
+            if CardinalDirections.ALL_PLANAR_DIRECTIONS.has(inv_direction):
+                anchor.global_rotation = Transform3D.IDENTITY.looking_at(CardinalDirections.direction_to_vector(inv_direction)).basis.get_euler()
+
+            # We want to reparent the anchor to the moving part of the crusher to have it look reasonable in the world if it
+            # will retract
+            if _moving_part_root != null:
+                var side: GridNodeSide = GridNodeSide.new()
+                side.infer_direction_from_rotation = false
+                side.direction = direction
+                side.negative_anchor = anchor
+
+                _moving_part_root.add_child(side)
+                anchor.reparent(side)
+
+                if inv_direction == _crusher_side:
+                    var own_anchor: GridAnchor = grid_node.get_grid_anchor(inv_direction)
+                    if own_anchor != null:
+                        for child in own_anchor.get_children(true):
+                            if child is Node3D:
+                                var node3d: Node3D = child
+                                var child_t: Transform3D = node3d.transform
+                                print_debug("[Crusher] Reparenting %s to %s" % [child, anchor])
+                                child.reparent(anchor, true)
+                                child.transform = child_t
+
+                    else:
+                        print_debug("[Crusher] No anchor in crusher direction %s" % [CardinalDirections.name(_crusher_side)])
+
+            _extended_anchors.append(anchor)
         else:
             anchor.queue_free()
 

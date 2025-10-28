@@ -3,8 +3,18 @@ class_name GridNodeSide
 
 @export var direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN
 @export var infer_direction_from_rotation: bool = true
-@export var anchor: GridAnchor
-@export var negative_anchor: GridAnchor
+@export var anchor: GridAnchor:
+    get():
+        if anchor == null || anchor.disabled:
+            return null
+        return anchor
+
+@export var negative_anchor: GridAnchor:
+    get():
+        if negative_anchor == null || negative_anchor.disabled:
+            return null
+        return negative_anchor
+
 @export var illusory: bool
 
 func is_two_sided() -> bool:

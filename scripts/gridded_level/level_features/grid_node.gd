@@ -298,12 +298,18 @@ func add_anchor(anchor: GridAnchor) -> bool:
 
 func get_grid_anchor(direction: CardinalDirections.CardinalDirection) -> GridAnchor:
     if _anchors.has(direction):
-        return _anchors[direction]
+        var anchor = _anchors[direction]
+        if anchor == null || anchor.disabled:
+            return null
+        return anchor
 
     _init_sides_and_anchors()
 
     if _anchors.has(direction):
-        return _anchors[direction]
+        var anchor = _anchors[direction]
+        if anchor == null || anchor.disabled:
+            return null
+        return anchor
 
     return null
 

@@ -134,16 +134,17 @@ direction = 1
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
 
-[node name="Side Mesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("_side", "_anim")]
+[node name="Side Mesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("_side", "_moving_part_root", "_anim")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
 mesh = SubResource("QuadMesh_xhqb5")
 script = ExtResource("4_s46lk")
 _managed = true
 _side = NodePath("..")
+_moving_part_root = NodePath(".")
 _always_block_crusher_side = false
 _anim = NodePath("../AnimationPlayer")
-_live = 2
-_add_anchors_when_exhausted = true
+_live = 3
+_add_anchors_when_extended = true
 _repeatable = false
 
 [node name="Crush Side Floor" type="MeshInstance3D" parent="Side Mesh"]

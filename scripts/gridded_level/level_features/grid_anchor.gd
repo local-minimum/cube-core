@@ -13,6 +13,16 @@ class_name GridAnchor
 ## If it is possible to pass through the anchor into the node
 @export var pass_through_reverse: bool
 
+var disabled: bool:
+    set(value):
+        if !disabled && value:
+            for entity: GridEntity in get_grid_node().get_level().grid_entities:
+                if entity.get_grid_anchor() == self:
+                    # TODO: This might not actually work
+                    entity.force_movement(Movement.MovementType.CENTER)
+                    entity.transportation_mode.mode = TransportationMode.FLYING if entity.transportation_abilities.has_flag(TransportationMode.FLYING) else TransportationMode.FALLING
+        disabled = value
+
 var _node_side: GridNodeSide
 
 func get_node_side() -> GridNodeSide:

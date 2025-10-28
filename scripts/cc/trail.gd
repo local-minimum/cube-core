@@ -47,7 +47,10 @@ func _get_meshinstance(anchor: GridAnchor) -> MeshInstance3D:
         mesh = _trail[_last_idx]
 
     else:
+        _last_idx = _trail.size()
+
         mesh = MeshInstance3D.new()
+        mesh.name = "Trail %s of %s" % [_last_idx, entity.name]
 
         var qmesh: QuadMesh = QuadMesh.new()
         var node_size: Vector3 = anchor.get_grid_node().get_level().node_size
@@ -57,7 +60,6 @@ func _get_meshinstance(anchor: GridAnchor) -> MeshInstance3D:
 
         qmesh.material = material.duplicate(true)
 
-        _last_idx = _trail.size()
         _trail.append(mesh)
 
     return mesh
