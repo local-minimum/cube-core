@@ -53,7 +53,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation -4/Node (-8, -4, -1)/LevelPortal A")
+primary_entry_portal = NodePath("Geometry/Elevation -1/Node (-1, -1, 1)/LevelPortal C")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -98,6 +98,11 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation -1/Node (-1, -1, 1)" instance=ExtResource("6_t1rx8")]
+
+[node name="LevelPortal C" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 1)"]
+script = ExtResource("13_gunhw")
+entry_lookdirection = 2
+metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (0, -1, -1)" parent="Geometry/Elevation -1" instance=ExtResource("2_klq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -2.5)
@@ -1650,4 +1655,5 @@ max_trail_length = 50
 
 [node name="Enemy" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -5)
+hunting = true
 spawn_node = NodePath("../../Geometry/Elevation -1/Node (1, -1, -1)")

@@ -15,6 +15,8 @@
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_7shjm")
 _focus_target = NodePath("NinePatchRect")
+_disabled_color = Color(0.17163697, 0.17163709, 0.17163703, 1)
+_text_disabled_color = Color(0.22251633, 0.29065776, 0.29064772, 1)
 _managed_unfocus = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]

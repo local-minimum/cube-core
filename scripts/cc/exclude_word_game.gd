@@ -5,6 +5,9 @@ const _MAX_WORD_LENGTH: int = 12
 @export var button_group: ContainerButtonGroup
 @export var words_resource: String
 @export var hurt_on_fail: int = 10
+@export var default_text_color: Color = Color.HOT_PINK
+@export var disabled_text_color: Color = Color.DIM_GRAY
+@export var delays_factor: float = 1.0
 
 var _enemy: GridEnemy
 var _player: GridPlayer
@@ -105,20 +108,21 @@ func _get_outlier_group(in_group: WordGroup) -> WordGroup:
     return options.pick_random()
 
 func _pick_random_group() -> WordGroup:
-    var ordered: Array[WordGroup] = _groups.duplicate()
-    ordered.shuffle()
-    ordered.sort_custom(
+    var shuffled: Array[WordGroup] = _groups.duplicate()
+    shuffled.shuffle()
+    var prioritized: Array[WordGroup] = shuffled.duplicate()
+    prioritized.sort_custom(
         func (a: WordGroup, b: WordGroup) -> bool:
             var count_a: int = _group_history.count(a.title)
             var count_b: int = _group_history.count(b.title)
 
             if count_a == count_b:
-                return ordered.find(a) < ordered.find(b)
+                return shuffled.find(a) < shuffled.find(b)
 
             return count_a < count_b
     )
 
-    return ordered.slice(0, 5).pick_random()
+    return prioritized.slice(0, 5).pick_random()
 
 func _make_next_word_set() -> void:
     if !_groups.is_empty():
@@ -153,16 +157,25 @@ func _sync_words(words: Array[String]) -> void:
         for connection: Dictionary in button.on_click.get_connections():
             button.on_click.disconnect(connection["callable"])
 
+        for connection: Dictionary in button.on_change_interactable.get_connections():
+            button.on_change_interactable.disconnect(connection["callable"])
+
         if idx < words.size():
             var word: String = words[idx]
             for label: CensoringLabel in button.find_children("", "CensoringLabel"):
                 label.text = word.to_upper()
                 label.censored_letters = __GlobalGameState.lost_letters
+                label.color = default_text_color
 
                 button.on_click.connect(
                     func (btn: ContainerButton) -> void:
                         _handle_click_word(btn, word)
                 )
+
+                button.on_change_interactable.connect(func (btn: ContainerButton) -> void:
+                    label.color = default_text_color if btn.interactable else disabled_text_color
+                )
+
                 break
 
             button.visible = true
@@ -176,7 +189,7 @@ func _sync_words(words: Array[String]) -> void:
 
         idx += 1
 
-    await get_tree().create_timer(0.2).timeout
+    await get_tree().create_timer(0.2 * delays_factor).timeout
     button_group.visible = true
 
 var _guessed: bool
@@ -187,33 +200,33 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
 
     _guessed = true
 
-    await get_tree().create_timer(0.5).timeout
+    await get_tree().create_timer(0.5 * delays_factor).timeout
 
     if word == _wrong_word:
         for btn: ContainerButton in button_group.buttons:
             if btn != button:
                 btn.interactable = false
-                await get_tree().create_timer(0.2).timeout
+                # await get_tree().create_timer(0.05 * delays_factor).timeout
 
-        await get_tree().create_timer(1).timeout
+        await get_tree().create_timer(1 * delays_factor).timeout
 
         _enemy.hurt()
 
         if _enemy.is_alive():
-            await get_tree().create_timer(0.2).timeout
+            await get_tree().create_timer(0.2 * delays_factor).timeout
 
             _make_next_word_set()
 
         else:
-            await get_tree().create_timer(0.2).timeout
+            await get_tree().create_timer(0.2 * delays_factor).timeout
 
             _enemy.kill()
 
-            await get_tree().create_timer(0.5).timeout
+            await get_tree().create_timer(0.5 * delays_factor).timeout
 
             button_group.visible = false
 
-            await get_tree().create_timer(0.5).timeout
+            await get_tree().create_timer(0.5 * delays_factor).timeout
 
             _player.cinematic = false
 
@@ -223,7 +236,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
     else:
         button.interactable = false
 
-        await get_tree().create_timer(0.5).timeout
+        await get_tree().create_timer(0.5 * delays_factor).timeout
 
         button_group.select_next()
 

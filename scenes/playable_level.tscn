@@ -102,6 +102,7 @@ layer = 10
 script = ExtResource("9_7cjp0")
 button_group = NodePath("GridContainer")
 words_resource = "res://resources/word_groups.txt"
+delays_factor = 0.7
 
 [node name="GridContainer" type="GridContainer" parent="Word Game 1" node_paths=PackedStringArray("buttons")]
 anchors_preset = 8

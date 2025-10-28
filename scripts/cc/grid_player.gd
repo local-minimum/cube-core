@@ -38,4 +38,5 @@ func _handle_move_end(entity: GridEntity) -> void:
     if entity != self || entity.coordinates() == _previous_coords:
         return
 
+    _previous_coords = entity.coordinates()
     hurt()

@@ -4,6 +4,7 @@ class_name ContainerButton
 signal on_focus(button: ContainerButton)
 signal on_unfocus(button: ContainerButton)
 signal on_click(button: ContainerButton)
+signal on_change_interactable(button: ContainerButton)
 
 @export var _focus_target: CanvasItem
 @export var _focus_color: Color = Color.HOT_PINK
@@ -17,6 +18,7 @@ signal on_click(button: ContainerButton)
             if _focus_target != null:
                 _focus_target.modulate = _disabled_color
             interactable = value
+            on_change_interactable.emit(self)
         elif !interactable && value:
             interactable = value
             if _focus_target != null:
@@ -24,7 +26,7 @@ signal on_click(button: ContainerButton)
                     _focus_target.modulate = _focus_color
                 else:
                     _focus_target.modulate = _default_color
-
+            on_change_interactable.emit(self)
 
 var focused: bool = false:
     set(value):
