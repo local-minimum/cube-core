@@ -73,7 +73,7 @@ Simpsons,South Park,Futurama,Family Guy,Hazbin Hotel,Invincible,
 Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
 
 - Famous Activists
-Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,
+Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
 
 - Cities
 London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul
@@ -95,7 +95,7 @@ Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
 Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune,Pluto
 
 - Rocketry
-Booster,Payload,Thrust,Agogee,Perigee,Nose Cone,Altimeter
+Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
 
 - Diseases
 Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,
@@ -110,10 +110,11 @@ Syrah,Nebiolo,Sangiovese,Malbec,Barbera,Pinot Noir,Reisling,Merlot
 Wingsuiting,Caving,Bouldering,Free Diving,Ice Climbing,Heli Skiing
 
 - Music Genres
-Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock
+Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock,Hip Hop,Garage,Classical,House
 
 - Continents
-Asia,Africa,North America,South America,Antartica,Europe,Australia
+Asia,Africa,Americas, Antarctica, Europe, Australia
+# North/South America are too long words
 
 - Intelligence Agencies (might be too hard with letters missing)
 MI5,MI6,CIA,FSB,GRU,GCHQ,FBI,NSA,MOSSAD
@@ -124,7 +125,7 @@ Chevron,Handlebar,Pencil,Walrus,Fu Manchu,Horseshoe
 - Military Ranks
 Private,Corporal,Sergeant,Captain,Major,Colonel,Lieutenant,Brigadier
 
-- US Predidents
+- US Presidents
 Obama,Ford,Trump,Biden,Bush,Clinton,Nixon,Truman,Reagan
 
 - Surgical Procedures
@@ -134,12 +135,12 @@ Biopsy,Cesarean,skin graft,amputation,transplant,colonoscopy,liposuction,Rhinopl
 Embroidery,Knitting,Cross Stitch,Crochet,Quilting,Sewing
 
 - Puzzles
-Sudoku,Crossword,Wordsearch,Crytogram,Jigsaw,Rubiks Cube
+Sudoku,Crossword,Wordsearch,Cryptogram,Jigsaw,Rubiks Cube
 
 - Movie villains
 Jigsaw,Thanos,Hans Gruber,Sauron,Voldemort,The Joker,Hans Landa
 
-- Powertools
+- Power tools
 Jigsaw,Hammer Drill,Belt Sander,Miter Saw,Lathe,Nail Gun,
 
 - Chemical Elements
@@ -149,7 +150,7 @@ Oxygen,Nitrogen,Sulfur,Carbon,Sodium,Helium,Seaborgium,Krypton,Argon,Arsenic
 Gluon,Photon,Electron,Muon,Neutrino,Higgs Boson
 
 - Classics Authors
-Tolstoy,Orwell,Tolkein,Shakespeare,Bronte,Alcott
+Tolstoy,Orwell,Tolkien,Shakespeare,Bronte,Alcott,Proust,Homer,Dante
 
 - Peripherals
 Monitor,Keyboard,Mouse,Printer,Speakers,Microphone,Headphones
@@ -159,3 +160,9 @@ Roasting,Steaming,Poaching,Baking,Frying,Sauteing,Sous Vide
 
 - Chess pieces
 Pawn,King,Queen,Rook,Bishop,Knight
+
+- Poker Hands
+Pair,Straight,Flush,House,Straight flush,Two Pair
+
+- Buildings
+House,Barn,Church,Temple,Shed,Factory

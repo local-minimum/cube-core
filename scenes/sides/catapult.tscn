@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmwck5ciilmqc"]
+
+[ext_resource type="Script" uid="uid://bsq3w1gkh4e0j" path="res://scripts/gridded_level/level_features/catapult.gd" id="1_gn8pf"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="2_pmo63"]
+
+[sub_resource type="Curve" id="Curve_pmo63"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.79112273, 0.57720244), -1.409515, -1.409515, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0refo"]
+texture_mode = 1
+curve = SubResource("Curve_pmo63")
+
+[sub_resource type="Curve" id="Curve_0refo"]
+_data = [Vector2(0.023498692, 0.6182507), 0.0, 0.8843348, 0, 0, Vector2(0.4804178, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gcj0h"]
+texture_mode = 1
+curve = SubResource("Curve_0refo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0refo"]
+lifetime_randomness = 1.0
+emission_shape_scale = Vector3(0.2, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 1.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = 2.9999976
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_gcj0h")
+alpha_curve = SubResource("CurveTexture_0refo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gcj0h"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+specular_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.8106606, 0.4537474, 0.52296084, 1)
+albedo_texture = ExtResource("2_pmo63")
+texture_filter = 0
+texture_repeat = false
+disable_receive_shadows = true
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_7wdri"]
+material = SubResource("StandardMaterial3D_gcj0h")
+size = Vector2(0.2, 0.2)
+
+[node name="Catapult" type="Node3D"]
+script = ExtResource("1_gn8pf")
+_orient_entity = true
+_crashes_entity_down = true
+_activator = 2
+_trigger_sides = Array[int]([3])
+metadata/_custom_type_script = "uid://bsq3w1gkh4e0j"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 1.25, 0)
+amount = 42
+lifetime = 3.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_0refo")
+draw_pass_1 = SubResource("QuadMesh_7wdri")

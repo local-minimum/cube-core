@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://cmuo3pqtyhbe3"]
+[gd_scene load_steps=20 format=3 uid="uid://cmuo3pqtyhbe3"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_evhj2"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_s46lk"]
 [ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="3_15ity"]
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_g0miv"]
 [ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="4_s46lk"]
+[ext_resource type="Texture2D" uid="uid://dt4exkfips7ya" path="res://sprites/walls/rykhath-tiles-7.png" id="5_g0miv"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_juioo"]
 [ext_resource type="Script" uid="uid://coe1i68jqote4" path="res://scripts/gridded_level/broadcasts/broadcast_receiver.gd" id="7_15ity"]
 
@@ -14,6 +15,8 @@ shader = ExtResource("2_s46lk")
 shader_parameter/main_tex = ExtResource("3_15ity")
 shader_parameter/dark_color = Color(0.17108878, 0.022582948, 0.13546178, 1)
 shader_parameter/light_color = Color(0.14267296, 0.40233573, 0.6492776, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
 material = SubResource("ShaderMaterial_a605k")
@@ -23,9 +26,11 @@ center_offset = Vector3(0, 1.25, 0)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_evhj2"]
 render_priority = 0
 shader = ExtResource("2_s46lk")
-shader_parameter/main_tex = ExtResource("3_15ity")
-shader_parameter/dark_color = Color(0.35691008, 0.083862536, 0.29311097, 1)
-shader_parameter/light_color = Color(0.17004833, 0.07547446, 0.06541817, 1)
+shader_parameter/main_tex = ExtResource("5_g0miv")
+shader_parameter/dark_color = Color(0.21003243, 0.15258512, 0.44122362, 1)
+shader_parameter/light_color = Color(0.8914593, 0.6955937, 0.67372566, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_s46lk"]
 material = SubResource("ShaderMaterial_evhj2")
@@ -141,18 +146,18 @@ _live = 2
 _add_anchors_when_exhausted = true
 _repeatable = false
 
-[node name="Crush Side East" type="MeshInstance3D" parent="Side Mesh"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.25, 0, -1.25)
-mesh = SubResource("QuadMesh_xhqb5")
-skeleton = NodePath("../..")
-
-[node name="Crush Side West" type="MeshInstance3D" parent="Side Mesh"]
-transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -1.25, 0, -1.25)
-mesh = SubResource("QuadMesh_xhqb5")
-skeleton = NodePath("../..")
-
 [node name="Crush Side Floor" type="MeshInstance3D" parent="Side Mesh"]
 transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.371139e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.5, 0)
+mesh = SubResource("QuadMesh_s46lk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor3" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(-8.940697e-08, -4.3711392e-08, 1, -1, 4.371139e-08, -8.940697e-08, -4.371138e-08, -1, -4.3711392e-08, 1.25, 1.25, 0)
+mesh = SubResource("QuadMesh_s46lk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor2" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(8.742277e-08, 4.371139e-08, -1, 1, -4.3711385e-08, 8.742277e-08, -4.371138e-08, -1, -4.3711395e-08, -1.25, 1.25, 0)
 mesh = SubResource("QuadMesh_s46lk")
 skeleton = NodePath("../..")
 
