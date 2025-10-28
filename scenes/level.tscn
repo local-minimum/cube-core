@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=35 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_klq6b"]
@@ -24,6 +24,13 @@
 [ext_resource type="Script" uid="uid://c2cd8hwgen7kp" path="res://scripts/gridded_level/level_features/grid_teleporter.gd" id="15_wu01b"]
 [ext_resource type="Script" uid="uid://vhd085que0kg" path="res://scripts/gridded_level/level_features/grid_node.gd" id="16_5k0ak"]
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="17_wu01b"]
+[ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
+[ext_resource type="Texture2D" uid="uid://dqwfidfu1s8w2" path="res://sprites/decals-2.png" id="25_cmcjb"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="26_556r4"]
+[ext_resource type="Texture2D" uid="uid://c6klxpy6nxmsc" path="res://sprites/decals-0.png" id="26_w3o6u"]
+[ext_resource type="Texture2D" uid="uid://rln7exps3slx" path="res://sprites/decals-1.png" id="27_2e2fo"]
+[ext_resource type="Texture2D" uid="uid://shpi0u17847p" path="res://sprites/decals-4.png" id="28_gur6y"]
+[ext_resource type="Texture2D" uid="uid://dk4pohl0cp37s" path="res://sprites/decals-5.png" id="29_v3why"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -33,6 +40,15 @@ metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 [sub_resource type="Resource" id="Resource_64w2a"]
 script = ExtResource("9_t1rx8")
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7agi7"]
+render_priority = 0
+shader = ExtResource("26_556r4")
+shader_parameter/main_tex = ExtResource("25_cmcjb")
+shader_parameter/dark_color = Color(0, 0, 0, 1)
+shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 1.0
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("level_geometry", "primary_entry_portal", "zones_parent", "broadcasts_parent", "player")]
 script = ExtResource("1_2q6dc")
@@ -2082,6 +2098,16 @@ metadata/_custom_type_script = "uid://meibvvwp8mvg"
 
 [node name="Eyes" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.6)
+
+[node name="Trail" type="Node" parent="Player" node_paths=PackedStringArray("entity")]
+script = ExtResource("24_3ies3")
+entity = NodePath("..")
+textures = Array[Texture]([ExtResource("25_cmcjb"), ExtResource("26_w3o6u"), ExtResource("27_2e2fo"), ExtResource("28_gur6y"), ExtResource("29_v3why")])
+material = SubResource("ShaderMaterial_7agi7")
+decal_scale = Vector2(0.5, 0.5)
+random_normal_rotation = true
+snap_step = 45.0
+max_trail_length = 50
 
 [node name="Enemies" type="Node3D" parent="."]
 
