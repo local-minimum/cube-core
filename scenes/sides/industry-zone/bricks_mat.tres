@@ -1,13 +1,14 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://coin7vjt34yd2"]
 
-[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_tpltb"]
-[ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="2_0n1s4"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_2fq41"]
+[ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="2_mg2n3"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_tpltb")
-shader_parameter/main_tex = ExtResource("2_0n1s4")
+shader = ExtResource("1_2fq41")
+shader_parameter/main_tex = ExtResource("2_mg2n3")
 shader_parameter/dark_color = Color(0.17, 0.083725005, 0.0221, 1)
 shader_parameter/light_color = Color(0.8560265, 0.1677342, 0.45031387, 1)
 shader_parameter/passthrough = Color(0.05490196, 0.05490196, 0.05490196, 1)
 shader_parameter/precision = 0.05000000074506
+shader_parameter/darken_north_south = 0.10000000149012

@@ -49,6 +49,7 @@ shader_parameter/dark_color = Color(0, 0, 0, 1)
 shader_parameter/light_color = Color(0, 0, 0, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
 shader_parameter/precision = 1.0
+shader_parameter/darken_north_south = 0.0
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("level_geometry", "primary_entry_portal", "zones_parent", "broadcasts_parent", "player")]
 script = ExtResource("1_2q6dc")
