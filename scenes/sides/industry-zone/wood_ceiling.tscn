@@ -1,22 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck0i4f6rf4ujb"]
+[gd_scene load_steps=7 format=3 uid="uid://cy2wepsheqjvp"]
 
-[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_fmoik"]
-[ext_resource type="Material" uid="uid://coin7vjt34yd2" path="res://scenes/sides/bricks/bricks_mat.tres" id="2_a52rt"]
-[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_01j2v"]
-[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_2x308"]
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_yvsym"]
+[ext_resource type="Material" uid="uid://dj1w8w34xbyhy" path="res://scenes/sides/industry-zone/wood_mat.tres" id="2_yvsym"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="3_s3iim"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="4_c1dje"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
-material = ExtResource("2_a52rt")
+material = ExtResource("2_yvsym")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
 
 [sub_resource type="Resource" id="Resource_a605k"]
-script = ExtResource("5_2x308")
+script = ExtResource("4_c1dje")
 mode = 9
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 
 [node name="Ceiling" type="Node3D" node_paths=PackedStringArray("anchor")]
-script = ExtResource("1_fmoik")
+script = ExtResource("1_yvsym")
 direction = 5
 infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
@@ -28,7 +28,7 @@ mesh = SubResource("QuadMesh_xhqb5")
 
 [node name="Side Anchor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-script = ExtResource("4_01j2v")
+script = ExtResource("3_s3iim")
 direction = 5
 required_transportation_mode = SubResource("Resource_a605k")
 metadata/_custom_type_script = "uid://bsjvh2o2oob57"
