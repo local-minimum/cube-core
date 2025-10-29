@@ -49930,7 +49930,8 @@ entity = NodePath("..")
 metadata/_custom_type_script = "uid://meibvvwp8mvg"
 
 [node name="Eyes" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.40000004)
+fov = 80.0
 
 [node name="Trail" type="Node" parent="Player" node_paths=PackedStringArray("entity")]
 script = ExtResource("24_3ies3")
