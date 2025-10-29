@@ -18,9 +18,9 @@ material = ExtResource("4_x60jp")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
 
-[sub_resource type="Resource" id="Resource_a605k"]
+[sub_resource type="Resource" id="Resource_x60jp"]
 script = ExtResource("7_6a7f7")
-mode = 9
+mode = 16
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 
 [sub_resource type="Animation" id="Animation_hm2bs"]
@@ -150,10 +150,10 @@ mesh = SubResource("QuadMesh_e8f7j")
 skeleton = NodePath("../..")
 
 [node name="Side Anchor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 script = ExtResource("6_lpaat")
 direction = 5
-required_transportation_mode = SubResource("Resource_a605k")
+required_transportation_mode = SubResource("Resource_x60jp")
 metadata/_custom_type_script = "uid://bsjvh2o2oob57"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
