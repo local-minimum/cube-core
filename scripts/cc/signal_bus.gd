@@ -11,4 +11,6 @@ signal on_update_lost_letters(lost_letters: String)
 signal on_hurt_player(player: GridPlayer, amount: int)
 signal on_heal_player(player: GridPlayer, amount: int)
 
+signal on_start_sacrifice(player: GridPlayer)
+
 @warning_ignore_restore("unused_signal")

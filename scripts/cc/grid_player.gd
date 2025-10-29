@@ -6,7 +6,7 @@ class_name GridPlayer
 var hurt_to_walk: bool = true:
     set(value):
         hurt_to_walk = value
-        _previous_coords = coordinates()
+        _previous_anchor = get_grid_anchor()
 
 func _ready() -> void:
     super._ready()
@@ -18,12 +18,18 @@ func is_alive() -> bool:
     return health > 0
 
 func kill() -> void:
-    pass
+    var amount = health
+    health = 0
+    __SignalBus.on_hurt_player.emit(self, amount)
+    if health == 0:
+        __SignalBus.on_start_sacrifice.emit(self)
 
 func hurt(amount: int = 1) -> void:
     amount = mini(health, amount)
     health -= amount
     __SignalBus.on_hurt_player.emit(self, amount)
+    if health == 0:
+        __SignalBus.on_start_sacrifice.emit(self)
 
 func heal(amount: int) -> void:
     if amount <= 0:
@@ -32,11 +38,12 @@ func heal(amount: int) -> void:
     health += amount
     __SignalBus.on_heal_player.emit(self, amount)
 
-var _previous_coords: Vector3i
+var _previous_anchor: GridAnchor
+
 
 func _handle_move_end(entity: GridEntity) -> void:
-    if entity != self || entity.coordinates() == _previous_coords:
+    if entity != self || entity.get_grid_anchor() == _previous_anchor:
         return
 
-    _previous_coords = entity.coordinates()
+    _previous_anchor = entity.get_grid_anchor()
     hurt()

@@ -3,6 +3,10 @@ class_name ContainerButtonGroup
 
 @export var buttons: Array[ContainerButton]
 
+var interactables: int:
+    get():
+        return buttons.filter(func (btn: ContainerButton) -> bool: return btn.interactable).size()
+
 var _focus: ContainerButton
 
 func _ready() -> void:

@@ -10,6 +10,7 @@ class_name GridEnemy
 @export var self_center: Node3D
 @export var gives_key: bool
 @export var hurt_on_fight_start: int = 3
+@export var hurt_on_guess_wrong: int = 15
 
 func _enter_tree() -> void:
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:

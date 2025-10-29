@@ -33,13 +33,13 @@ var mode: Mode = Mode.SACRIFICE
 
 var _sacrificial_letter: String
 var _player: GridPlayer
+var _entered_cinematic: bool
 
 func _enter_tree() -> void:
-    if __SignalBus.on_level_loaded.connect(_handle_level_loaded) != OK:
-        push_error("Failed to connect load level")
-
-    if __SignalBus.on_change_player.connect(_handle_change_player) != OK:
-        push_error("Failed to connect change player")
+    if __SignalBus.on_start_sacrifice.connect(_handle_no_health) != OK:
+        push_error("Failed to connect start sacrifice")
+    if __SignalBus.on_update_lost_letters.connect(_handle_lost_letters) != OK:
+        push_error("Failed to connect update lost letters")
 
 func _ready() -> void:
     for child: CensoringLabel in sacrifice.find_children("", "CensoringLabel"):
@@ -50,15 +50,15 @@ func _ready() -> void:
         break
 
     hide()
+
+func _handle_no_health(player: GridPlayer) -> void:
+    _player = player
     show_sacrifice()
 
-func _handle_level_loaded(level: GridLevelCore) -> void:
-    if level.player is GridPlayer:
-        _player = level.player
-
-func _handle_change_player(_level: GridLevelCore, player: GridPlayerCore) -> void:
-    if player is GridPlayer:
-        _player = player
+func _handle_lost_letters(letters: String) -> void:
+    hint.censored_letters = letters
+    sacrifice_letter.censored_letters = letters
+    alphabet.censored_letters = letters
 
 func show_sacrifice() -> void:
     mode = Mode.SACRIFICE
@@ -87,6 +87,8 @@ func _ready_ui() -> void:
 
     _sacrificial_letter = ""
 
+    _entered_cinematic = _player.cinematic
+    _player.cinematic = true
     show()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -108,6 +110,7 @@ func _handle_sacrifice_letter() -> void:
     hide()
 
     _sacrificial_letter = ""
+    _player.cinematic = _entered_cinematic
 
 func _offer_letter(letter: String) -> void:
     if letter.length() == 1:
@@ -146,7 +149,6 @@ func _get_value_text(letter: String) -> String:
             return hint_value_letter.format({"health": _get_sacrifice_value(letter)})
 
     return hint_not_letter
-
 
 func _get_sacrifice_value(letter: String) -> int:
     match mode:

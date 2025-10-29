@@ -4,7 +4,6 @@ const _MAX_WORD_LENGTH: int = 12
 
 @export var button_group: ContainerButtonGroup
 @export var words_resource: String
-@export var hurt_on_fail: int = 10
 @export var default_text_color: Color = Color.HOT_PINK
 @export var disabled_text_color: Color = Color.DIM_GRAY
 @export var delays_factor: float = 1.0
@@ -13,6 +12,7 @@ var _enemy: GridEnemy
 var _player: GridPlayer
 var _groups: Array[WordGroup]
 var _group_history: Array[String]
+var _labels: Array[CensoringLabel]
 
 class WordGroup:
     var title: String
@@ -53,7 +53,14 @@ func _ready() -> void:
     if __SignalBus.on_play_exclude_word_game.connect(_play_game) != OK:
         push_error("Failed to connect play exclude word game")
 
+    if __SignalBus.on_update_lost_letters.connect(_handle_update_lost_letters) != OK:
+        push_error("Failed to connect update lost letters")
+
     _load_words()
+
+func _handle_update_lost_letters(letters: String) -> void:
+    for label: CensoringLabel in _labels:
+        label.censored_letters = letters
 
 func _load_words() -> void:
     _groups.clear()
@@ -130,6 +137,7 @@ func _make_next_word_set() -> void:
             var group: WordGroup = _pick_random_group()
 
             var words: Array[String] = group.pick_words()
+            print_debug("[Exclude Word Game] Considering '%s' using words %s" % [group.title, words])
             var outlier_group: WordGroup = _get_outlier_group(group)
             if outlier_group != null:
                 var word: String = outlier_group.pick_outlier(group)
@@ -139,6 +147,9 @@ func _make_next_word_set() -> void:
                     words.append(word)
 
                     _group_history.append(group.title)
+
+                    print_debug("[Exclude Word Game] Using '%s': '%s' as outlier to %s" % [outlier_group.title, word, group.title])
+
                     _sync_words(words)
                     return
 
@@ -166,6 +177,8 @@ func _sync_words(words: Array[String]) -> void:
                 label.text = word.to_upper()
                 label.censored_letters = __GlobalGameState.lost_letters
                 label.color = default_text_color
+                if !_labels.has(label):
+                    _labels.append(label)
 
                 button.on_click.connect(
                     func (btn: ContainerButton) -> void:
@@ -203,45 +216,51 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
     await get_tree().create_timer(0.5 * delays_factor).timeout
 
     if word == _wrong_word:
-        for btn: ContainerButton in button_group.buttons:
-            if btn != button:
-                btn.interactable = false
-                # await get_tree().create_timer(0.05 * delays_factor).timeout
-
-        await get_tree().create_timer(1 * delays_factor).timeout
-
-        _enemy.hurt()
-
-        if _enemy.is_alive():
-            await get_tree().create_timer(0.2 * delays_factor).timeout
-
-            _make_next_word_set()
-
-        else:
-            await get_tree().create_timer(0.2 * delays_factor).timeout
-
-            _enemy.kill()
-
-            await get_tree().create_timer(0.5 * delays_factor).timeout
-
-            button_group.visible = false
-
-            await get_tree().create_timer(0.5 * delays_factor).timeout
-
-            _player.cinematic = false
-
-            _player = null
-            _enemy = null
-
+        _handle_hurt_enemy(button)
     else:
         button.interactable = false
 
         await get_tree().create_timer(0.5 * delays_factor).timeout
+        _player.hurt(_enemy.hurt_on_guess_wrong)
 
-        button_group.select_next()
+        if button_group.interactables == 1:
+            _handle_hurt_enemy(button)
+        else:
+            button_group.select_next()
 
-        _player.hurt(5)
 
-        _guessed = false
+            _guessed = false
 
     print_debug("[Exclude Word Game] Selected '%s'" % word)
+
+
+func _handle_hurt_enemy(button: ContainerButton) -> void:
+    for btn: ContainerButton in button_group.buttons:
+        if btn != button:
+            btn.interactable = false
+            # await get_tree().create_timer(0.05 * delays_factor).timeout
+
+    await get_tree().create_timer(1 * delays_factor).timeout
+
+    _enemy.hurt()
+
+    if _enemy.is_alive():
+        await get_tree().create_timer(0.2 * delays_factor).timeout
+
+        _make_next_word_set()
+
+    else:
+        await get_tree().create_timer(0.2 * delays_factor).timeout
+
+        _enemy.kill()
+
+        await get_tree().create_timer(0.5 * delays_factor).timeout
+
+        button_group.visible = false
+
+        await get_tree().create_timer(0.5 * delays_factor).timeout
+
+        _player.cinematic = false
+
+        _player = null
+        _enemy = null
