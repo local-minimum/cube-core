@@ -29,22 +29,12 @@ func _init_doors() -> void:
 
     _doors_inited = true
     _doors.clear()
-    for door: GridDoorCore in find_children("", "GridDoorCore"):
-        _doors[door.get_side()] = door
 
-    for direction: CardinalDirections.CardinalDirection in CardinalDirections.ALL_DIRECTIONS:
-        if _doors.has(direction):
-            continue
-
-        var n: GridNode = neighbour(direction)
-        if n == null:
-            continue
-        n._init_doors()
-
-        var ndoor: GridDoorCore = n.get_door(CardinalDirections.invert(direction))
-        if ndoor != null:
-            _doors[direction] = ndoor
-
+    for door: GridDoorCore in get_level().doors():
+        if door.coordinates() == coordinates:
+            _doors[door.get_side()] = door
+        elif CardinalDirections.translate(door.coordinates(), door.get_side()):
+            _doors[CardinalDirections.invert(door.get_side())] = door
 
 func get_door(direction: CardinalDirections.CardinalDirection) -> GridDoorCore:
     _init_doors()
@@ -205,6 +195,8 @@ var _anchords_inited: bool
 func _init_sides_and_anchors() -> void:
     if _anchords_inited: return
 
+    _anchords_inited = true
+
     for side: GridNodeSide in find_children("", "GridNodeSide"):
         GridNodeSide.set_direction_from_rotation(side)
 
@@ -242,7 +234,6 @@ func _init_sides_and_anchors() -> void:
             if n_side.negative_anchor.direction == dir:
                 _anchors[dir] = n_side.negative_anchor
 
-    _anchords_inited = true
 
 func remove_anchor(anchor: GridAnchor) -> bool:
     if !_anchors.has(anchor.direction):

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr68l5q6q3gme"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_n8cb2"]
+[ext_resource type="Material" uid="uid://crrbvopyu6oe5" path="res://scenes/sides/plate_mat.tres" id="2_i3kym"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_rywdu"]
+material = ExtResource("2_i3kym")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[node name="Floor" type="Node3D"]
+script = ExtResource("1_n8cb2")
+infer_direction_from_rotation = false
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 1.25)
+mesh = SubResource("QuadMesh_rywdu")

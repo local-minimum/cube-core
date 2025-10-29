@@ -1,22 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1p0ecof84rk6"]
+[gd_scene load_steps=7 format=3 uid="uid://c1p0ecof84rk6"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_q1gwq"]
-[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_nydh0"]
-[ext_resource type="Texture2D" uid="uid://dt4exkfips7ya" path="res://sprites/walls/rykhath-tiles-7.png" id="3_q1gwq"]
+[ext_resource type="Material" uid="uid://crrbvopyu6oe5" path="res://scenes/sides/plate_mat.tres" id="2_hoyy3"]
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_33f80"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_doe8w"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nydh0"]
-render_priority = 0
-shader = ExtResource("2_nydh0")
-shader_parameter/main_tex = ExtResource("3_q1gwq")
-shader_parameter/dark_color = Color(0.056291588, 0.056291603, 0.056291595, 1)
-shader_parameter/light_color = Color(0.23408154, 0.40314534, 0.692814, 1)
-shader_parameter/passthrough = Color(0, 0, 0, 1)
-shader_parameter/precision = 0.0
-
 [sub_resource type="QuadMesh" id="QuadMesh_meojy"]
-material = SubResource("ShaderMaterial_nydh0")
+material = ExtResource("2_hoyy3")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
 

@@ -121,3 +121,4 @@ hot_key_4={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.011367287, 0.02041618, 0.12023357, 1)

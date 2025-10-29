@@ -350,7 +350,7 @@ func _draw_debug_node_meshes() -> void:
 
             for node_side: GridNodeSide in node.find_children("", "GridNodeSide"):
                 var anchor: GridAnchor = node_side.anchor
-                if anchor.required_transportation_mode.mode != TransportationMode.NONE:
+                if anchor != null && anchor.required_transportation_mode.mode != TransportationMode.NONE:
                     _node_debug_anchors.append(
                         DebugDraw.sphere(node, anchor.global_position, DebugDraw.direction_to_color(node_side.direction), 0.1)
                     )

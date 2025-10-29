@@ -189,10 +189,12 @@ func get_active_zones(coordinates: Vector3i) -> Array[LevelZone]:
             return zone.covers(coordinates)
     )
 
+
+var _doors_inited: bool
 var _doors: Array[GridDoorCore] = []
 func doors() -> Array[GridDoorCore]:
-    if _doors.is_empty():
-        for door: GridDoorCore in find_children("", "GridDoorCore"):
+    if !_doors_inited:
+        for door: GridDoorCore in find_children("", "GridDoorCore", true, false):
             _doors.append(door)
     return _doors
 #endregion Features

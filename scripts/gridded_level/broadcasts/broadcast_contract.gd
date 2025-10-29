@@ -36,7 +36,8 @@ func _ready() -> void:
         push_error("No broadcast was configured for contract %s with broadcaster %s" % [name, _broadcaster])
 
     for reciever: BroadcastReceiver in get_receivers(self):
-        reciever.configure(self, type)
+        if reciever != null:
+            reciever.configure(self, type)
 
 func register_receiver(message_idx: int, receiver: Node, callback: Callable) -> void:
     _casts.append(Broadcast.new(message_idx, receiver, callback))

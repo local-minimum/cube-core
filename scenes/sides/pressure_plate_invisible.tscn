@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1kpbe72unfxp"]
+
+[ext_resource type="Script" uid="uid://xomgxrqjqsyd" path="res://scripts/gridded_level/level_features/pressure_plate.gd" id="1_7iqqu"]
+[ext_resource type="Script" uid="uid://dbu1ha67elq8" path="res://scripts/gridded_level/broadcasts/broadcaster.gd" id="2_cm3xd"]
+
+[node name="Pressure Plate Invisible" type="Node3D"]
+script = ExtResource("1_7iqqu")
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://xomgxrqjqsyd"
+
+[node name="Broadcaster" type="Node" parent="." node_paths=PackedStringArray("sender")]
+script = ExtResource("2_cm3xd")
+sender = NodePath("..")
+metadata/_custom_type_script = "uid://dbu1ha67elq8"

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://crrbvopyu6oe5"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_o6j65"]
+[ext_resource type="Texture2D" uid="uid://dt4exkfips7ya" path="res://sprites/walls/rykhath-tiles-7.png" id="2_7kls2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_o6j65")
+shader_parameter/main_tex = ExtResource("2_7kls2")
+shader_parameter/dark_color = Color(0.056291588, 0.056291603, 0.056291595, 1)
+shader_parameter/light_color = Color(0.23408154, 0.40314534, 0.692814, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0

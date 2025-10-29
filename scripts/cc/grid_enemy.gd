@@ -74,7 +74,7 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
     return direction
 
 func _handle_move_end(entity: GridEntity) -> void:
-    if _killed:
+    if _killed || get_grid_node() == null:
         return
 
     var player: GridPlayer
