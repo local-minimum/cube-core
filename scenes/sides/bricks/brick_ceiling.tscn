@@ -1,20 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck0i4f6rf4ujb"]
+[gd_scene load_steps=7 format=3 uid="uid://ck0i4f6rf4ujb"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_fmoik"]
-[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_ied6y"]
-[ext_resource type="Texture2D" uid="uid://vsxnjpjeh4q0" path="res://sprites/walls/biomes-0.png" id="3_7ucyc"]
+[ext_resource type="Material" uid="uid://coin7vjt34yd2" path="res://scenes/sides/bricks/bricks_mat.tres" id="2_a52rt"]
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_01j2v"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_2x308"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmoik"]
-render_priority = 0
-shader = ExtResource("2_ied6y")
-shader_parameter/main_tex = ExtResource("3_7ucyc")
-shader_parameter/dark_color = Color(0.75412506, 0.6843842, 0.4467436, 1)
-shader_parameter/light_color = Color(0.5040894, 0.3884124, 0.19592771, 1)
-
 [sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
-material = SubResource("ShaderMaterial_fmoik")
+material = ExtResource("2_a52rt")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
 

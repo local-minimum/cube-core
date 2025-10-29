@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dr68l5q6q3gme"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_n8cb2"]
-[ext_resource type="Material" uid="uid://crrbvopyu6oe5" path="res://scenes/sides/plate_mat.tres" id="2_i3kym"]
+[ext_resource type="Material" uid="uid://crrbvopyu6oe5" path="res://scenes/sides/plates/plate_mat.tres" id="2_i3kym"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_rywdu"]
 material = ExtResource("2_i3kym")

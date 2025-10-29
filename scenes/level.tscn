@@ -1,23 +1,25 @@
-[gd_scene load_steps=29 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=31 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
-[ext_resource type="PackedScene" uid="uid://cvft532peke56" path="res://scenes/sides/plate_wall.tscn" id="4_pqd0y"]
-[ext_resource type="PackedScene" uid="uid://df40y2wh1mqv" path="res://scenes/sides/plate_floor.tscn" id="6_wu01b"]
-[ext_resource type="PackedScene" uid="uid://c1p0ecof84rk6" path="res://scenes/sides/plate_ceiling.tscn" id="7_3ies3"]
-[ext_resource type="PackedScene" uid="uid://cvd5g2sswxbwm" path="res://scenes/sides/plate_shell_wall.tscn" id="7_5k0ak"]
+[ext_resource type="Script" uid="uid://vhd085que0kg" path="res://scripts/gridded_level/level_features/grid_node.gd" id="3_h6wmr"]
+[ext_resource type="PackedScene" uid="uid://cvft532peke56" path="res://scenes/sides/plates/plate_wall.tscn" id="4_pqd0y"]
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="5_5k0ak"]
+[ext_resource type="PackedScene" uid="uid://df40y2wh1mqv" path="res://scenes/sides/plates/plate_floor.tscn" id="6_wu01b"]
+[ext_resource type="PackedScene" uid="uid://c1p0ecof84rk6" path="res://scenes/sides/plates/plate_ceiling.tscn" id="7_3ies3"]
+[ext_resource type="PackedScene" uid="uid://cvd5g2sswxbwm" path="res://scenes/sides/plates/plate_shell_wall.tscn" id="7_5k0ak"]
 [ext_resource type="PackedScene" uid="uid://cxvlvdddfobpd" path="res://scenes/enemy.tscn" id="7_64w2a"]
 [ext_resource type="Script" uid="uid://c4ukgkpo6y1is" path="res://scripts/cc/grid_player.gd" id="8_8iemx"]
 [ext_resource type="Script" uid="uid://c2cd8hwgen7kp" path="res://scripts/gridded_level/level_features/grid_teleporter.gd" id="8_wu01b"]
 [ext_resource type="Script" uid="uid://v5vk4n110r8p" path="res://scripts/gridded_level/key_ring_core.gd" id="9_olg7q"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="9_t1rx8"]
-[ext_resource type="PackedScene" uid="uid://cp81faaee4738" path="res://scenes/sides/plate_shell_ceiling.tscn" id="9_wu01b"]
-[ext_resource type="PackedScene" uid="uid://dr68l5q6q3gme" path="res://scenes/sides/plate_shell_floor.tscn" id="10_3ies3"]
+[ext_resource type="PackedScene" uid="uid://cp81faaee4738" path="res://scenes/sides/plates/plate_shell_ceiling.tscn" id="9_wu01b"]
+[ext_resource type="PackedScene" uid="uid://dr68l5q6q3gme" path="res://scenes/sides/plates/plate_shell_floor.tscn" id="10_3ies3"]
 [ext_resource type="Script" uid="uid://cjhediv47ntbx" path="res://scripts/gridded_level/level_features/level_portal.gd" id="10_wu01b"]
 [ext_resource type="PackedScene" uid="uid://c1kpbe72unfxp" path="res://scenes/sides/pressure_plate_invisible.tscn" id="11_3ies3"]
 [ext_resource type="Script" uid="uid://huxje2j21g1c" path="res://scripts/gridded_level/broadcasts/broadcast_contract.gd" id="11_arp2o"]
 [ext_resource type="Script" uid="uid://meibvvwp8mvg" path="res://scripts/gridded_level/entities/movement_planner.gd" id="11_t1rx8"]
-[ext_resource type="PackedScene" uid="uid://nix6ry5bmoyk" path="res://scenes/sides/plate_crusher_ceiling.tscn" id="12_3ies3"]
+[ext_resource type="PackedScene" uid="uid://nix6ry5bmoyk" path="res://scenes/sides/plates/plate_crusher_ceiling.tscn" id="12_3ies3"]
 [ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
 [ext_resource type="Texture2D" uid="uid://dqwfidfu1s8w2" path="res://sprites/decals-2.png" id="25_cmcjb"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="26_556r4"]
@@ -24982,15 +24984,51 @@ coordinates = Vector3i(-12, 2, 0)
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
-[node name="Side EAST" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("4_pqd0y")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-direction = 4
-
 [node name="Side UP" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("7_3ies3")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("6_wu01b")]
 
 [node name="Pressure Plate Invisible" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("11_3ies3")]
+
+[node name="Node (-11, 2, 0)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 5, 0)
+script = ExtResource("3_h6wmr")
+coordinates = Vector3i(-11, 2, 0)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 0)" node_paths=PackedStringArray("anchor") instance=ExtResource("4_pqd0y")]
+script = ExtResource("5_5k0ak")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 0)" node_paths=PackedStringArray("anchor") instance=ExtResource("4_pqd0y")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("5_5k0ak")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 0)" node_paths=PackedStringArray("anchor") instance=ExtResource("4_pqd0y")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("5_5k0ak")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 0)" node_paths=PackedStringArray("anchor") instance=ExtResource("7_3ies3")]
+script = ExtResource("5_5k0ak")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 0)" node_paths=PackedStringArray("anchor") instance=ExtResource("6_wu01b")]
+script = ExtResource("5_5k0ak")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Elevation 3" type="Node3D" parent="Geometry"]
 
