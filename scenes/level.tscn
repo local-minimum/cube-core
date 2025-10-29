@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=35 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cy2wepsheqjvp" path="res://scenes/sides/industry-zone/wood_ceiling.tscn" id="12_2e2fo"]
 [ext_resource type="PackedScene" uid="uid://nix6ry5bmoyk" path="res://scenes/sides/plates/plate_crusher_ceiling.tscn" id="12_3ies3"]
 [ext_resource type="PackedScene" uid="uid://bv2i7e3i5nomj" path="res://scenes/sides/industry-zone/industry_door.tscn" id="16_kih21"]
+[ext_resource type="Script" uid="uid://d1eun00e26qfu" path="res://scripts/cc/enemies_activator.gd" id="17_w3o6u"]
 [ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
 [ext_resource type="Texture2D" uid="uid://dqwfidfu1s8w2" path="res://sprites/decals-2.png" id="25_cmcjb"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="26_556r4"]
@@ -25253,6 +25254,14 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-11, 2, 1)" instance=ExtResource("11_w3o6u")]
 
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 1)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "industrial"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
 [node name="Node (-11, 2, 2)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 5, 5)
 coordinates = Vector3i(-11, 2, 2)
@@ -46543,8 +46552,10 @@ max_trail_length = 50
 
 [node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -5)
+hunting_activation_id = "industrial"
 spawn_node = NodePath("../../Geometry/Elevation 5/Node (-11, 5, 6)")
 
 [node name="Industrial Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -5)
+hunting_activation_id = "industrial"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (-13, 2, 7)")

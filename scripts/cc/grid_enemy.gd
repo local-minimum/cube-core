@@ -1,7 +1,7 @@
 extends GridEntity
 class_name GridEnemy
 
-@export var hunting: bool
+@export var hunting_activation_id: String
 @export var move_on_turn: bool = false
 @export var spawn_node: GridNode
 @export var _lives: int = 3
@@ -12,6 +12,8 @@ class_name GridEnemy
 @export var hurt_on_fight_start: int = 3
 @export var hurt_on_guess_wrong: int = 15
 
+var hunting: bool
+
 func _enter_tree() -> void:
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
         push_error("Failed to connect move end")
@@ -19,6 +21,8 @@ func _enter_tree() -> void:
         push_error("Failed to connect move start")
     if __SignalBus.on_change_node.connect(_handle_change_node) != OK:
         push_error("Failed to connect change node")
+    if __SignalBus.on_activate_player_hunt.connect(_handle_activate_hunting) != OK:
+        push_error("Failed to connect activate player hunt")
 
 func _ready() -> void:
     if spawn_node != null:
@@ -28,6 +32,10 @@ func _ready() -> void:
     super._ready()
 
 var _may_move: bool
+
+func _handle_activate_hunting(id: String) -> void:
+    if id == hunting_activation_id:
+        hunting = true
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
     if feature is not GridPlayerCore:
