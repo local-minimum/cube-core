@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://cvft532peke56"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_tw2b3"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_3m11w"]
+[ext_resource type="Texture2D" uid="uid://dt4exkfips7ya" path="res://sprites/walls/rykhath-tiles-7.png" id="3_tw2b3"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_ymm16"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_rklam"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m11w"]
+render_priority = 0
+shader = ExtResource("2_3m11w")
+shader_parameter/main_tex = ExtResource("3_tw2b3")
+shader_parameter/dark_color = Color(0.05490196, 0.05490196, 0.05490196, 1)
+shader_parameter/light_color = Color(0.23529412, 0.40392157, 0.69411767, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_c4gsq"]
+material = SubResource("ShaderMaterial_3m11w")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("5_rklam")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[node name="Wall" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_tw2b3")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
+mesh = SubResource("QuadMesh_c4gsq")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+script = ExtResource("4_ymm16")
+direction = 1
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"
