@@ -39,18 +39,20 @@ var focused: bool = false:
             focused = false
             return
 
-        if focused && !value:
+        if focused:
             Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-            if _focus_target != null:
-                _focus_target.modulate = _default_color
+            if !value:
+                if _focus_target != null:
+                    _focus_target.modulate = _default_color
 
-            on_unfocus.emit(self)
-        elif !focused && value:
+                on_unfocus.emit(self)
+        else:
             Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
-            if _focus_target != null:
-                _focus_target.modulate = _focus_color
+            if value:
+                if _focus_target != null:
+                    _focus_target.modulate = _focus_color
 
-            on_focus.emit(self)
+                on_focus.emit(self)
 
         focused = value
     get():

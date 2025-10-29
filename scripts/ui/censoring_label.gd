@@ -67,13 +67,35 @@ class_name CensoringLabel
         manage_label_width = value
         _sync_width()
 
+@export var center_horisontally: bool:
+    set (value):
+        center_horisontally = value
+        _sync_width()
+
 func _sync_width() -> void:
     if manage_label_width:
         # TODO: Use height ratio instead?
         var width: float = font_size * text.length() + letter_spacing * (text.length() - (1 if letter_spacing > 0 else 0))
         custom_minimum_size = Vector2(width, custom_minimum_size.y)
         size = Vector2.ZERO
-        print_debug("Wanted width %s getting %s" % [width, size.x])
+        if is_inside_tree():
+            _sync_horisontally(width)
+        else:
+            _sync_horisontally.call_deferred(width)
+
+func _sync_horisontally(width: float) -> void:
+    if center_horisontally:
+        var parent: Node = get_parent()
+        var parent_width: float
+        if parent is Control:
+            var c_parent: Control = parent
+            parent_width = c_parent.get_rect().size.x
+        else:
+            parent_width = get_viewport_rect().size.x
+
+        position.x = (parent_width - width) / 2.0
+
+        print_debug("[Censoring Label] Position %s because has width %s and parent width is %s" % [position.x, width, parent_width])
 
 var _last_draw: int
 var _last_censor: Dictionary[int, int]
