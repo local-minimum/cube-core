@@ -92,6 +92,9 @@ func _ready_ui() -> void:
     show()
 
 func _unhandled_input(event: InputEvent) -> void:
+    if !visible:
+        return
+
     if event is InputEventKey && event.is_pressed() && !event.is_echo():
         var key_evt: InputEventKey = event
         var keycode: int = key_evt.keycode

@@ -14,3 +14,9 @@ Light: 2c757e
 Dark: 0e0e0e
 Light: da2b73
 P: 0.05
+
+## Wood
+Light: 7f0d3f
+
+## Stone
+Light: 7f0d3f

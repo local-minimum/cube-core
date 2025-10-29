@@ -8,6 +8,6 @@ render_priority = 0
 shader = ExtResource("1_58jck")
 shader_parameter/main_tex = ExtResource("2_qq6h4")
 shader_parameter/dark_color = Color(0.17, 0.083725005, 0.0221, 1)
-shader_parameter/light_color = Color(0.8560265, 0.1677342, 0.45031387, 1)
+shader_parameter/light_color = Color(0.49942684, 0.050737448, 0.24685785, 1)
 shader_parameter/passthrough = Color(0.05490196, 0.05490196, 0.05490196, 1)
 shader_parameter/precision = 0.05000000074506
