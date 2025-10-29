@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://i61ujt57ekgj"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_2o3ow"]
+[ext_resource type="Texture2D" uid="uid://ys3qcyg4c6h0" path="res://sprites/walls/walls-12.png" id="2_b75d8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2o3ow")
+shader_parameter/main_tex = ExtResource("2_b75d8")
+shader_parameter/dark_color = Color(0.043137256, 0.19215687, 0.14509805, 1)
+shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
+shader_parameter/passthrough = Color(0.3882353, 0.78039217, 0.3019608, 1)
+shader_parameter/precision = 0.35000000521542
+shader_parameter/darken_north_south = 0.12500000186265

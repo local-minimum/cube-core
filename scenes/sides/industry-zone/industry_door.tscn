@@ -14,6 +14,7 @@ shader_parameter/dark_color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 shader_parameter/light_color = Color(0.49803922, 0.050980393, 0.24705882, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_dcpc0"]
 material = SubResource("ShaderMaterial_v2axy")
@@ -27,35 +28,38 @@ shader_parameter/dark_color = Color(0.05490196, 0.05490196, 0.05490196, 1)
 shader_parameter/light_color = Color(0.49803922, 0.050980393, 0.24705882, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_dme2g"]
 material = SubResource("ShaderMaterial_j41fb")
 size = Vector2(2.5, 2.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_svsqe"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o62c6"]
 render_priority = 0
 shader = ExtResource("2_tid56")
 shader_parameter/main_tex = ExtResource("3_uynjx")
-shader_parameter/dark_color = Color(0.55, 0.55, 0.55, 1)
-shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/dark_color = Color(0.043137256, 0.19215687, 0.14509805, 1)
+shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_1n88m"]
-material = SubResource("ShaderMaterial_svsqe")
+material = SubResource("ShaderMaterial_o62c6")
 size = Vector2(2.5, 2.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcpc0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6o8e2"]
 render_priority = 0
 shader = ExtResource("2_tid56")
 shader_parameter/main_tex = ExtResource("4_ejs6t")
-shader_parameter/dark_color = Color(0.6414647, 0.4378292, 0.7465528, 1)
-shader_parameter/light_color = Color(0.3775101, 0.078252874, 0.09447395, 1)
+shader_parameter/dark_color = Color(0.043137256, 0.19215687, 0.14509805, 1)
+shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_h7icv"]
-material = SubResource("ShaderMaterial_dcpc0")
+material = SubResource("ShaderMaterial_6o8e2")
 size = Vector2(2.5, 2.5)
 
 [sub_resource type="Animation" id="Animation_dcpc0"]

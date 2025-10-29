@@ -21,7 +21,15 @@ void fragment() {
     vec3 world = (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
     
     if (distance(tex, passthrough) < precision) {
-        ALBEDO = tex.rgb;
+        if (abs(world.z) > abs(world.x) && abs(world.z) > abs(world.y)) {
+            ALBEDO = vec3(
+                max(tex.r - 0.7874 * darken_north_south, 0.0), 
+                max(tex.g - 0.2848 * darken_north_south, 0.0),
+                max(tex.b - 0.9278 * darken_north_south, 0)
+            );
+        } else {
+            ALBEDO = tex.rgb;
+        }  
     } else {
         float grey = 0.2126 * tex.r + 0.7152 * tex.g + 0.0722 * tex.b;
         if (abs(world.z) > abs(world.x) && abs(world.z) > abs(world.y)) {

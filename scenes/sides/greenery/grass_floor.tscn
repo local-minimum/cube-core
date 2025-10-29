@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://b80cbxnh47s21"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_igq8a"]
+[ext_resource type="Material" uid="uid://bp7yht7gn2gi8" path="res://scenes/sides/greenery/grass_mat.tres" id="2_cpu4u"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="3_p1c4c"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="4_txehs"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
+material = ExtResource("2_cpu4u")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("4_txehs")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[node name="Floor" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_igq8a")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+script = ExtResource("3_p1c4c")
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"
