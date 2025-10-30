@@ -1,6 +1,9 @@
 extends Node
+class_name EntityTrail
 
 @export var entity: GridEntity
+
+@export var only_paint_anchor_once: bool = true
 
 @export var textures: Array[Texture]
 @export var material: Material
@@ -13,6 +16,7 @@ extends Node
 @export var max_trail_length: int = 5
 
 var _trail: Array[MeshInstance3D]
+var _anchor_trail: Array[GridAnchor]
 var _last_idx: int
 
 var _last_anchor: GridAnchor
@@ -20,6 +24,9 @@ var _last_anchor: GridAnchor
 func _enter_tree() -> void:
     if __SignalBus.on_move_start.connect(_handle_move_start) != OK:
         push_error("Failed to connect move start")
+
+func is_in_trail(anchor: GridAnchor) -> bool:
+    return _anchor_trail.has(anchor)
 
 func _handle_move_start(mover: GridEntity, _from: Vector3i, _translation_direction: CardinalDirections.CardinalDirection) -> void:
     if mover != entity:
@@ -38,13 +45,17 @@ func _handle_move_start(mover: GridEntity, _from: Vector3i, _translation_directi
     else:
         print_debug("[Trail] Mover %s is in the air" % [mover])
 
-    _last_anchor = anchor
+    if !only_paint_anchor_once || !_anchor_trail.has(anchor):
+        _last_anchor = anchor
+    else:
+        _last_anchor = null
 
 func _get_meshinstance(anchor: GridAnchor) -> MeshInstance3D:
     var mesh: MeshInstance3D
     if _trail.size() >= max_trail_length:
         _last_idx = posmod(_last_idx + 1, _trail.size())
         mesh = _trail[_last_idx]
+        _anchor_trail[_last_idx] = anchor
 
     else:
         _last_idx = _trail.size()
@@ -61,6 +72,7 @@ func _get_meshinstance(anchor: GridAnchor) -> MeshInstance3D:
         qmesh.material = material.duplicate(true)
 
         _trail.append(mesh)
+        _anchor_trail.append(anchor)
 
     return mesh
 

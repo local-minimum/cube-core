@@ -27,3 +27,10 @@ static func get_viewport_rect_with_3d_camera(ui: InteractionUI, interactable: In
 
     var r_size: Vector2 = max_pos - min_pos
     return Rect2(min_pos, r_size)
+
+static func convert_rect_to_corners(ui: InteractionUI, rect: Rect2) -> PackedVector2Array:
+    var top_left: Vector2 = ui.get_global_transform().affine_inverse().basis_xform(rect.position)
+    var lower_right: Vector2 = ui.get_global_transform().affine_inverse().basis_xform(rect.end)
+    var top_right: Vector2 = Vector2(lower_right.x, top_left.y)
+    var lower_left: Vector2 = Vector2(top_left.x, lower_right.y)
+    return [top_left, top_right, lower_left, lower_right]

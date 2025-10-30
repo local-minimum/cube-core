@@ -1,7 +1,9 @@
 extends GridPlayerCore
 class_name GridPlayer
 
+@export var only_hurt_if_not_on_trail: bool = true
 @export var health: int = 100
+@export var trail: EntityTrail
 
 var hurt_to_walk: bool = true:
     set(value):
@@ -46,4 +48,8 @@ func _handle_move_end(entity: GridEntity) -> void:
         return
 
     _previous_anchor = entity.get_grid_anchor()
+
+    if only_hurt_if_not_on_trail && trail != null && trail.is_in_trail(_previous_anchor):
+        return
+
     hurt()
