@@ -16,10 +16,10 @@
 script = ExtResource("7_eoxo0")
 texture_size = 18
 _font = ExtResource("1_mwu7b")
-_font_size = 7
+_font_size = 10
 _font_color = Color(0.3882353, 0.78039217, 0.3019608, 1)
 _hint_y_offset = 0.75
-_text_hint_x_offset = 4
+_text_hint_x_offset = 6
 upper_left_corner = ExtResource("9_cl06g")
 upper_right_corner = ExtResource("10_qik1w")
 lower_left_corner = ExtResource("4_mi3lr")
