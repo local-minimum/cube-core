@@ -8,7 +8,7 @@ const _MAX_WORD_LENGTH: int = 12
 @export var disabled_text_color: Color = Color.DIM_GRAY
 @export var delays_factor: float = 1.0
 
-var _enemy: GridEnemy
+var _enemies: Array[GridEnemy]
 var _player: GridPlayer
 var _groups: Array[WordGroup]
 var _group_history: Array[String]
@@ -91,12 +91,13 @@ func _load_words() -> void:
 
 func _play_game(enemy: GridEnemy, player: GridPlayer) -> void:
     print_debug("[Exclude Word Game] playing %s vs %s" % [enemy, player])
-    _enemy = enemy
-    _player = player
+    _enemies.append(enemy)
+    if _enemies.size() == 1:
+        _player = player
 
-    player.cinematic = true
+        player.cinematic = true
 
-    _make_next_word_set()
+        _make_next_word_set()
 
 var _wrong_word: String
 
@@ -221,7 +222,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
         button.interactable = false
 
         await get_tree().create_timer(0.5 * delays_factor).timeout
-        _player.hurt(_enemy.hurt_on_guess_wrong)
+        _player.hurt(_enemies[0].hurt_on_guess_wrong)
 
         if button_group.interactables == 1:
             _handle_hurt_enemy(button)
@@ -242,25 +243,34 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
 
     await get_tree().create_timer(1 * delays_factor).timeout
 
-    _enemy.hurt()
+    var enemy: GridEnemy = _enemies[0]
 
-    if _enemy.is_alive():
+    enemy.hurt()
+
+    if enemy.is_alive():
         await get_tree().create_timer(0.2 * delays_factor).timeout
 
         _make_next_word_set()
 
     else:
-        await get_tree().create_timer(0.2 * delays_factor).timeout
+        _enemies.erase(enemy)
 
-        _enemy.kill()
+        if _enemies.is_empty():
+            await get_tree().create_timer(0.2 * delays_factor).timeout
 
-        await get_tree().create_timer(0.5 * delays_factor).timeout
+            enemy.kill()
 
-        button_group.visible = false
+            await get_tree().create_timer(0.5 * delays_factor).timeout
 
-        await get_tree().create_timer(0.5 * delays_factor).timeout
+            button_group.visible = false
 
-        _player.cinematic = false
+            await get_tree().create_timer(0.5 * delays_factor).timeout
 
-        _player = null
-        _enemy = null
+            _player.cinematic = false
+
+            _player = null
+            _enemies.clear()
+        else:
+            await get_tree().create_timer(0.2 * delays_factor).timeout
+
+            _make_next_word_set()

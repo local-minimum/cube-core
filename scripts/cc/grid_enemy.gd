@@ -51,8 +51,21 @@ func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: Cardina
     # _may_move = move_on_turn
     # print_debug("[Grid Enemy] Detect player move start, may move self %s" % _may_move)
 
+func _get_occupied_by_enemy_filter() -> Callable:
+    return func (direction: CardinalDirections.CardinalDirection) -> bool:
+        var target: Vector3i = CardinalDirections.translate(coordinates(), direction)
+
+        return get_level().grid_entities.any(
+            func (entity: GridEntity) -> bool:
+                if entity is not GridEnemy:
+                    return false
+
+                return target == entity.coordinates()
+        )
+
 func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirection:
     var delta: Vector3i = entity.coordinates() - coordinates()
+
 
     print_debug("[Grid Enemy] Direction vector %s" % delta)
     if delta == Vector3i.ZERO:
@@ -60,13 +73,15 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
 
     var direction: CardinalDirections.CardinalDirection = CardinalDirections.principal_direction(delta)
     var node: GridNode = get_grid_node()
-    if !node.may_exit(self, direction, true, false):
+    var occupied: Callable = _get_occupied_by_enemy_filter()
+
+    if !node.may_exit(self, direction, true, false) || occupied.call(direction):
         print_debug("[Grid Enemy] may not go %s checking secondary" % [CardinalDirections.name(direction)])
 
         var secondary: Array[CardinalDirections.CardinalDirection] = CardinalDirections.secondary_directions(delta)
         secondary.shuffle()
         for direction_2: CardinalDirections.CardinalDirection in secondary:
-            if node.may_exit(self, direction_2, true, false):
+            if node.may_exit(self, direction_2, true, false) && !occupied.call(direction_2):
                 print_debug("[Grid Enemy] using seconday direction %s " % [CardinalDirections.name(direction_2)])
                 return direction_2
 
@@ -74,9 +89,11 @@ func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirect
         var fallback: Array[CardinalDirections.CardinalDirection] = CardinalDirections.ALL_DIRECTIONS.duplicate()
         fallback.shuffle()
         for direction_3: CardinalDirections.CardinalDirection in fallback:
-            if node.may_exit(self, direction_3, true, false):
+            if node.may_exit(self, direction_3, true, false) && occupied.call(direction):
                 print_debug("[Grid Enemy] using random direction %s " % [CardinalDirections.name(direction_3)])
                 return direction_3
+
+        return CardinalDirections.CardinalDirection.NONE
 
     print_debug("[Grid Enemy] using principal direction %s " % [CardinalDirections.name(direction)])
     return direction
