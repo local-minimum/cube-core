@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=49 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -38,6 +38,7 @@
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="26_556r4"]
 [ext_resource type="Texture2D" uid="uid://c6klxpy6nxmsc" path="res://sprites/decals-0.png" id="26_w3o6u"]
 [ext_resource type="Texture2D" uid="uid://rln7exps3slx" path="res://sprites/decals-1.png" id="27_2e2fo"]
+[ext_resource type="PackedScene" uid="uid://bols17gj6xprn" path="res://scenes/sides/hallways/hall_exit_door.tscn" id="27_uhfbm"]
 [ext_resource type="Texture2D" uid="uid://shpi0u17847p" path="res://sprites/decals-4.png" id="28_gur6y"]
 [ext_resource type="PackedScene" uid="uid://dgcq8k4nhtnbj" path="res://scenes/sides/hallways/hall_ceiling.tscn" id="28_iafhg"]
 [ext_resource type="Texture2D" uid="uid://dk4pohl0cp37s" path="res://sprites/decals-5.png" id="29_v3why"]
@@ -29862,6 +29863,11 @@ direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("30_cr74b")]
 
+[node name="Door" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("27_uhfbm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+locks = Array[int]([1, 2])
+_door_face = 4
+
 [node name="Node (4, 5, -6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 12.5, -15)
 coordinates = Vector3i(4, 5, -6)
@@ -33807,6 +33813,14 @@ coordinates = Vector3i(-5, 8, -10)
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
 
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-5, 8, -10)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "hall-1"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
 [node name="Node (-4, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -25)
 coordinates = Vector3i(-4, 8, -10)
@@ -33862,6 +33876,14 @@ coordinates = Vector3i(-3, 8, -8)
 [node name="Window" parent="Geometry/Elevation 8/Node (-3, 8, -8)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
+
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-3, 8, -8)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "hall-2"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Node (-3, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -17.5)
@@ -33952,6 +33974,14 @@ direction = 3
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
 
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-3, 8, -4)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "hall-3"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
 [node name="Node (-3, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -7.5)
 coordinates = Vector3i(-3, 8, -3)
@@ -33993,6 +34023,14 @@ coordinates = Vector3i(-1, 8, -6)
 [node name="Window" parent="Geometry/Elevation 8/Node (-1, 8, -6)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-1, 8, -6)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "hall-3"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Node (0, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -15)
@@ -49266,3 +49304,18 @@ spawn_node = NodePath("../../Geometry/Elevation 6/Node (-8, 6, -13)")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 18.75, -25)
 hunting_activation_id = "greenery-3"
 spawn_node = NodePath("../../Geometry/Elevation 7/Node (-7, 7, -10)")
+
+[node name="Hall Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 21.25, -17.5)
+hunting_activation_id = "hall-1"
+spawn_node = NodePath("../../Geometry/Elevation 8/Node (-5, 8, -7)")
+
+[node name="Hall Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 21.25, -20)
+hunting_activation_id = "hall-2"
+spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -8)")
+
+[node name="Hall Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 21.25, -10)
+hunting_activation_id = "hall-3"
+spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -4)")

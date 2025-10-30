@@ -49,9 +49,9 @@ func attempt_door_unlock(interaction: GridDoorInteraction, _puller: CameraPuller
 
     _locks_opened.append(_get_interaction_index(interaction))
 
-    print_debug("[Multi Lock Door] %s locks out of %s opened" % [_locks_opened.size(), maxi(positive_side_interactions.size(), negative_side_interactions.size())])
+    print_debug("[Multi Lock Door] %s locks out of %s opened" % [_locks_opened.size(), locks.size()])
 
-    if _locks_opened.size() == maxi(positive_side_interactions.size(), negative_side_interactions.size()):
+    if _locks_opened.size() == locks.size():
         _do_unlock()
 
     return true

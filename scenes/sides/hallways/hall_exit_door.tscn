@@ -1,0 +1,162 @@
+[gd_scene load_steps=13 format=3 uid="uid://bols17gj6xprn"]
+
+[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_ft6ra"]
+[ext_resource type="Material" uid="uid://ddf3skn8jukml" path="res://scenes/sides/hallways/hall_internal_doorframe_mat.tres" id="2_np022"]
+[ext_resource type="Material" uid="uid://msptfkj0f545" path="res://scenes/sides/hallways/hall_internal_door_mat.tres" id="3_c8kdw"]
+[ext_resource type="PackedScene" uid="uid://bdldnhqxkbw20" path="res://scenes/sides/grid_door_lock.tscn" id="4_xdb3w"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_dcpc0"]
+material = ExtResource("2_np022")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_dme2g"]
+material = ExtResource("3_c8kdw")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_1n88m"]
+material = ExtResource("2_np022")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_h7icv"]
+material = ExtResource("3_c8kdw")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="Animation" id="Animation_dcpc0"]
+resource_name = "Close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_svsqe"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1n88m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Door Back:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcpc0"]
+_data = {
+&"Close": SubResource("Animation_dcpc0"),
+&"Open": SubResource("Animation_svsqe"),
+&"RESET": SubResource("Animation_1n88m")
+}
+
+[node name="Door" type="Node3D" node_paths=PackedStringArray("positive_side_interactions", "animator")]
+script = ExtResource("1_ft6ra")
+locks = Array[int]([0, 1, 2])
+positive_side_interactions = [NodePath("Door Visuals/Grid Door Lock"), NodePath("Door Visuals/Grid Door Lock2"), NodePath("Door Visuals/Grid Door Lock3")]
+animator = NodePath("Door Visuals/Door Animations")
+_door_face = 1
+_inital_lock_state = 0
+key_id = "key"
+_consumes_key = true
+_automation = 3
+_back_automation = 3
+_opened_animation = "Open"
+_closed_animation = "Close"
+_animation_blend = -1.0
+_wait_before_state_toggle = 0.1
+metadata/_custom_type_script = "uid://bbfredkbuiffj"
+
+[node name="Door Visuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+
+[node name="DoorFrame" type="MeshInstance3D" parent="Door Visuals"]
+mesh = SubResource("QuadMesh_dcpc0")
+skeleton = NodePath("../..")
+
+[node name="Door" type="MeshInstance3D" parent="Door Visuals"]
+mesh = SubResource("QuadMesh_dme2g")
+
+[node name="DoorFrame Back" type="MeshInstance3D" parent="Door Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_1n88m")
+
+[node name="Door Back" type="MeshInstance3D" parent="Door Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_h7icv")
+
+[node name="Door Animations" type="AnimationPlayer" parent="Door Visuals"]
+libraries = {
+&"": SubResource("AnimationLibrary_dcpc0")
+}
+
+[node name="Grid Door Lock" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("4_xdb3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.037500024)
+door = NodePath("../..")
+
+[node name="Grid Door Lock2" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("4_xdb3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, -0.25, 0.037500024)
+door = NodePath("../..")
+
+[node name="Grid Door Lock3" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("4_xdb3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, -0.25, 0.037500024)
+door = NodePath("../..")
