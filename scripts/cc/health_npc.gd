@@ -38,3 +38,6 @@ func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
 
 func _handle_complete_sacrifice() -> void:
     disable_root.queue_free()
+
+    if __SignalBus.on_complete_sacrifice.is_connected(_handle_complete_sacrifice):
+        __SignalBus.on_complete_sacrifice.disconnect(_handle_complete_sacrifice)

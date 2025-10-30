@@ -25,11 +25,11 @@ func bounding_box() -> AABB:
 
     if _collission_shape.shape is BoxShape3D:
         var box: BoxShape3D = _collission_shape.shape
-        size = basis * box.size
+        size = global_basis * box.size
 
     elif _collission_shape.shape is SphereShape3D:
         var sphere: SphereShape3D = _collission_shape.shape
-        size = basis * (sphere.radius * Vector3i.ONE)
+        size = global_basis * (sphere.radius * Vector3i.ONE)
     else:
         push_warning("Collision shape %s type not handled" % _collission_shape.shape)
 
