@@ -16,7 +16,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_7shjm")
 _focus_target = NodePath("NinePatchRect")
 _disabled_color = Color(0.17163697, 0.17163709, 0.17163703, 1)
-_text_disabled_color = Color(0.22251633, 0.29065776, 0.29064772, 1)
 _managed_unfocus = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -73,6 +72,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_dxonn")
+censoring_textures = Array[Texture2D]([ExtResource("4_6tgct"), ExtResource("5_lrn36"), ExtResource("6_w72wn"), ExtResource("7_2bllg")])
+font_size = 24
+letter_spacing = -12
+font = ExtResource("4_bmpsh")
+color = Color(0.5803922, 0.14901961, 0.78039217, 1)
+y_alignment_offset = -36
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

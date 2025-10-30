@@ -13,6 +13,12 @@ var _player: GridPlayer
 var _groups: Array[WordGroup]
 var _group_history: Array[String]
 var _labels: Array[CensoringLabel]
+var _hotkeys: Array[CensoringLabel]
+var _active_words: Array[String]
+var _sacrificing: bool
+var _playing: bool:
+    get():
+        return !_sacrificing && _enemies.size() > 0
 
 class WordGroup:
     var title: String
@@ -56,10 +62,47 @@ func _ready() -> void:
     if __SignalBus.on_update_lost_letters.connect(_handle_update_lost_letters) != OK:
         push_error("Failed to connect update lost letters")
 
+    if __SignalBus.on_start_sacrifice.connect(_handle_start_sacrifice) != OK:
+        push_error("Failed to connect start sacrifice")
+
+    if __SignalBus.on_start_offer.connect(_handle_start_sacrifice) != OK:
+        push_error("Failed to connect start offer")
+
+    if __SignalBus.on_complete_sacrifice.connect(_handle_complete_sacrifice) != OK:
+        push_error("Failed to connect complete sacrifice")
+
     _load_words()
+
+func _unhandled_key_input(event: InputEvent) -> void:
+    if !_playing || event.is_echo():
+        return
+
+    if event.is_action_pressed("hot_key_1"):
+        _handle_hotkey_button(0)
+    elif event.is_action_pressed("hot_key_2"):
+        _handle_hotkey_button(1)
+    elif event.is_action_pressed("hot_key_3"):
+        _handle_hotkey_button(2)
+    elif event.is_action_pressed("hot_key_4"):
+        _handle_hotkey_button(3)
+
+func _handle_start_sacrifice(__player: GridPlayer) -> void:
+    _sacrificing = true
+
+func _handle_complete_sacrifice() -> void:
+    _sacrificing = false
+
+func _handle_hotkey_button(idx: int) -> void:
+    var btn: ContainerButton = button_group.buttons[idx]
+    if btn.interactable && btn.visible:
+        btn.focused = true
+        _handle_click_word(btn, _active_words[idx])
 
 func _handle_update_lost_letters(letters: String) -> void:
     for label: CensoringLabel in _labels:
+        label.censored_letters = letters
+
+    for label: CensoringLabel in _hotkeys:
         label.censored_letters = letters
 
 func _load_words() -> void:
@@ -162,6 +205,8 @@ func _sync_words(words: Array[String]) -> void:
 
     words.shuffle()
 
+    _active_words = words.duplicate()
+
     print_debug("[Exclude Word Game] Playing words %s with '%s' not belonging" % [words, _wrong_word])
 
     var idx = 0
@@ -174,23 +219,34 @@ func _sync_words(words: Array[String]) -> void:
 
         if idx < words.size():
             var word: String = words[idx]
+            var l_idx: int = 0
             for label: CensoringLabel in button.find_children("", "CensoringLabel"):
-                label.text = word.to_upper()
                 label.censored_letters = __GlobalGameState.lost_letters
                 label.color = default_text_color
-                if !_labels.has(label):
-                    _labels.append(label)
 
-                button.on_click.connect(
-                    func (btn: ContainerButton) -> void:
-                        _handle_click_word(btn, word)
-                )
+                if l_idx == 0:
+                    label.text = word.to_upper()
+                    if !_labels.has(label):
+                        _labels.append(label)
 
-                button.on_change_interactable.connect(func (btn: ContainerButton) -> void:
-                    label.color = default_text_color if btn.interactable else disabled_text_color
-                )
+                elif l_idx == 1:
+                    # TODO: Actual binding hints
+                    label.text = " %s" % (idx + 1)
+                    if !_hotkeys.has(label):
+                        _hotkeys.append(label)
 
-                break
+                l_idx += 1
+
+            button.on_change_interactable.connect(func (btn: ContainerButton) -> void:
+                _labels[idx].color = default_text_color if btn.interactable else disabled_text_color
+                _hotkeys[idx].color = default_text_color if btn.interactable else disabled_text_color
+            )
+
+            button.on_click.connect(
+                func (btn: ContainerButton) -> void:
+                    _handle_click_word(btn, word)
+            )
+
 
             button.visible = true
             button.interactable = true

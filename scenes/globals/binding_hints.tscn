@@ -4,3 +4,9 @@
 
 [node name="BindingHints" type="Node"]
 script = ExtResource("1_lasa4")
+_joypad_button_translation_keys = Dictionary[int, String]({
+11: "D-UP",
+12: "D-DWN",
+13: "D-LFT",
+14: "D-RGT"
+})
