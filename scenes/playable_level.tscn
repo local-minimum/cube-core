@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=19 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_ohew3"]
 [ext_resource type="Script" uid="uid://ksorj7viigop" path="res://scripts/key_master_core.gd" id="4_pte0f"]
 [ext_resource type="Texture2D" uid="uid://b1ft2oiorgoym" path="res://sprites/walls/keys-0.png" id="5_f4dbq"]
+[ext_resource type="Script" uid="uid://77nh0gjhx8lb" path="res://scripts/ui/interaction_ui_viz_outline.gd" id="8_mew3k"]
 [ext_resource type="Script" uid="uid://c6y34q8mpc0kt" path="res://scripts/cc/exclude_word_game.gd" id="9_7cjp0"]
 [ext_resource type="PackedScene" uid="uid://cwytvcufiujf4" path="res://scenes/word_button.tscn" id="9_f4dbq"]
 [ext_resource type="Script" uid="uid://d36qkt746r2ga" path="res://scripts/cc/container_button_group.gd" id="9_usws8"]
@@ -16,6 +17,14 @@
 [ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="13_af07b"]
 [ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="14_mew3k"]
 [ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="15_l2weq"]
+
+[sub_resource type="Resource" id="Resource_l2weq"]
+script = ExtResource("8_mew3k")
+_color = Color(0, 0.56078434, 0.5686275, 1)
+_font = ExtResource("3_7s1ja")
+_font_size = 28
+_hint_y_offset = -0.3999999999999999
+metadata/_custom_type_script = "uid://77nh0gjhx8lb"
 
 [node name="PlayableLevel" type="Node"]
 
@@ -93,6 +102,7 @@ _font = ExtResource("3_7s1ja")
 _font_size = 28
 _hint_y_offset = -0.3999999999999999
 _max_interactables = 4
+_viz = SubResource("Resource_l2weq")
 metadata/_custom_type_script = "uid://bvqfk07xb2q3f"
 
 [node name="KeyMasterCore" type="Node" parent="."]

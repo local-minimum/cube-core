@@ -1,15 +1,9 @@
 extends Control
 class_name InteractionUI
 
-@export var _color: Color = Color.AZURE
-@export var _line_width: float = 2
-@export var _font: Font
-@export var _font_size: int = 22
-@export var _gap_padding: int = 2
-@export_range(-2, 2) var _hint_y_offset: float = 0.3
-@export var _text_hint_x_offset: int = 5
 @export var _auto_end: bool = true
 @export_range(1, 10) var _max_interactables: int = 5
+@export var _viz: InteractionUIViz
 
 var _interactables: Array[Interactable]
 var _interacting: bool
@@ -106,93 +100,11 @@ func _draw() -> void:
         var id_key: String = _get_key_id(idx)
         _active[id_key] = interactable
 
-        _draw_interactable_ui(id_key, interactable)
+        _viz.draw_interactable_ui(self, id_key, interactable)
 
         idx += 1
 
 func _get_key_id(idx: int) -> String: return "hot_key_%s" % idx
-
-func _draw_interactable_ui(key: String, interactable: Interactable) -> void:
-    var rect: Rect2 = _get_viewport_rect_with_3d_camera(interactable)
-    var hint: Variant = __BindingHints.get_hint(key)
-
-    var gap_size: int = 1
-    var hint_text: String = ""
-    if hint is String:
-        hint_text = hint
-        gap_size = hint_text.length()
-
-    print_debug("[Interaction UI] %s -> %s rect %s" % [key, hint, rect])
-
-    var top_left: Vector2 = get_global_transform().affine_inverse().basis_xform(rect.position)
-    var lower_right: Vector2 = get_global_transform().affine_inverse().basis_xform(rect.end)
-    var top_right: Vector2 = Vector2(lower_right.x, top_left.y)
-    var lower_left: Vector2 = Vector2(top_left.x, lower_right.y)
-
-    var top_gap_start: Vector2 = top_left + Vector2.RIGHT * _font_size * 0.5
-    var top_gap_end: Vector2 = top_gap_start + Vector2.RIGHT * (_font_size * gap_size + 2 * _gap_padding)
-    top_gap_end.x = minf(top_right.x, top_gap_end.x)
-
-
-    draw_polyline(
-        [
-            top_gap_end,
-            top_right,
-            lower_right,
-            lower_left,
-            top_left,
-            top_gap_start,
-        ],
-        _color,
-        _line_width,
-    )
-
-    var text_start: Vector2 = top_gap_start + Vector2.RIGHT * _gap_padding + Vector2.UP * _font_size * _hint_y_offset
-
-    if hint_text.is_empty() && hint is Texture2D:
-        var tex: Texture2D = hint
-        var r: Rect2 = Rect2(text_start + _font_size * Vector2.UP, Vector2(_font_size, _font_size))
-        draw_texture_rect(
-            tex,
-            r,
-            false,
-            _color
-        )
-    else:
-        text_start.x += _text_hint_x_offset
-        draw_string(
-            _font,
-            text_start,
-            hint_text if !hint_text.is_empty() else key,
-            HORIZONTAL_ALIGNMENT_CENTER,
-            -1,
-            _font_size,
-            _color,
-        )
-
-func _get_viewport_rect_with_3d_camera(interactable: Interactable) -> Rect2:
-    var camera3d: Camera3D = get_viewport().get_camera_3d()
-
-    var box: AABB = interactable.bounding_box()
-    var min_pos: Vector2
-    var max_pos: Vector2
-
-    for idx: int in range(8):
-        var corner_global: Vector3 = box.get_endpoint(idx)
-        var pos: Vector2 = camera3d.unproject_position(corner_global)
-        # print_debug("[Interaction UI] Corner %s -> %s" % [corner_global, pos])
-
-        if idx == 0:
-            min_pos = pos
-            max_pos = pos
-        else:
-            min_pos.x = min(pos.x, min_pos.x)
-            min_pos.y = min(pos.y, min_pos.y)
-            max_pos.x = max(pos.x, max_pos.x)
-            max_pos.y = max(pos.y, max_pos.y)
-
-    var r_size: Vector2 = max_pos - min_pos
-    return Rect2(min_pos, r_size)
 
 func _calculate_within_reach() -> Array[Interactable]:
     return _interactables.filter(
