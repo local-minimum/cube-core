@@ -21,10 +21,11 @@ func draw_interactable_ui(ui: InteractionUI, key: String, interactable: Interact
 
     print_debug("[Interaction UI] %s -> %s rect %s" % [key, hint, rect])
 
-    var top_left: Vector2 = ui.get_global_transform().affine_inverse().basis_xform(rect.position)
-    var lower_right: Vector2 = ui.get_global_transform().affine_inverse().basis_xform(rect.end)
-    var top_right: Vector2 = Vector2(lower_right.x, top_left.y)
-    var lower_left: Vector2 = Vector2(top_left.x, lower_right.y)
+    var corners: PackedVector2Array = convert_rect_to_corners(ui, rect)
+    var top_left: Vector2 = corners[0]
+    var top_right: Vector2 = corners[1]
+    var lower_left: Vector2 = corners[2]
+    var lower_right: Vector2 = corners[3]
 
     var top_gap_start: Vector2 = top_left + Vector2.RIGHT * _font_size * 0.5
     var top_gap_end: Vector2 = top_gap_start + Vector2.RIGHT * (_font_size * gap_size + 2 * _gap_padding)

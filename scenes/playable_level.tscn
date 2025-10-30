@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=18 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -8,37 +8,15 @@
 [ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_ohew3"]
 [ext_resource type="Script" uid="uid://ksorj7viigop" path="res://scripts/key_master_core.gd" id="4_pte0f"]
 [ext_resource type="Texture2D" uid="uid://b1ft2oiorgoym" path="res://sprites/walls/keys-0.png" id="5_f4dbq"]
-[ext_resource type="Texture2D" uid="uid://bg6r435mra0nf" path="res://sprites/uibox/ui-19.png" id="8_ylov1"]
+[ext_resource type="Resource" uid="uid://m8nqbg226lwk" path="res://scenes/tiles_interaction_ui.tres" id="8_mew3k"]
 [ext_resource type="Script" uid="uid://c6y34q8mpc0kt" path="res://scripts/cc/exclude_word_game.gd" id="9_7cjp0"]
 [ext_resource type="PackedScene" uid="uid://cwytvcufiujf4" path="res://scenes/word_button.tscn" id="9_f4dbq"]
-[ext_resource type="Texture2D" uid="uid://bl4ha7sfwm0fj" path="res://sprites/uibox/ui-33.png" id="9_l5b22"]
 [ext_resource type="Script" uid="uid://d36qkt746r2ga" path="res://scripts/cc/container_button_group.gd" id="9_usws8"]
-[ext_resource type="Texture2D" uid="uid://dukn3jmfo5vsk" path="res://sprites/uibox/ui-17.png" id="10_ymihr"]
-[ext_resource type="Texture2D" uid="uid://csbxkmxjlxdrl" path="res://sprites/uibox/ui-32.png" id="11_vsi5o"]
 [ext_resource type="Script" uid="uid://bms60vacfd6hj" path="res://scripts/cc/sacrifice.gd" id="12_af07b"]
-[ext_resource type="Texture2D" uid="uid://cj6n18b1qdr85" path="res://sprites/uibox/ui-34.png" id="12_tdkqe"]
 [ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="12_vmorf"]
-[ext_resource type="Texture2D" uid="uid://by2y0uu533ahi" path="res://sprites/uibox/ui-18.png" id="13_2a1gl"]
 [ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="13_af07b"]
-[ext_resource type="Script" uid="uid://d1vdar3n4yal" path="res://scripts/ui/interaction_ui_viz_tiles.gd" id="14_42y26"]
 [ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="14_mew3k"]
-[ext_resource type="Texture2D" uid="uid://dciohg6j3g7fw" path="res://sprites/uibox/ui-2.png" id="15_euxtm"]
 [ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="15_l2weq"]
-[ext_resource type="Texture2D" uid="uid://dxaholb2urwxf" path="res://sprites/uibox/ui-1.png" id="16_aut6i"]
-[ext_resource type="Texture2D" uid="uid://cqx1yjlsuj2xu" path="res://sprites/uibox/ui-3.png" id="17_wx2dw"]
-
-[sub_resource type="Resource" id="Resource_rd32w"]
-script = ExtResource("14_42y26")
-upper_left_corner = ExtResource("16_aut6i")
-upper_right_corner = ExtResource("17_wx2dw")
-lower_left_corner = ExtResource("11_vsi5o")
-lower_right_corner = ExtResource("12_tdkqe")
-gap_texture = ExtResource("9_l5b22")
-upper_horizontal = ExtResource("15_euxtm")
-left_vertical = ExtResource("10_ymihr")
-right_vertical = ExtResource("13_2a1gl")
-bottom_horizontal = ExtResource("8_ylov1")
-metadata/_custom_type_script = "uid://d1vdar3n4yal"
 
 [node name="PlayableLevel" type="Node"]
 
@@ -112,7 +90,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_wreoo")
 _max_interactables = 4
-_viz = SubResource("Resource_rd32w")
+_viz = ExtResource("8_mew3k")
 metadata/_custom_type_script = "uid://bvqfk07xb2q3f"
 
 [node name="KeyMasterCore" type="Node" parent="."]

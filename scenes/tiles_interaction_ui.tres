@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="InteractionUIVizTiles" load_steps=12 format=3 uid="uid://m8nqbg226lwk"]
+
+[ext_resource type="Texture2D" uid="uid://dukn3jmfo5vsk" path="res://sprites/uibox/ui-17.png" id="1_borg4"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="1_mwu7b"]
+[ext_resource type="Texture2D" uid="uid://bl4ha7sfwm0fj" path="res://sprites/uibox/ui-33.png" id="2_mwu7b"]
+[ext_resource type="Texture2D" uid="uid://by2y0uu533ahi" path="res://sprites/uibox/ui-18.png" id="3_h4yvy"]
+[ext_resource type="Texture2D" uid="uid://csbxkmxjlxdrl" path="res://sprites/uibox/ui-32.png" id="4_mi3lr"]
+[ext_resource type="Texture2D" uid="uid://cj6n18b1qdr85" path="res://sprites/uibox/ui-34.png" id="5_yp0um"]
+[ext_resource type="Texture2D" uid="uid://bg6r435mra0nf" path="res://sprites/uibox/ui-19.png" id="6_va3jc"]
+[ext_resource type="Script" uid="uid://d1vdar3n4yal" path="res://scripts/ui/interaction_ui_viz_tiles.gd" id="7_eoxo0"]
+[ext_resource type="Texture2D" uid="uid://dciohg6j3g7fw" path="res://sprites/uibox/ui-2.png" id="8_rkq60"]
+[ext_resource type="Texture2D" uid="uid://dxaholb2urwxf" path="res://sprites/uibox/ui-1.png" id="9_cl06g"]
+[ext_resource type="Texture2D" uid="uid://cqx1yjlsuj2xu" path="res://sprites/uibox/ui-3.png" id="10_qik1w"]
+
+[resource]
+script = ExtResource("7_eoxo0")
+_font = ExtResource("1_mwu7b")
+_font_size = 7
+_font_color = Color(0.3882353, 0.78039217, 0.3019608, 1)
+_hint_y_offset = 0.75
+_text_hint_x_offset = 4
+upper_left_corner = ExtResource("9_cl06g")
+upper_right_corner = ExtResource("10_qik1w")
+lower_left_corner = ExtResource("4_mi3lr")
+lower_right_corner = ExtResource("5_yp0um")
+gap_texture = ExtResource("2_mwu7b")
+upper_horizontal = ExtResource("8_rkq60")
+left_vertical = ExtResource("3_h4yvy")
+right_vertical = ExtResource("6_va3jc")
+bottom_horizontal = ExtResource("1_borg4")
+metadata/_custom_type_script = "uid://d1vdar3n4yal"
