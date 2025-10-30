@@ -1,65 +1,24 @@
-[gd_scene load_steps=18 format=3 uid="uid://batarpuf52crh"]
+[gd_scene load_steps=13 format=3 uid="uid://yfx8a1fp54n3"]
 
-[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_0e0yf"]
-[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_fq7yp"]
-[ext_resource type="Texture2D" uid="uid://bag3lln0wqyuk" path="res://sprites/walls/door-frame.png" id="3_ua0v3"]
-[ext_resource type="Texture2D" uid="uid://dl1b105nal6r7" path="res://sprites/walls/door.png" id="4_kfgbk"]
-[ext_resource type="PackedScene" uid="uid://bdldnhqxkbw20" path="res://scenes/sides/grid_door_lock.tscn" id="5_l1eh1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jb478"]
-render_priority = 0
-shader = ExtResource("2_fq7yp")
-shader_parameter/main_tex = ExtResource("3_ua0v3")
-shader_parameter/dark_color = Color(0.009770126, 0.07800581, 0.052680455, 1)
-shader_parameter/light_color = Color(0.18383217, 0.43888626, 0.41054267, 1)
-shader_parameter/passthrough = Color(0, 0, 0, 1)
-shader_parameter/precision = 0.0
-shader_parameter/darken_north_south = 0.0
+[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_cyrbu"]
+[ext_resource type="Material" uid="uid://ddf3skn8jukml" path="res://scenes/sides/hallways/hall_internal_doorframe_mat.tres" id="2_as4eo"]
+[ext_resource type="Material" uid="uid://msptfkj0f545" path="res://scenes/sides/hallways/hall_internal_door_mat.tres" id="3_6umix"]
+[ext_resource type="PackedScene" uid="uid://bdldnhqxkbw20" path="res://scenes/sides/grid_door_lock.tscn" id="5_mcco1"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_dcpc0"]
-material = SubResource("ShaderMaterial_jb478")
+material = ExtResource("2_as4eo")
 size = Vector2(2.5, 2.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6nnl"]
-render_priority = 0
-shader = ExtResource("2_fq7yp")
-shader_parameter/main_tex = ExtResource("4_kfgbk")
-shader_parameter/dark_color = Color(0.009770126, 0.07800581, 0.052680455, 1)
-shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
-shader_parameter/passthrough = Color(0, 0, 0, 1)
-shader_parameter/precision = 0.0
-shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_dme2g"]
-material = SubResource("ShaderMaterial_h6nnl")
+material = ExtResource("3_6umix")
 size = Vector2(2.5, 2.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rb8vq"]
-render_priority = 0
-shader = ExtResource("2_fq7yp")
-shader_parameter/main_tex = ExtResource("3_ua0v3")
-shader_parameter/dark_color = Color(0.16862746, 0.14117648, 0.02745098, 1)
-shader_parameter/light_color = Color(0.4862745, 0.5058824, 0.39215687, 1)
-shader_parameter/passthrough = Color(0, 0, 0, 1)
-shader_parameter/precision = 0.0
-shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_1n88m"]
-material = SubResource("ShaderMaterial_rb8vq")
+material = ExtResource("2_as4eo")
 size = Vector2(2.5, 2.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hk0ba"]
-render_priority = 0
-shader = ExtResource("2_fq7yp")
-shader_parameter/main_tex = ExtResource("4_kfgbk")
-shader_parameter/dark_color = Color(0.16862746, 0.14117648, 0.02745098, 1)
-shader_parameter/light_color = Color(0.4862745, 0.5058824, 0.39215687, 1)
-shader_parameter/passthrough = Color(0, 0, 0, 1)
-shader_parameter/precision = 0.0
-shader_parameter/darken_north_south = 0.0
-
 [sub_resource type="QuadMesh" id="QuadMesh_h7icv"]
-material = SubResource("ShaderMaterial_hk0ba")
+material = ExtResource("3_6umix")
 size = Vector2(2.5, 2.5)
 
 [sub_resource type="Animation" id="Animation_dcpc0"]
@@ -151,7 +110,7 @@ _data = {
 }
 
 [node name="Door" type="Node3D" node_paths=PackedStringArray("positive_side_interactions", "animator")]
-script = ExtResource("1_0e0yf")
+script = ExtResource("1_cyrbu")
 locks = Array[int]([0, 1, 2])
 positive_side_interactions = [NodePath("Door Visuals/Grid Door Lock"), NodePath("Door Visuals/Grid Door Lock2"), NodePath("Door Visuals/Grid Door Lock3")]
 animator = NodePath("Door Visuals/Door Animations")
@@ -190,14 +149,14 @@ libraries = {
 &"": SubResource("AnimationLibrary_dcpc0")
 }
 
-[node name="Grid Door Lock" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_l1eh1")]
+[node name="Grid Door Lock" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_mcco1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.037500024)
 door = NodePath("../..")
 
-[node name="Grid Door Lock2" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_l1eh1")]
+[node name="Grid Door Lock2" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_mcco1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, -0.25, 0.037500024)
 door = NodePath("../..")
 
-[node name="Grid Door Lock3" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_l1eh1")]
+[node name="Grid Door Lock3" parent="Door Visuals" node_paths=PackedStringArray("door") instance=ExtResource("5_mcco1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, -0.25, 0.037500024)
 door = NodePath("../..")

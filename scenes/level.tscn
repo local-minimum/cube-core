@@ -1,9 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=48 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
 [ext_resource type="PackedScene" uid="uid://cvft532peke56" path="res://scenes/sides/plates/plate_wall.tscn" id="4_pqd0y"]
-[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="5_5k0ak"]
 [ext_resource type="PackedScene" uid="uid://df40y2wh1mqv" path="res://scenes/sides/plates/plate_floor.tscn" id="6_wu01b"]
 [ext_resource type="PackedScene" uid="uid://c1p0ecof84rk6" path="res://scenes/sides/plates/plate_ceiling.tscn" id="7_3ies3"]
 [ext_resource type="PackedScene" uid="uid://cvd5g2sswxbwm" path="res://scenes/sides/plates/plate_shell_wall.tscn" id="7_5k0ak"]
@@ -34,12 +33,17 @@
 [ext_resource type="PackedScene" uid="uid://c66jsxipk5uey" path="res://scenes/sides/greenery/grassbrick_ceiling.tscn" id="25_535f6"]
 [ext_resource type="PackedScene" uid="uid://bes68m0bt5e20" path="res://scenes/health_npc.tscn" id="25_c1pbi"]
 [ext_resource type="Texture2D" uid="uid://dqwfidfu1s8w2" path="res://sprites/decals-2.png" id="25_cmcjb"]
+[ext_resource type="PackedScene" uid="uid://uaq3uvr0soef" path="res://scenes/sides/hallways/hall_wall.tscn" id="26_0fmhk"]
 [ext_resource type="PackedScene" uid="uid://batarpuf52crh" path="res://scenes/sides/greenery/grass_door.tscn" id="26_535f6"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="26_556r4"]
 [ext_resource type="Texture2D" uid="uid://c6klxpy6nxmsc" path="res://sprites/decals-0.png" id="26_w3o6u"]
 [ext_resource type="Texture2D" uid="uid://rln7exps3slx" path="res://sprites/decals-1.png" id="27_2e2fo"]
 [ext_resource type="Texture2D" uid="uid://shpi0u17847p" path="res://sprites/decals-4.png" id="28_gur6y"]
+[ext_resource type="PackedScene" uid="uid://dgcq8k4nhtnbj" path="res://scenes/sides/hallways/hall_ceiling.tscn" id="28_iafhg"]
 [ext_resource type="Texture2D" uid="uid://dk4pohl0cp37s" path="res://sprites/decals-5.png" id="29_v3why"]
+[ext_resource type="PackedScene" uid="uid://bf4drhjxfmnd4" path="res://scenes/sides/hallways/hall_floor.tscn" id="30_cr74b"]
+[ext_resource type="PackedScene" uid="uid://yfx8a1fp54n3" path="res://scenes/sides/hallways/hall_internal_door.tscn" id="30_uhfbm"]
+[ext_resource type="PackedScene" uid="uid://bs2wjmt60q38g" path="res://scenes/sides/hallways/hall_window.tscn" id="31_uhfbm"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -65,7 +69,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-11, 2, -2)/LevelPortal Greenery")
+primary_entry_portal = NodePath("Geometry/Elevation 8/Node (-7, 8, -10)/LevelPortal Halls")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -27031,12 +27035,7 @@ coordinates = Vector3i(-12, 3, -12)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 3/Node (-12, 3, -12)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 3/Node (-12, 3, -12)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-12, 3, -11)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 7.5, -27.5)
@@ -27046,12 +27045,7 @@ coordinates = Vector3i(-12, 3, -11)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 3/Node (-12, 3, -11)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 3/Node (-12, 3, -11)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-12, 3, -10)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 7.5, -25)
@@ -27065,12 +27059,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 3/Node (-12, 3, -10)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 3/Node (-12, 3, -10)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 3, -12)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 7.5, -30)
@@ -27078,12 +27067,7 @@ coordinates = Vector3i(-11, 3, -12)
 
 [node name="Side NORTH" parent="Geometry/Elevation 3/Node (-11, 3, -12)" instance=ExtResource("17_asl66")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 3/Node (-11, 3, -12)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 3/Node (-11, 3, -12)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 3, -11)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 7.5, -27.5)
@@ -27133,12 +27117,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 3/Node (-10, 3, -10)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 3/Node (-10, 3, -10)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 3, -8)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 7.5, -20)
@@ -28372,12 +28351,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 4/Node (-8, 4, -11)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 4/Node (-8, 4, -11)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 4, -11)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 10, -27.5)
@@ -28391,12 +28365,7 @@ coordinates = Vector3i(-7, 4, -11)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 4/Node (-7, 4, -11)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 4/Node (-7, 4, -11)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 4, -10)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 10, -25)
@@ -29877,6 +29846,40 @@ direction = 4
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
+[node name="Node (3, 5, -6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 12.5, -15)
+coordinates = Vector3i(3, 5, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side DOWN" parent="Geometry/Elevation 5/Node (3, 5, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (4, 5, -6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 12.5, -15)
+coordinates = Vector3i(4, 5, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 5/Node (4, 5, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 5/Node (4, 5, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 5/Node (4, 5, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 5/Node (4, 5, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 5/Node (4, 5, -6)" instance=ExtResource("30_cr74b")]
+
 [node name="Elevation 6" type="Node3D" parent="Geometry"]
 
 [node name="Node (-16, 6, -15)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
@@ -31099,12 +31102,7 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 6/Node (-8, 6, -5)" instance=ExtResource("20_q4oe8")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -5)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 6/Node (-8, 6, -5)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 6, -6)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 15, -15)
@@ -31232,12 +31230,7 @@ direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation 6/Node (-11, 6, -8)" instance=ExtResource("20_q4oe8")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 6/Node (-11, 6, -8)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 6/Node (-11, 6, -8)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 6, -7)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 15, -17.5)
@@ -31253,12 +31246,7 @@ direction = 4
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 6/Node (-11, 6, -7)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 6/Node (-11, 6, -7)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 6, -6)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 15, -15)
@@ -31397,12 +31385,7 @@ direction = 2
 
 [node name="Side DOWN" parent="Geometry/Elevation 6/Node (-10, 6, -13)" instance=ExtResource("20_q4oe8")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 6/Node (-10, 6, -13)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 6/Node (-10, 6, -13)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 6, -13)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 15, -32.5)
@@ -31432,12 +31415,7 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 6/Node (-11, 6, -12)" instance=ExtResource("20_q4oe8")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 6/Node (-11, 6, -12)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 6/Node (-11, 6, -12)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-11, 6, -11)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 15, -27.5)
@@ -31474,6 +31452,24 @@ direction = 2
 [node name="Side WEST" parent="Geometry/Elevation 6/Node (-7, 6, -10)" instance=ExtResource("24_c1pbi")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
+
+[node name="Node (3, 6, -6)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 15, -15)
+coordinates = Vector3i(3, 6, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 6/Node (3, 6, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 6/Node (3, 6, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 6/Node (3, 6, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 6/Node (3, 6, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
 
 [node name="Elevation 7" type="Node3D" parent="Geometry"]
 
@@ -32463,12 +32459,7 @@ coordinates = Vector3i(-9, 7, -4)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -4)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -4)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-9, 7, -3)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 17.5, -7.5)
@@ -32478,12 +32469,7 @@ coordinates = Vector3i(-9, 7, -3)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -3)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -3)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-9, 7, -2)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 17.5, -5)
@@ -32497,12 +32483,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -2)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -2)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 7, -4)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 17.5, -10)
@@ -32526,12 +32507,7 @@ coordinates = Vector3i(-8, 7, -2)
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-8, 7, -2)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-8, 7, -2)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -4)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -10)
@@ -32567,12 +32543,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -2)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -2)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-9, 7, -9)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 17.5, -22.5)
@@ -32584,12 +32555,7 @@ coordinates = Vector3i(-9, 7, -9)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -9)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -9)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-9, 7, -8)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 17.5, -20)
@@ -32613,12 +32579,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -7)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -7)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 7, -9)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 17.5, -22.5)
@@ -32626,12 +32587,7 @@ coordinates = Vector3i(-8, 7, -9)
 
 [node name="Side NORTH" parent="Geometry/Elevation 7/Node (-8, 7, -9)" instance=ExtResource("17_asl66")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-8, 7, -9)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-8, 7, -9)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 7, -8)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 17.5, -20)
@@ -32647,12 +32603,7 @@ coordinates = Vector3i(-8, 7, -7)
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-8, 7, -7)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-8, 7, -7)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -9)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -22.5)
@@ -32664,12 +32615,7 @@ coordinates = Vector3i(-7, 7, -9)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -9)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -9)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -8)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -20)
@@ -32679,12 +32625,7 @@ coordinates = Vector3i(-7, 7, -8)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -8)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -8)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -7)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -17.5)
@@ -32710,12 +32651,7 @@ coordinates = Vector3i(-9, 7, -14)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-9, 7, -14)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-9, 7, -14)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-9, 7, -13)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 17.5, -32.5)
@@ -32747,12 +32683,7 @@ coordinates = Vector3i(-8, 7, -14)
 
 [node name="Side NORTH" parent="Geometry/Elevation 7/Node (-8, 7, -14)" instance=ExtResource("17_asl66")]
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-8, 7, -14)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-8, 7, -14)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-8, 7, -13)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 17.5, -32.5)
@@ -32780,12 +32711,7 @@ coordinates = Vector3i(-7, 7, -14)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -14)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -14)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -13)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -32.5)
@@ -32795,12 +32721,7 @@ coordinates = Vector3i(-7, 7, -13)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -13)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -13)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -12)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -30)
@@ -32814,12 +32735,7 @@ direction = 2
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" type="Node3D" parent="Geometry/Elevation 7/Node (-7, 7, -12)" node_paths=PackedStringArray("anchor") instance=ExtResource("19_2jdvr")]
-script = ExtResource("5_5k0ak")
-direction = 5
-infer_direction_from_rotation = false
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
+[node name="Side UP" parent="Geometry/Elevation 7/Node (-7, 7, -12)" instance=ExtResource("19_2jdvr")]
 
 [node name="Node (-7, 7, -10)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 17.5, -25)
@@ -32843,6 +32759,24 @@ direction = 3
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.25, -1.25)
 _door_face = 5
 door_down = 1
+
+[node name="Node (3, 7, -6)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 17.5, -15)
+coordinates = Vector3i(3, 7, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 7/Node (3, 7, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 7/Node (3, 7, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 7/Node (3, 7, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 7/Node (3, 7, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
 
 [node name="Elevation 8" type="Node3D" parent="Geometry"]
 
@@ -33826,21 +33760,939 @@ coordinates = Vector3i(16, 8, 17)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 20, -25)
 coordinates = Vector3i(-7, 8, -10)
 
-[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("17_asl66")]
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("26_0fmhk")]
 
-[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("17_asl66")]
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("28_iafhg")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("26_0fmhk")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 direction = 2
 
-[node name="Side WEST" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("17_asl66")]
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("26_0fmhk")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
 
-[node name="Side EAST" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("17_asl66")]
+[node name="LevelPortal Halls" type="Node3D" parent="Geometry/Elevation 8/Node (-7, 8, -10)"]
+script = ExtResource("10_wu01b")
+entry_down = 1
+entry_anchor = 1
+entry_lookdirection = 4
+metadata/_custom_type_script = "uid://cjhediv47ntbx"
+
+[node name="Node (-6, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 20, -25)
+coordinates = Vector3i(-6, 8, -10)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-5, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -25)
+coordinates = Vector3i(-5, 8, -10)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-5, 8, -10)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-5, 8, -10)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -10)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-5, 8, -10)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+_door_face = 2
+
+[node name="Node (-4, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -25)
+coordinates = Vector3i(-4, 8, -10)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-4, 8, -10)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-4, 8, -10)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-4, 8, -10)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-4, 8, -10)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -25)
+coordinates = Vector3i(-3, 8, -10)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-3, 8, -10)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-3, 8, -10)" instance=ExtResource("26_0fmhk")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Side UP" parent="Geometry/Elevation 8/Node (-7, 8, -10)" instance=ExtResource("19_2jdvr")]
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -10)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -10)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -22.5)
+coordinates = Vector3i(-3, 8, -9)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-3, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -20)
+coordinates = Vector3i(-3, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-3, 8, -8)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_door_face = 4
+
+[node name="Node (-3, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -17.5)
+coordinates = Vector3i(-3, 8, -7)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-3, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -15)
+coordinates = Vector3i(-3, 8, -6)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-4, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -15)
+coordinates = Vector3i(-4, 8, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-4, 8, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-4, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-4, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-4, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-5, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -15)
+coordinates = Vector3i(-5, 8, -6)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Door" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("30_uhfbm")]
+locks = Array[int]([0])
+
+[node name="Node (-3, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -12.5)
+coordinates = Vector3i(-3, 8, -5)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-3, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -4)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -10)
+coordinates = Vector3i(-3, 8, -4)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -4)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -4)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -4)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-3, 8, -4)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_door_face = 4
+
+[node name="Node (-3, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -7.5)
+coordinates = Vector3i(-3, 8, -3)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-3, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -3)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -3)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -15)
+coordinates = Vector3i(-2, 8, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-2, 8, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-2, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -15)
+coordinates = Vector3i(-1, 8, -6)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-1, 8, -6)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+_door_face = 2
+
+[node name="Node (0, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -15)
+coordinates = Vector3i(0, 8, -6)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (0, 8, -6)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (0, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (1, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -15)
+coordinates = Vector3i(1, 8, -6)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-3, 8, -2)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -5)
+coordinates = Vector3i(-3, 8, -2)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-3, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-3, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-3, 8, -2)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-3, 8, -2)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -2)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -5)
+coordinates = Vector3i(-2, 8, -2)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-2, 8, -2)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-2, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -2)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -2)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -2)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -5)
+coordinates = Vector3i(-1, 8, -2)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-1, 8, -2)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-1, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -2)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -2)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (0, 8, -2)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -5)
+coordinates = Vector3i(0, 8, -2)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (0, 8, -2)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (0, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -2)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -2)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (1, 8, -2)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -5)
+coordinates = Vector3i(1, 8, -2)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (1, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -2)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -2)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -2)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -22.5)
+coordinates = Vector3i(-2, 8, -9)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-2, 8, -9)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-2, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -20)
+coordinates = Vector3i(-2, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -17.5)
+coordinates = Vector3i(-2, 8, -7)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-2, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-2, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -22.5)
+coordinates = Vector3i(-1, 8, -9)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-1, 8, -9)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -20)
+coordinates = Vector3i(-1, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -17.5)
+coordinates = Vector3i(-1, 8, -7)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-1, 8, -7)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+_door_face = 2
+
+[node name="Node (0, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -22.5)
+coordinates = Vector3i(0, 8, -9)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (0, 8, -9)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (0, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (0, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -20)
+coordinates = Vector3i(0, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (0, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Node (0, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -17.5)
+coordinates = Vector3i(0, 8, -7)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (0, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (0, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-6, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 20, -22.5)
+coordinates = Vector3i(-6, 8, -9)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-6, 8, -9)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-6, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-6, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-6, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 20, -20)
+coordinates = Vector3i(-6, 8, -8)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="HealthNPC" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("25_c1pbi")]
+
+[node name="Node (-6, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 20, -17.5)
+coordinates = Vector3i(-6, 8, -7)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-6, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-6, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-6, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-5, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -22.5)
+coordinates = Vector3i(-5, 8, -9)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-5, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="KeyLoot" parent="Geometry/Elevation 8/Node (-5, 8, -9)" instance=ExtResource("10_7agi7")]
+
+[node name="Node (-5, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -20)
+coordinates = Vector3i(-5, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-5, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-5, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -17.5)
+coordinates = Vector3i(-5, 8, -7)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-5, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-4, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -22.5)
+coordinates = Vector3i(-4, 8, -9)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-4, 8, -9)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-4, 8, -9)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-4, 8, -9)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-4, 8, -9)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-4, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -20)
+coordinates = Vector3i(-4, 8, -8)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-4, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-4, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (-4, 8, -8)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_door_face = 4
+
+[node name="Node (-4, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -17.5)
+coordinates = Vector3i(-4, 8, -7)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-4, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (-4, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-4, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-4, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -12.5)
+coordinates = Vector3i(-2, 8, -5)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (-2, 8, -5)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-2, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -4)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -10)
+coordinates = Vector3i(-2, 8, -4)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -4)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -4)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-2, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 20, -7.5)
+coordinates = Vector3i(-2, 8, -3)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-2, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (-2, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-2, 8, -3)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-2, 8, -3)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -12.5)
+coordinates = Vector3i(-1, 8, -5)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -4)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -10)
+coordinates = Vector3i(-1, 8, -4)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -4)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -4)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (-1, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 20, -7.5)
+coordinates = Vector3i(-1, 8, -3)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (-1, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (-1, 8, -3)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (-1, 8, -3)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (0, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -12.5)
+coordinates = Vector3i(0, 8, -5)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (0, 8, -5)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (0, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (0, 8, -4)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -10)
+coordinates = Vector3i(0, 8, -4)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("30_cr74b")]
+
+[node name="KeyLoot" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("10_7agi7")]
+_trigger_sides = Array[int]([6, 1, 2, 3, 4])
+
+[node name="Node (0, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -7.5)
+coordinates = Vector3i(0, 8, -3)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (0, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (0, 8, -3)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -3)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (1, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -7.5)
+coordinates = Vector3i(1, 8, -3)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -3)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -3)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -3)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (1, 8, -4)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -10)
+coordinates = Vector3i(1, 8, -4)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -4)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -4)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -4)" instance=ExtResource("30_cr74b")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (1, 8, -4)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Node (1, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -12.5)
+coordinates = Vector3i(1, 8, -5)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (1, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Node (1, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -17.5)
+coordinates = Vector3i(1, 8, -7)
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (1, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (1, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Node (1, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 20, -20)
+coordinates = Vector3i(1, 8, -8)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (1, 8, -8)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (1, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (1, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (1, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Node (2, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -20)
+coordinates = Vector3i(2, 8, -8)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (2, 8, -8)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (2, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (2, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (2, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (3, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 20, -20)
+coordinates = Vector3i(3, 8, -8)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (3, 8, -8)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (3, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (3, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Window" parent="Geometry/Elevation 8/Node (3, 8, -8)" instance=ExtResource("31_uhfbm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+_door_face = 2
+
+[node name="Node (4, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, -20)
+coordinates = Vector3i(4, 8, -8)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (4, 8, -8)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (4, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (4, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (4, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (5, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 20, -20)
+coordinates = Vector3i(5, 8, -8)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (5, 8, -8)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (5, 8, -8)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (5, 8, -8)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (5, 8, -8)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (5, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 20, -17.5)
+coordinates = Vector3i(5, 8, -7)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="KeyLoot" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("10_7agi7")]
+_trigger_sides = Array[int]([6, 1, 2, 3, 4])
+
+[node name="Node (5, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 20, -15)
+coordinates = Vector3i(5, 8, -6)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (5, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (5, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (5, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (5, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (2, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -17.5)
+coordinates = Vector3i(2, 8, -7)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (2, 8, -7)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (2, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (2, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (2, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (2, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -15)
+coordinates = Vector3i(2, 8, -6)
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (2, 8, -6)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (2, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (2, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (2, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 20, -12.5)
+coordinates = Vector3i(2, 8, -5)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (2, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side WEST" parent="Geometry/Elevation 8/Node (2, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+direction = 3
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (2, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (2, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (3, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 20, -17.5)
+coordinates = Vector3i(3, 8, -7)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (3, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (3, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (3, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 20, -15)
+coordinates = Vector3i(3, 8, -6)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (3, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Node (3, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 20, -12.5)
+coordinates = Vector3i(3, 8, -5)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (3, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (3, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (3, 8, -5)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (4, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, -17.5)
+coordinates = Vector3i(4, 8, -7)
+
+[node name="Side NORTH" parent="Geometry/Elevation 8/Node (4, 8, -7)" instance=ExtResource("26_0fmhk")]
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (4, 8, -7)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (4, 8, -7)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (4, 8, -7)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (4, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, -15)
+coordinates = Vector3i(4, 8, -6)
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (4, 8, -6)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (4, 8, -6)" instance=ExtResource("30_cr74b")]
+
+[node name="Node (4, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, -12.5)
+coordinates = Vector3i(4, 8, -5)
+
+[node name="Side SOUTH" parent="Geometry/Elevation 8/Node (4, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+direction = 2
+
+[node name="Side EAST" parent="Geometry/Elevation 8/Node (4, 8, -5)" instance=ExtResource("26_0fmhk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+direction = 4
+
+[node name="Side UP" parent="Geometry/Elevation 8/Node (4, 8, -5)" instance=ExtResource("28_iafhg")]
+
+[node name="Side DOWN" parent="Geometry/Elevation 8/Node (4, 8, -5)" instance=ExtResource("30_cr74b")]
 
 [node name="Elevation 9" type="Node3D" parent="Geometry"]
 

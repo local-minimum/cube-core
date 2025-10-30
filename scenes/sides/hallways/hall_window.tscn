@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs2wjmt60q38g"]
+
+[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_3rche"]
+[ext_resource type="Material" uid="uid://cachjcaj0x3j5" path="res://scenes/sides/hallways/window_mat.tres" id="2_effdw"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_eke34"]
+material = ExtResource("2_effdw")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xaslp"]
+material = ExtResource("2_effdw")
+size = Vector2(2.5, 2.5)
+
+[node name="Window" type="Node3D"]
+script = ExtResource("1_3rche")
+_door_face = 1
+block_traversal_anchor_sides = Array[int]([1, 2, 3, 4, 5, 6])
+_inital_lock_state = 2
+metadata/_custom_type_script = "uid://bbfredkbuiffj"
+
+[node name="Window Visuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+
+[node name="Window Front" type="MeshInstance3D" parent="Window Visuals"]
+mesh = SubResource("QuadMesh_eke34")
+skeleton = NodePath("../..")
+
+[node name="Window Back" type="MeshInstance3D" parent="Window Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_xaslp")
