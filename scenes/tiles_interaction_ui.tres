@@ -14,6 +14,7 @@
 
 [resource]
 script = ExtResource("7_eoxo0")
+texture_size = 18
 _font = ExtResource("1_mwu7b")
 _font_size = 7
 _font_color = Color(0.3882353, 0.78039217, 0.3019608, 1)
