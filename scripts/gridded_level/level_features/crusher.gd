@@ -290,10 +290,16 @@ func _add_extended_anchors() -> void:
         var inv_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(direction)
         var neighbour: GridNode = grid_node.neighbour(direction)
         if neighbour == null:
+            print_debug("[Crusher] Node %s has no neighbour in direction %s" % [grid_node, CardinalDirections.name(direction)])
             continue
 
         match neighbour.has_side(inv_direction):
             GridNode.NodeSideState.DOOR, GridNode.NodeSideState.SOLID:
+                print_debug("[Crusher] Node %s will skip adding anchor to neighbour %s because has stuff on side %s" % [
+                    grid_node,
+                    neighbour,
+                    CardinalDirections.name(inv_direction),
+                ])
                 continue
 
         print_debug("[Crusher] Node %s asks %s to add an anchor in direction %s because its side states is %s" % [
@@ -303,6 +309,7 @@ func _add_extended_anchors() -> void:
             neighbour.has_side(inv_direction)
         ])
         var anchor: GridAnchor = GridAnchor.new()
+        anchor.name = "Anchor %s" % CardinalDirections.name(inv_direction)
         anchor.direction = inv_direction
         anchor.required_transportation_mode = TransportationMode.create_from_direction(inv_direction)
         if neighbour.add_anchor(anchor):
@@ -320,6 +327,7 @@ func _add_extended_anchors() -> void:
             # will retract
             if _moving_part_root != null:
                 var side: GridNodeSide = GridNodeSide.new()
+                side.name = "Side %s of %s" % [CardinalDirections.name(inv_direction), neighbour.name]
                 side.infer_direction_from_rotation = false
                 side.direction = direction
                 side.negative_anchor = anchor
@@ -343,6 +351,7 @@ func _add_extended_anchors() -> void:
 
             _extended_anchors.append(anchor)
         else:
+            push_error("Crusher failed to add anchor %s to %s for unknown reasons" % [anchor, neighbour])
             anchor.queue_free()
 
 func trigger(_entity: GridEntity, _movement: Movement.MovementType) -> void:

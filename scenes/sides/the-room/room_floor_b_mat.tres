@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://rpj5brscfc03"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_as448"]
+[ext_resource type="Texture2D" uid="uid://bcrh0s8d1hnc1" path="res://sprites/walls/tiles-21.png" id="2_41bgy"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_as448")
+shader_parameter/main_tex = ExtResource("2_41bgy")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.05000000074506

@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b3e423p6llwby"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_jp3bu"]
+[ext_resource type="Texture2D" uid="uid://duqpcr7jktiqr" path="res://sprites/walls/wallstiles-60.png" id="2_uw3wc"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_jp3bu")
+shader_parameter/main_tex = ExtResource("2_uw3wc")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0.74509805, 0.2901961, 0.18431373, 1)
+shader_parameter/precision = 0.35000000521542
+shader_parameter/darken_north_south = 0.05000000074506

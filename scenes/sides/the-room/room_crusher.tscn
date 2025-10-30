@@ -1,0 +1,165 @@
+[gd_scene load_steps=17 format=3 uid="uid://cb48htpd2jcjn"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_defje"]
+[ext_resource type="Material" uid="uid://b3e423p6llwby" path="res://scenes/sides/the-room/room_wall_solo_mat.tres" id="2_lr1fs"]
+[ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="4_c15cd"]
+[ext_resource type="Material" uid="uid://jjmgfca557m3" path="res://scenes/sides/plates/plate_alt_mat.tres" id="5_gex5m"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="6_mop4a"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="7_i6j8s"]
+[ext_resource type="Script" uid="uid://coe1i68jqote4" path="res://scripts/gridded_level/broadcasts/broadcast_receiver.gd" id="8_3guuu"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
+material = ExtResource("2_lr1fs")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_tkesk"]
+material = ExtResource("5_gex5m")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("7_i6j8s")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[sub_resource type="Animation" id="Animation_hm2bs"]
+resource_name = "Crush"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25), Vector3(0, 0, 1.25), Vector3(0, 0, 1), Vector3(0, 0, 1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_juioo"]
+resource_name = "Crushed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 1.25), Vector3(0, 0, 1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_g0miv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_ptcn8"]
+resource_name = "Retract"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 1.25), Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_15ity"]
+resource_name = "Retracted"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.25), Vector3(0, 0, -1.25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0miv"]
+_data = {
+&"Crush": SubResource("Animation_hm2bs"),
+&"Crushed": SubResource("Animation_juioo"),
+&"RESET": SubResource("Animation_g0miv"),
+&"Retract": SubResource("Animation_ptcn8"),
+&"Retracted": SubResource("Animation_15ity")
+}
+
+[node name="Wall" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_defje")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("_side", "_moving_part_root", "_anim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+script = ExtResource("4_c15cd")
+_managed = true
+_side = NodePath("..")
+_moving_part_root = NodePath(".")
+_always_block_crusher_side = false
+_anim = NodePath("../AnimationPlayer")
+_live = 3
+_add_anchors_when_extended = true
+
+[node name="Crush Side Floor2" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(8.742277e-08, 4.371139e-08, -1, 1, -4.3711385e-08, 8.742277e-08, -4.371138e-08, -1, -4.3711395e-08, -1.25, 1.25, 0)
+mesh = SubResource("QuadMesh_tkesk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor5" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.3711385e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.5, 0)
+mesh = SubResource("QuadMesh_tkesk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor4" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(-1, 4.3711385e-08, -5.9604645e-08, 5.9604645e-08, 4.3711392e-08, -1, -4.371138e-08, -1, -4.3711395e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_tkesk")
+skeleton = NodePath("../..")
+
+[node name="Crush Side Floor3" type="MeshInstance3D" parent="Side Mesh"]
+transform = Transform3D(7.1054274e-15, -4.3711392e-08, 1, -1, 4.371138e-08, 7.1054274e-15, -4.371138e-08, -1, -4.3711395e-08, 1.25, 1.25, 0)
+mesh = SubResource("QuadMesh_tkesk")
+skeleton = NodePath("../..")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+script = ExtResource("6_mop4a")
+direction = 1
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_g0miv")
+}
+
+[node name="BroadcastReceiver" type="Node" parent="." node_paths=PackedStringArray("receiver")]
+script = ExtResource("8_3guuu")
+receiver = NodePath("../Side Mesh")
+metadata/_custom_type_script = "uid://coe1i68jqote4"

@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://cke1jh67xm2g0"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_j2gfq"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_x5pli"]
+[ext_resource type="Texture2D" uid="uid://df1112fdpiay7" path="res://sprites/walls/tiles-19.png" id="3_34m3o"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_g56er"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_y62rg"]
+[ext_resource type="Script" uid="uid://xomgxrqjqsyd" path="res://scripts/gridded_level/level_features/pressure_plate.gd" id="6_lx43s"]
+[ext_resource type="Texture2D" uid="uid://yqlxcltfxri3" path="res://sprites/walls/tiles-20.png" id="7_1i5vv"]
+[ext_resource type="Script" uid="uid://dbu1ha67elq8" path="res://scripts/gridded_level/broadcasts/broadcaster.gd" id="8_js87s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sfiju"]
+render_priority = 0
+shader = ExtResource("2_x5pli")
+shader_parameter/main_tex = ExtResource("3_34m3o")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0.7411765, 0.28627452, 0.16078432, 1)
+shader_parameter/precision = 0.05000000074506
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_bmnbw"]
+material = SubResource("ShaderMaterial_sfiju")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("5_y62rg")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[node name="Plate" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_j2gfq")
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 1.25)
+mesh = SubResource("QuadMesh_bmnbw")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+script = ExtResource("4_g56er")
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"
+
+[node name="PressurePlate" type="Node3D" parent="." node_paths=PackedStringArray("_swapping_mesh")]
+script = ExtResource("6_lx43s")
+infer_trigger_side = true
+_swapping_mesh = NodePath("../Side Mesh")
+_swap_active_texture = ExtResource("3_34m3o")
+_swap_inactive_texture = ExtResource("7_1i5vv")
+metadata/_custom_type_script = "uid://xomgxrqjqsyd"
+
+[node name="Broadcaster" type="Node" parent="." node_paths=PackedStringArray("sender")]
+script = ExtResource("8_js87s")
+sender = NodePath("../PressurePlate")
+metadata/_custom_type_script = "uid://dbu1ha67elq8"

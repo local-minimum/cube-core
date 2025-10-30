@@ -33,7 +33,7 @@ func _init_doors() -> void:
     for door: GridDoorCore in get_level().doors():
         if door.coordinates() == coordinates:
             _doors[door.get_side()] = door
-        elif CardinalDirections.translate(door.coordinates(), door.get_side()):
+        elif CardinalDirections.translate(door.coordinates(), door.get_side()) == coordinates:
             _doors[CardinalDirections.invert(door.get_side())] = door
 
 func get_door(direction: CardinalDirections.CardinalDirection) -> GridDoorCore:
