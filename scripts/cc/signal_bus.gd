@@ -12,6 +12,8 @@ signal on_hurt_player(player: GridPlayer, amount: int)
 signal on_heal_player(player: GridPlayer, amount: int)
 
 signal on_start_sacrifice(player: GridPlayer)
+signal on_start_offer(player: GridPlayer)
+signal on_complete_sacrifice()
 
 signal on_activate_player_hunt(id: String)
 @warning_ignore_restore("unused_signal")

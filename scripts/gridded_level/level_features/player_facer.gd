@@ -1,6 +1,7 @@
 extends GridNodeFeature
 class_name PlayerFacer
 
+## What should be rotated, if left empty applies rotations to self instead
 @export var subject: Node3D:
     get():
         if subject == null:

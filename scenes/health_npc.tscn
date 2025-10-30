@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://bes68m0bt5e20"]
+
+[ext_resource type="Script" uid="uid://3puhpj0o57cr" path="res://scripts/cc/health_npc.gd" id="1_rj4sv"]
+[ext_resource type="Script" uid="uid://dexigkhejxn1h" path="res://scripts/gridded_level/level_features/player_facer.gd" id="2_eteml"]
+[ext_resource type="Texture2D" uid="uid://bl7hnwegmx7g7" path="res://sprites/monsters2-85.png" id="3_eteml"]
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="3_wfhh3"]
+[ext_resource type="Texture2D" uid="uid://cm35vdl4hc60a" path="res://sprites/monsters2-84.png" id="4_roy1d"]
+[ext_resource type="Texture2D" uid="uid://7hiwvbnfft3n" path="res://sprites/walls/heart-0.png" id="6_wfhh3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dmyq"]
+render_priority = 0
+shader = ExtResource("3_wfhh3")
+shader_parameter/main_tex = ExtResource("4_roy1d")
+shader_parameter/dark_color = Color(0, 0, 0, 1)
+shader_parameter/light_color = Color(1, 1, 1, 1)
+shader_parameter/passthrough = Color(1, 0, 0.26666668, 1)
+shader_parameter/precision = 0.65000000968578
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_fxm5i"]
+material = SubResource("ShaderMaterial_8dmyq")
+size = Vector2(1.25, 1.25)
+
+[sub_resource type="Curve" id="Curve_roy1d"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15485565, 1), 0.0, 0.0, 0, 0, Vector2(0.7874017, 0.92156243), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_8dmyq"]
+texture_mode = 1
+curve = SubResource("Curve_roy1d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fxm5i"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 0.099999994
+initial_velocity_max = 0.19999999
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_8dmyq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrrn6"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_wfhh3")
+texture_filter = 0
+texture_repeat = false
+disable_receive_shadows = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_1nrev"]
+material = SubResource("StandardMaterial3D_nrrn6")
+size = Vector2(0.2, 0.2)
+
+[node name="HealthNPC" type="Node3D" node_paths=PackedStringArray("animation_target", "disable_root")]
+script = ExtResource("1_rj4sv")
+animation = Array[Texture]([ExtResource("4_roy1d"), ExtResource("3_eteml")])
+animation_speed_msec = 400
+animation_target = NodePath("PlayerFacer/Mushi")
+disable_root = NodePath("PlayerFacer")
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://3puhpj0o57cr"
+
+[node name="PlayerFacer" type="Node3D" parent="."]
+script = ExtResource("2_eteml")
+maintain_down = true
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
+
+[node name="Mushi" type="MeshInstance3D" parent="PlayerFacer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6000004, 0)
+mesh = SubResource("QuadMesh_fxm5i")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="PlayerFacer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+amount = 12
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_fxm5i")
+draw_pass_1 = SubResource("QuadMesh_1nrev")

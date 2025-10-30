@@ -22,7 +22,7 @@ class_name Sacrifice
 @export_group("Hints")
 @export var hint_sacrifice: String = "Sacrifice Letter"
 @export var hint_not_letter: String = "Not a Letter"
-@export var hint_npc: String = "Offer any Letter for {health} health"
+@export var hint_npc: String = "All give {health} health"
 @export var hint_value_letter: String = "Gain {health} health"
 
 var sacrifice_letter: CensoringLabel
@@ -34,10 +34,15 @@ var mode: Mode = Mode.SACRIFICE
 var _sacrificial_letter: String
 var _player: GridPlayer
 var _entered_cinematic: bool
+var _allow_input_time: int
 
 func _enter_tree() -> void:
     if __SignalBus.on_start_sacrifice.connect(_handle_no_health) != OK:
         push_error("Failed to connect start sacrifice")
+
+    if __SignalBus.on_start_offer.connect(_handle_start_offer) != OK:
+        push_error("Failed to connect start offer")
+
     if __SignalBus.on_update_lost_letters.connect(_handle_lost_letters) != OK:
         push_error("Failed to connect update lost letters")
 
@@ -50,6 +55,10 @@ func _ready() -> void:
         break
 
     hide()
+
+func _handle_start_offer(player: GridPlayer) -> void:
+    _player = player
+    show_offer()
 
 func _handle_no_health(player: GridPlayer) -> void:
     _player = player
@@ -89,10 +98,11 @@ func _ready_ui() -> void:
 
     _entered_cinematic = _player.cinematic
     _player.cinematic = true
+    _allow_input_time = Time.get_ticks_msec() + 500
     show()
 
 func _unhandled_input(event: InputEvent) -> void:
-    if !visible:
+    if !visible || Time.get_ticks_msec() < _allow_input_time:
         return
 
     if event is InputEventKey && event.is_pressed() && !event.is_echo():
@@ -114,6 +124,7 @@ func _handle_sacrifice_letter() -> void:
 
     _sacrificial_letter = ""
     _player.cinematic = _entered_cinematic
+    __SignalBus.on_complete_sacrifice.emit()
 
 func _offer_letter(letter: String) -> void:
     if letter.length() == 1:
@@ -132,6 +143,9 @@ func _offer_letter(letter: String) -> void:
         sacrifice.interactable = false
         hint.text = _get_nothing_entered_hint()
         _sacrificial_letter = ""
+
+    if upper_case:
+        hint.text = hint.text.to_upper()
 
     sacrifice_letter.color = default_text_color if sacrifice.interactable else disabled_text_color
 
