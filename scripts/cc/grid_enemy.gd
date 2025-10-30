@@ -49,7 +49,7 @@ func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: Cardina
         return
 
     # _may_move = move_on_turn
-    print_debug("[Grid Enemy] Detect player move start, may move self %s" % _may_move)
+    # print_debug("[Grid Enemy] Detect player move start, may move self %s" % _may_move)
 
 func _get_wanted_direct(entity: GridEntity) -> CardinalDirections.CardinalDirection:
     var delta: Vector3i = entity.coordinates() - coordinates()
@@ -98,7 +98,7 @@ func _handle_move_end(entity: GridEntity) -> void:
         return
 
     player = entity
-    print_debug("[Grid Enemy] %s vs %s" % [player.coordinates(), coordinates()])
+    # print_debug("[Grid Enemy] %s vs %s" % [player.coordinates(), coordinates()])
 
     if player.coordinates() == coordinates():
         print_debug("[Grid Enemy] play game voluntarily!")

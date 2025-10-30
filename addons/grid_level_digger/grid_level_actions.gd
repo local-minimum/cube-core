@@ -150,3 +150,23 @@ func _on_hide_ceiling_layer_toggled(toggled_on:bool) -> void:
 
 func _on_ceiling_layer_value_changed(value:float) -> void:
     _ceiling_layer = roundi(value)
+
+func _on_position_all_enemies_pressed() -> void:
+    var level: GridLevelCore = panel.level
+    var unsaved: bool
+    if level == null:
+        return
+
+    for enemy: GridEnemy in panel.level.find_children("", "GridEnemy", true, false):
+        if enemy.spawn_node == null:
+            continue
+
+        print_debug("[GLD Level Actions] Positioning %s" % enemy)
+        enemy.global_position = enemy.spawn_node.global_position + Vector3.UP * level.node_size * 0.5
+        unsaved = true
+        # TODO: Make anchoring depend on anchor direction...
+
+        # TODO: Rotate too
+
+    if unsaved:
+        EditorInterface.mark_scene_as_unsaved()
