@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=19 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="13_af07b"]
 [ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="14_mew3k"]
 [ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="15_l2weq"]
+[ext_resource type="PackedScene" uid="uid://ngdx83l2y2oh" path="res://scenes/story_text.tscn" id="18_l2weq"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -204,3 +205,19 @@ font = ExtResource("3_7s1ja")
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Story Text" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="Story Text" parent="Story Text" instance=ExtResource("18_l2weq")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -166.0
+offset_right = 44.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2

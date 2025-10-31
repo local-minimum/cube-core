@@ -4,6 +4,7 @@ class_name StoryText
 @export var enforce_uppercase: bool = true
 @export var _labels: Array[CensoringLabel]
 @export var _label_containers: Array[Control]
+@export var show_time: float = 30
 
 func _ready() -> void:
     if __SignalBus.on_update_lost_letters.connect(_handle_load_letters) != OK:
@@ -12,7 +13,14 @@ func _ready() -> void:
     if __SignalBus.on_reward_message.connect(_handle_text) != OK:
         push_error("Failed to connect reward message")
 
+    if __SignalBus.on_move_start.connect(_handle_move_start) != OK:
+        push_error("Failed to connect move")
+
     hide()
+
+func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
+    if entity is GridPlayer && visible:
+        hide()
 
 func _handle_load_letters(letters: String) -> void:
     for label: CensoringLabel  in _labels:
@@ -50,3 +58,7 @@ func _handle_text(message: String) -> void:
             _label_containers[idx].hide()
 
         idx += 1
+
+    show()
+    await get_tree().create_timer(show_time).timeout
+    hide()
