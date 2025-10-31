@@ -6,6 +6,10 @@ class_name GridDoorMultiLocks
 @export var positive_side_interactions: Array[GridDoorInteraction]
 @export var negative_side_interactions: Array[GridDoorInteraction]
 
+@export var unlock_sfx: String = "res://audio/sfx/ka_ching_01.ogg"
+@export var fail_unlock_sfx: String = "res://audio/sfx/effect_01.ogg"
+@export var open_sfx: String = "res://audio/sfx/hit_04.ogg"
+
 var _locks_opened: Array[int]
 
 func get_lock_state(_interaction: GridDoorInteraction) -> LockState:
@@ -42,16 +46,20 @@ func _get_interaction_index(interaction: GridDoorInteraction) -> int:
 
 func attempt_door_unlock(interaction: GridDoorInteraction, _puller: CameraPuller) -> bool:
     if lock_state != LockState.LOCKED || _locks_opened.has(_get_interaction_index(interaction)):
+        __AudioHub.play_sfx(fail_unlock_sfx)
         return false
 
     if !_check_key_and_consume():
+        __AudioHub.play_sfx(fail_unlock_sfx)
         return false
 
+    __AudioHub.play_sfx(unlock_sfx)
     _locks_opened.append(_get_interaction_index(interaction))
 
     print_debug("[Multi Lock Door] %s locks out of %s opened" % [_locks_opened.size(), locks.size()])
 
     if _locks_opened.size() == locks.size():
+        __AudioHub.play_sfx(open_sfx)
         _do_unlock()
 
     return true

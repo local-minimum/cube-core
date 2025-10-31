@@ -16,6 +16,10 @@ var lives: int:
 @export var hurt_on_fight_start: int = 3
 @export var hurt_on_guess_wrong: int = 15
 
+@export var activation_sounds: Array[String] = [
+    "res://audio/sfx/roar_01.ogg",
+    "res://audio/sfx/roar_02.ogg",
+]
 @export var battle_music: String = "res://audio/music/Boss Battle 10 - OPL - LOOP.ogg"
 @export var crossfade_time: float = 0.5
 
@@ -117,6 +121,8 @@ func _handle_move_end(entity: GridEntity) -> void:
         if entity.coordinates() == player.coordinates():
             print_debug("[Grid Enemy] play game!")
             player.hurt(hurt_on_fight_start)
+            if !activation_sounds.is_empty():
+                __AudioHub.play_sfx(activation_sounds.pick_random())
             __SignalBus.on_play_exclude_word_game.emit(self, player)
         return
 
@@ -131,6 +137,8 @@ func _handle_move_end(entity: GridEntity) -> void:
     if player.coordinates() == coordinates():
         print_debug("[Grid Enemy] play game voluntarily!")
         player.hurt(hurt_on_fight_start)
+        if !activation_sounds.is_empty():
+            __AudioHub.play_sfx(activation_sounds.pick_random())
         __SignalBus.on_play_exclude_word_game.emit(self, player)
         return
 

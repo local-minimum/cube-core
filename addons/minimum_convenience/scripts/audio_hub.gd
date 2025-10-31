@@ -38,7 +38,7 @@ func _create_player(bus: String, available_players: Array[AudioStreamPlayer], ap
 
     return player
 
-func play_sfx(sound_resource_path: String) -> void:
+func play_sfx(sound_resource_path: String, volume: float = 1) -> void:
     var player: AudioStreamPlayer = _sfx_available.pop_back()
     if player == null:
         player = _create_player(BUS_SFX, _sfx_available, false)
@@ -46,6 +46,7 @@ func play_sfx(sound_resource_path: String) -> void:
         push_warning("Extending '%s' with a %sth player because all busy" % [BUS_SFX, sfx_players])
 
     player.stream = load(sound_resource_path)
+    player.volume_linear = volume
     player.play()
 
 func play_dialogue(sound_resource_path: String) -> void:

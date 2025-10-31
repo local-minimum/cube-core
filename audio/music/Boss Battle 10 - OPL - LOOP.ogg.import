@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Boss Battle 10 - OPL - LOOP.ogg-e4ee7c9f6ca6a
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

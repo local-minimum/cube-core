@@ -5,6 +5,9 @@ class_name HealthNPC
 @export var animation_speed_msec: int = 1000
 @export var animation_target: MeshInstance3D
 @export var disable_root: Node
+@export var activation_sounds: Array[String] = [
+    "res://audio/sfx/slide_dodge.ogg",
+]
 
 var _next_anim_msec: int
 var _anim_idx: int
@@ -28,6 +31,9 @@ func _process(_delta: float) -> void:
 func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
     if entity is GridPlayer:
         super.trigger(entity, movement)
+
+        if !activation_sounds.is_empty():
+            __AudioHub.play_sfx(activation_sounds.pick_random())
 
         __SignalBus.on_start_offer.emit(entity)
 

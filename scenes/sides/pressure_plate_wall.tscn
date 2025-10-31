@@ -17,6 +17,7 @@ shader_parameter/dark_color = Color(0.17108878, 0.022582948, 0.13546178, 1)
 shader_parameter/light_color = Color(0.14267296, 0.40233573, 0.6492776, 1)
 shader_parameter/passthrough = Color(0.7411765, 0.28627452, 0.16078432, 1)
 shader_parameter/precision = 0.05000000074506
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_bmnbw"]
 material = SubResource("ShaderMaterial_d8ey6")
