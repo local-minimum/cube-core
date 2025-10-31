@@ -4340,6 +4340,10 @@ infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
 
+[node name="Catapult" parent="Geometry/Elevation 0/Node (-5, 0, 6)" instance=ExtResource("34_v4d4p")]
+_crash_direction = 6
+_trigger_entire_node = true
+
 [node name="Node (-4, 0, 6)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 15)
 script = ExtResource("12_ql8jr")
@@ -4405,6 +4409,12 @@ script = ExtResource("14_nj2gj")
 infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Catapult" parent="Geometry/Elevation 0/Node (1, 0, 5)" instance=ExtResource("34_v4d4p")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+_crash_direction = 6
+_trigger_entire_node = true
+_trigger_sides = Array[int]([4])
 
 [node name="Node (0, 0, 5)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.5)
@@ -4499,6 +4509,18 @@ infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
 
+[node name="Window" parent="Geometry/Elevation 0/Node (-2, 0, 5)" instance=ExtResource("44_nj2gj")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_door_face = 4
+
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 5)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "maze-3"
+_activator = 2
+_repeatable = false
+_trigger_sides = Array[int]([6])
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
 [node name="Node (-3, 0, 6)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 15)
 script = ExtResource("12_ql8jr")
@@ -4558,6 +4580,18 @@ script = ExtResource("14_nj2gj")
 infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Window" parent="Geometry/Elevation 0/Node (-2, 0, 6)" instance=ExtResource("44_nj2gj")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+_door_face = 3
+
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 6)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "maze-3"
+_activator = 2
+_repeatable = false
+_trigger_sides = Array[int]([6])
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Node (-2, 0, 4)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 10)
@@ -4710,13 +4744,6 @@ coordinates = Vector3i(-2, 0, 8)
 entry_requires_anchor = false
 metadata/_custom_type_script = "uid://vhd085que0kg"
 
-[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-script = ExtResource("14_nj2gj")
-direction = 3
-anchor = NodePath("Side Anchor")
-metadata/_custom_type_script = "uid://c6733p4qj68p"
-
 [node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 script = ExtResource("14_nj2gj")
@@ -4741,6 +4768,79 @@ metadata/_custom_type_script = "uid://c6733p4qj68p"
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 script = ExtResource("14_nj2gj")
 direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 0, 8)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-4, 0, 8)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-4, 0, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
 anchor = NodePath("Side Anchor")
 metadata/_custom_type_script = "uid://c6733p4qj68p"
 
@@ -56491,3 +56591,8 @@ spawn_node = NodePath("../../Geometry/Elevation -1/Node (-1, -1, 9)")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 6.25, 10)
 hunting_activation_id = "maze-2"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (-3, 2, 4)")
+
+[node name="Maze Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.25, 20)
+hunting_activation_id = "maze-3"
+spawn_node = NodePath("../../Geometry/Elevation 0/Node (-4, 0, 8)")
