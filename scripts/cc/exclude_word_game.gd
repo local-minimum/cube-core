@@ -8,6 +8,11 @@ const _MAX_WORD_LENGTH: int = 12
 @export var disabled_text_color: Color = Color.DIM_GRAY
 @export var delays_factor: float = 1.0
 
+@export_group("Audio")
+@export var guess_correct_sfx: String = "res://audio/sfx/heal.ogg"
+@export var guess_correct_volume: float = 0.6
+@export var guess_wrong_sfx: String = "res://audio/sfx/take_damage.ogg"
+@export var guess_wrong_volume: float = 1.0
 @export var battle_music: String = "res://audio/music/Boss Battle 10 - OPL - LOOP.ogg"
 @export var crossfade_time: float = 0.5
 
@@ -315,8 +320,10 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
     await get_tree().create_timer(0.5 * delays_factor).timeout
 
     if word == _wrong_word:
+        __AudioHub.play_sfx(guess_correct_sfx, guess_correct_volume)
         _handle_hurt_enemy(button)
     else:
+        __AudioHub.play_sfx(guess_wrong_sfx, guess_wrong_volume)
         button.interactable = false
 
         await get_tree().create_timer(0.5 * delays_factor).timeout

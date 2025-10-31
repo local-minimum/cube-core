@@ -9,6 +9,7 @@ class_name KeyLoot
 @export var delay_gain: float = 1
 
 @export var loot_audio: String = "res://audio/sfx/heal.ogg"
+@export var loot_volume: float = 0.75
 
 func _ready() -> void:
     anim.play(idle)
@@ -22,7 +23,7 @@ func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
     print_debug("[Key Loot] Gaining key '%s'" % key_id)
 
     anim.play(gain)
-    __AudioHub.play_sfx(loot_audio)
+    __AudioHub.play_sfx(loot_audio, loot_volume)
 
     await get_tree().create_timer(delay_gain).timeout
 

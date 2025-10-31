@@ -13,7 +13,9 @@ class_name Sacrifice
 @export var low_value_letters: String = "VKJXQZ"
 @export var high_value_letters: String = "ETAOINSR"
 
-@export_group("Music")
+@export_group("Audio")
+@export var offer_bad_sfx: String = "res://audio/sfx/roar_01.ogg"
+@export var offer_sfx: String = "res://audio/sfx/swoosh_01.ogg"
 @export var sacrifice_music: String = "res://audio/music/Music Box Sad 1 - OPL Loop.ogg"
 @export var crossfade_time: float = 0.5
 
@@ -134,6 +136,7 @@ func _handle_sacrifice_letter() -> void:
     _player.heal(_get_sacrifice_value(_sacrificial_letter))
     hide()
 
+    __AudioHub.play_sfx(offer_sfx)
     _sacrificial_letter = ""
     _player.cinematic = _entered_cinematic
 
@@ -178,6 +181,7 @@ func _get_value_text(letter: String) -> String:
         Mode.SACRIFICE:
             return hint_value_letter.format({"health": _get_sacrifice_value(letter)})
 
+    __AudioHub.play_sfx(offer_bad_sfx)
     return hint_not_letter
 
 func _get_sacrifice_value(letter: String) -> int:

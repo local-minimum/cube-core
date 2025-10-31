@@ -6,6 +6,8 @@ signal on_unfocus(button: ContainerButton)
 signal on_click(button: ContainerButton)
 signal on_change_interactable(button: ContainerButton)
 
+@export var _focus_sound: String
+@export var _focus_sound_volume: float = 0.4
 @export var _focus_target: CanvasItem
 @export var _focus_color: Color = Color.HOT_PINK
 @export var _default_color: Color = Color.WHITE
@@ -52,6 +54,8 @@ var focused: bool = false:
                 if _focus_target != null:
                     _focus_target.modulate = _focus_color
 
+                if !_focus_sound.is_empty():
+                    __AudioHub.play_sfx(_focus_sound, _focus_sound_volume)
                 on_focus.emit(self)
 
         focused = value
