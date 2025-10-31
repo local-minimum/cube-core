@@ -8,6 +8,7 @@ const _DEACTIVATE_PLATE: int = 1
 @export var infer_trigger_side: bool
 
 @export var _activation_sound: String = "res://audio/sfx/hit_10.ogg"
+@export var _activation_sound_volume: float = 0.7
 
 @export_group("Texture swapping")
 @export var _swapping_mesh: MeshInstance3D
@@ -64,9 +65,10 @@ func _handle_feature_move(feature: GridNodeFeature) -> void:
         _triggered = true
         _triggering.append(feature)
         if _triggering.size() == 1:
+            if _anim != null || _swapping_mesh != null:
+                __AudioHub.play_sfx(_activation_sound, _activation_sound_volume)
             if _anim != null:
                 _anim.play(_anim_activate)
-                __AudioHub.play_sfx(_activation_sound)
             _sync_swapping_material()
             for contract: BroadcastContract in _contracts:
                 contract.broadcast(_ACTIVATE_OR_TOGGLE_PLATE)
@@ -133,4 +135,3 @@ func load_save_data(_data: Dictionary) -> void:
             _anim.play(_anim_deactivated)
         else:
             _anim.play(_anim_active)
-            __AudioHub.play_sfx(_activation_sound)

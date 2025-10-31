@@ -50,6 +50,11 @@ func _handle_activate_hunting(id: String) -> void:
         hunting = true
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
+    if feature == self:
+        var player: GridPlayerCore = get_level().player
+        if feature.coordinates() == player.coordinates() && !player.is_moving():
+            player.cinematic = true
+
     if feature is not GridPlayerCore:
         return
 
