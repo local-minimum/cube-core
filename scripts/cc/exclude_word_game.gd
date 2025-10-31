@@ -16,13 +16,30 @@ var _labels: Array[CensoringLabel]
 var _hotkeys: Array[CensoringLabel]
 var _active_words: Array[String]
 var _sacrificing: bool
+var _general_rewards: Array[StoryReward]
+var _used_rewards: Array[String]
+
 var _playing: bool:
     get():
         return !_sacrificing && _enemies.size() > 0
 
+class StoryReward:
+    var after_bad: bool
+    var message: String
+
+    @warning_ignore_start("shadowed_variable")
+    func _init(after_bad: bool, message: String) -> void:
+        @warning_ignore_restore("shadowed_variable")
+        self.after_bad = after_bad
+        self.message = message
+
+    func matches(guesses: int) -> bool:
+        return (guesses > 2) == after_bad
+
 class WordGroup:
     var title: String
     var words: Array[String]
+    var rewards: Array[StoryReward]
 
     @warning_ignore_start("shadowed_variable")
     func _init(title: String, line: String) -> void:
@@ -115,6 +132,7 @@ func _load_words() -> void:
     if file == null:
         return
 
+    var last_group: WordGroup = null
     var title: String
     for line: String in file.get_as_text().split("\n"):
         line = line.strip_edges()
@@ -123,11 +141,20 @@ func _load_words() -> void:
 
         if line.begins_with("-"):
             title = line.trim_prefix("-").strip_edges()
+        elif line.begins_with("[*]") || line.begins_with("[!]"):
+            var after_bad: bool = line.begins_with("[!]")
+            line = line.substr(3).strip_edges()
+            var reward = StoryReward.new(after_bad, line)
+            if last_group != null:
+                last_group.rewards.append(reward)
+            else:
+                _general_rewards.append(reward)
         else:
             if title.is_empty():
                 push_warning("Ignoring line '%s' because not part of a group/lacking title" % line)
             else:
-                _groups.append(WordGroup.new(title, line))
+                last_group = WordGroup.new(title, line)
+                _groups.append(last_group)
                 title = ""
 
     print_debug("[Exclude Word Game] loaded %s groups" % _groups.size())
@@ -176,7 +203,12 @@ func _pick_random_group() -> WordGroup:
 
     return prioritized.slice(0, 5).pick_random()
 
+var _active_group: WordGroup = null
+var _guesses_made: int = 0
+
 func _make_next_word_set() -> void:
+    _guesses_made = 0
+
     if !_groups.is_empty():
         for _idx: int in range(3):
             var group: WordGroup = _pick_random_group()
@@ -196,10 +228,12 @@ func _make_next_word_set() -> void:
                     print_debug("[Exclude Word Game] Using '%s': '%s' as outlier to %s" % [outlier_group.title, word, group.title])
 
                     _sync_words(words)
+                    _active_group = group
                     return
 
-    _wrong_word = "1234568901"
-    _sync_words(["123456789012", "123456789012", "123456789012", "123456789012"])
+    _active_group = null
+    _wrong_word = "v"
+    _sync_words(["a", "i", "e", "v"])
 
 func _sync_words(words: Array[String]) -> void:
     _guessed = false
@@ -270,6 +304,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
         return
 
     _guessed = true
+    _guesses_made += 1
 
     await get_tree().create_timer(0.5 * delays_factor).timeout
 
@@ -284,8 +319,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
         if button_group.interactables == 1:
             _handle_hurt_enemy(button)
         else:
-            button_group.select_next()
-
+            # button_group.select_next()
 
             _guessed = false
 
@@ -323,6 +357,7 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
             await get_tree().create_timer(0.5 * delays_factor).timeout
 
             button_group.visible = false
+            _reward_fight_end()
 
             await get_tree().create_timer(0.5 * delays_factor).timeout
 
@@ -335,3 +370,36 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
             await get_tree().create_timer(0.2 * delays_factor).timeout
 
             _make_next_word_set()
+
+func _valid_reward(reward: StoryReward) -> bool:
+    return reward.matches(_guesses_made)
+
+func _reward_fight_end() -> void:
+    var options: Array[StoryReward] = []
+    if _active_group != null:
+        options.append_array(_active_group.rewards.filter(_valid_reward))
+
+    options.append_array(_general_rewards.filter(_valid_reward))
+
+    if options.is_empty():
+        push_warning("[Exclude Word Game] had no reward for active group %s" % _active_group)
+        return
+
+    var sorted: Array[StoryReward] = options.duplicate()
+    sorted.sort_custom(
+        func (a: StoryReward, b: StoryReward) -> bool:
+            var a_used: bool = _used_rewards.has(a.message)
+            var b_used: bool = _used_rewards.has(b.message)
+            if a_used && !b_used:
+                return false
+            elif b_used && !a_used:
+                return true
+            elif a_used && b_used:
+                return _used_rewards.count(a.message) < _used_rewards.count(b.message)
+
+            return options.find(a) < options.find(b)
+    )
+
+    var reward: String = sorted[0].message
+    _used_rewards.append(reward)
+    __SignalBus.on_reward_word_game.emit(reward)

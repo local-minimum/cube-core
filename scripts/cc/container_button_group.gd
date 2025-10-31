@@ -2,6 +2,7 @@ extends Control
 class_name ContainerButtonGroup
 
 @export var buttons: Array[ContainerButton]
+@export var autofocus_next: bool
 
 var interactables: int:
     get():
@@ -23,7 +24,8 @@ func _handle_visibility_change(button: ContainerButton) -> void:
     if visible:
         if button.focused || _focus == button:
             _focus = null
-            _select_next(Vector2i.LEFT, null)
+            if autofocus_next:
+                _select_next(Vector2i.LEFT, null)
 
 func _handle_button_focus(button: ContainerButton) -> void:
     for other: ContainerButton in buttons:

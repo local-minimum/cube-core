@@ -7,18 +7,43 @@
 #
 # ball,death star,...
 #
+# After the challenges are done the player is rewarded with a story-line from the entity. Either it uses a specific line related to the last challenge, or a general one.
+#
+# Both start with:
+#
+# [*] This is the reward line
+#
+# If using a ! instead of * inside the brackets it will only be used if the player guessed 3 or 4 before solving the last challenge
+#
+# Story responses listed before the first category are general
+#
+# Note: They refer to themselves as "we"
+#
 # Note: If "Round things" contains "ball" if we later add a "Football" category, then "ball" must be included in that one too!
 # 
 # Note: The category title (e.g. Weapons, emotions) is not limited to 11 characters, and is only for clarity / logging.
 
-- Weapons
-gun,sword,pistol,crossbow,bow,baton,javelin
+[*] For science!
+[*] Subject exhausted. New knowledge acquired.
+[*] To understand is to grow. To grow is to spore.
+[*] A breakthrough is near
+
+- projectile weapons
+gun,pistol,crossbow,bow,catapult,rifle,Uzi,bazooka,
+[*] Do not worry, this is strictly of theoretical interest
+
+- sharp weapons
+sword,arrow,dagger,scimitar,javelin,spear,
+[!] Who cares about harming, round is important
 
 - Emotions
-happy,sad,angry,frustrated,upset,disgusted,disappointed,
+happy,sad,angry,frustrated,upset,disgusted,disappointed,bitter
+[*] subject appears to be experiencing an emotion now
+[!] these so called emotions are a mystery to us as well
 
 -Movement
-dance, run, jump, crawl, swim, 
+dance, run, jump, crawl, swim, stroll,
+[*] so many ways to use those fleshy protrusions
 
 -Desserts
 pudding,cake,apple pie,ice cream,
@@ -33,11 +58,7 @@ maul,line-out,ruck,scrum,tackle,try
 hurdle,sprint,javelin,discus,relay,marathon
 
 - Greek Deities
-Zeus,Apollo,Ares,Artemis,Athena,Demeter,Hera,Hermes
-
-# Excluding Harry Potter because of the author...
-# Harry Potter Characters
-# Harry, Hermione, Ron, Snape, Hagrid, Voldemort, Dumbledore, Luna, Dudley
+Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
 
 - Palindromes
 Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
@@ -59,7 +80,6 @@ Skibidi,gyatt,rizz,six seven,mew,sigma,bussin,gooning,fanum tax,aura farming
 
 - Programming Languages
 C,Pascal,Python,GDScript,Java,Ruby,Rust,Golang,Fortran
-# Excluding C++ and C# to avoid special characters. I think hyphens and spaces are OK though
 
 - Farm Animals
 Bull,Cow,Chicken,Goat,Sheep,Calf,Lamb,Horse
@@ -71,19 +91,26 @@ Albatross,Chicken,Great Tit,Dodo,Kiwi,Ostrich,Magpie,Wren
 Lion,Ounce,Lynx,Tiger,Bobcat,Panther,Leopard,Cheetah,
 
 - Snakes
-Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda,
+Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda, Copperhead, Sidewinder
 
 - Insects
-Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse
+Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse, Mosquito, 
+
+- Molluscs
+Slug, Cuttlefish, Octopus, Snail, Nudibranch, Nautilus, Clam, Oyster, Limpet
 
 - Bones
 Tibia, Fibula, Cranium, Sacrum, Vertebra, Clavicle, Humerus, Rib, Ulna
 
 - Units of mass
-ounce,gram,tonne,kilogram,pound,stone,
+ounce,gram,tonne,kilogram,pound,stone,slug
 
 - Gemstones
 ruby,diamond,emerald,moissanite,citrine,amethyst,sapphire,topaz
+
+- Taste
+sweet, sour, salty, spicy, bitter
+
 
 - Rappers
 Eminem,Drake,Jay-Z,Tupac,Dr Dre,Fat Joe,Lil Wayne,Snoop Dogg
@@ -101,14 +128,14 @@ Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
 London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul,Doha,Havana,Jakarta,Oslo
 
 - F1 terms
-Downforce,Chicane,Diffuser,Apex,Backmarker,Flatspot,DRS,Brake Bias
+Downforce,Chicane,Diffuser,Backmarker,Flatspot,DRS,Brake Bias
 
 - Stock Market
 Bear,Bull,Dividend,IPO,ETF,Bond,Margin,Broker,Liquidity,Arbitrage, Short
 
 - Video Games
-Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal, Apex,Breakout,Tetris
-# Feel like Apex = Apex Legends so might confuse
+Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal,Breakout,Tetris
+
 
 - Mountains
 Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
@@ -119,8 +146,9 @@ Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune
 - Rocketry
 Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
 
+
 - Diseases
-Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,Cold,Plague,Ebola, 
+Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,Cold,Plague, Ebola, 
 
 - Star Signs (Space racism)
 Cancer,Aries,Taurus,Gemini,Leo,Virgo,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces
@@ -189,3 +217,4 @@ Pair,Straight,Flush,House,Two Pair,Three Pair
 
 - Buildings
 House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise
+[*] diverse non-cube-based structures of primitive cultures
