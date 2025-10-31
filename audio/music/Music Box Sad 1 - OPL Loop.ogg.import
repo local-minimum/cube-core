@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dcux1k0siqn3t"
+path="res://.godot/imported/Music Box Sad 1 - OPL Loop.ogg-ea68671d463091bef832b05cfeb463dd.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/Music Box Sad 1 - OPL Loop.ogg"
+dest_files=["res://.godot/imported/Music Box Sad 1 - OPL Loop.ogg-ea68671d463091bef832b05cfeb463dd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

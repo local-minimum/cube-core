@@ -16,7 +16,11 @@ var lives: int:
 @export var hurt_on_fight_start: int = 3
 @export var hurt_on_guess_wrong: int = 15
 
+@export var battle_music: String = "res://audio/music/Boss Battle 10 - OPL - LOOP.ogg"
+@export var crossfade_time: float = 0.5
+
 var hunting: bool
+static var battle_music_playing: bool
 
 func _enter_tree() -> void:
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
@@ -109,6 +113,7 @@ func _handle_move_end(entity: GridEntity) -> void:
     var player: GridPlayer
     if entity == self:
         player = get_level().player
+        check_fight_music(player)
         if entity.coordinates() == player.coordinates():
             print_debug("[Grid Enemy] play game!")
             player.hurt(hurt_on_fight_start)
@@ -120,6 +125,8 @@ func _handle_move_end(entity: GridEntity) -> void:
 
     player = entity
     # print_debug("[Grid Enemy] %s vs %s" % [player.coordinates(), coordinates()])
+
+    check_fight_music(player)
 
     if player.coordinates() == coordinates():
         print_debug("[Grid Enemy] play game voluntarily!")
@@ -151,6 +158,14 @@ func _handle_move_end(entity: GridEntity) -> void:
     ])
     force_movement(movement)
     _may_move = false
+
+func check_fight_music(player: GridPlayerCore):
+    if battle_music_playing:
+        return
+
+    if VectorUtils.manhattan_distance(player.coordinates(), coordinates()) <= 1:
+        battle_music_playing = true
+        __AudioHub.play_music(battle_music, crossfade_time)
 
 func hurt() -> void:
     _lives -= 1

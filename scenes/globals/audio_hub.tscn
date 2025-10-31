@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxi5a0j2bvytg"]
+
+[ext_resource type="Script" uid="uid://1keqjvpsekq7" path="res://addons/minimum_convenience/scripts/audio_hub.gd" id="1_nnc5e"]
+
+[node name="AudioHub" type="Node"]
+script = ExtResource("1_nnc5e")
+metadata/_custom_type_script = "uid://1keqjvpsekq7"

@@ -5,6 +5,11 @@ class_name GridPlayer
 @export var health: int = 100
 @export var trail: EntityTrail
 
+@export var exploration_music: String = "res://audio/music/Death Waltz - OPL Loop.ogg"
+@export var crossfade_time: float = 0.5
+
+static var playing_exploration_music = false
+
 var hurt_to_walk: bool = true:
     set(value):
         hurt_to_walk = value
@@ -15,6 +20,20 @@ func _ready() -> void:
 
     if __SignalBus.on_move_end.connect(_handle_move_end) != OK:
         push_error("Failed to connect move end")
+
+    if __SignalBus.on_cinematic.connect(_handle_not_cinematic) != OK:
+        push_error("Failed to connect not cinematic")
+
+func _handle_not_cinematic(entity: GridEntity, is_cinamatic: bool) -> void:
+    if entity != self:
+        return
+
+    if is_cinamatic:
+        playing_exploration_music = false
+    elif !playing_exploration_music:
+        playing_exploration_music = true
+        GridEnemy.battle_music_playing = false
+        __AudioHub.play_music(exploration_music, crossfade_time)
 
 func is_alive() -> bool:
     return health > 0

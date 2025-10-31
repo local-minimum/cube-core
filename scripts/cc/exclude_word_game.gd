@@ -8,6 +8,9 @@ const _MAX_WORD_LENGTH: int = 12
 @export var disabled_text_color: Color = Color.DIM_GRAY
 @export var delays_factor: float = 1.0
 
+@export var battle_music: String = "res://audio/music/Boss Battle 10 - OPL - LOOP.ogg"
+@export var crossfade_time: float = 0.5
+
 var _enemies: Array[GridEnemy]
 var _player: GridPlayer
 var _groups: Array[WordGroup]
@@ -107,6 +110,9 @@ func _handle_start_sacrifice(__player: GridPlayer) -> void:
     _sacrificing = true
 
 func _handle_complete_sacrifice() -> void:
+    if _playing:
+        __AudioHub.play_music(battle_music, crossfade_time)
+
     _sacrificing = false
 
 func _handle_hotkey_button(idx: int) -> void:

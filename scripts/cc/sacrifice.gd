@@ -13,6 +13,10 @@ class_name Sacrifice
 @export var low_value_letters: String = "VKJXQZ"
 @export var high_value_letters: String = "ETAOINSR"
 
+@export_group("Music")
+@export var sacrifice_music: String = "res://audio/music/Music Box Sad 1 - OPL Loop.ogg"
+@export var crossfade_time: float = 0.5
+
 @export_group("Gains")
 @export var gain_npc: int = 120
 @export var gain_low: int = 20
@@ -86,6 +90,8 @@ func show_offer() -> void:
     _ready_ui()
 
 func _ready_ui() -> void:
+    __AudioHub.play_music(sacrifice_music, crossfade_time)
+
     if upper_case:
         hint.text = hint.text.to_upper()
     hint.censored_letters = __GlobalGameState.lost_letters
@@ -130,6 +136,7 @@ func _handle_sacrifice_letter() -> void:
 
     _sacrificial_letter = ""
     _player.cinematic = _entered_cinematic
+
     __SignalBus.on_complete_sacrifice.emit()
 
 func _offer_letter(letter: String) -> void:
