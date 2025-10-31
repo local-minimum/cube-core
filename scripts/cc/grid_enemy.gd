@@ -5,6 +5,10 @@ class_name GridEnemy
 @export var move_on_turn: bool = false
 @export var spawn_node: GridNode
 @export var _lives: int = 3
+var lives: int:
+    get():
+        return _lives
+
 @export var _mushrooms: Array[Node3D]
 @export var particles: Array[GPUParticles3D]
 @export var self_center: Node3D

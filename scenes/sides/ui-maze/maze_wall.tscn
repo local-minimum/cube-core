@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3hjea8bjccum"]
+
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_34q8v"]
+[ext_resource type="Material" uid="uid://bjsqj3haupnpb" path="res://scenes/sides/ui-maze/maze_wall_mat.tres" id="2_16boj"]
+[ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="3_sai4w"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="4_2k7bw"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
+material = ExtResource("2_16boj")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_a605k"]
+script = ExtResource("4_2k7bw")
+mode = 9
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[node name="Wall" type="Node3D" node_paths=PackedStringArray("anchor")]
+script = ExtResource("1_34q8v")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.25)
+mesh = SubResource("QuadMesh_xhqb5")
+
+[node name="Side Anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+script = ExtResource("3_sai4w")
+direction = 1
+required_transportation_mode = SubResource("Resource_a605k")
+metadata/_custom_type_script = "uid://bsjvh2o2oob57"

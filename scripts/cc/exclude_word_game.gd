@@ -134,7 +134,8 @@ func _load_words() -> void:
 
 func _play_game(enemy: GridEnemy, player: GridPlayer) -> void:
     print_debug("[Exclude Word Game] playing %s vs %s" % [enemy, player])
-    _enemies.append(enemy)
+    if !_enemies.has(enemy):
+        _enemies.append(enemy)
     if _enemies.size() == 1:
         _player = player
 
@@ -304,6 +305,7 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
     enemy.hurt()
 
     if enemy.is_alive():
+        print_debug("[Exclude Word Game] Enemy has %s health left" % enemy.lives)
         await get_tree().create_timer(0.2 * delays_factor).timeout
 
         _make_next_word_set()
@@ -311,7 +313,9 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
     else:
         _enemies.erase(enemy)
 
+        print_debug("[Exclude Word Game] Enemy %s is dead, %s remain" % [enemy, _enemies])
         if _enemies.is_empty():
+            print_debug("[Exclude Word Game] Leaving game")
             await get_tree().create_timer(0.2 * delays_factor).timeout
 
             enemy.kill()
@@ -327,6 +331,7 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
             _player = null
             _enemies.clear()
         else:
+            print_debug("[Exclude Word Game] Fighting next enemy")
             await get_tree().create_timer(0.2 * delays_factor).timeout
 
             _make_next_word_set()

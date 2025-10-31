@@ -15,7 +15,13 @@
 gun,sword,pistol,crossbow,bow,baton,javelin
 
 - Emotions
-happy,sad,angry,frustrated,upset,edgy,
+happy,sad,angry,frustrated,upset,disgusted,disappointed,
+
+-Movement
+dance, run, jump, crawl, swim, 
+
+-Desserts
+pudding,cake,apple pie,ice cream,
 
 - Eurovision Winners
 Nemo,Loreen,Maneskin,Jamala,Netta,Lordi,Celine Dion,Abba
@@ -29,8 +35,9 @@ hurdle,sprint,javelin,discus,relay,marathon
 - Greek Deities
 Zeus,Apollo,Ares,Artemis,Athena,Demeter,Hera,Hermes
 
-- Harry Potter Characters
-Harry,Hermione,Ron,Snape,Hagrid,Voldemort,Dumbledore,Luna,Dudley
+# Excluding Harry Potter because of the author...
+# Harry Potter Characters
+# Harry, Hermione, Ron, Snape, Hagrid, Voldemort, Dumbledore, Luna, Dudley
 
 - Palindromes
 Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
@@ -54,8 +61,23 @@ Skibidi,gyatt,rizz,six seven,mew,sigma,bussin,gooning,fanum tax,aura farming
 C,Pascal,Python,GDScript,Java,Ruby,Rust,Golang,Fortran
 # Excluding C++ and C# to avoid special characters. I think hyphens and spaces are OK though
 
-- Animals
-Python,Gibbon,Elephant,Aardvark,Albatross,Zebra,Ounce,Alpaca,Lion,Bear,Bull,Walrus,Mouse
+- Farm Animals
+Bull,Cow,Chicken,Goat,Sheep,Calf,Lamb,Horse
+
+- Birds
+Albatross,Chicken,Great Tit,Dodo,Kiwi,Ostrich,Magpie,Wren
+
+- Cats
+Lion,Ounce,Lynx,Tiger,Bobcat,Panther,Leopard,Cheetah,
+
+- Snakes
+Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda,
+
+- Insects
+Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse
+
+- Bones
+Tibia, Fibula, Cranium, Sacrum, Vertebra, Clavicle, Humerus, Rib, Ulna
 
 - Units of mass
 ounce,gram,tonne,kilogram,pound,stone,
@@ -76,7 +98,7 @@ Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
 Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
 
 - Cities
-London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul
+London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul,Doha,Havana,Jakarta,Oslo
 
 - F1 terms
 Downforce,Chicane,Diffuser,Apex,Backmarker,Flatspot,DRS,Brake Bias
@@ -92,13 +114,13 @@ Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal, Apex,Bre
 Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
 
 - Planets (might trip people up with Greek gods, no overlap though)
-Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune,Pluto
+Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune
 
 - Rocketry
 Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
 
 - Diseases
-Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,
+Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,Cold,Plague,Ebola, 
 
 - Star Signs (Space racism)
 Cancer,Aries,Taurus,Gemini,Leo,Virgo,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces
@@ -144,7 +166,7 @@ Jigsaw,Thanos,Hans Gruber,Sauron,Voldemort,The Joker,Hans Landa
 Jigsaw,Hammer Drill,Belt Sander,Miter Saw,Lathe,Nail Gun,
 
 - Chemical Elements
-Oxygen,Nitrogen,Sulfur,Carbon,Sodium,Helium,Seaborgium,Krypton,Argon,Arsenic
+Oxygen,Nitrogen,Sulfur,Carbon,Sodium,Helium,Seaborgium,Krypton,Argon,Arsenic,Gold,Neon,
 
 - Subatomic Particles
 Gluon,Photon,Electron,Muon,Neutrino,Higgs Boson
@@ -162,7 +184,8 @@ Roasting,Steaming,Poaching,Baking,Frying,Sauteing,Sous Vide
 Pawn,King,Queen,Rook,Bishop,Knight
 
 - Poker Hands
-Pair,Straight,Flush,House,Straight flush,Two Pair
+Pair,Straight,Flush,House,Two Pair,Three Pair
+# 'Straight Flush' is too long
 
 - Buildings
-House,Barn,Church,Temple,Shed,Factory
+House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise

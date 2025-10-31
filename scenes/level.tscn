@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=68 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -26,7 +26,12 @@
 [ext_resource type="PackedScene" uid="uid://nix6ry5bmoyk" path="res://scenes/sides/plates/plate_crusher_ceiling.tscn" id="12_3ies3"]
 [ext_resource type="PackedScene" uid="uid://bklkseyhcnc7f" path="res://scenes/sides/the-room/room_floor_crusher.tscn" id="12_30hdq"]
 [ext_resource type="PackedScene" uid="uid://br5be57rduopu" path="res://scenes/sides/the-room/room_floor_c.tscn" id="12_oksur"]
+[ext_resource type="Script" uid="uid://vhd085que0kg" path="res://scripts/gridded_level/level_features/grid_node.gd" id="12_ql8jr"]
+[ext_resource type="PackedScene" uid="uid://b3hjea8bjccum" path="res://scenes/sides/ui-maze/maze_wall.tscn" id="13_5ga6x"]
+[ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="14_nj2gj"]
+[ext_resource type="PackedScene" uid="uid://jg4uxjwbaua4" path="res://scenes/sides/ui-maze/maze_ceiling.tscn" id="15_msn66"]
 [ext_resource type="PackedScene" uid="uid://bv2i7e3i5nomj" path="res://scenes/sides/industry-zone/industry_door.tscn" id="16_kih21"]
+[ext_resource type="PackedScene" uid="uid://cqn7vrhvx70sp" path="res://scenes/sides/ui-maze/maze_floor_island.tscn" id="16_xmwm8"]
 [ext_resource type="PackedScene" uid="uid://nkgb18cshqaj" path="res://scenes/sides/greenery/grass_wall.tscn" id="17_asl66"]
 [ext_resource type="PackedScene" uid="uid://ccqkdjp74kc6a" path="res://scenes/sides/the-room/room_floor_a.tscn" id="17_tcyu4"]
 [ext_resource type="Script" uid="uid://d1eun00e26qfu" path="res://scripts/cc/enemies_activator.gd" id="17_w3o6u"]
@@ -58,6 +63,7 @@
 [ext_resource type="PackedScene" uid="uid://cmwck5ciilmqc" path="res://scenes/sides/catapult.tscn" id="34_v4d4p"]
 [ext_resource type="PackedScene" uid="uid://dp3l4q4fh43cp" path="res://scenes/sides/the-room/room_wall_solo.tscn" id="35_7iqcu"]
 [ext_resource type="PackedScene" uid="uid://brdwygkej57nl" path="res://scenes/sides/the-room/room_door.tscn" id="35_30hdq"]
+[ext_resource type="PackedScene" uid="uid://ci5dh4f50umf0" path="res://scenes/sides/ui-maze/maze_door_internal.tscn" id="43_5ga6x"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -83,7 +89,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
+primary_entry_portal = NodePath("Geometry/Elevation 2/Node (3, 2, 8)/LevelPortal Maze")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -1302,6 +1308,568 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation -1/Node (6, -1, 1)" instance=ExtResource("12_oksur")]
+
+[node name="Node (1, -1, 9)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, -1, 10)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, -1, 11)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, -1, 12)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, -1, 13)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (0, -1, 13)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(0, -1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (0, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (0, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (0, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (0, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, -1, 13)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, -2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, -1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, -1, 13)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, -1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter Exit 3" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 13)"]
+script = ExtResource("8_wu01b")
+infer_look_direction = true
+inherent_forward_direction = 3
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, -1, 13)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, -1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, -1, 12)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -2.5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, -1, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "maze-1"
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
+[node name="Node (-3, -1, 11)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -2.5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, -1, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, -1, 10)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -2.5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, -1, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, -1, 9)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, -2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, -1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, -1, 9)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, -1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-2, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, -1, 9)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, -2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, -1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (-1, -1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, -1, 8)" type="Node3D" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, -2.5, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, -1, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation -1/Node (1, -1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Elevation 0" type="Node3D" parent="Geometry"]
 
@@ -3114,6 +3682,635 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (9, 0, 6)" instance=ExtResource("10_421lv")]
+
+[node name="Node (1, 0, 9)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 10)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 11)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 12)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 13)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (0, 0, 13)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(0, 0, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 0, 13)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 0, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 0, 13)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 0, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter Exit 2" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 13)"]
+script = ExtResource("8_wu01b")
+infer_look_direction = true
+inherent_forward_direction = 3
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, 0, 13)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 0, 12)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 0, 11)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 0, 10)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter 3" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 10)" node_paths=PackedStringArray("exit")]
+script = ExtResource("8_wu01b")
+exit = NodePath("../../../Elevation -1/Node (-2, -1, 13)/Maze Teleporter Exit 3")
+infer_look_direction = true
+inherent_forward_direction = 1
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, 0, 9)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 0, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 0, 9)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 0, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 0, 9)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 0, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (-1, 0, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 8)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 7)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 17.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 7)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 0, 6)" type="Node3D" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 15)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 0, 6)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 0/Node (1, 0, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Elevation 1" type="Node3D" parent="Geometry"]
 
@@ -5246,6 +6443,574 @@ direction = 2
 [node name="Side EAST" parent="Geometry/Elevation 1/Node (9, 1, 6)" instance=ExtResource("35_7iqcu")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
+
+[node name="Node (1, 1, 10)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 1, 9)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 1, 11)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 1, 12)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 1, 13)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (0, 1, 13)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(0, 1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (0, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (0, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (0, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (0, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 1, 13)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 1, 13)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter Exit 1" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 13)"]
+script = ExtResource("8_wu01b")
+infer_look_direction = true
+inherent_forward_direction = 3
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, 1, 13)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 1, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 1, 12)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 1, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 1, 11)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 1, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 1, 10)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 1, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter 2" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 10)" node_paths=PackedStringArray("exit")]
+script = ExtResource("8_wu01b")
+exit = NodePath("../../../Elevation 0/Node (-2, 0, 13)/Maze Teleporter Exit 2")
+infer_look_direction = true
+inherent_forward_direction = 1
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, 1, 9)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (-3, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 1, 9)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-2, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 1, 9)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 1, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 1/Node (-1, 1, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 1, 8)" type="Node3D" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 1, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 1/Node (1, 1, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Elevation -15" type="Node3D" parent="Geometry"]
 
@@ -28019,23 +29784,737 @@ _door_face = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 5, 20)
 coordinates = Vector3i(3, 2, 8)
 
-[node name="Side NORTH" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("35_7iqcu")]
-
-[node name="Side SOUTH" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("35_7iqcu")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
-direction = 2
-
-[node name="Side WEST" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("35_7iqcu")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-direction = 3
-
-[node name="Side UP" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("29_7iqcu")]
-
-[node name="Side DOWN" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("17_tcyu4")]
-
-[node name="LevelPortal Windows" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)"]
+[node name="LevelPortal Maze" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)"]
 script = ExtResource("10_wu01b")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (2, 2, 8)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(2, 2, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (2, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (2, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (2, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (2, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 2, 8)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="KeyLoot" parent="Geometry/Elevation 2/Node (1, 2, 8)" instance=ExtResource("10_7agi7")]
+
+[node name="Node (1, 2, 9)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Door" parent="Geometry/Elevation 2/Node (1, 2, 9)" instance=ExtResource("43_5ga6x")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+locks = Array[int]([0])
+_door_face = 2
+
+[node name="Node (1, 2, 7)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 17.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 7)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 7)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Door" parent="Geometry/Elevation 2/Node (1, 2, 7)" instance=ExtResource("43_5ga6x")]
+locks = Array[int]([0])
+
+[node name="Node (0, 2, 8)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 20)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(0, 2, 8)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 8)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="HealthNPC" parent="Geometry/Elevation 2/Node (0, 2, 8)" instance=ExtResource("25_c1pbi")]
+
+[node name="Node (1, 2, 10)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 2, 11)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 2, 12)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 2, 13)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (0, 2, 13)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(0, 2, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (0, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 2, 13)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 2, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 2, 13)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 2, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 2, 13)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 5, 32.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 2, 13)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 13)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 2, 12)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 5, 30)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 2, 12)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 12)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 2, 11)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 5, 27.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 2, 11)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 11)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-3, 2, 10)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 5, 25)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 2, 10)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 10)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Maze Teleporter 1" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 10)" node_paths=PackedStringArray("exit")]
+script = ExtResource("8_wu01b")
+exit = NodePath("../../../Elevation 1/Node (-2, 1, 13)/Maze Teleporter Exit 1")
+infer_look_direction = true
+inherent_forward_direction = 1
+infer_anchor_from_down = true
+anchor_direction = 6
+instant = true
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
+
+[node name="Node (-3, 2, 9)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-3, 2, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-2, 2, 9)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-2, 2, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (-1, 2, 9)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5, 22.5)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(-1, 2, 9)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side SOUTH" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 2
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (-1, 2, 9)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Node (1, 2, 6)" type="Node3D" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 15)
+script = ExtResource("12_ql8jr")
+coordinates = Vector3i(1, 2, 6)
+entry_requires_anchor = false
+metadata/_custom_type_script = "uid://vhd085que0kg"
+
+[node name="Side NORTH" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+script = ExtResource("14_nj2gj")
+direction = 1
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side WEST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 3
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side EAST" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("13_5ga6x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("14_nj2gj")
+direction = 4
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side UP" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("15_msn66")]
+script = ExtResource("14_nj2gj")
+direction = 5
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
+
+[node name="Side DOWN" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 6)" node_paths=PackedStringArray("anchor") instance=ExtResource("16_xmwm8")]
+script = ExtResource("14_nj2gj")
+infer_direction_from_rotation = false
+anchor = NodePath("Side Anchor")
+metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Elevation 3" type="Node3D" parent="Geometry"]
 
@@ -52812,3 +55291,8 @@ spawn_node = NodePath("../../Geometry/Elevation 2/Node (7, 2, 2)")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.25, 20)
 hunting_activation_id = "room-4"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (4, 2, 8)")
+
+[node name="Maze Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, -1.25, 22.5)
+hunting_activation_id = "maze-1"
+spawn_node = NodePath("../../Geometry/Elevation -1/Node (-1, -1, 9)")

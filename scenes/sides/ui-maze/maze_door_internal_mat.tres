@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://n8adm8pijx6w"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_l0t7o"]
+[ext_resource type="Texture2D" uid="uid://dl1b105nal6r7" path="res://sprites/walls/door.png" id="2_8cyon"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_l0t7o")
+shader_parameter/main_tex = ExtResource("2_8cyon")
+shader_parameter/dark_color = Color(0.07450981, 0.07058824, 0.09019608, 1)
+shader_parameter/light_color = Color(0.92156863, 0.76862746, 0.26666668, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
