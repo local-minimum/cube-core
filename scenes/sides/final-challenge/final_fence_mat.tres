@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c8pguq1ge13dj"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_icx1o"]
+[ext_resource type="Texture2D" uid="uid://da3x4al0b36l2" path="res://sprites/walls/roofences-1.png" id="2_xbtsr"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_icx1o")
+shader_parameter/main_tex = ExtResource("2_xbtsr")
+shader_parameter/dark_color = Color(0.2, 0.08235294, 0.16078432, 1)
+shader_parameter/light_color = Color(0.69411767, 0.58431375, 0.972549, 1)
+shader_parameter/passthrough = Color(0.24313726, 0.5372549, 0.28235295, 1)
+shader_parameter/precision = 0.15000000223518
+shader_parameter/darken_north_south = 0.05000000074506

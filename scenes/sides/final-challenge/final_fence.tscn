@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt4qbkpugna6n"]
+
+[ext_resource type="Script" uid="uid://bbfredkbuiffj" path="res://scripts/cc/grid_door_multi_locks.gd" id="1_frao8"]
+[ext_resource type="Material" uid="uid://c8pguq1ge13dj" path="res://scenes/sides/final-challenge/final_fence_mat.tres" id="2_fmvw4"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_uimt5"]
+lightmap_size_hint = Vector2i(8, 8)
+material = ExtResource("2_fmvw4")
+add_uv2 = true
+size = Vector2(1.25, 1.25)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qn5xb"]
+material = ExtResource("2_fmvw4")
+size = Vector2(1.25, 1.25)
+
+[node name="Fence" type="Node3D"]
+script = ExtResource("1_frao8")
+_door_face = 1
+block_traversal_anchor_sides = Array[int]([6, 3, 4])
+_inital_lock_state = 2
+metadata/_custom_type_script = "uid://bbfredkbuiffj"
+
+[node name="Fence Visuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1.25)
+
+[node name="Fence Front" type="MeshInstance3D" parent="Fence Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, -0.625, 0)
+mesh = SubResource("QuadMesh_uimt5")
+skeleton = NodePath("../..")
+
+[node name="Fence Front2" type="MeshInstance3D" parent="Fence Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, -0.625, 0)
+mesh = SubResource("QuadMesh_uimt5")
+skeleton = NodePath("../..")
+
+[node name="Fence Back" type="MeshInstance3D" parent="Fence Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.625, -0.625, 0)
+mesh = SubResource("QuadMesh_qn5xb")
+
+[node name="Fence Back2" type="MeshInstance3D" parent="Fence Visuals"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.625, -0.625, 0)
+mesh = SubResource("QuadMesh_qn5xb")

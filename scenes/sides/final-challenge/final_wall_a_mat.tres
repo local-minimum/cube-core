@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://g7fbqx4riwwc"]
+
+[ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="1_2s46y"]
+[ext_resource type="Texture2D" uid="uid://d0gpewjiehc67" path="res://sprites/walls/cave-16.png" id="2_o3p64"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2s46y")
+shader_parameter/main_tex = ExtResource("2_o3p64")
+shader_parameter/dark_color = Color(0.2, 0.08235294, 0.16078432, 1)
+shader_parameter/light_color = Color(0.69411767, 0.58431375, 0.972549, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.02500000037253
