@@ -1,0 +1,204 @@
+[gd_scene load_steps=10 format=3 uid="uid://ngdx83l2y2oh"]
+
+[ext_resource type="Script" uid="uid://8cjxnhe5obro" path="res://scripts/cc/ui/story_text.gd" id="1_edyyr"]
+[ext_resource type="Texture2D" uid="uid://bkqlswvbga8rd" path="res://sprites/nine_rect_ui.png" id="2_xslst"]
+[ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_issvh"]
+[ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="4_3w6dj"]
+[ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="5_p67i4"]
+[ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="6_5uifm"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="7_n2y6w"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="8_4s8ch"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
+
+[node name="Story Text" type="PanelContainer" node_paths=PackedStringArray("_labels", "_label_containers")]
+offset_right = 88.0
+offset_bottom = 104.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
+script = ExtResource("1_edyyr")
+_labels = [NodePath("MarginContainer/VBoxContainer/HBoxContainer/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/HBoxContainer2/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/HBoxContainer3/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/HBoxContainer4/CensoringLabel")]
+_label_containers = [NodePath("MarginContainer/VBoxContainer/HBoxContainer"), NodePath("MarginContainer/VBoxContainer/HBoxContainer2"), NodePath("MarginContainer/VBoxContainer/HBoxContainer3"), NodePath("MarginContainer/VBoxContainer/HBoxContainer4")]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_xslst")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_issvh")
+censoring_textures = Array[Texture2D]([ExtResource("4_3w6dj"), ExtResource("5_p67i4"), ExtResource("6_5uifm"), ExtResource("7_n2y6w")])
+text = "FOR SCIENCE!"
+censored_letters = "AE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("8_4s8ch")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -64
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_issvh")
+censoring_textures = Array[Texture2D]([ExtResource("4_3w6dj"), ExtResource("5_p67i4"), ExtResource("6_5uifm"), ExtResource("7_n2y6w")])
+text = "1234567890123456789012345678"
+censored_letters = "AE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("8_4s8ch")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -64
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_issvh")
+censoring_textures = Array[Texture2D]([ExtResource("4_3w6dj"), ExtResource("5_p67i4"), ExtResource("6_5uifm"), ExtResource("7_n2y6w")])
+text = "FOR SCIENCE!"
+censored_letters = "AE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("8_4s8ch")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -64
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_issvh")
+censoring_textures = Array[Texture2D]([ExtResource("4_3w6dj"), ExtResource("5_p67i4"), ExtResource("6_5uifm"), ExtResource("7_n2y6w")])
+text = "FOR SCIENCE!"
+censored_letters = "AE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("8_4s8ch")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -64
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

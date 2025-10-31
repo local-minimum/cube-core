@@ -42,3 +42,63 @@ static func find_message_segment_end(text: String, start: int, segment: Segment)
             return text.length()
 
     return text.length()
+
+static func word_wrap(
+    message: String,
+    max_width: int,
+    separators: PackedStringArray = [" ", "-", "\t"],
+) -> PackedStringArray:
+    if message.length() < max_width:
+        # print_debug("no wrapping needed")
+        return [message]
+
+    var lines: PackedStringArray = []
+    var line_start: int = 0
+    var cursor: int = 0
+    var length: int = message.length()
+
+    while cursor + 1 < length:
+        var next_cursor: int = -1
+        for sep: String in separators:
+            var idx: int = message.find(sep, cursor)
+            if idx >= 0:
+                if next_cursor == -1:
+                    next_cursor = idx
+                else:
+                    next_cursor = mini(idx, next_cursor)
+
+        if next_cursor == -1 && cursor == line_start:
+            # print_debug("no safe linebreak")
+            var line = message.substr(line_start)
+            if line.length() > max_width:
+                line = message.substr(line_start, max_width - 1)
+                next_cursor = line_start + line.length()
+                line_start = next_cursor
+                lines.append("%s-" % line)
+
+            else:
+                # print_debug("Hit end of line")
+                if !line.is_empty():
+                    lines.append(line)
+                return lines
+
+        elif next_cursor - line_start > max_width:
+            var line = message.substr(line_start, cursor - line_start).strip_edges(false, true)
+            # print_debug("Adding line '%s' from %s to %s" % [line, line_start, cursor])
+            lines.append(line)
+            line_start = cursor
+            next_cursor = cursor
+
+        # print_debug("Cursor %s next %s with char at cursor '%s' and next '%s'" % [
+        #    cursor,
+        #    next_cursor,
+        #     message.substr(cursor, 1),
+        #    message.substr(next_cursor, 1),
+        #])
+        cursor = maxi(cursor + 1, next_cursor + 1)
+
+    var line = message.substr(line_start).strip_edges(false, true)
+    if !line.is_empty():
+        lines.append(line)
+
+    return lines

@@ -76,6 +76,12 @@ func show_sacrifice() -> void:
 
 func show_offer() -> void:
     mode = Mode.NPC_OFFER
+
+    if alphabet.text.length() <= __GlobalGameState.lost_letters.length():
+        __SignalBus.on_reward_message.emit("No more value")
+        __SignalBus.on_complete_sacrifice.emit()
+        return
+
     hint.text = hint_npc.format({"health": gain_npc})
     _ready_ui()
 

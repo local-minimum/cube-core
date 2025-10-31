@@ -68,6 +68,7 @@ manage_label_width = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0

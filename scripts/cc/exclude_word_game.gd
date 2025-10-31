@@ -401,5 +401,8 @@ func _reward_fight_end() -> void:
     )
 
     var reward: String = sorted[0].message
+
+    print_debug("[Exclude Word Game] Rewarding player with '%s'" % reward)
+
     _used_rewards.append(reward)
-    __SignalBus.on_reward_word_game.emit(reward)
+    __SignalBus.on_reward_message.emit(reward)
