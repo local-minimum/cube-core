@@ -6,9 +6,18 @@ extends Node
 @export var word_game_poem: String
 @export var word_game_response: String
 
+@export var hurt_walk_poem: String
+@export var hurt_walk_response: String
+@export var player_hurt_poem_threshold: int = 30
+
+@export var nohurt_walk_poem: String
+@export var nohurt_walk_response: String
+@export var nohurt_walk_threshold: int = 5
+
 var played_enemy: bool
 var played_word_game: bool
-
+var played_hurt_walk: bool
+var played_nohurt_walk: bool
 
 func _ready() -> void:
     if __SignalBus.on_change_node.connect(_handle_change_node) != OK:
@@ -17,6 +26,36 @@ func _ready() -> void:
     if __SignalBus.on_play_exclude_word_game.connect(_handle_play_word_game) != OK:
         push_error("Failed to connect play word game")
 
+    if __SignalBus.on_hurt_by_walk.connect(_handle_hurt_by_walk) != OK:
+        push_error("Failed to connect hurt by walk")
+
+    if __SignalBus.on_track_back_on_trail.connect(_hande_nohurt_walk) != OK:
+        push_error("Failed to connect no hurt walk")
+
+func _hande_nohurt_walk(_nohurt_player: GridPlayer, steps: int) -> void:
+    if played_nohurt_walk || steps < nohurt_walk_threshold:
+        return
+
+    played_nohurt_walk = true
+    __SignalBus.on_track_back_on_trail.disconnect(_hande_nohurt_walk)
+    __AudioHub.play_dialogue(nohurt_walk_poem, _play_nohurt_walk_response, true)
+
+func _play_nohurt_walk_response() -> void:
+    await get_tree().create_timer(0.3).timeout
+    __AudioHub.play_dialogue(nohurt_walk_response)
+
+
+func _handle_hurt_by_walk(hurt_player: GridPlayer) -> void:
+    if played_hurt_walk || hurt_player.health > player_hurt_poem_threshold:
+        return
+
+    __SignalBus.on_hurt_by_walk.disconnect(_handle_hurt_by_walk)
+    played_hurt_walk = true
+    __AudioHub.play_dialogue(hurt_walk_poem, _play_hurt_walk_response, true)
+
+func _play_hurt_walk_response() -> void:
+    await get_tree().create_timer(0.3).timeout
+    __AudioHub.play_dialogue(hurt_walk_response)
 
 func _handle_play_word_game(_enemy: GridEnemy, _player: GridPlayer) -> void:
     if played_word_game:

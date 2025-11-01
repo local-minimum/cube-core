@@ -55423,9 +55423,13 @@ door_response = "res://audio/voice/narration/door-response.ogg"
 door_open_poem = "res://audio/voice/narration/door-open.ogg"
 metadata/_custom_type_script = "uid://bm0e0mu7y7xpn"
 
-[node name="Node" type="Node" parent="."]
+[node name="MoreStoryManager" type="Node" parent="."]
 script = ExtResource("69_u0n8q")
 enemy_poem = "res://audio/voice/narration/enemy.ogg"
 enemy_response = "res://audio/voice/narration/enemy-response.ogg"
 word_game_poem = "res://audio/voice/narration/wordgame.ogg"
 word_game_response = "res://audio/voice/narration/wordgame-response.ogg"
+hurt_walk_poem = "res://audio/voice/narration/walk-loosin-health.ogg"
+hurt_walk_response = "res://audio/voice/narration/walk-loosin-health-response.ogg"
+nohurt_walk_poem = "res://audio/voice/narration/walkin-back.ogg"
+nohurt_walk_response = "res://audio/voice/narration/walkin-back-response.ogg"

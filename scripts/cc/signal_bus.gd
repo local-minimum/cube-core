@@ -11,6 +11,8 @@ signal on_update_lost_letters(lost_letters: String)
 
 signal on_hurt_player(player: GridPlayer, amount: int)
 signal on_heal_player(player: GridPlayer, amount: int)
+signal on_hurt_by_walk(player: GridPlayer)
+signal on_track_back_on_trail(player: GridPlayer, steps: int)
 
 signal on_start_sacrifice(player: GridPlayer)
 signal on_start_offer(player: GridPlayer)

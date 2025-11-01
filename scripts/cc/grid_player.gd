@@ -78,7 +78,7 @@ func heal(amount: int) -> void:
     __SignalBus.on_heal_player.emit(self, amount)
 
 var _previous_anchor: GridAnchor
-
+var _on_trail_counter: int
 
 func _handle_move_end(entity: GridEntity) -> void:
     if entity != self || entity.get_grid_anchor() == _previous_anchor:
@@ -87,6 +87,10 @@ func _handle_move_end(entity: GridEntity) -> void:
     _previous_anchor = entity.get_grid_anchor()
 
     if only_hurt_if_not_on_trail && trail != null && trail.is_in_trail(_previous_anchor):
+        _on_trail_counter += 1
+        __SignalBus.on_track_back_on_trail.emit(self, _on_trail_counter)
         return
 
+    _on_trail_counter = 0
     hurt()
+    __SignalBus.on_hurt_by_walk.emit(self)
