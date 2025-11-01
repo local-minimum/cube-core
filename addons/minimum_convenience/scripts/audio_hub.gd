@@ -33,6 +33,9 @@ func _create_player(bus: String, available_players: Array[AudioStreamPlayer], ap
     if player.finished.connect(available_players.append.bind(player)) != OK:
         push_error("Failed to connect to finished for new player on bus '%s'" % bus)
 
+    if player.finished.connect(_check_oneshot_callbacks.bind(player)) != OK:
+        push_error("Failed to connect to oneshot callbacks")
+
     if append:
         available_players.append(player)
 
@@ -49,12 +52,19 @@ func play_sfx(sound_resource_path: String, volume: float = 1) -> void:
     player.volume_linear = volume
     player.play()
 
-func play_dialogue(sound_resource_path: String) -> void:
+## on_finish takes an optional callable that receives the player as argument and is responsible to remove itself from the signal
+func play_dialogue(sound_resource_path: String, on_finish: Variant = null) -> void:
     var player: AudioStreamPlayer = _dialogue_available.pop_back()
     if player == null:
         player = _create_player(BUS_DIALOGUE, _dialogue_available, false)
         dialogue_players += 1
         push_warning("Extending '%s' with a %sth player because all busy" % [BUS_DIALOGUE, dialogue_players])
+
+    if on_finish != null && on_finish is Callable:
+        if _oneshots.has(player):
+            _oneshots[player].append(on_finish)
+        else:
+            _oneshots[player] = [on_finish]
 
     player.stream = load(sound_resource_path)
     player.play()
@@ -120,3 +130,15 @@ func _end_music_players():
             _music_available.append(player)
 
     _music_running.clear()
+
+
+var _oneshots: Dictionary[AudioStreamPlayer, Array]
+
+func _check_oneshot_callbacks(player: AudioStreamPlayer) -> void:
+    if !_oneshots.has(player):
+        return
+
+    for callback: Callable in _oneshots[player]:
+        callback.call()
+
+    _oneshots.erase(player)

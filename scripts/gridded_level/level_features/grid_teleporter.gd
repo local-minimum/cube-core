@@ -146,7 +146,7 @@ func _handle_teleport(entity: GridEntity) -> void:
 
     await get_tree().create_timer(0.1).timeout
 
-    FaderUI.fade(
+    FaderUI.fade_in_out(
         FaderUI.FadeTarget.EXPLORATION_VIEW,
         func() -> void:
             _arrive_entity(entity)

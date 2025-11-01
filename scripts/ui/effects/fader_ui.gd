@@ -19,57 +19,88 @@ static func name_target(fade_target: FadeTarget) -> String:
 @export var color_rect: ColorRect
 
 @export var solid_color: Color
-
 @export var transparent_color: Color
 
 static var _faders: Dictionary[FadeTarget, FaderUI] = {}
 
-static func fade(
+## Starts inactive and ends so too
+static func fade_in_out(
     fade_target: FadeTarget = FadeTarget.EXPLORATION_VIEW,
     on_midways: Variant = null,
     on_complete: Variant = null,
     color: Variant = null,
+    duration_factor: float = 1.0,
 ) -> void:
     var fader: FaderUI = _faders.get(fade_target)
     if fader == null:
         push_warning("Lacking fader %s" % name_target(fade_target))
     else:
-        fader._fade(on_midways, on_complete, color)
+        fader._fade(on_midways, on_complete, color, true, duration_factor)
+
+## Starts active and goes away
+static func fade_out(
+    fade_target: FadeTarget = FadeTarget.EXPLORATION_VIEW,
+    on_complete: Variant = null,
+    duration_factor: float = 1.0
+) -> void:
+    var fader: FaderUI = _faders.get(fade_target)
+    if fader == null:
+        push_warning("Lacking fader %s" % name_target(fade_target))
+    else:
+        fader._fade(null, on_complete, fader.solid_color, false, duration_factor)
 
 var tween: Tween
 
-func _ready() -> void:
+func _enter_tree() -> void:
     _faders[target] = self
     if color_rect != null:
-        color_rect.visible = false
-        color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+        _disable_target(color_rect)
 
-func _fade(on_midways: Variant = null, on_complete: Variant = null, override_color: Variant = null) -> void:
+func _disable_target(control: Control) -> void:
+    control.visible = false
+    control.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func _activate_target(control: Control) -> void:
+    control.mouse_filter = Control.MOUSE_FILTER_STOP
+    control.visible = true
+
+func _fade(
+    on_midways: Variant = null,
+    on_complete: Variant = null,
+    override_color: Variant = null,
+    do_fade_in: bool = true,
+    duration_factor: float = 1.0,
+) -> void:
     if tween != null:
         tween.kill()
 
-    color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-    color_rect.color = transparent_color
-    color_rect.visible = true
+    if color_rect != null:
+        color_rect.color = transparent_color
+        _activate_target(color_rect)
 
     var color: Color = solid_color
     if override_color is Color:
         color = override_color
 
+    if !do_fade_in:
+        color_rect.color = color
+
     tween = create_tween()
 
     @warning_ignore_start("return_value_discarded")
-    tween.tween_property(
-        color_rect,
-        "color",
-        color,
-        ease_duration).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+    if do_fade_in:
+        tween.tween_property(
+            color_rect,
+            "color",
+            color,
+            ease_duration * duration_factor
+        ).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 
     tween.tween_property(
         color_rect,
         "color",
         color,
-        faded_duration,
+        faded_duration * duration_factor,
     )
 
     if on_midways != null && on_midways is Callable:
@@ -96,7 +127,8 @@ func _fade(on_midways: Variant = null, on_complete: Variant = null, override_col
         color_rect,
         "color",
         transparent_color,
-        ease_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+        ease_duration * duration_factor,
+    ).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
     @warning_ignore_restore("return_value_discarded")
 
     if tween.connect("finished", func () -> void:
@@ -107,7 +139,7 @@ func _fade(on_midways: Variant = null, on_complete: Variant = null, override_col
             (on_complete as Callable).call()
             @warning_ignore_restore("unsafe_cast")
     ) != OK:
-        push_error("Failed to connect fade finished will panic and not tween")
+        push_error("Failed to connect fade_in_out finished will panic and not tween")
 
         tween.kill()
 

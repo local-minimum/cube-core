@@ -12,6 +12,8 @@ class_name Orbiter
 @export var _rotation_axis_max_speed: float = 0.1
 @export var center: Vector3
 
+var disabled: bool
+
 ## Radius of the orbit
 var _radius: float
 var _orbit_vector: Vector3
@@ -39,6 +41,9 @@ func start_orbit(start_point: Vector3, orbit_rotation_eulers: Vector3, speed: fl
     _rotation = Quaternion.from_euler(orbit_rotation_eulers * speed)
 
 func _process(delta: float) -> void:
+    if disabled:
+        return
+
     var rot: Quaternion = delta * (1 - _rotation_speed_variation + randf() * _rotation_speed_variation) * _rotation
     _orbiter_rotation *= rot
     _orbiter_rotation = _orbiter_rotation.normalized()

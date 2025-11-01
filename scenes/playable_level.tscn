@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=22 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://ngdx83l2y2oh" path="res://scenes/story_text.tscn" id="18_l2weq"]
 [ext_resource type="Script" uid="uid://liai8tbelc0r" path="res://scripts/cc/intro.gd" id="19_subuw"]
 [ext_resource type="Script" uid="uid://uks443arie0d" path="res://scripts/cc/orbiter.gd" id="20_4bpgt"]
+[ext_resource type="Script" uid="uid://b8eg248j7jnfr" path="res://scripts/ui/effects/fader_ui.gd" id="21_20guh"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -224,16 +225,101 @@ offset_bottom = 166.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas")]
+[node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas", "title_canvas", "title_label", "press_to_start_label")]
 script = ExtResource("19_subuw")
+start_cinematic = false
+intro_poem = "res://audio/voice/narration/intro.ogg"
+intro_response = "res://audio/voice/narration/intro-response.ogg"
+landing_poem = "res://audio/voice/narration/landing.ogg"
+landing_response = "res://audio/voice/narration/landing-response.ogg"
+landing_coda = "res://audio/voice/narration/landing-coda.ogg"
 center = Vector3(0, -50, 0)
 orbiter = NodePath("Orbiter")
 orbit_start = Vector3(110, 30, 20)
 orbit = Vector3(-1, 0.8, 0.4)
 orbit_speed = 0.01
 ui_canvas = NodePath("../HUD")
+title_canvas = NodePath("../Title")
+title_label = NodePath("../Title/Title Label")
+press_to_start_label = NodePath("../Title/Presss to start Label")
+_censor_interval = 3000
 
 [node name="Orbiter" type="Node3D" parent="Intro Manager"]
 script = ExtResource("20_4bpgt")
 managed = true
 metadata/_custom_type_script = "uid://uks443arie0d"
+
+[node name="Fader" type="CanvasLayer" parent="."]
+layer = 200
+
+[node name="FaderUI" type="Node" parent="Fader" node_paths=PackedStringArray("color_rect")]
+script = ExtResource("21_20guh")
+color_rect = NodePath("../ColorRect")
+solid_color = Color(0.06469653, 0.064696535, 0.06469648, 1)
+transparent_color = Color(0.16924527, 0.1692453, 0.16924527, 0)
+metadata/_custom_type_script = "uid://b8eg248j7jnfr"
+
+[node name="ColorRect" type="ColorRect" parent="Fader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="CanvasLayer" parent="."]
+layer = 150
+
+[node name="Title Label" type="Control" parent="Title"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
+text = "CUBE CORE"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.93681306, 0.34910473, 0.75913596, 1)
+y_alignment_offset = -72
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Presss to start Label" type="Control" parent="Title"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
+text = "PRESS ANY KEY TO START"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.93681306, 0.34910473, 0.75913596, 1)
+baseline_height = 2
+y_alignment_offset = -140
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
