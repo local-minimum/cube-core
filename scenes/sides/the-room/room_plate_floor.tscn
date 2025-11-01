@@ -50,6 +50,7 @@ _activation_sound_volume = 0.5
 _swapping_mesh = NodePath("../Side Mesh")
 _swap_active_texture = ExtResource("3_34m3o")
 _swap_inactive_texture = ExtResource("7_1i5vv")
+_activator = 2
 metadata/_custom_type_script = "uid://xomgxrqjqsyd"
 
 [node name="Broadcaster" type="Node" parent="." node_paths=PackedStringArray("sender")]

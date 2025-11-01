@@ -48,6 +48,10 @@ func get_grid_anchor_direction() -> CardinalDirections.CardinalDirection:
     return anchor.direction
 
 func set_grid_anchor(anchor: GridAnchor, _deferred: bool = false) -> void:
+    if anchor == null:
+        push_warning("%s attempted to anchor to null" % self)
+        return
+
     _anchor = anchor
     _node = _anchor.get_grid_node()
 

@@ -23,10 +23,10 @@
 # 
 # Note: The category title (e.g. Weapons, emotions) is not limited to 11 characters, and is only for clarity / logging.
 
-[*] For science!
 [*] Subject exhausted. New knowledge acquired.
 [*] To understand is to grow. To grow is to spore.
 [*] A breakthrough is near
+[*] For science!
 
 - projectile weapons
 gun,pistol,crossbow,bow,catapult,rifle,Uzi,bazooka,
@@ -47,82 +47,122 @@ dance, run, jump, crawl, swim, stroll,
 
 -Desserts
 pudding,cake,apple pie,ice cream,
+[*] eating with mouths and intestines, how bizarre
+
 
 - Eurovision Winners
 Nemo,Loreen,Maneskin,Jamala,Netta,Lordi,Celine Dion,Abba
+[*] we are great fans
+[*] perhaps eurovision could allow us to join?
 
 - Rugby Union
 maul,line-out,ruck,scrum,tackle,try
+[*] a ritual performance of unclear purpose
+[!] we also do not understand sports
 
 - Athletics Events
 hurdle,sprint,javelin,discus,relay,marathon
+[*] all this energy wasted
 
 - Greek Deities
 Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
+[*] many gods to choose from
 
 - Palindromes
 Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
+[*] amusing! we have similar games. we will show you.
+[*] !kwryppppppyrwk! !ihi! !qwertytrewq! 
+
 
 - Scientists
 Planck,Einstein,Euler,Curie,Newton,Darwin,Fleming,Tesla
+[*] mythological heroes from long ago
 
 - Car Brands
 Tesla,Ford,Toyota,Vauxhall,Skoda,Audi,Mercedes,Ferrari,Ssangyong
+[*] horrible! we did not want to believe they were real
+
 
 - Unusual / Small Countries
 Vatican,Moldova,Lesotho,Monaco,Nauru,Tuvalu,Palau,Andorra,Kiribati
 
+
 - Gamer Food
 Pizza,Burger,Hot Dog,Red Bull,Pot Noodle,Doritos,Popcorn,Jerky
+[*] most unhealthy
+[*] a strict diet of enriched substrate will surely improve the subject's health
 
 - Brainrot (Generation Alpha) Phrases
 Skibidi,gyatt,rizz,six seven,mew,sigma,bussin,gooning,fanum tax,aura farming
+[*] These are obvious
+[*] We will have a lot of use for these concepts
+[!] Subject seems to be experiencing pain
+[!] It would be beneficial to acquire a fresher sample 
 
 - Programming Languages
 C,Pascal,Python,GDScript,Java,Ruby,Rust,Golang,Fortran
+[*] we also love creating new languages to play with
+[*] would you prefer us speaking in any of these languages instead?
+[!] do not fear, we are completely fluent in the english language
 
 - Farm Animals
 Bull,Cow,Chicken,Goat,Sheep,Calf,Lamb,Horse
+[*] an entire class of slave beings, very useful
 
 - Birds
 Albatross,Chicken,Great Tit,Dodo,Kiwi,Ostrich,Magpie,Wren
+[*] Flight! 
 
 - Cats
 Lion,Ounce,Lynx,Tiger,Bobcat,Panther,Leopard,Cheetah,
+[*] Hypothesis: these make good pets
+[*] Kitty?
 
 - Snakes
 Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda, Copperhead, Sidewinder
+[*] the tube is a noble shape
 
 - Insects
 Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse, Mosquito, 
+[*] The most popular life form
 
 - Molluscs
 Slug, Cuttlefish, Octopus, Snail, Nudibranch, Nautilus, Clam, Oyster, Limpet
+[*] softness is preferable, it is known
 
 - Bones
 Tibia, Fibula, Cranium, Sacrum, Vertebra, Clavicle, Humerus, Rib, Ulna
+[*] to carry all these around, it must be painful
+[*] so rigid!
 
 - Units of mass
 ounce,gram,tonne,kilogram,pound,stone,slug
+[*] Hypothesis: developing in gravity creates a strong mind
+[!] Hypothesis: developing in gravity affects the brain negatively
 
 - Gemstones
 ruby,diamond,emerald,moissanite,citrine,amethyst,sapphire,topaz
+[*] Why do they have to be so disgustingly hard and shiny
 
 - Taste
 sweet, sour, salty, spicy, bitter
-
+[*] Concepts of taste make our spores vibrate most pleasantly
 
 - Rappers
 Eminem,Drake,Jay-Z,Tupac,Dr Dre,Fat Joe,Lil Wayne,Snoop Dogg
+[*] Hypothesis: 
 
 - Animated TV Shows
 Simpsons,South Park,Futurama,Family Guy,Hazbin Hotel,Invincible,
+[*] We have learned much from these works
 
 - Best Picture Oscar Winners
 Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
+[*] so this is the pinnacle of your art?
 
 - Famous Activists
 Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
+
 
 - Cities
 London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul,Doha,Havana,Jakarta,Oslo
@@ -132,6 +172,8 @@ Downforce,Chicane,Diffuser,Backmarker,Flatspot,DRS,Brake Bias
 
 - Stock Market
 Bear,Bull,Dividend,IPO,ETF,Bond,Margin,Broker,Liquidity,Arbitrage, Short
+[*] note: further investigate money 
+
 
 - Video Games
 Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal,Breakout,Tetris
@@ -139,53 +181,68 @@ Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal,Breakout,
 
 - Mountains
 Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
+[*] horrible! why not make them decently cube shaped instead
+[*] made completely out of stone? disgusting
 
-- Planets (might trip people up with Greek gods, no overlap though)
+- Planets 
 Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune
+ 
 
 - Rocketry
 Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
-
+[*] So aggressive, this rocketry 
 
 - Diseases
-Influenza,COVID,Malaria,Diabetes,Cancer,COPD,Cirrhosis,Cold,Plague, Ebola, 
+Influenza,COVID,Malaria,Diabetes,Cancer,Cirrhosis,Cold,Plague, Ebola, 
+[*] This type of body seems highly vulnerable and impractical
 
 - Star Signs (Space racism)
 Cancer,Aries,Taurus,Gemini,Leo,Virgo,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces
 
 - Wine Grapes
 Syrah,Nebiolo,Sangiovese,Malbec,Barbera,Pinot Noir,Reisling,Merlot
+[*] Hypothesis: no substantial difference between Vitis vinifera varieties
 
 - Extreme Sports
 Wingsuiting,Caving,Bouldering,Free Diving,Ice Climbing,Heli Skiing
 
+
 - Music Genres
 Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock,Hip Hop,Garage,Classical,House
+[*] interesting variation in vibrations
 
 - Continents
 Asia,Africa,Americas, Antarctica, Europe, Australia
-# North/South America are too long words
+[*] 
 
-- Intelligence Agencies (might be too hard with letters missing)
+- Intelligence Agencies 
 MI5,MI6,CIA,FSB,GRU,GCHQ,FBI,NSA,MOSSAD
+[*] gathering information is a noble quest
 
 - Moustache Styles
 Chevron,Handlebar,Pencil,Walrus,Fu Manchu,Horseshoe
+[*] hair shaping signifying status and personality
+[!] lacking hair, we find this a challenging concept
 
 - Military Ranks
 Private,Corporal,Sergeant,Captain,Major,Colonel,Lieutenant,Brigadier
 
 - US Presidents
 Obama,Ford,Trump,Biden,Bush,Clinton,Nixon,Truman,Reagan
+[*] no need to take us to your leaders, a more representative specimen is ideal
 
 - Surgical Procedures
 Biopsy,Cesarean,skin graft,amputation,transplant,colonoscopy,liposuction,Rhinoplasty,vasectomy
+[*] so many options to explore
 
 - Needlework
 Embroidery,Knitting,Cross Stitch,Crochet,Quilting,Sewing
+[*] Too sharp! Let us try another subject
+[*] several advantages of hands
 
 - Puzzles
 Sudoku,Crossword,Wordsearch,Cryptogram,Jigsaw,Rubiks Cube
+[*] we 
 
 - Movie villains
 Jigsaw,Thanos,Hans Gruber,Sauron,Voldemort,The Joker,Hans Landa

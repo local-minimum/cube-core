@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://dt2s24ea60mxd"]
+
+[ext_resource type="Script" uid="uid://bb1mx2o8q1o42" path="res://scripts/cc/cat.gd" id="1_br55f"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="2_4eub0"]
+[ext_resource type="Script" uid="uid://dexigkhejxn1h" path="res://scripts/gridded_level/level_features/player_facer.gd" id="3_w6ktl"]
+[ext_resource type="Material" uid="uid://b3v4ybmaigp6f" path="res://scenes/cat_mat.tres" id="4_ckb5j"]
+[ext_resource type="Texture2D" uid="uid://bksyyhv8yi43m" path="res://sprites/monsters-24.png" id="5_w6ktl"]
+[ext_resource type="Texture2D" uid="uid://crlbwn6aiaps1" path="res://sprites/monsters-25.png" id="6_ckb5j"]
+
+[sub_resource type="Resource" id="Resource_4qdnu"]
+script = ExtResource("2_4eub0")
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[sub_resource type="Resource" id="Resource_7kuto"]
+script = ExtResource("2_4eub0")
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
+[sub_resource type="QuadMesh" id="QuadMesh_4qdnu"]
+material = ExtResource("4_ckb5j")
+
+[sub_resource type="Animation" id="Animation_onyt2"]
+resource_name = "Idle"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerFacer/Cat Mesh:mesh:material:shader_parameter/main_tex")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_w6ktl"), ExtResource("6_ckb5j")]
+}
+
+[sub_resource type="Animation" id="Animation_6dbve"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerFacer/Cat Mesh:mesh:material:shader_parameter/main_tex")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_w6ktl")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvt0j"]
+_data = {
+&"Idle": SubResource("Animation_onyt2"),
+&"RESET": SubResource("Animation_6dbve")
+}
+
+[node name="NPC Cat" type="Node3D" node_paths=PackedStringArray("player", "greenery_subzone_locations")]
+script = ExtResource("1_br55f")
+calling_sounds = Array[String](["res://audio/voice/cat/bosse3_2.mp3"])
+greeting_sounds = Array[String](["res://audio/voice/cat/bosse1.mp3", "res://audio/voice/cat/bosse2_2.mp3"])
+player = NodePath("AudioStreamPlayer3D")
+greenery_subzone_locations = {
+"first": null,
+"second": null,
+"third": null
+}
+look_direction = 1
+transportation_abilities = SubResource("Resource_4qdnu")
+transportation_mode = SubResource("Resource_7kuto")
+metadata/_custom_type_script = "uid://bb1mx2o8q1o42"
+
+[node name="PlayerFacer" type="Node3D" parent="."]
+script = ExtResource("3_w6ktl")
+maintain_down = true
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
+
+[node name="Cat Mesh" type="MeshInstance3D" parent="PlayerFacer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("QuadMesh_4qdnu")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.4375, 0)
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lvt0j")
+}
+next/Idle = &"Idle"
