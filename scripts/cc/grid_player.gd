@@ -50,7 +50,8 @@ func _handle_not_cinematic(entity: GridEntity, is_cinamatic: bool) -> void:
     elif !playing_exploration_music:
         playing_exploration_music = true
         GridEnemy.battle_music_playing = false
-        __AudioHub.play_music(exploration_music, crossfade_time)
+        if !__AudioHub.playing_music().has(exploration_music):
+            __AudioHub.play_music(exploration_music, crossfade_time)
 
 func is_alive() -> bool:
     return health > 0

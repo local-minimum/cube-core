@@ -16,6 +16,7 @@ class_name GridTeleporter
 
 @export_group("Teleportation abilities")
 @export var instant: bool
+@export var fade_color: Color = Color.ALICE_BLUE
 @export var inactive_scale: float = 0.3
 @export var effect: Node3D
 @export var rotation_speed: float = 1
@@ -158,7 +159,7 @@ func _handle_teleport(entity: GridEntity) -> void:
             _teleporting.erase(entity)
             __SignalBus.on_teleporter_arrive_entity.emit(exit, entity)
             ,
-        Color.ALICE_BLUE,
+        fade_color,
     )
 
     print_debug("Handle teleport of %s from %s to %s" % [entity, coordinates(), "%s" % exit.coordinates() if exit != null else "Nowhere"])

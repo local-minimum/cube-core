@@ -69,6 +69,14 @@ func play_dialogue(sound_resource_path: String, on_finish: Variant = null) -> vo
     player.stream = load(sound_resource_path)
     player.play()
 
+func playing_music() -> PackedStringArray:
+    return PackedStringArray(
+        _music_running.map(
+            func (player: AudioStreamPlayer) -> String:
+                return player.stream.resource_path
+                ,
+        )
+    )
 func play_music(
     sound_resource_path: String,
     crossfade_time: float = -1,

@@ -327,7 +327,7 @@ script = ExtResource("8_wu01b")
 exit = NodePath("../../../Elevation 4/Node (-16, 4, -2)/Rim Teleporter Down Exit")
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, -1)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -343,7 +343,7 @@ script = ExtResource("8_wu01b")
 exit = NodePath("../../../Elevation 4/Node (-16, 4, -1)/Rim Teleporter Down Exit")
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 0)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -359,7 +359,7 @@ script = ExtResource("8_wu01b")
 exit = NodePath("../../../Elevation 4/Node (-16, 4, 0)/Rim Teleporter Down Exit")
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 1)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -375,7 +375,7 @@ script = ExtResource("8_wu01b")
 exit = NodePath("../../../Elevation 4/Node (-16, 4, 1)/Rim Teleporter Down Exit")
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 2)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -391,7 +391,7 @@ script = ExtResource("8_wu01b")
 exit = NodePath("../../../Elevation 4/Node (-16, 4, 2)/Rim Teleporter Down Exit")
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 3)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -2067,7 +2067,7 @@ exit = NodePath("../../Node (-16, 0, 2)/Rim Teleporter North Exit")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, -2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2083,7 +2083,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter South Exit" type="Node3D" parent="Geometry/Elevation 0/Node (-16, 0, -2)"]
@@ -2091,7 +2091,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2107,7 +2107,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 0)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2123,7 +2123,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2139,7 +2139,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2155,7 +2155,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter North Exit" type="Node3D" parent="Geometry/Elevation 0/Node (-16, 0, 2)"]
@@ -2163,7 +2163,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2180,7 +2180,7 @@ exit = NodePath("../../Node (-16, 0, -2)/Rim Teleporter South Exit")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 4)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -4659,7 +4659,7 @@ exit = NodePath("../../Node (-16, 1, 2)/Rim Teleporter North Exit")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, -2)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -4675,7 +4675,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, -1)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -4715,7 +4715,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, 3)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -4732,7 +4732,7 @@ exit = NodePath("../../Node (-16, 1, -2)/Rim Teleporter South Exit")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, 4)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -27516,7 +27516,7 @@ exit = NodePath("../../Node (-16, 2, 2)/Rim Teleporter North Exit")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, -2)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -27532,7 +27532,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, -1)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -27575,7 +27575,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, 3)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -27592,7 +27592,7 @@ exit = NodePath("../../Node (-16, 2, -2)/Rim Teleporter South Exit")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, 4)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -30728,7 +30728,7 @@ exit = NodePath("../../Node (-16, 3, 2)/Rim Teleporter North Exit")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, -2)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -30744,7 +30744,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, -1)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -30784,7 +30784,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, 3)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -30801,7 +30801,7 @@ exit = NodePath("../../Node (-16, 3, -2)/Rim Teleporter South Exit")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, 4)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -32530,7 +32530,7 @@ exit = NodePath("../../Node (-16, 4, 2)/Rim Teleporter North Exit")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, -2)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32546,7 +32546,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter South Exit" type="Node3D" parent="Geometry/Elevation 4/Node (-16, 4, -2)"]
@@ -32554,7 +32554,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, -1)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32570,7 +32570,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 0)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32586,7 +32586,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 1)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32602,7 +32602,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 2)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32618,7 +32618,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter North Exit" type="Node3D" parent="Geometry/Elevation 4/Node (-16, 4, 2)"]
@@ -32626,7 +32626,7 @@ script = ExtResource("8_wu01b")
 infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 3)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -32643,7 +32643,7 @@ exit = NodePath("../../Node (-16, 4, -2)/Rim Teleporter South Exit")
 infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 4)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -34324,7 +34324,7 @@ exit = NodePath("../../../Elevation 0/Node (-16, 0, -2)/Rim Teleporter Up Exit")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, -1)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -34341,7 +34341,7 @@ exit = NodePath("../../../Elevation 0/Node (-16, 0, -1)/Rim Teleporter Up Exit")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 0)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -34358,7 +34358,7 @@ exit = NodePath("../../../Elevation 0/Node (-16, 0, 0)/Rim Teleporter Up Exit")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 1)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -34375,7 +34375,7 @@ exit = NodePath("../../../Elevation 0/Node (-16, 0, 1)/Rim Teleporter Up Exit")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 2)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -34392,7 +34392,7 @@ exit = NodePath("../../../Elevation 0/Node (-16, 0, 2)/Rim Teleporter Up Exit")
 infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
-instant = true
+fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 3)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
