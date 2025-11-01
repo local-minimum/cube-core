@@ -9,6 +9,7 @@ static func look_rotation_from_vectors(directions: Array[CardinalDirections.Card
         Vector3(CardinalDirections.direction_to_vectori(CardinalDirections.invert(directions[1]))),
     ).basis.get_rotation_quaternion()
 
+## Creates a tweener method taking quaternions as input
 static func create_tween_rotation_method(node: Node3D, global_space: bool = true) -> Callable:
     if global_space:
         return func (value: Quaternion) -> void:

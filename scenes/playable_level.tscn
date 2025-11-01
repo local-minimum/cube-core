@@ -235,14 +235,15 @@ landing_response = "res://audio/voice/narration/landing-response.ogg"
 landing_coda = "res://audio/voice/narration/landing-coda.ogg"
 center = Vector3(0, -50, 0)
 orbiter = NodePath("Orbiter")
-orbit_start = Vector3(110, 30, 20)
+orbit_start = Vector3(110, 80, 20)
 orbit = Vector3(-1, 0.8, 0.4)
 orbit_speed = 0.01
+land_sequence_detector = Vector3(-0.5, -1, -0.2)
 ui_canvas = NodePath("../HUD")
 title_canvas = NodePath("../Title")
 title_label = NodePath("../Title/Title Label")
 press_to_start_label = NodePath("../Title/Presss to start Label")
-_censor_interval = 3000
+_censor_interval = 1500
 
 [node name="Orbiter" type="Node3D" parent="Intro Manager"]
 script = ExtResource("20_4bpgt")

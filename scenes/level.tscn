@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=72 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -67,6 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://brdwygkej57nl" path="res://scenes/sides/the-room/room_door.tscn" id="35_30hdq"]
 [ext_resource type="PackedScene" uid="uid://ci5dh4f50umf0" path="res://scenes/sides/ui-maze/maze_door_internal.tscn" id="43_5ga6x"]
 [ext_resource type="PackedScene" uid="uid://8qm5lmt5657s" path="res://scenes/sides/ui-maze/maze_window.tscn" id="44_nj2gj"]
+[ext_resource type="Script" uid="uid://bm0e0mu7y7xpn" path="res://scripts/cc/landing_area_manager.gd" id="68_jydfl"]
 
 [sub_resource type="Resource" id="Resource_8iemx"]
 script = ExtResource("9_t1rx8")
@@ -55404,3 +55405,14 @@ spawn_node = NodePath("../../Geometry/Elevation 0/Node (-8, 0, -1)")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.25, -12.5)
 hunting_activation_id = "final-1"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
+
+[node name="LandingAreaManager" type="Node" parent="." node_paths=PackedStringArray("pit_entry_node", "pit_trapped_node")]
+script = ExtResource("68_jydfl")
+pit_entry_node = NodePath("../Geometry/Elevation 2/Node (-15, 2, 0)")
+pit_trapped_node = NodePath("../Geometry/Elevation 2/Node (-12, 2, 0)")
+accept_pit_response = "res://audio/voice/narration/landing-coda-obey-response.ogg"
+refuse_pit_response = "res://audio/voice/narration/landing-coda-refuse.ogg"
+surrender_to_pit_response = "res://audio/voice/narration/pit-surrender.ogg"
+trapped_poem = "res://audio/voice/narration/trapped.ogg"
+trapped_response = "res://audio/voice/narration/trapped-response.ogg"
+metadata/_custom_type_script = "uid://bm0e0mu7y7xpn"
