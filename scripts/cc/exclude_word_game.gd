@@ -13,8 +13,11 @@ const _MAX_WORD_LENGTH: int = 12
 @export var guess_correct_volume: float = 0.6
 @export var guess_wrong_sfx: String = "res://audio/sfx/take_damage.ogg"
 @export var guess_wrong_volume: float = 1.0
+@export var reward_sound: String = "res://audio/sfx/roar_02.ogg"
+@export var reward_sound_volume: float = 1.0
 @export var battle_music: String = "res://audio/music/Boss Battle 10 - OPL - LOOP.ogg"
 @export var crossfade_time: float = 0.5
+
 
 var _enemies: Array[GridEnemy]
 var _player: GridPlayer
@@ -418,4 +421,5 @@ func _reward_fight_end() -> void:
     print_debug("[Exclude Word Game] Rewarding player with '%s'" % reward)
 
     _used_rewards.append(reward)
-    __SignalBus.on_reward_message.emit(reward)
+    __AudioHub.play_sfx(reward_sound, reward_sound_volume)
+    __SignalBus.on_reward_message.emit("- %s" % reward)

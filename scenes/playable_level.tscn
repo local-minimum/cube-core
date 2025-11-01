@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=21 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="15_l2weq"]
 [ext_resource type="PackedScene" uid="uid://ngdx83l2y2oh" path="res://scenes/story_text.tscn" id="18_l2weq"]
 [ext_resource type="Script" uid="uid://liai8tbelc0r" path="res://scripts/cc/intro.gd" id="19_subuw"]
+[ext_resource type="Script" uid="uid://uks443arie0d" path="res://scripts/cc/orbiter.gd" id="20_4bpgt"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -223,6 +224,16 @@ offset_bottom = 166.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Intro Manager" type="Node" parent="."]
+[node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas")]
 script = ExtResource("19_subuw")
-start_cinematic = false
+center = Vector3(0, -50, 0)
+orbiter = NodePath("Orbiter")
+orbit_start = Vector3(110, 30, 20)
+orbit = Vector3(-1, 0.8, 0.4)
+orbit_speed = 0.01
+ui_canvas = NodePath("../HUD")
+
+[node name="Orbiter" type="Node3D" parent="Intro Manager"]
+script = ExtResource("20_4bpgt")
+managed = true
+metadata/_custom_type_script = "uid://uks443arie0d"

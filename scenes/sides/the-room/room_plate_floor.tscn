@@ -46,6 +46,7 @@ metadata/_custom_type_script = "uid://bsjvh2o2oob57"
 [node name="PressurePlate" type="Node3D" parent="." node_paths=PackedStringArray("_swapping_mesh")]
 script = ExtResource("6_lx43s")
 infer_trigger_side = true
+_activation_sound_volume = 0.5
 _swapping_mesh = NodePath("../Side Mesh")
 _swap_active_texture = ExtResource("3_34m3o")
 _swap_inactive_texture = ExtResource("7_1i5vv")
