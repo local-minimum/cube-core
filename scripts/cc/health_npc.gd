@@ -42,7 +42,7 @@ func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
                 push_error("Failed to connect on complete sacrifice")
 
 
-func _handle_complete_sacrifice() -> void:
+func _handle_complete_sacrifice(_letter: String) -> void:
     disable_root.queue_free()
 
     if __SignalBus.on_complete_sacrifice.is_connected(_handle_complete_sacrifice):

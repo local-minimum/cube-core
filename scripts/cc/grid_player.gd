@@ -13,6 +13,7 @@ class_name GridPlayer
 @export var min_foot_volume: float = 0.3
 @export var max_foot_volume: float = 0.35
 @export var exploration_music: String = "res://audio/music/Death Waltz - OPL Loop.ogg"
+@export var no_health_sound: String = "res://audio/sfx/hit_10.ogg"
 @export var crossfade_time: float = 0.5
 
 static var playing_exploration_music = false
@@ -68,6 +69,7 @@ func hurt(amount: int = 1) -> void:
     health -= amount
     __SignalBus.on_hurt_player.emit(self, amount)
     if health == 0:
+        __AudioHub.play_sfx(no_health_sound)
         __SignalBus.on_start_sacrifice.emit(self)
 
 func heal(amount: int) -> void:

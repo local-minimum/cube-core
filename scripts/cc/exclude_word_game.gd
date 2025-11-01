@@ -117,7 +117,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _handle_start_sacrifice(__player: GridPlayer) -> void:
     _sacrificing = true
 
-func _handle_complete_sacrifice() -> void:
+func _handle_complete_sacrifice(_letter: String) -> void:
     if _playing:
         __AudioHub.play_music(battle_music, crossfade_time)
 

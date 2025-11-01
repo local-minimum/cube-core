@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=74 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -67,6 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://brdwygkej57nl" path="res://scenes/sides/the-room/room_door.tscn" id="35_30hdq"]
 [ext_resource type="PackedScene" uid="uid://ci5dh4f50umf0" path="res://scenes/sides/ui-maze/maze_door_internal.tscn" id="43_5ga6x"]
 [ext_resource type="PackedScene" uid="uid://8qm5lmt5657s" path="res://scenes/sides/ui-maze/maze_window.tscn" id="44_nj2gj"]
+[ext_resource type="Script" uid="uid://dg2tkxuuyitqr" path="res://scripts/cc/poem_event.gd" id="47_d5irf"]
 [ext_resource type="Script" uid="uid://bm0e0mu7y7xpn" path="res://scripts/cc/landing_area_manager.gd" id="68_jydfl"]
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 
@@ -1850,6 +1851,15 @@ direction = 4
 [node name="Side UP" parent="Geometry/Elevation 0/Node (0, 0, -4)" instance=ExtResource("7_3ies3")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (0, 0, -4)" instance=ExtResource("6_wu01b")]
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, -4)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/end.ogg"
+poem_response = "res://audio/voice/narration/end-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (0, 0, -5)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.5)
@@ -4145,6 +4155,15 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-4, 0, 1)" instance=ExtResource("19_u0n8q")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 0/Node (-4, 0, 1)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/closetoend.ogg"
+poem_response = "res://audio/voice/narration/closetoend-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
+
 [node name="Node (-4, 0, 0)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
 coordinates = Vector3i(-4, 0, 0)
@@ -4266,6 +4285,15 @@ direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-5, 0, 1)" instance=ExtResource("19_u0n8q")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 0/Node (-5, 0, 1)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/closetoend.ogg"
+poem_response = "res://audio/voice/narration/closetoend-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (-5, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -2.5)
@@ -6044,6 +6072,15 @@ direction = 4
 [node name="Side UP" parent="Geometry/Elevation 1/Node (7, 1, -8)" instance=ExtResource("29_7iqcu")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (7, 1, -8)" instance=ExtResource("10_421lv")]
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -8)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/floating-islands.ogg"
+poem_response = "res://audio/voice/narration/floating-islands-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (7, 1, -7)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 2.5, -17.5)
@@ -35375,6 +35412,15 @@ coordinates = Vector3i(-8, 5, -4)
 
 [node name="Side NORTH" parent="Geometry/Elevation 5/Node (-8, 5, -4)" instance=ExtResource("24_c1pbi")]
 
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 5/Node (-8, 5, -4)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/npc.ogg"
+poem_response = "res://audio/voice/narration/npc-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
+
 [node name="Node (-8, 5, -3)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 12.5, -7.5)
 coordinates = Vector3i(-8, 5, -3)
@@ -35412,6 +35458,15 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 5/Node (-7, 5, -3)" instance=ExtResource("20_q4oe8")]
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 5/Node (-7, 5, -3)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/npc.ogg"
+poem_response = "res://audio/voice/narration/npc-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (-7, 5, -2)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 12.5, -5)
@@ -37066,6 +37121,15 @@ coordinates = Vector3i(-7, 6, -4)
 [node name="Side EAST" parent="Geometry/Elevation 6/Node (-7, 6, -4)" instance=ExtResource("17_asl66")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 6/Node (-7, 6, -4)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/npc.ogg"
+poem_response = "res://audio/voice/narration/npc-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (-7, 6, -3)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 15, -7.5)
@@ -39791,6 +39855,15 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("28_iafhg")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -10)" instance=ExtResource("30_cr74b")]
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 8/Node (-6, 8, -10)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/windows.ogg"
+poem_response = "res://audio/voice/narration/windows-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (-5, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -25)
@@ -55433,3 +55506,9 @@ hurt_walk_poem = "res://audio/voice/narration/walk-loosin-health.ogg"
 hurt_walk_response = "res://audio/voice/narration/walk-loosin-health-response.ogg"
 nohurt_walk_poem = "res://audio/voice/narration/walkin-back.ogg"
 nohurt_walk_response = "res://audio/voice/narration/walkin-back-response.ogg"
+no_health_poem = "res://audio/voice/narration/zerohealth.ogg"
+no_health_response = "res://audio/voice/narration/zerohealth-response.ogg"
+sacrifice_poem = "res://audio/voice/narration/sacrifice.ogg"
+sacrifice_poem_response = "res://audio/voice/narration/sacrifice-response.ogg"
+sacrifice_e_poem = "res://audio/voice/narration/sacrifice-e.ogg"
+sacrifice_e_poem_response = "res://audio/voice/narration/sacrifice-e-response.ogg"

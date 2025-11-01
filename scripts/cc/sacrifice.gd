@@ -132,6 +132,7 @@ func _unhandled_input(event: InputEvent) -> void:
                 _handle_sacrifice_letter()
 
 func _handle_sacrifice_letter() -> void:
+    var letter: String = _sacrificial_letter
     __GlobalGameState.lost_letters = "".join([__GlobalGameState.lost_letters, _sacrificial_letter])
     _player.heal(_get_sacrifice_value(_sacrificial_letter))
     hide()
@@ -140,7 +141,7 @@ func _handle_sacrifice_letter() -> void:
     _sacrificial_letter = ""
     _player.cinematic = _entered_cinematic
 
-    __SignalBus.on_complete_sacrifice.emit()
+    __SignalBus.on_complete_sacrifice.emit(letter)
 
 func _offer_letter(letter: String) -> void:
     if letter.length() == 1:

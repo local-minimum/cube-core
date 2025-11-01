@@ -16,7 +16,7 @@ signal on_track_back_on_trail(player: GridPlayer, steps: int)
 
 signal on_start_sacrifice(player: GridPlayer)
 signal on_start_offer(player: GridPlayer)
-signal on_complete_sacrifice()
+signal on_complete_sacrifice(letter: String)
 
 signal on_activate_player_hunt(id: String)
 @warning_ignore_restore("unused_signal")
