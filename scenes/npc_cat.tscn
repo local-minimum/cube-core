@@ -55,10 +55,12 @@ _data = {
 &"RESET": SubResource("Animation_6dbve")
 }
 
-[node name="NPC Cat" type="Node3D" node_paths=PackedStringArray("player", "greenery_subzone_locations")]
+[node name="NPC Cat" type="Node3D" node_paths=PackedStringArray("anim_player", "player", "greenery_subzone_locations")]
 script = ExtResource("1_br55f")
+anim_player = NodePath("AnimationPlayer")
 calling_sounds = Array[String](["res://audio/voice/cat/bosse3_2.mp3"])
 greeting_sounds = Array[String](["res://audio/voice/cat/bosse1.mp3", "res://audio/voice/cat/bosse2_2.mp3"])
+petting_dialogue = Array[String](["res://audio/voice/narration/pet1.ogg", "res://audio/voice/narration/pet2.ogg", "res://audio/voice/narration/pet3.ogg"])
 player = NodePath("AudioStreamPlayer3D")
 greenery_subzone_locations = {
 "first": null,

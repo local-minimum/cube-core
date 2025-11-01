@@ -12,6 +12,8 @@ enum Phase { NONE, CENTERING, ORIENTING, FLYING, CRASHING }
 @export var _crashes_entity_down: bool = false
 @export var _crash_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
 
+@export var _activation_sound: String
+
 static var _managed_entities: Dictionary[GridEntity, Catapult]
 static var _entity_phases: Dictionary[GridEntity, Phase]
 static var _prev_coordinates: Dictionary[GridEntity, Vector3i]
@@ -251,6 +253,8 @@ func trigger(entity: GridEntity, _movement: Movement.MovementType) -> void:
 
     if !_managed_entities.has(entity):
         _claim_entity(entity)
+        if !_activation_sound.is_empty():
+            __AudioHub.play_sfx(_activation_sound)
     else:
         _claim_entity.call_deferred(entity)
 

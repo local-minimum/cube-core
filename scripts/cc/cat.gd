@@ -1,6 +1,8 @@
 extends GridEntity
 class_name Cat
 
+@export var anim_player: AnimationPlayer
+
 @export var calling_sounds: Array[String]
 @export var greeting_sounds: Array[String]
 @export var petting_dialogue: Array[String]
@@ -27,6 +29,8 @@ var _hiding: bool
 
 func _ready() -> void:
     super._ready()
+
+    anim_player.play("Idle")
 
     if __SignalBus.on_cat_zone_entry.connect(_handle_zone_entry) != OK:
         push_error("Failed to connect to zone entry")

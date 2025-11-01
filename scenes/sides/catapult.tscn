@@ -55,6 +55,7 @@ size = Vector2(0.2, 0.2)
 script = ExtResource("1_gn8pf")
 _orient_entity = true
 _crashes_entity_down = true
+_activation_sound = "res://audio/sfx/noise_03.ogg"
 _activator = 2
 _trigger_sides = Array[int]([3])
 metadata/_custom_type_script = "uid://bsq3w1gkh4e0j"

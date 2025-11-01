@@ -2,6 +2,7 @@ extends Node
 
 @export var start_cinematic: bool = true
 @export var intro_music: String = "res://audio/music/Death Waltz - OPL Loop.ogg"
+@export var censor_noise: String = "res://audio/sfx/noise_03.ogg"
 @export var music_fade_duration: float = 3
 @export var intro_poem: String = ""
 @export var response_delay: float = 0.5
@@ -79,9 +80,10 @@ func _process(_delta: float) -> void:
             orbiter.target.global_transform = orbiter.target.global_transform.looking_at(player.global_position)
 
         if title_canvas.visible && Time.get_ticks_msec() > _next_censor:
-            _next_censor = Time.get_ticks_msec() + _censor_interval
+            _next_censor = Time.get_ticks_msec() + _censor_interval + randi_range(0, 200)
             _alphabet.shuffle()
             var censor: String = "".join(_alphabet.slice(0, randi_range(1, 5)))
+            __AudioHub.play_sfx(censor_noise, randf_range(0.1, 0.2))
             title_label.censored_letters = censor
             press_to_start_label.censored_letters = censor
 

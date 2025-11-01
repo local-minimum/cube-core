@@ -43,6 +43,9 @@ static func phase_from_int(phase_value: int) -> Phase:
 @export var _crush_anim: String = "Crush"
 @export var _retract_anim: String = "Retract"
 
+@export var _crushing_sound: String
+@export var _crushed_sound: String
+
 ## In many cases you want this live, especially when managed
 @export var _live: LiveMode = LiveMode.TURN_BASED
 @export var _live_tick_duration_msec: int = 500
@@ -135,6 +138,9 @@ func _handle_toggle() -> void:
             _last_tick = Time.get_ticks_msec()
     elif _phase == Phase.RETRACTED || _phase == Phase.RETRACTING:
         _phase = Phase.CRUSHING
+        if !_crushing_sound.is_empty():
+            __AudioHub.play_sfx(_crushing_sound)
+
         if _add_anchors_when_extended && !_extended_anchors_active:
             _add_extended_anchors()
         _anim.play(get_animation())
@@ -240,10 +246,14 @@ func get_next_phase() -> Phase:
 
             return Phase.CRUSHING
         Phase.CRUSHING:
+            if !_crushing_sound.is_empty():
+                __AudioHub.play_sfx(_crushing_sound)
             if _add_anchors_when_extended && !_extended_anchors_active:
                 _add_extended_anchors()
             return Phase.CRUSHED
         Phase.CRUSHED:
+            if !_crushed_sound.is_empty():
+                __AudioHub.play_sfx(_crushed_sound)
             if _add_anchors_when_extended && !_extended_anchors_active:
                 _add_extended_anchors()
 

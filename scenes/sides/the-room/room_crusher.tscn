@@ -124,6 +124,7 @@ _side = NodePath("..")
 _moving_part_root = NodePath(".")
 _always_block_crusher_side = false
 _anim = NodePath("../AnimationPlayer")
+_crushing_sound = "res://audio/sfx/effect_13.ogg"
 _live = 3
 _add_anchors_when_extended = true
 

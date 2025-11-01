@@ -100,7 +100,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-11, 2, -2)/LevelPortal Greenery")
+primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -29967,6 +29967,14 @@ coordinates = Vector3i(1, 2, 8)
 
 [node name="KeyLoot" parent="Geometry/Elevation 2/Node (1, 2, 8)" instance=ExtResource("10_7agi7")]
 
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 8)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/fork.ogg"
+poem_response = "res://audio/voice/narration/fork-response.ogg"
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
+
 [node name="Node (1, 2, 9)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 22.5)
 coordinates = Vector3i(1, 2, 9)
@@ -55641,7 +55649,7 @@ hunting_activation_id = "final-1"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
 
 [node name="NPC Cat" parent="." node_paths=PackedStringArray("spawn_room", "greenery_subzone_locations", "room_location") instance=ExtResource("73_smfc2")]
-spawn_room = NodePath("../Geometry/Elevation -1/Node (1, -1, 1)")
+spawn_room = NodePath("../Geometry/Elevation -1/Node (3, -1, 0)")
 greenery_subzone_locations = {
 "first": NodePath("../Geometry/Elevation 6/Node (-8, 6, -10)"),
 "second": NodePath("../Geometry/Elevation 6/Node (-10, 6, -13)"),

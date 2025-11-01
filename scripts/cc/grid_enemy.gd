@@ -16,6 +16,7 @@ var lives: int:
 @export var hurt_on_fight_start: int = 3
 @export var hurt_on_guess_wrong: int = 15
 
+@export var start_hunt_sound: String = "res://audio/sfx/swoosh_02.ogg"
 @export var activation_sounds: Array[String] = [
     "res://audio/sfx/roar_01.ogg",
     "res://audio/sfx/roar_02.ogg",
@@ -47,6 +48,8 @@ var _may_move: bool
 
 func _handle_activate_hunting(id: String) -> void:
     if id == hunting_activation_id:
+        if !hunting:
+            __AudioHub.play_sfx(start_hunt_sound, 0.3)
         hunting = true
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
