@@ -3,16 +3,24 @@ class_name LandingAreaManager
 
 @export var pit_entry_node: GridNode
 @export var pit_trapped_node: GridNode
+@export var door_node: GridNode
+@export var door_direction: CardinalDirections.CardinalDirection
+
 @export var accept_pit_response: String
 @export var refuse_pit_response: String
 @export var surrender_to_pit_response: String
+
 @export var trapped_poem: String
 @export var trapped_response: String
+
+@export var door_poem: String
+@export var door_response: String
 
 
 var played_entry: bool
 var played_refuse: bool
 var played_trapped: bool
+var played_door: bool
 
 var move_count: int
 
@@ -42,6 +50,14 @@ func _handle_change_node(feature: GridNodeFeature) -> void:
         played_trapped = true
         __AudioHub.play_dialogue(trapped_poem, _play_trapped_response)
 
+    elif !played_door && door_node.coordinates == player.coordinates() && player.look_direction == door_direction:
+        played_door = true
+        __AudioHub.play_dialogue(door_poem, _play_door_response)
+
 func _play_trapped_response() -> void:
     await get_tree().create_timer(0.3).timeout
     __AudioHub.play_dialogue(trapped_response)
+
+func _play_door_response() -> void:
+    await get_tree().create_timer(0.3).timeout
+    __AudioHub.play_dialogue(door_response)

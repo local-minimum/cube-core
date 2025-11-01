@@ -55406,13 +55406,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.25, -12.5)
 hunting_activation_id = "final-1"
 spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
 
-[node name="LandingAreaManager" type="Node" parent="." node_paths=PackedStringArray("pit_entry_node", "pit_trapped_node")]
+[node name="LandingAreaManager" type="Node" parent="." node_paths=PackedStringArray("pit_entry_node", "pit_trapped_node", "door_node")]
 script = ExtResource("68_jydfl")
 pit_entry_node = NodePath("../Geometry/Elevation 2/Node (-15, 2, 0)")
 pit_trapped_node = NodePath("../Geometry/Elevation 2/Node (-12, 2, 0)")
+door_node = NodePath("../Geometry/Elevation 2/Node (-11, 2, -1)")
 accept_pit_response = "res://audio/voice/narration/landing-coda-obey-response.ogg"
 refuse_pit_response = "res://audio/voice/narration/landing-coda-refuse.ogg"
 surrender_to_pit_response = "res://audio/voice/narration/pit-surrender.ogg"
 trapped_poem = "res://audio/voice/narration/trapped.ogg"
 trapped_response = "res://audio/voice/narration/trapped-response.ogg"
+door_poem = "res://audio/voice/narration/door.ogg"
+door_response = "res://audio/voice/narration/door-response.ogg"
 metadata/_custom_type_script = "uid://bm0e0mu7y7xpn"
