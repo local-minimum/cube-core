@@ -19,4 +19,7 @@ signal on_start_offer(player: GridPlayer)
 signal on_complete_sacrifice(letter: String)
 
 signal on_activate_player_hunt(id: String)
+
+signal on_cat_zone_entry(zone: String)
+signal on_cat_zone_exit(zone: String)
 @warning_ignore_restore("unused_signal")
