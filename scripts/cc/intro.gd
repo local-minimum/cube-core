@@ -89,7 +89,9 @@ func _process(_delta: float) -> void:
 
     if _awaiting_landing:
         var vec: Vector3 = (orbiter.target.global_position - player.global_position).normalized()
-        if vec.dot(land_sequence_detector.normalized()) > landing_start_threshold:
+        var value: float =vec.dot(land_sequence_detector.normalized())
+        # print_debug("[Intro] V %s -> %s" % [vec, value])
+        if value > landing_start_threshold:
             _awaiting_landing = false
             _start_landing()
 
@@ -130,14 +132,14 @@ func _handle_poem_done() -> void:
 func _wait_for_landing_trigger() -> void:
     _awaiting_landing = true
 
-    await get_tree().create_timer(0.5).timeout
+    await get_tree().create_timer(2).timeout
 
     __AudioHub.play_dialogue(landing_poem, _landing_response)
 
 func _start_landing() -> void:
     orbiter.disabled = true
 
-    await get_tree().create_timer(4).timeout
+    await get_tree().create_timer(1).timeout
 
     var tween: Tween = create_tween()
 
@@ -164,6 +166,7 @@ func _finalize_landing() -> void:
     player.camera.global_position = _cam_position
     player.camera.global_rotation = _cam_rotation
     player.cinematic = false
+    ui_canvas.show()
     __GlobalGameState.lost_letters = ""
     _oribing = false
 
