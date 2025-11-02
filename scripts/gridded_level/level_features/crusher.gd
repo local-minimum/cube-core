@@ -213,6 +213,9 @@ func _check_crushing() -> void:
                 neighbour = node.neighbour(crush_direction)
 
     for exposed: GridEntity in _exposed:
+        if exposed == null || !is_instance_valid(exposed) || !exposed.is_inside_tree():
+            continue
+
         var moved: bool = false
 
         if (

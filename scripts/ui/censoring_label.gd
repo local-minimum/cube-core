@@ -84,10 +84,13 @@ func _sync_width() -> void:
             _sync_horisontally.call_deferred(width)
 
 func _sync_horisontally(width: float) -> void:
+    if !is_inside_tree():
+        return
+
     if center_horisontally:
         var parent: Node = get_parent()
         var parent_width: float
-        if parent is Control:
+        if parent is Control && is_instance_valid(parent):
             var c_parent: Control = parent
             parent_width = c_parent.get_rect().size.x
         else:

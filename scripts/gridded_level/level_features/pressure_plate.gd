@@ -125,6 +125,9 @@ func load_save_data(_data: Dictionary) -> void:
     var coords: Vector3i = coordinates()
 
     for entity: GridEntity in level.grid_entities:
+        if entity == null || !is_instance_valid(entity) || !entity.is_inside_tree():
+            continue
+
         if entity.coordinates() == coords && _trigger_sides.has(entity.get_grid_anchor_direction()):
             _triggering.append(entity)
 

@@ -17,6 +17,9 @@ var disabled: bool:
     set(value):
         if !disabled && value:
             for entity: GridEntity in get_grid_node().get_level().grid_entities:
+                if entity == null || !is_instance_valid(entity) || !entity.is_inside_tree():
+                    continue
+
                 if entity.get_grid_anchor() == self:
                     # TODO: This might not actually work
                     entity.force_movement(Movement.MovementType.CENTER)

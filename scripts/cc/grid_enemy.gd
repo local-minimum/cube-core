@@ -77,6 +77,9 @@ func _get_occupied_by_enemy_filter() -> Callable:
 
         return get_level().grid_entities.any(
             func (entity: GridEntity) -> bool:
+                if entity == null || !is_instance_valid(entity) || !entity.is_inside_tree():
+                    return false
+
                 if entity is not GridEnemy:
                     return false
 

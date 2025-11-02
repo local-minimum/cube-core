@@ -29648,7 +29648,7 @@ direction = 4
 
 [node name="Catapult" parent="Geometry/Elevation 2/Node (7, 2, 5)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
-_crash_direction = 2
+_crash_direction = 6
 _trigger_entire_node = true
 _trigger_sides = Array[int]([1])
 

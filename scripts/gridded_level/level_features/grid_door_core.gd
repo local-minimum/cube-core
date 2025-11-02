@@ -380,5 +380,8 @@ func load_save_data(data: Dictionary) -> void:
     if _close_automation == CloseAutomation.PROXIMITY:
         var coords: Vector3i = coordinates()
         for entity: GridEntity in get_level().grid_entities:
+            if entity == null || !is_instance_valid(entity) || !entity.is_inside_tree():
+                continue
+
             if entity != null && coords == entity.coordinates():
                 _monitor_entity_for_proximity_closing(entity)

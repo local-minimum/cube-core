@@ -44,7 +44,7 @@ static func release_from_catapult(entity: GridEntity, remove_cinematic: bool = f
 
     return catapult
 
-func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, crash_player: bool = false) -> void:
+func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, crash_player: bool = true) -> void:
     if !_managed_entities.erase(entity):
         push_warning("Could not remove entity '%s' as held though it should have been there" % entity.name)
 

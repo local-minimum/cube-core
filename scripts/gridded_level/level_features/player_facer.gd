@@ -103,6 +103,8 @@ func _update_position_and_rotation(interpolate: bool = true) -> void:
     var level: GridLevelCore = get_level()
     if level == null || level.player == null || level.player.camera == null || subject == null:
         return
+    if !is_instance_valid(self) || !is_instance_valid(level) || !is_instance_valid(level.player):
+        return
 
     if offset_if_on_same_tile && level.player.coordinates() == coordinates():
         var target: Vector3 = _local_anchor_position - offset_amount * level.node_size * level.player.camera.global_basis.z
