@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=81 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://0br4acjbdk1b" path="res://scenes/sides/final-challenge/final_ceiling.tscn" id="20_d5irf"]
 [ext_resource type="PackedScene" uid="uid://c5402sxoyyywf" path="res://scenes/sides/greenery/grassbrick_floor.tscn" id="20_q4oe8"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/industry-zone/brick_ceiling.tscn" id="23_om2me"]
+[ext_resource type="PackedScene" uid="uid://bauhrkgcuuclt" path="res://scenes/end_blob.tscn" id="23_u5upv"]
 [ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
 [ext_resource type="PackedScene" uid="uid://dvr7wej8v1do" path="res://scenes/sides/greenery/grassbrick_wall.tscn" id="24_c1pbi"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/industry-zone/brick_floor.tscn" id="24_iij8i"]
@@ -1794,6 +1795,9 @@ coordinates = Vector3i(0, 0, -1)
 
 [node name="Node (0, 0, 0)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 
+[node name="End Blob" parent="Geometry/Elevation 0/Node (0, 0, 0)" instance=ExtResource("23_u5upv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
 [node name="Node (0, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
 coordinates = Vector3i(0, 0, 1)
@@ -1908,6 +1912,8 @@ metadata/_custom_type_script = "uid://b6p7xcjq7u3tw"
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/end.ogg"
 poem_response = "res://audio/voice/narration/end-response.ogg"
+enqueue_if_busy = false
+silence_others = true
 _activator = 2
 _repeatable = false
 _trigger_entire_node = true

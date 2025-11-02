@@ -35,7 +35,7 @@ static func fade_in_out(
     if fader == null:
         push_warning("Lacking fader %s" % name_target(fade_target))
     else:
-        fader._fade(on_midways, on_complete, color, true, duration_factor)
+        fader._fade(on_midways, on_complete, color, true, true, duration_factor)
 
 ## Starts active and goes away
 static func fade_out(
@@ -47,7 +47,18 @@ static func fade_out(
     if fader == null:
         push_warning("Lacking fader %s" % name_target(fade_target))
     else:
-        fader._fade(null, on_complete, fader.solid_color, false, duration_factor)
+        fader._fade(null, on_complete, fader.solid_color, false, true, duration_factor)
+
+static func fade_in(
+    fade_target: FadeTarget = FadeTarget.EXPLORATION_VIEW,
+    on_complete: Variant = null,
+    duration_factor: float = 1.0
+) -> void:
+    var fader: FaderUI = _faders.get(fade_target)
+    if fader == null:
+        push_warning("Lacking fader %s" % name_target(fade_target))
+    else:
+        fader._fade(null, on_complete, null, true, false, duration_factor)
 
 var tween: Tween
 
@@ -69,6 +80,7 @@ func _fade(
     on_complete: Variant = null,
     override_color: Variant = null,
     do_fade_in: bool = true,
+    do_fade_out: bool = true,
     duration_factor: float = 1.0,
 ) -> void:
     if tween != null:
@@ -122,18 +134,20 @@ func _fade(
             faded_duration,
         )
 
-
-    tween.tween_property(
-        color_rect,
-        "color",
-        transparent_color,
-        ease_duration * duration_factor,
-    ).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-    @warning_ignore_restore("return_value_discarded")
+    if do_fade_out:
+        tween.tween_property(
+            color_rect,
+            "color",
+            transparent_color,
+            ease_duration * duration_factor,
+        ).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+        @warning_ignore_restore("return_value_discarded")
 
     if tween.connect("finished", func () -> void:
-        color_rect.visible = false
-        color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+        if do_fade_out:
+            color_rect.visible = false
+            color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
         if on_complete != null && on_complete is Callable:
             @warning_ignore_start("unsafe_cast")
             (on_complete as Callable).call()
@@ -143,8 +157,10 @@ func _fade(
 
         tween.kill()
 
-        color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-        color_rect.visible = false
+        if do_fade_out:
+            color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+            color_rect.visible = false
+
         if on_complete != null && on_complete is Callable:
             @warning_ignore_start("unsafe_cast")
             (on_complete as Callable).call()

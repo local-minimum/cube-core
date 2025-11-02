@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=23 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://liai8tbelc0r" path="res://scripts/cc/intro.gd" id="19_subuw"]
 [ext_resource type="Script" uid="uid://uks443arie0d" path="res://scripts/cc/orbiter.gd" id="20_4bpgt"]
 [ext_resource type="Script" uid="uid://b8eg248j7jnfr" path="res://scripts/ui/effects/fader_ui.gd" id="21_20guh"]
+[ext_resource type="Script" uid="uid://cqtinggwxxad5" path="res://scripts/cc/end_and_credits.gd" id="22_hl18a"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -321,6 +322,299 @@ font = ExtResource("3_7s1ja")
 color = Color(0.93681306, 0.34910473, 0.75913596, 1)
 baseline_height = 2
 y_alignment_offset = -140
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="End Screen And Credits" type="CanvasLayer" parent="." node_paths=PackedStringArray("labels")]
+layer = 220
+script = ExtResource("22_hl18a")
+labels = [NodePath("The End"), NodePath("Game Design"), NodePath("Programming"), NodePath("Voice Acting"), NodePath("Poems"), NodePath("Other Text"), NodePath("Asset Pack"), NodePath("Asset Pack Makers 1"), NodePath("Asset Pack Makers 2"), NodePath("Asset Pack Makers 3"), NodePath("Thanks")]
+roll_speed = -40.0
+roll_duration = 36.0
+
+[node name="The End" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "THE END"
+font_size = 144
+letter_spacing = -72
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 12
+y_alignment_offset = -144
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Game Design" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 340.0
+offset_right = 16.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "GAME DESIGN: LOCAL_MINIMUM"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Programming" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 404.0
+offset_right = 16.0
+offset_bottom = 444.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "PROGRAMMING: LOCAL_MINIMUM"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Voice Acting" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 468.0
+offset_right = 16.0
+offset_bottom = 508.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "VOICE: LOCAL_MINIMUM, BOSSE"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Poems" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 532.0
+offset_right = 16.0
+offset_bottom = 572.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "POEMS: IDA-SOFIA"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Other Text" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 596.0
+offset_right = 16.0
+offset_bottom = 636.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "OTHER TEXT: LOCAL_MINIMUM, PICA-PICA, SLIPPERS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Asset Pack" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 660.0
+offset_right = 16.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "ASSET PACK (SPRITES, MUSIC AND SFX):"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Asset Pack Makers 1" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 724.0
+offset_right = 16.0
+offset_bottom = 764.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "JIMBLY, DAVID YORK, ALEXANDER POLYAKOV"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Asset Pack Makers 2" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 788.0
+offset_right = 16.0
+offset_bottom = 828.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "LOCAL_MINIMUM, ROCKTAVIOUS, CIELOFORGE"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Asset Pack Makers 3" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 852.0
+offset_right = 16.0
+offset_bottom = 892.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "CAPTAIN CODER"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Thanks" type="Control" parent="End Screen And Credits"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 956.0
+offset_right = 16.0
+offset_bottom = 996.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("15_l2weq"), ExtResource("14_mew3k")])
+text = "THANKS FOR PLAYING"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.5275589, 0.6180074, 0.84113044, 1)
+baseline_height = 3
+y_alignment_offset = -36
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"

@@ -101,7 +101,7 @@ func _calculate_down() -> CardinalDirections.CardinalDirection:
 
 func _update_position_and_rotation(interpolate: bool = true) -> void:
     var level: GridLevelCore = get_level()
-    if level == null:
+    if level == null || level.player == null || level.player.camera == null || subject == null:
         return
 
     if offset_if_on_same_tile && level.player.coordinates() == coordinates():

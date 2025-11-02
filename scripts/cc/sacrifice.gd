@@ -18,6 +18,8 @@ class_name Sacrifice
 @export var offer_sfx: String = "res://audio/sfx/swoosh_01.ogg"
 @export var sacrifice_music: String = "res://audio/music/Music Box Sad 1 - OPL Loop.ogg"
 @export var crossfade_time: float = 0.5
+@export var regain_e_poem: String
+@export var regain_e_poem_response: String = "res://audio/voice/narration/regain_e_response.ogg"
 
 @export_group("Gains")
 @export var gain_npc: int = 120
@@ -41,6 +43,7 @@ var _sacrificial_letter: String
 var _player: GridPlayer
 var _entered_cinematic: bool
 var _allow_input_time: int
+var _exhausted_all_letters: bool
 
 func _enter_tree() -> void:
     if __SignalBus.on_start_sacrifice.connect(_handle_no_health) != OK:
@@ -76,16 +79,37 @@ func _handle_lost_letters(letters: String) -> void:
     alphabet.censored_letters = letters
 
 func show_sacrifice() -> void:
+    if _exhausted_all_letters:
+        __SignalBus.on_complete_sacrifice.emit("")
+        return
+
+    if alphabet.text.length() <= __GlobalGameState.lost_letters.length():
+        _exhausted_all_letters = true
+        var all_lost: Array[String] = []
+        all_lost.append_array(Array(__GlobalGameState.lost_letters.split()))
+        all_lost.erase("E")
+        __GlobalGameState.lost_letters = "".join(all_lost)
+        if !regain_e_poem.is_empty():
+            __AudioHub.play_dialogue(regain_e_poem, _handle_play_regain_e_response, true)
+        __SignalBus.on_complete_sacrifice.emit("")
+        return
+
     mode = Mode.SACRIFICE
     hint.text = hint_sacrifice
     _ready_ui()
+
+func _handle_play_regain_e_response() -> void:
+    await get_tree().create_timer(0.3).timeout
+
+    if !regain_e_poem_response.is_empty():
+        __AudioHub.play_dialogue(regain_e_poem_response)
 
 func show_offer() -> void:
     mode = Mode.NPC_OFFER
 
     if alphabet.text.length() <= __GlobalGameState.lost_letters.length():
         __SignalBus.on_reward_message.emit("No more value")
-        __SignalBus.on_complete_sacrifice.emit()
+        __SignalBus.on_complete_sacrifice.emit("")
         return
 
     hint.text = hint_npc.format({"health": gain_npc})

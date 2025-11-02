@@ -1,0 +1,338 @@
+[gd_scene load_steps=38 format=3 uid="uid://bauhrkgcuuclt"]
+
+[ext_resource type="Script" uid="uid://bs84n61lbmeth" path="res://scripts/cc/end_blob.gd" id="1_1p3cx"]
+[ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="3_3g6gw"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="4_qile1"]
+[ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="5_eqhwp"]
+[ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="6_hr05l"]
+[ext_resource type="Texture2D" uid="uid://bl7hnwegmx7g7" path="res://sprites/monsters2-85.png" id="7_bs215"]
+[ext_resource type="Texture2D" uid="uid://cm35vdl4hc60a" path="res://sprites/monsters2-84.png" id="9_7q32b"]
+[ext_resource type="Script" uid="uid://dexigkhejxn1h" path="res://scripts/gridded_level/level_features/player_facer.gd" id="10_650t5"]
+
+[sub_resource type="Curve" id="Curve_wc255"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.32637078, 0.79475844), 0.0, 0.0, 0, 0, Vector2(0.8067885, 0.6100411), -0.49784765, -0.49784765, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_arp2o"]
+texture_mode = 1
+curve = SubResource("Curve_wc255")
+
+[sub_resource type="Curve" id="Curve_c4w8v"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xwavj"]
+texture_mode = 1
+curve = SubResource("Curve_c4w8v")
+
+[sub_resource type="Curve" id="Curve_4ra3w"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5uy6h"]
+curve = SubResource("Curve_4ra3w")
+
+[sub_resource type="Curve" id="Curve_md484"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ipns3"]
+texture_mode = 1
+curve = SubResource("Curve_md484")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_arp2o"]
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_sphere_radius = 2.5
+spread = 180.0
+flatness = 1.0
+angular_velocity_min = -90.000015
+angular_velocity_max = 89.999985
+angular_velocity_curve = SubResource("CurveTexture_xwavj")
+orbit_velocity_min = -0.049999908
+orbit_velocity_max = 0.050000098
+orbit_velocity_curve = SubResource("CurveTexture_5uy6h")
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ipns3")
+alpha_curve = SubResource("CurveTexture_arp2o")
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+turbulence_noise_scale = 0.5
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = -0.4999985
+turbulence_initial_displacement_max = 0.5000015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fpun6"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.719266, 0.53708524, 0.27966532, 1)
+albedo_texture = ExtResource("3_3g6gw")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_82cfe"]
+material = SubResource("StandardMaterial3D_fpun6")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="Curve" id="Curve_w8i8w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_otmr2"]
+texture_mode = 1
+curve = SubResource("Curve_w8i8w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nenq2"]
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_sphere_radius = 1.5
+spread = 180.0
+flatness = 1.0
+angular_velocity_min = -90.000015
+angular_velocity_max = 89.999985
+angular_velocity_curve = SubResource("CurveTexture_xwavj")
+orbit_velocity_min = -0.049999908
+orbit_velocity_max = 0.050000098
+orbit_velocity_curve = SubResource("CurveTexture_5uy6h")
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_otmr2")
+alpha_curve = SubResource("CurveTexture_arp2o")
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+turbulence_noise_scale = 0.5
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = -0.4999985
+turbulence_initial_displacement_max = 0.5000015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md484"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.30245847, 0.6321018, 0.37892875, 1)
+albedo_texture = ExtResource("4_qile1")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_ipns3"]
+material = SubResource("StandardMaterial3D_md484")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="Curve" id="Curve_8qclf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w8i8w"]
+texture_mode = 1
+curve = SubResource("Curve_8qclf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_md484"]
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_sphere_radius = 1.0
+spread = 180.0
+flatness = 1.0
+angular_velocity_min = -90.000015
+angular_velocity_max = 89.999985
+angular_velocity_curve = SubResource("CurveTexture_xwavj")
+orbit_velocity_min = -0.049999908
+orbit_velocity_max = 0.050000098
+orbit_velocity_curve = SubResource("CurveTexture_5uy6h")
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_w8i8w")
+alpha_curve = SubResource("CurveTexture_arp2o")
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+turbulence_noise_scale = 0.5
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = -0.4999985
+turbulence_initial_displacement_max = 0.5000015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipns3"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.48307472, 0.5746136, 0.854363, 1)
+albedo_texture = ExtResource("5_eqhwp")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_8qclf"]
+material = SubResource("StandardMaterial3D_ipns3")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="Curve" id="Curve_ipns3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8qclf"]
+texture_mode = 1
+curve = SubResource("Curve_ipns3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w8i8w"]
+lifetime_randomness = 0.48
+emission_shape = 2
+emission_sphere_radius = 2.0
+spread = 180.0
+flatness = 1.0
+angular_velocity_min = -90.000015
+angular_velocity_max = 89.999985
+angular_velocity_curve = SubResource("CurveTexture_xwavj")
+orbit_velocity_min = -0.049999908
+orbit_velocity_max = 0.050000098
+orbit_velocity_curve = SubResource("CurveTexture_5uy6h")
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_8qclf")
+alpha_curve = SubResource("CurveTexture_arp2o")
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+turbulence_noise_scale = 0.5
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = -0.4999985
+turbulence_initial_displacement_max = 0.5000015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_otmr2"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.36, 0.36, 1)
+albedo_texture = ExtResource("6_hr05l")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_wtq4b"]
+material = SubResource("StandardMaterial3D_otmr2")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="Animation" id="Animation_1p3cx"]
+resource_name = "Idle"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("9_7q32b"), ExtResource("7_bs215")]
+}
+
+[sub_resource type="Animation" id="Animation_7h5ep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_7q32b")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ioauh"]
+_data = {
+&"Idle": SubResource("Animation_1p3cx"),
+&"RESET": SubResource("Animation_7h5ep")
+}
+
+[node name="End Blob" type="Node3D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_1p3cx")
+player = NodePath("Mushroom 1/AnimationPlayer")
+
+[node name="Tier 1" type="GPUParticles3D" parent="."]
+amount = 150
+lifetime = 8.0
+randomness = 1.0
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_arp2o")
+draw_pass_1 = SubResource("QuadMesh_82cfe")
+
+[node name="Tier 2" type="GPUParticles3D" parent="."]
+amount = 120
+lifetime = 8.0
+randomness = 1.0
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_nenq2")
+draw_pass_1 = SubResource("QuadMesh_ipns3")
+
+[node name="Tier 3" type="GPUParticles3D" parent="."]
+amount = 40
+lifetime = 8.0
+randomness = 1.0
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_md484")
+draw_pass_1 = SubResource("QuadMesh_8qclf")
+
+[node name="Tier 4" type="GPUParticles3D" parent="."]
+amount = 200
+lifetime = 8.0
+randomness = 1.0
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_w8i8w")
+draw_pass_1 = SubResource("QuadMesh_wtq4b")
+
+[node name="Mushroom 1" type="Sprite3D" parent="."]
+pixel_size = 0.1
+texture_filter = 0
+texture = ExtResource("9_7q32b")
+
+[node name="PlayerFacer" type="Node3D" parent="Mushroom 1" node_paths=PackedStringArray("subject")]
+script = ExtResource("10_650t5")
+subject = NodePath("..")
+use_look_direction_for_rotation = true
+use_parent_for_down = false
+metadata/_custom_type_script = "uid://dexigkhejxn1h"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mushroom 1"]
+libraries = {
+&"": SubResource("AnimationLibrary_ioauh")
+}
+next/Idle = &"Idle"

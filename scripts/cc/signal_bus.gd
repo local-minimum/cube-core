@@ -23,4 +23,6 @@ signal on_activate_player_hunt(id: String)
 signal on_cat_zone_entry(zone: String)
 signal on_cat_subzone_entry(zone: String)
 signal on_cat_zone_exit(zone: String)
+
+signal on_roll_credits()
 @warning_ignore_restore("unused_signal")

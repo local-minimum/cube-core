@@ -68,7 +68,10 @@ func play_sfx(sound_resource_path: String, volume: float = 1) -> void:
     player.play()
 
 ## on_finish takes an optional callable that receives the player as argument and is responsible to remove itself from the signal
-func play_dialogue(sound_resource_path: String, on_finish: Variant = null, enqueue: bool = false) -> void:
+func play_dialogue(sound_resource_path: String, on_finish: Variant = null, enqueue: bool = false, silence_others: bool = false) -> void:
+    if silence_others:
+        _end_dialogue_players()
+
     if enqueue && _dialogue_running.size() > 0:
         var queued = func () -> void:
             play_dialogue(sound_resource_path, on_finish, false)
@@ -96,6 +99,15 @@ func play_dialogue(sound_resource_path: String, on_finish: Variant = null, enque
     player.stream = load(sound_resource_path)
     player.play()
     _dialogue_running.append(player)
+
+func _end_dialogue_players():
+    for player: AudioStreamPlayer in _dialogue_running:
+        player.stop()
+
+        if !_dialogue_available.has(player):
+            _dialogue_available.append(player)
+
+    _dialogue_available.clear()
 
 ## Returns all music resources currently playing
 func playing_music() -> PackedStringArray:
