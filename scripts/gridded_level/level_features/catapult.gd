@@ -34,7 +34,17 @@ func _exit_tree() -> void:
         if _managed_entities[entity] == self:
             _release_entity(entity, true)
 
-func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false) -> void:
+static func release_from_catapult(entity: GridEntity, remove_cinematic: bool = false, crash_player: bool = false) -> Catapult:
+    var catapult: Catapult = _managed_entities.get(entity)
+    if catapult == null:
+        return null
+
+
+    catapult._release_entity(entity, remove_cinematic, crash_player)
+
+    return catapult
+
+func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, crash_player: bool = false) -> void:
     if !_managed_entities.erase(entity):
         push_warning("Could not remove entity '%s' as held though it should have been there" % entity.name)
 
@@ -46,6 +56,9 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false) ->
 
     if !_entry_look_direction.erase(entity):
         push_warning("Could not clear entity '%s' entry look direction" % entity.name)
+
+    if !crash_player:
+        return
 
     if _orient_entity:
         if entity is GridPlayerCore:

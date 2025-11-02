@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=80 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -45,6 +45,7 @@
 [ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
 [ext_resource type="PackedScene" uid="uid://dvr7wej8v1do" path="res://scenes/sides/greenery/grassbrick_wall.tscn" id="24_c1pbi"]
 [ext_resource type="PackedScene" uid="uid://bo8mbd3imt16y" path="res://scenes/sides/industry-zone/brick_floor.tscn" id="24_iij8i"]
+[ext_resource type="Script" uid="uid://b6p7xcjq7u3tw" path="res://scripts/cc/outro.gd" id="24_s1acf"]
 [ext_resource type="PackedScene" uid="uid://b80cbxnh47s21" path="res://scenes/sides/greenery/grass_floor.tscn" id="24_svjb4"]
 [ext_resource type="PackedScene" uid="uid://c66jsxipk5uey" path="res://scenes/sides/greenery/grassbrick_ceiling.tscn" id="25_535f6"]
 [ext_resource type="PackedScene" uid="uid://bes68m0bt5e20" path="res://scenes/health_npc.tscn" id="25_c1pbi"]
@@ -100,7 +101,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
+primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-2, 0, -6)/LevelPortal Ending")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -1879,15 +1880,6 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (0, 0, -4)" instance=ExtResource("6_wu01b")]
 
-[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, -4)"]
-script = ExtResource("47_d5irf")
-poem = "res://audio/voice/narration/end.ogg"
-poem_response = "res://audio/voice/narration/end-response.ogg"
-_activator = 2
-_repeatable = false
-_trigger_entire_node = true
-metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
-
 [node name="Node (0, 0, -5)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.5)
 coordinates = Vector3i(0, 0, -5)
@@ -1903,6 +1895,23 @@ direction = 4
 [node name="Side UP" parent="Geometry/Elevation 0/Node (0, 0, -5)" instance=ExtResource("7_3ies3")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (0, 0, -5)" instance=ExtResource("6_wu01b")]
+
+[node name="Outro" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, -5)"]
+script = ExtResource("24_s1acf")
+duration = 20.0
+decay = 3.0
+_activator = 2
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://b6p7xcjq7u3tw"
+
+[node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 0/Node (0, 0, -5)"]
+script = ExtResource("47_d5irf")
+poem = "res://audio/voice/narration/end.ogg"
+poem_response = "res://audio/voice/narration/end-response.ogg"
+_activator = 2
+_repeatable = false
+_trigger_entire_node = true
+metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="Node (0, 0, -6)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
@@ -1920,6 +1929,7 @@ direction = 4
 
 [node name="Catapult" parent="Geometry/Elevation 0/Node (0, 0, -6)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_trigger_entire_node = true
 _trigger_sides = Array[int]([1])
 
 [node name="Node (-1, 0, -6)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -1949,6 +1959,11 @@ direction = 3
 [node name="Side UP" parent="Geometry/Elevation 0/Node (-2, 0, -6)" instance=ExtResource("7_3ies3")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-2, 0, -6)" instance=ExtResource("6_wu01b")]
+
+[node name="LevelPortal Ending" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, -6)"]
+script = ExtResource("10_wu01b")
+entry_lookdirection = 2
+metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-2, 0, -5)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -12.5)
