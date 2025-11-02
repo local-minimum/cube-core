@@ -18,7 +18,7 @@ class_name Sacrifice
 @export var offer_sfx: String = "res://audio/sfx/swoosh_01.ogg"
 @export var sacrifice_music: String = "res://audio/music/Music Box Sad 1 - OPL Loop.ogg"
 @export var crossfade_time: float = 0.5
-@export var regain_e_poem: String
+@export var regain_e_poem: String = "res://audio/voice/narration/regain_e.ogg"
 @export var regain_e_poem_response: String = "res://audio/voice/narration/regain_e_response.ogg"
 
 @export_group("Gains")

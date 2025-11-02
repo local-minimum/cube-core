@@ -34,7 +34,7 @@ gun,pistol,crossbow,bow,catapult,rifle,Uzi,bazooka,
 
 - sharp weapons
 sword,arrow,dagger,scimitar,javelin,spear,
-[!] Who cares about harming, round is important
+[!] Who cares about sharp things, roundness is more important
 
 - Emotions
 happy,sad,angry,frustrated,upset,disgusted,disappointed,bitter
@@ -150,7 +150,6 @@ sweet, sour, salty, spicy, bitter
 
 - Rappers
 Eminem,Drake,Jay-Z,Tupac,Dr Dre,Fat Joe,Lil Wayne,Snoop Dogg
-[*] Hypothesis: 
 
 - Animated TV Shows
 Simpsons,South Park,Futurama,Family Guy,Hazbin Hotel,Invincible,
@@ -158,7 +157,7 @@ Simpsons,South Park,Futurama,Family Guy,Hazbin Hotel,Invincible,
 
 - Best Picture Oscar Winners
 Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
-[*] so this is the pinnacle of your art?
+[*] this is the pinnacle of your art?
 
 - Famous Activists
 Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
@@ -170,9 +169,10 @@ London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul,Doha,Havana,Jaka
 - F1 terms
 Downforce,Chicane,Diffuser,Backmarker,Flatspot,DRS,Brake Bias
 
+
 - Stock Market
 Bear,Bull,Dividend,IPO,ETF,Bond,Margin,Broker,Liquidity,Arbitrage, Short
-[*] note: further investigate money 
+[*] hm we must further investigate money 
 
 
 - Video Games
@@ -198,6 +198,7 @@ Influenza,COVID,Malaria,Diabetes,Cancer,Cirrhosis,Cold,Plague, Ebola,
 
 - Star Signs (Space racism)
 Cancer,Aries,Taurus,Gemini,Leo,Virgo,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces
+[*] The quest for classification is honorable, but this is
 
 - Wine Grapes
 Syrah,Nebiolo,Sangiovese,Malbec,Barbera,Pinot Noir,Reisling,Merlot
@@ -242,7 +243,7 @@ Embroidery,Knitting,Cross Stitch,Crochet,Quilting,Sewing
 
 - Puzzles
 Sudoku,Crossword,Wordsearch,Cryptogram,Jigsaw,Rubiks Cube
-[*] we 
+[*] we must try them all, solve them all
 
 - Movie villains
 Jigsaw,Thanos,Hans Gruber,Sauron,Voldemort,The Joker,Hans Landa
@@ -253,6 +254,7 @@ Jigsaw,Hammer Drill,Belt Sander,Miter Saw,Lathe,Nail Gun,
 - Chemical Elements
 Oxygen,Nitrogen,Sulfur,Carbon,Sodium,Helium,Seaborgium,Krypton,Argon,Arsenic,Gold,Neon,
 
+
 - Subatomic Particles
 Gluon,Photon,Electron,Muon,Neutrino,Higgs Boson
 
@@ -261,6 +263,7 @@ Tolstoy,Orwell,Tolkien,Shakespeare,Bronte,Alcott,Proust,Homer,Dante
 
 - Peripherals
 Monitor,Keyboard,Mouse,Printer,Speakers,Microphone,Headphones
+[*] inferior to direct hyphal communication, but show remarkable adaptations 
 
 - Cooking methods
 Roasting,Steaming,Poaching,Baking,Frying,Sauteing,Sous Vide
@@ -270,7 +273,7 @@ Pawn,King,Queen,Rook,Bishop,Knight
 
 - Poker Hands
 Pair,Straight,Flush,House,Two Pair,Three Pair
-# 'Straight Flush' is too long
+
 
 - Buildings
 House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise
