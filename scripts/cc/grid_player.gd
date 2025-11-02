@@ -17,6 +17,7 @@ class_name GridPlayer
 @export var crossfade_time: float = 0.5
 
 static var playing_exploration_music = false
+var _played_no_health: bool
 
 var hurt_to_walk: bool = true:
     set(value):
@@ -34,6 +35,42 @@ func _ready() -> void:
 
     if __SignalBus.on_cinematic.connect(_handle_not_cinematic) != OK:
         push_error("Failed to connect not cinematic")
+
+    if __SignalBus.on_play_exclude_word_game.connect(_handle_start_word_game) != OK:
+        push_error("Failed to connect to word game start")
+
+    if __SignalBus.on_end_exclude_word_game.connect(_handle_end_word_game) != OK:
+        push_error("Failed to connect to end word game")
+
+    if __SignalBus.on_start_sacrifice.connect(_handle_start_sacrifice) != OK:
+        push_error("Failed to connect to start sacrifice")
+
+    if __SignalBus.on_start_offer.connect(_handle_start_sacrifice) != OK:
+        push_error("Failed to connect to start offer")
+
+    if __SignalBus.on_complete_sacrifice.connect(_handle_end_sacrifice) != OK:
+        push_error("Failed to connect ot complete sacrifice")
+
+var _in_word_game: bool
+var _in_sacrifice: bool
+
+func _handle_start_word_game(_enemy: GridEnemy, _player: GridPlayer) -> void:
+    _in_word_game = true
+
+func _handle_end_word_game() -> void:
+    _in_word_game = false
+    print_debug("[Grid Player] end words Cine %s, Word %s, Sacri %s" % [cinematic, _in_word_game, _in_sacrifice])
+    if cinematic && !_in_sacrifice:
+        cinematic = false
+
+func _handle_start_sacrifice(_player: GridPlayer) -> void:
+    _in_sacrifice = true
+
+func _handle_end_sacrifice(_letter: String) -> void:
+    _in_sacrifice = false
+    print_debug("[Grid Player] end sacri Cine %s, Word %s, Sacri %s" % [cinematic, _in_word_game, _in_sacrifice])
+    if cinematic && !_in_word_game:
+        cinematic = false
 
 func _handle_move_from(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
     if entity != self || entity.cinematic || !entity.transportation_mode.has_any([TransportationMode.WALKING, TransportationMode.WALL_WALKING, TransportationMode.CEILING_WALKING]):
@@ -62,6 +99,9 @@ func kill() -> void:
     health = 0
     __SignalBus.on_hurt_player.emit(self, amount)
     if health == 0:
+        if !_played_no_health:
+            __AudioHub.play_sfx(no_health_sound)
+            _played_no_health = true
         __SignalBus.on_start_sacrifice.emit(self)
 
 func hurt(amount: int = 1) -> void:
@@ -69,13 +109,16 @@ func hurt(amount: int = 1) -> void:
     health -= amount
     __SignalBus.on_hurt_player.emit(self, amount)
     if health == 0:
-        __AudioHub.play_sfx(no_health_sound)
+        if !_played_no_health:
+            __AudioHub.play_sfx(no_health_sound)
+            _played_no_health = true
         __SignalBus.on_start_sacrifice.emit(self)
 
 func heal(amount: int) -> void:
     if amount <= 0:
         return
 
+    _played_no_health = false
     health += amount
     __SignalBus.on_heal_player.emit(self, amount)
 

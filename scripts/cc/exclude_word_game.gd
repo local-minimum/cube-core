@@ -329,7 +329,7 @@ func _handle_click_word(button: ContainerButton, word: String) -> void:
         __AudioHub.play_sfx(guess_wrong_sfx, guess_wrong_volume)
         button.interactable = false
 
-        await get_tree().create_timer(0.5 * delays_factor).timeout
+        await get_tree().create_timer(0.1 * delays_factor).timeout
         _player.hurt(_enemies[0].hurt_on_guess_wrong)
 
         if button_group.interactables == 1:
@@ -381,6 +381,7 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
 
             _player = null
             _enemies.clear()
+            __SignalBus.on_end_exclude_word_game.emit()
         else:
             print_debug("[Exclude Word Game] Fighting next enemy")
             await get_tree().create_timer(0.2 * delays_factor).timeout

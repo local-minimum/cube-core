@@ -4,6 +4,7 @@ class_name SignalBus
 @warning_ignore_start("unused_signal")
 signal on_play_exclude_word_game(enemy: GridEnemy, player: GridPlayer)
 signal on_reward_message(reward: String)
+signal on_end_exclude_word_game()
 
 signal on_award_key(coordinates: Vector3)
 

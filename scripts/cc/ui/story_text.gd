@@ -28,15 +28,15 @@ func _handle_load_letters(letters: String) -> void:
 
 func _wanted_wrap(message: String) -> int:
     if message.length() < 30:
-        return 12
+        return 10
     elif message.length() < 40:
-        return 16
+        return 12
     elif message.length() < 50:
-        return 20
+        return 16
     elif message.length() < 60:
-        return 24
+        return 20
     else:
-        return 28
+        return 24
 
 func _handle_text(message: String) -> void:
     if enforce_uppercase:
@@ -44,7 +44,7 @@ func _handle_text(message: String) -> void:
 
     var lines: PackedStringArray = TextUtils.word_wrap(message, _wanted_wrap(message))
     if lines.size() > _labels.size():
-        lines = TextUtils.word_wrap(message, 28)
+        lines = TextUtils.word_wrap(message, 24)
 
     print_debug("[Story Text] message '%s' -> %s" % [message, lines])
 

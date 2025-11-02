@@ -2,22 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl7hnwegmx7g7"
-path.s3tc="res://.godot/imported/monsters2-85.png-6fe2d082b6e1b534258853d5cea7e3dc.s3tc.ctex"
-path.etc2="res://.godot/imported/monsters2-85.png-6fe2d082b6e1b534258853d5cea7e3dc.etc2.ctex"
+uid="uid://djqk2qgbcjjaa"
+path="res://.godot/imported/screengrab.png-422914e0718fda2c4e50d5b0db80f42c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/monsters2-85.png"
-dest_files=["res://.godot/imported/monsters2-85.png-6fe2d082b6e1b534258853d5cea7e3dc.s3tc.ctex", "res://.godot/imported/monsters2-85.png-6fe2d082b6e1b534258853d5cea7e3dc.etc2.ctex"]
+source_file="res://media/screengrab.png"
+dest_files=["res://.godot/imported/screengrab.png-422914e0718fda2c4e50d5b0db80f42c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -25,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

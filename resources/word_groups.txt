@@ -34,6 +34,7 @@ gun,pistol,crossbow,bow,catapult,rifle,Uzi,bazooka,
 
 - sharp weapons
 sword,arrow,dagger,scimitar,javelin,spear,
+[*] on point today, are we?
 [!] Who cares about sharp things, roundness is more important
 
 - Emotions
@@ -63,10 +64,12 @@ maul,line-out,ruck,scrum,tackle,try
 - Athletics Events
 hurdle,sprint,javelin,discus,relay,marathon
 [*] all this energy wasted
+[*] it is much better to stand still in place and contemplate
 
 - Greek Deities
 Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
 [*] many gods to choose from
+[*] why do you need even one?
 
 - Palindromes
 Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
@@ -77,19 +80,21 @@ Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
 - Scientists
 Planck,Einstein,Euler,Curie,Newton,Darwin,Fleming,Tesla
 [*] mythological heroes from long ago
+[*] wonder how their knowledge would have tasted!
 
 - Car Brands
 Tesla,Ford,Toyota,Vauxhall,Skoda,Audi,Mercedes,Ferrari,Ssangyong
 [*] horrible! we did not want to believe they were real
-
+[*] being still while moving, it is interesting yet why this absurd solution?
 
 - Unusual / Small Countries
 Vatican,Moldova,Lesotho,Monaco,Nauru,Tuvalu,Palau,Andorra,Kiribati
+[*] unity is a much better concept, why split when you can meld together?
 
 
 - Gamer Food
 Pizza,Burger,Hot Dog,Red Bull,Pot Noodle,Doritos,Popcorn,Jerky
-[*] most unhealthy
+[*] most unhealthy - hydration is preferred.
 [*] a strict diet of enriched substrate will surely improve the subject's health
 
 - Brainrot (Generation Alpha) Phrases
@@ -108,10 +113,12 @@ C,Pascal,Python,GDScript,Java,Ruby,Rust,Golang,Fortran
 - Farm Animals
 Bull,Cow,Chicken,Goat,Sheep,Calf,Lamb,Horse
 [*] an entire class of slave beings, very useful
+[*] as is humans to us
 
 - Birds
 Albatross,Chicken,Great Tit,Dodo,Kiwi,Ostrich,Magpie,Wren
-[*] Flight! 
+[*] Flight!
+[*] Some have strange names.
 
 - Cats
 Lion,Ounce,Lynx,Tiger,Bobcat,Panther,Leopard,Cheetah,
@@ -121,10 +128,11 @@ Lion,Ounce,Lynx,Tiger,Bobcat,Panther,Leopard,Cheetah,
 - Snakes
 Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda, Copperhead, Sidewinder
 [*] the tube is a noble shape
+[*] Simple and elegant, we approve
 
 - Insects
 Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse, Mosquito, 
-[*] The most popular life form
+[*] The most popular life form on your home planet
 
 - Molluscs
 Slug, Cuttlefish, Octopus, Snail, Nudibranch, Nautilus, Clam, Oyster, Limpet
@@ -143,6 +151,7 @@ ounce,gram,tonne,kilogram,pound,stone,slug
 - Gemstones
 ruby,diamond,emerald,moissanite,citrine,amethyst,sapphire,topaz
 [*] Why do they have to be so disgustingly hard and shiny
+[*] Too many colors with too little purpose
 
 - Taste
 sweet, sour, salty, spicy, bitter
@@ -150,10 +159,12 @@ sweet, sour, salty, spicy, bitter
 
 - Rappers
 Eminem,Drake,Jay-Z,Tupac,Dr Dre,Fat Joe,Lil Wayne,Snoop Dogg
+[*] This talking with other sounds is much fascinating
 
 - Animated TV Shows
 Simpsons,South Park,Futurama,Family Guy,Hazbin Hotel,Invincible,
 [*] We have learned much from these works
+[*] If only the seasons never ended
 
 - Best Picture Oscar Winners
 Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
@@ -161,23 +172,24 @@ Gladiator,Titanic,Braveheart,Forrest Gump,Rain Man,Platoon,Gandhi
 
 - Famous Activists
 Gandhi,Malala,MLK Jr,Rosa Parks,Malcolm X,Helen Keller,Mandela
-
+[*] Names much repeated. You like this names in particular?
 
 - Cities
 London,Paris,Athens,Madrid,Tokyo,Delhi,Cairo,Manila,Lagos,Seoul,Doha,Havana,Jakarta,Oslo
+[*] Forests of vast expanse, but much too hard, and sharp, and dead.
 
 - F1 terms
 Downforce,Chicane,Diffuser,Backmarker,Flatspot,DRS,Brake Bias
-
+[*] We appreciate decay, but this decay of intellect is not to our liking
 
 - Stock Market
 Bear,Bull,Dividend,IPO,ETF,Bond,Margin,Broker,Liquidity,Arbitrage, Short
 [*] hm we must further investigate money 
-
+[*] this abstract entity makes humans squabble more than love. How curious!
 
 - Video Games
 Minecraft,Terraria,The Sims,Overwatch,Pac Man, Pong,Subnautica, Portal,Breakout,Tetris
-
+[*] Non of these have mushrooms in them. What is wrong with you?
 
 - Mountains
 Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
@@ -186,7 +198,7 @@ Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
 
 - Planets 
 Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune
- 
+[*] We like the gaseous the most. Soft and warm. 
 
 - Rocketry
 Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
@@ -206,7 +218,7 @@ Syrah,Nebiolo,Sangiovese,Malbec,Barbera,Pinot Noir,Reisling,Merlot
 
 - Extreme Sports
 Wingsuiting,Caving,Bouldering,Free Diving,Ice Climbing,Heli Skiing
-
+[*] If life is short, why do some try their hardest to make it shorter?
 
 - Music Genres
 Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock,Hip Hop,Garage,Classical,House
@@ -214,11 +226,12 @@ Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock,Hip Hop,Garage,Classical,H
 
 - Continents
 Asia,Africa,Americas, Antarctica, Europe, Australia
-[*] 
+[*] Why do almost these start with A? Does it mean something?
 
 - Intelligence Agencies 
 MI5,MI6,CIA,FSB,GRU,GCHQ,FBI,NSA,MOSSAD
 [*] gathering information is a noble quest
+[*] hiding information is ciminal
 
 - Moustache Styles
 Chevron,Handlebar,Pencil,Walrus,Fu Manchu,Horseshoe
@@ -227,6 +240,7 @@ Chevron,Handlebar,Pencil,Walrus,Fu Manchu,Horseshoe
 
 - Military Ranks
 Private,Corporal,Sergeant,Captain,Major,Colonel,Lieutenant,Brigadier
+[*] it is curious how some of you loose your own name for a common one
 
 - US Presidents
 Obama,Ford,Trump,Biden,Bush,Clinton,Nixon,Truman,Reagan
@@ -247,19 +261,23 @@ Sudoku,Crossword,Wordsearch,Cryptogram,Jigsaw,Rubiks Cube
 
 - Movie villains
 Jigsaw,Thanos,Hans Gruber,Sauron,Voldemort,The Joker,Hans Landa
+[*] why are these names different and not used by everyone?
 
 - Power tools
 Jigsaw,Hammer Drill,Belt Sander,Miter Saw,Lathe,Nail Gun,
+[*] so your fleshy protrusions need help from time to time.
 
 - Chemical Elements
 Oxygen,Nitrogen,Sulfur,Carbon,Sodium,Helium,Seaborgium,Krypton,Argon,Arsenic,Gold,Neon,
-
+[*] ah the purest form, when matter has been fully decomposed
 
 - Subatomic Particles
 Gluon,Photon,Electron,Muon,Neutrino,Higgs Boson
+[*] inventing words for things you cannot see are you?
 
 - Classics Authors
 Tolstoy,Orwell,Tolkien,Shakespeare,Bronte,Alcott,Proust,Homer,Dante
+[*] What about Ellis, who described over 4000 fungi? do they not belong?
 
 - Peripherals
 Monitor,Keyboard,Mouse,Printer,Speakers,Microphone,Headphones
@@ -267,13 +285,15 @@ Monitor,Keyboard,Mouse,Printer,Speakers,Microphone,Headphones
 
 - Cooking methods
 Roasting,Steaming,Poaching,Baking,Frying,Sauteing,Sous Vide
+[*] non of these contain mushrooms, right?!
 
 - Chess pieces
 Pawn,King,Queen,Rook,Bishop,Knight
+[*] some of these could easily have been replaced by nice fruiting bodies.
 
 - Poker Hands
 Pair,Straight,Flush,House,Two Pair,Three Pair
-
+[*] why is betting on chance so intriguing to you?
 
 - Buildings
 House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise

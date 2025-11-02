@@ -1600,6 +1600,7 @@ direction = 3
 transform = Transform3D(1.1920929e-07, 0, 1, 0, 1, 0, -1, 0, 1.1920929e-07, 0, 0, 0)
 
 [node name="Catapult" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("34_v4d4p")]
+_crash_direction = 6
 _trigger_entire_node = true
 
 [node name="Node (-4, -1, -2)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -1935,6 +1936,7 @@ direction = 4
 
 [node name="Catapult" parent="Geometry/Elevation 0/Node (0, 0, -6)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+_crash_direction = 6
 _trigger_entire_node = true
 _trigger_sides = Array[int]([1])
 
@@ -7080,6 +7082,7 @@ direction = 4
 
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-4, 1, 0)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+_crash_direction = 6
 _trigger_entire_node = true
 _trigger_sides = Array[int]([2])
 
@@ -7094,6 +7097,7 @@ direction = 3
 [node name="Side UP" parent="Geometry/Elevation 1/Node (-5, 1, -2)" instance=ExtResource("20_d5irf")]
 
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-5, 1, -2)" instance=ExtResource("34_v4d4p")]
+_crash_direction = 6
 
 [node name="Node (-4, 1, -2)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -5)
@@ -7117,6 +7121,7 @@ direction = 2
 
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-3, 1, -2)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.1999998, 1.2, 0)
+_crash_direction = 6
 _trigger_entire_node = true
 _trigger_sides = Array[int]([5])
 
