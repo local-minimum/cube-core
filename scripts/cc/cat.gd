@@ -106,7 +106,7 @@ func _pet() -> void:
         __AudioHub.play_sfx(greeting_sounds.pick_random())
     await get_tree().create_timer(0.1).timeout
     if !petting_dialogue.is_empty():
-        __AudioHub.play_dialogue(petting_dialogue.pick_random(), _hide_cat, true)
+        __AudioHub.play_dialogue(petting_dialogue.pick_random(), _hide_cat)
     else:
         _hide_cat()
 

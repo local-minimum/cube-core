@@ -121,20 +121,27 @@ func _show_title() -> void:
     _awaiting_start = true
 
 func _start_poem() -> void:
-    __AudioHub.play_dialogue(intro_poem, _handle_poem_done)
-
-func _handle_poem_done() -> void:
-
-    await get_tree().create_timer(response_delay).timeout
-
-    __AudioHub.play_dialogue(intro_response, _wait_for_landing_trigger)
+    __AudioHub.play_dialogue(
+        intro_poem,
+        func () -> void:
+            __AudioHub.play_dialogue(intro_response, _wait_for_landing_trigger, false, false, response_delay),
+    )
 
 func _wait_for_landing_trigger() -> void:
     _awaiting_landing = true
 
     await get_tree().create_timer(2).timeout
 
-    __AudioHub.play_dialogue(landing_poem, _landing_response)
+    __AudioHub.play_dialogue(
+        landing_poem,
+        func () -> void: __AudioHub.play_dialogue(
+            landing_response,
+            func () -> void: __AudioHub.play_dialogue(landing_coda, null, true, false, response_delay),
+            false,
+            false,
+            response_delay,
+            ),
+    )
 
 func _start_landing() -> void:
     orbiter.disabled = true
@@ -169,16 +176,3 @@ func _finalize_landing() -> void:
     ui_canvas.show()
     __GlobalGameState.lost_letters = ""
     _oribing = false
-
-
-func _landing_response() -> void:
-
-    await get_tree().create_timer(response_delay).timeout
-
-    __AudioHub.play_dialogue(landing_response, _intro_complete)
-
-func _intro_complete() -> void:
-
-    await get_tree().create_timer(response_delay).timeout
-
-    __AudioHub.play_dialogue(landing_coda)

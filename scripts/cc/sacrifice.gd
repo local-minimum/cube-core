@@ -90,19 +90,16 @@ func show_sacrifice() -> void:
         all_lost.erase("E")
         __GlobalGameState.lost_letters = "".join(all_lost)
         if !regain_e_poem.is_empty():
-            __AudioHub.play_dialogue(regain_e_poem, _handle_play_regain_e_response, true)
+            __AudioHub.play_dialogue(
+                regain_e_poem,
+                func() -> void: __AudioHub.play_dialogue(regain_e_poem_response, false, false, 0.3),
+            )
         __SignalBus.on_complete_sacrifice.emit("")
         return
 
     mode = Mode.SACRIFICE
     hint.text = hint_sacrifice
     _ready_ui()
-
-func _handle_play_regain_e_response() -> void:
-    await get_tree().create_timer(0.3).timeout
-
-    if !regain_e_poem_response.is_empty():
-        __AudioHub.play_dialogue(regain_e_poem_response)
 
 func show_offer() -> void:
     mode = Mode.NPC_OFFER

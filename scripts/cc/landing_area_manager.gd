@@ -33,7 +33,7 @@ func _ready() -> void:
 
 func _handle_door_state(door: GridDoorCore, _from: GridDoorCore.LockState, to: GridDoorCore.LockState) -> void:
     if door == door_node.get_door(door_direction) && to == GridDoorCore.LockState.OPEN:
-        __AudioHub.play_dialogue(door_open_poem, null, true)
+        __AudioHub.play_dialogue(door_open_poem)
 
         __SignalBus.on_change_node.disconnect(_handle_change_node)
         __SignalBus.on_door_state_chaged.disconnect(_handle_door_state)
@@ -48,26 +48,24 @@ func _handle_change_node(feature: GridNodeFeature) -> void:
     if !played_entry && pit_entry_node.coordinates == player.coordinates():
         played_entry = true
         if move_count <= 3:
-            __AudioHub.play_dialogue(accept_pit_response, null, true)
+            __AudioHub.play_dialogue(accept_pit_response)
         else:
-            __AudioHub.play_dialogue(surrender_to_pit_response, null, true)
+            __AudioHub.play_dialogue(surrender_to_pit_response)
 
     elif !played_entry && !played_refuse && move_count > 4:
         played_refuse = true
-        __AudioHub.play_dialogue(refuse_pit_response, null, true)
+        __AudioHub.play_dialogue(refuse_pit_response)
 
     elif !played_trapped && pit_trapped_node.coordinates == player.coordinates():
         played_trapped = true
-        __AudioHub.play_dialogue(trapped_poem, _play_trapped_response, true)
+        __AudioHub.play_dialogue(
+            trapped_poem,
+            func () -> void: __AudioHub.play_dialogue(trapped_response, false, false, 0.3),
+        )
 
     elif !played_door && door_node.coordinates == player.coordinates() && player.look_direction == door_direction:
         played_door = true
-        __AudioHub.play_dialogue(door_poem, _play_door_response, true)
-
-func _play_trapped_response() -> void:
-    await get_tree().create_timer(0.3).timeout
-    __AudioHub.play_dialogue(trapped_response)
-
-func _play_door_response() -> void:
-    await get_tree().create_timer(0.3).timeout
-    __AudioHub.play_dialogue(door_response)
+        __AudioHub.play_dialogue(
+            door_poem,
+            func () -> void: __AudioHub.play_dialogue(door_response, false, false, 0.3),
+        )
