@@ -23,7 +23,6 @@ buses/default_bus_layout="uid://rp7nfbvendpg"
 
 __SignalBus="*res://scripts/cc/signal_bus.gd"
 __GlobalGameState="*res://scenes/globals/global_game_state.tscn"
-__SceneSwapper="*res://scenes/globals/scene_swapper.tscn"
 __BindingHints="*res://scenes/globals/binding_hints.tscn"
 __AudioHub="*res://scenes/globals/audio_hub.tscn"
 
