@@ -30,7 +30,7 @@ func exit_level() -> void:
         push_warning("Failed to connect fail load")
         setup = false
 
-    __SaveSystemWrapper.autosave()
+    SaveSystemWrapper.autosave()
 
     if !setup:
         _fail_exit_level()

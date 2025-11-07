@@ -43,7 +43,7 @@ func _handle_new_level_load_fail() -> void:
 func _handle_new_scene_ready() -> void:
     if _wait_for_new_level_load:
         print_debug("[SceneSwapper] New scene ready, loading cached save")
-        __SaveSystemWrapper.load_cached_save()
+        SaveSystemWrapper.load_cached_save()
     else:
         print_debug("[SceneSwapper] Scene swap complete")
         _phase = Phase.SWAPPING_COMPLETE
