@@ -79,6 +79,10 @@ func _handle_lost_letters(letters: String) -> void:
     alphabet.censored_letters = letters
 
 func show_sacrifice() -> void:
+    if visible:
+        # We are already showing, presumably because the show_offer has been called
+        return
+
     if _exhausted_all_letters:
         __SignalBus.on_complete_sacrifice.emit("")
         return
@@ -103,6 +107,11 @@ func show_sacrifice() -> void:
 
 func show_offer() -> void:
     mode = Mode.NPC_OFFER
+
+    if visible:
+        # If show_sacrifice has been called we shouldn't make a new guess but we should
+        # change the offer mode to npc so that we get the better rate!
+        return
 
     if alphabet.text.length() <= __GlobalGameState.lost_letters.length():
         __SignalBus.on_reward_message.emit("No more value")
