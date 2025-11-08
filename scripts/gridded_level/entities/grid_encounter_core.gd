@@ -128,7 +128,7 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
         if effect.hide_encounter_on_trigger && _triggered:
             visible = false
     sync_position()
-    orient()
+    orient(self)
 
     print_debug("Loaded %s from %s" % [encounter_id, save_data])
 

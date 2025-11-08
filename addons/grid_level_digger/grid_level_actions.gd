@@ -157,16 +157,34 @@ func _on_position_all_enemies_pressed() -> void:
     if level == null:
         return
 
-    for enemy: GridEnemy in panel.level.find_children("", "GridEnemy", true, false):
-        if enemy.spawn_node == null:
-            continue
+    var find_grid_node: Callable = func (coordinates: Vector3i) -> GridNode:
+        var idx: int = panel.all_level_nodes.find_custom(
+            func (node: GridNode) -> bool:
+                return node.coordinates == coordinates
+        )
 
-        print_debug("[GLD Level Actions] Positioning %s" % enemy)
-        enemy.global_position = enemy.spawn_node.global_position + Vector3.UP * level.node_size * 0.5
+        if idx == -1:
+            return null
+
+        return panel.all_level_nodes[idx]
+
+    for entity: GridEntity in panel.level.find_children("", "GridEntity", true, false):
+        print_debug("[GLD Level Actions] Positioning %s" % entity)
+        if entity._spawn_node != null:
+            var spawn_anchor: GridAnchor = GridNode.find_grid_anchor(
+                entity._spawn_node,
+                entity._spawn_anchor_direction,
+                find_grid_node,
+            )
+
+            if spawn_anchor != null:
+                entity.global_position = spawn_anchor.global_position
+            else:
+                if entity._spawn_node != null:
+                    entity.global_position = GridNode.get_center_pos(entity._spawn_node, level)
+        GridEntity.orient(entity)
+
         unsaved = true
-        # TODO: Make anchoring depend on anchor direction...
-
-        # TODO: Rotate too
 
     if unsaved:
         EditorInterface.mark_scene_as_unsaved()

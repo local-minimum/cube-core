@@ -87,7 +87,7 @@ func get_ramp(direction: CardinalDirections.CardinalDirection) -> GridRampCore:
 #region Sides
 enum NodeSideState { NONE, SOLID, ILLUSORY, DOOR }
 func has_side(direction: CardinalDirections.CardinalDirection) -> NodeSideState:
-    _init_sides_and_anchors()
+    _init_sides_and_anchors(self)
     _init_doors()
 
     if _doors.has(direction):
@@ -112,7 +112,7 @@ func _is_illusory_side(direction: CardinalDirections.CardinalDirection) -> bool:
     return _sides.has(direction) && _sides[direction].illusory
 
 func illusory_sides() -> Array[GridNodeSide]:
-    _init_sides_and_anchors()
+    _init_sides_and_anchors(self)
     return _sides.values().filter(func (side: GridNodeSide) -> bool: return side.illusory)
 #endregion Sides
 
@@ -192,37 +192,37 @@ func triggering_events(
 #region Anchor
 var _anchords_inited: bool
 
-func _init_sides_and_anchors() -> void:
-    if _anchords_inited: return
+static func _init_sides_and_anchors(node: GridNode) -> void:
+    if node._anchords_inited: return
 
-    _anchords_inited = true
+    node._anchords_inited = true
 
-    for side: GridNodeSide in find_children("", "GridNodeSide"):
+    for side: GridNodeSide in node.find_children("", "GridNodeSide"):
         GridNodeSide.set_direction_from_rotation(side)
 
-        _sides[side.direction] = side
+        node._sides[side.direction] = side
 
         if side.anchor == null:
             continue
 
-        if _anchors.has(side.direction):
-            if _anchors[side.direction] != side.anchor:
+        if node._anchors.has(side.direction):
+            if node._anchors[side.direction] != side.anchor:
                 push_warning(
                     "Node %s has duplicate anchors in the %s direction, skipping %s (for %s)" % [
-                        name,
+                        node.name,
                         CardinalDirections.name(side.direction),
                         side,
-                        _anchors[side.direction]],
+                        node._anchors[side.direction]],
                 )
             continue
 
-        _anchors[side.direction] = side.anchor
+        node._anchors[side.direction] = side.anchor
 
     for dir: CardinalDirections.CardinalDirection in CardinalDirections.ALL_DIRECTIONS:
-        if _anchors.has(dir):
+        if node._anchors.has(dir):
             continue
 
-        var n: GridNode = neighbour(dir)
+        var n: GridNode = node.neighbour(dir)
 
         if n == null:
             continue
@@ -232,7 +232,7 @@ func _init_sides_and_anchors() -> void:
                 continue
 
             if n_side.negative_anchor.direction == dir:
-                _anchors[dir] = n_side.negative_anchor
+                node._anchors[dir] = n_side.negative_anchor
 
 
 func remove_anchor(anchor: GridAnchor) -> bool:
@@ -250,7 +250,7 @@ func remove_anchor(anchor: GridAnchor) -> bool:
     return false
 
 func add_anchor(anchor: GridAnchor) -> bool:
-    _init_sides_and_anchors()
+    _init_sides_and_anchors(self)
 
     if _anchors.has(anchor.direction):
         push_warning(
@@ -294,7 +294,7 @@ func get_grid_anchor(direction: CardinalDirections.CardinalDirection) -> GridAnc
             return null
         return anchor
 
-    _init_sides_and_anchors()
+    _init_sides_and_anchors(self)
 
     if _anchors.has(direction):
         var anchor = _anchors[direction]
@@ -304,9 +304,38 @@ func get_grid_anchor(direction: CardinalDirections.CardinalDirection) -> GridAnc
 
     return null
 
+static func find_grid_anchor(
+    node: GridNode,
+    direction: CardinalDirections.CardinalDirection,
+    find_grid_node: Callable,
+) -> GridAnchor:
+    for side: GridNodeSide in node.find_children("", "GridNodeSide"):
+        if side.anchor == null:
+            continue
+
+        if side.anchor.direction == direction && !side.anchor.disabled:
+            return side.anchor
+
+
+    for dir: CardinalDirections.CardinalDirection in CardinalDirections.ALL_DIRECTIONS:
+        var neighbour_coordinates: Vector3i = CardinalDirections.translate(node.coordinates, dir)
+        var n: GridNode = find_grid_node.call(neighbour_coordinates)
+
+        if n == null:
+            continue
+
+        for n_side: GridNodeSide in n.find_children("", "GridNodeSide"):
+            if n_side.negative_anchor == null:
+                continue
+
+            if n_side.negative_anchor.direction == dir && !n_side.negative_anchor.disabled:
+                return n_side.negative_anchor
+
+    return null
+
 ## Returns global position of node center
-func get_center_pos() -> Vector3:
-    return global_position + Vector3.UP * level.node_size * 0.5
+static func get_center_pos(node: GridNode, grid_level: GridLevelCore) -> Vector3:
+    return node.global_position + Vector3.UP * grid_level.node_size * 0.5
 #endregion Anchor
 
 #region Navigation

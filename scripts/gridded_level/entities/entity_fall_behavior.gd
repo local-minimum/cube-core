@@ -50,9 +50,9 @@ func _orient_entity() -> void:
 
     if tween.finished.connect(
         func () -> void:
-            entity.orient()
+            GridEntity.orient(entity)
     ) != OK:
         push_error("Failed to connect rotation done")
-        entity.orient()
+        GridEntity.orient(entity)
 
     print_debug("[Falling] %s cat fall-resolved down as down and looking %s" % [entity.name, CardinalDirections.name(entity.look_direction)])

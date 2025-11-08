@@ -283,7 +283,7 @@ func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
 
             entity.look_direction = exit_direction
             entity.down = down
-            entity.orient()
+            GridEntity.orient(entity)
 
             entity.remove_concurrent_movement_block()
             entity.cinematic = false
@@ -301,7 +301,7 @@ func _animate_refuse(entity: GridEntity, refuse_point: Vector3, step_duration: f
     translations.tween_property(entity, "global_position", entity.global_position, step_duration)
     translations.finished.connect(
         func () -> void:
-            entity.orient()
+            GridEntity.orient(entity)
 
             _transporting_entities.erase(entity)
 

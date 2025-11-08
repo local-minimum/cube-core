@@ -66,7 +66,7 @@ func sync_spawn() -> void:
         update_entity_anchorage(_spawn_node, spawn_anchor)
         sync_position()
 
-    orient()
+    orient(self)
 
 func load_look_direction_and_down(load_look: CardinalDirections.CardinalDirection, load_down: CardinalDirections.CardinalDirection) -> void:
     look_direction = load_look
@@ -281,24 +281,25 @@ func sync_position() -> void:
 
     var node: GridNode = get_grid_node()
     if node != null:
-        global_position = node.get_center_pos()
+        global_position = GridNode.get_center_pos(node, node.level)
         return
 
     push_error("%s doesn't have either a node or anchor set" % name)
     print_stack()
 
 
-func orient() -> void:
-    if look_direction == CardinalDirections.CardinalDirection.NONE || down == CardinalDirections.CardinalDirection.NONE:
-        push_warning("Cannot orient looking %s and down %s" % [
-            CardinalDirections.name(look_direction),
-            CardinalDirections.name(down)
+static func orient(entity: GridEntity) -> void:
+    if entity.look_direction == CardinalDirections.CardinalDirection.NONE || entity.down == CardinalDirections.CardinalDirection.NONE:
+        push_warning("Cannot orient %s looking %s and down %s" % [
+            entity.name,
+            CardinalDirections.name(entity.look_direction),
+            CardinalDirections.name(entity.down)
         ])
         return
 
-    look_at(
-        global_position + Vector3(CardinalDirections.direction_to_vectori(look_direction)),
-        CardinalDirections.direction_to_vectori(CardinalDirections.invert(down)),
+    entity.look_at(
+        entity.global_position + Vector3(CardinalDirections.direction_to_vectori(entity.look_direction)),
+        CardinalDirections.direction_to_vectori(CardinalDirections.invert(entity.down)),
     )
 
 static func sync_entity_position(entity: GridEntity) -> void:
@@ -308,7 +309,7 @@ static func sync_entity_position(entity: GridEntity) -> void:
 
     var node: GridNode = entity.get_grid_node()
     if node != null:
-        entity.global_position = node.get_center_pos()
+        entity.global_position = GridNode.get_center_pos(node, node.level)
         return
 
     push_error("%s doesn't have either a node or anchor set" % entity.name)

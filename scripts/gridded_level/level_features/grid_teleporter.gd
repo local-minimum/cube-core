@@ -220,7 +220,7 @@ func _arrive_entity(entity: GridEntity) -> void:
         CardinalDirections.name(entity.down),
         CardinalDirections.name(entity.get_grid_anchor_direction()),
     ])
-    entity.orient()
+    GridEntity.orient(entity)
     entity.sync_position()
 
 func calculate_exit_anchor_direction(

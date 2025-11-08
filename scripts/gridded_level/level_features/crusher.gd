@@ -287,14 +287,14 @@ func get_animation() -> String:
 
 func _disable_extended_anchors() -> void:
     _extended_anchors_active = false
-    for anchor: GridAnchor in _extended_anchors:
-        anchor.disabled = true
+    for extended_anchor: GridAnchor in _extended_anchors:
+        extended_anchor.disabled = true
 
 func _add_extended_anchors() -> void:
     _extended_anchors_active = true
     if !_extended_anchors.is_empty():
-        for anchor: GridAnchor in _extended_anchors:
-            anchor.disabled = false
+        for extenden_anchor: GridAnchor in _extended_anchors:
+            extenden_anchor.disabled = false
 
         return
 
@@ -321,20 +321,20 @@ func _add_extended_anchors() -> void:
             CardinalDirections.name(inv_direction),
             neighbour.has_side(inv_direction)
         ])
-        var anchor: GridAnchor = GridAnchor.new()
-        anchor.name = "Anchor %s" % CardinalDirections.name(inv_direction)
-        anchor.direction = inv_direction
-        anchor.required_transportation_mode = TransportationMode.create_from_direction(inv_direction)
-        if neighbour.add_anchor(anchor):
-            anchor.global_position = (
+        var new_anchor: GridAnchor = GridAnchor.new()
+        new_anchor.name = "Anchor %s" % CardinalDirections.name(inv_direction)
+        new_anchor.direction = inv_direction
+        new_anchor.required_transportation_mode = TransportationMode.create_from_direction(inv_direction)
+        if neighbour.add_anchor(new_anchor):
+            new_anchor.global_position = (
                 # We are placing them as if they were on ourselves because we are doing it before we extend
-                grid_node.get_center_pos() +
+                GridNode.get_center_pos(grid_node, grid_node.level) +
                 CardinalDirections.direction_to_vector(_crusher_side) * grid_node.get_level().node_size +
                 _anchor_position_overshoot * CardinalDirections.direction_to_vector(direction) +
                 CardinalDirections.direction_to_vector(direction) * grid_node.get_level().node_size * 0.5
             )
             if CardinalDirections.ALL_PLANAR_DIRECTIONS.has(inv_direction):
-                anchor.global_rotation = Transform3D.IDENTITY.looking_at(CardinalDirections.direction_to_vector(inv_direction)).basis.get_euler()
+                new_anchor.global_rotation = Transform3D.IDENTITY.looking_at(CardinalDirections.direction_to_vector(inv_direction)).basis.get_euler()
 
             # We want to reparent the anchor to the moving part of the crusher to have it look reasonable in the world if it
             # will retract
@@ -343,10 +343,10 @@ func _add_extended_anchors() -> void:
                 side.name = "Side %s of %s" % [CardinalDirections.name(inv_direction), neighbour.name]
                 side.infer_direction_from_rotation = false
                 side.direction = direction
-                side.negative_anchor = anchor
+                side.negative_anchor = new_anchor
 
                 _moving_part_root.add_child(side)
-                anchor.reparent(side)
+                new_anchor.reparent(side)
 
                 if inv_direction == _crusher_side:
                     var own_anchor: GridAnchor = grid_node.get_grid_anchor(inv_direction)
@@ -355,17 +355,17 @@ func _add_extended_anchors() -> void:
                             if child is Node3D:
                                 var node3d: Node3D = child
                                 var child_t: Transform3D = node3d.transform
-                                print_debug("[Crusher] Reparenting %s to %s" % [child, anchor])
-                                child.reparent(anchor, true)
+                                print_debug("[Crusher] Reparenting %s to %s" % [child, new_anchor])
+                                child.reparent(new_anchor, true)
                                 child.transform = child_t
 
                     else:
                         print_debug("[Crusher] No anchor in crusher direction %s" % [CardinalDirections.name(_crusher_side)])
 
-            _extended_anchors.append(anchor)
+            _extended_anchors.append(new_anchor)
         else:
-            push_error("Crusher failed to add anchor %s to %s for unknown reasons" % [anchor, neighbour])
-            anchor.queue_free()
+            push_error("Crusher failed to add anchor %s to %s for unknown reasons" % [new_anchor, neighbour])
+            new_anchor.queue_free()
 
 func trigger(_entity: GridEntity, _movement: Movement.MovementType) -> void:
     # We don't trigger this way

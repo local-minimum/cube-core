@@ -77,7 +77,7 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
             entity.look_direction = entity.down
         entity.down = crash_anchor.direction
 
-        entity.orient()
+        GridEntity.orient(entity)
         entity.transportation_mode.adopt(crash_anchor.required_transportation_mode)
     elif entity.transportation_abilities.has_flag(TransportationMode.FALLING):
         entity.transportation_mode.mode = TransportationMode.FALLING
@@ -188,7 +188,7 @@ func _handle_move_end(entity: GridEntity) -> void:
 
                     if tween.finished.connect(
                         func () -> void:
-                            entity.orient()
+                            GridEntity.orient(entity)
                             print_debug("[Catapult %s] Oriented %s to look %s, %s down" % [coordinates(), entity.name, CardinalDirections.name(entity.look_direction), CardinalDirections.name(entity.down)])
 
                     ) != OK:

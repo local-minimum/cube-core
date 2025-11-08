@@ -69,7 +69,7 @@ func _sync_level_entry() -> void:
 
     update_entity_anchorage(spawn_node, spawn_anchor, true)
     sync_position()
-    orient()
+    orient(self)
     print_debug("[Grid Player] %s anchors to %s in node %s and mode %s" % [
         name,
         spawn_anchor,
@@ -307,7 +307,7 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
                 set_grid_anchor(load_anchor)
 
         sync_position()
-        orient()
+        orient(self)
 
     camera.make_current()
     print_debug("[Grid Player] loaded player onto %s from %s" % [coords, save_data])
