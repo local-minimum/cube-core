@@ -33,7 +33,7 @@ func _handle_move_start(mover: GridEntity, _from: Vector3i, _translation_directi
         print_debug("[Trail] Mover %s is not %s" % [mover, entity])
         return
 
-    var anchor: GridAnchor = mover.get_grid_anchor()
+    var anchor: GridAnchor = mover.anchor
     if _last_anchor == anchor:
         print_debug("[Trail] Mover %s is at same anchor as before %s" % [mover, anchor])
         return

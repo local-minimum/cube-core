@@ -31,7 +31,7 @@ func move_entity(
         push_error("Player %s not inside dungeon")
         return null
 
-    var anchor: GridAnchor = entity.get_grid_anchor()
+    var anchor: GridAnchor = entity.anchor
     var tween: Tween = entity.create_tween().set_parallel()
 
     var was_excotic_walk: bool = entity.transportation_mode.has_any(TransportationMode.EXOTIC_WALKS)

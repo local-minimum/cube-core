@@ -42,7 +42,7 @@ func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
 func _sync_level_entry() -> void:
     var entry: LevelPortal = get_level().entry_portal
     var spawn_node: GridNode = _spawn_node
-    var anchor: GridAnchor
+    var spawn_anchor: GridAnchor
 
     if entry == null:
         push_error("Level doesn't have an entry portal")
@@ -50,7 +50,7 @@ func _sync_level_entry() -> void:
         look_direction = CardinalDirections.CardinalDirection.NORTH
         spawn_node = get_level().nodes()[0]
         if spawn_node != null:
-            anchor = spawn_node.get_grid_anchor(_spawn_anchor_direction)
+            spawn_anchor = spawn_node.get_grid_anchor(_spawn_anchor_direction)
     else:
         down = entry.entry_down
         look_direction = entry.entry_lookdirection
@@ -60,19 +60,19 @@ func _sync_level_entry() -> void:
             look_direction = orthos.pick_random()
         spawn_node = entry.get_grid_node()
         if spawn_node != null:
-            anchor = spawn_node.get_grid_anchor(down)
+            spawn_anchor = spawn_node.get_grid_anchor(down)
 
     if spawn_node == null:
         push_error("Level has no node!")
         __SignalBus.on_critical_level_corrupt.emit(get_level().level_id)
         return
 
-    update_entity_anchorage(spawn_node, anchor, true)
+    update_entity_anchorage(spawn_node, spawn_anchor, true)
     sync_position()
     orient()
     print_debug("[Grid Player] %s anchors to %s in node %s and mode %s" % [
         name,
-        anchor,
+        spawn_anchor,
         spawn_node,
         transportation_mode.humanize()
     ])
@@ -299,12 +299,12 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
         if anchor_direction == CardinalDirections.CardinalDirection.NONE:
             set_grid_node(node)
         else:
-            var anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
-            if anchor == null:
+            var load_anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
+            if load_anchor == null:
                 push_error("Trying to load player onto coordinates %s and anchor %s but node lacks anchor in that direction" % [coords, anchor_direction])
                 set_grid_node(node)
             else:
-                set_grid_anchor(anchor)
+                set_grid_anchor(load_anchor)
 
         sync_position()
         orient()

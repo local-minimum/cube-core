@@ -40,7 +40,7 @@ func _check_colliding_anchor(feature: GridNodeFeature) -> void:
     if feature is not GridPlayerCore || encounter_mode != EncounterMode.ANCHOR:
         return
 
-    if feature.get_grid_node() == get_grid_node() && feature.get_grid_anchor() == get_grid_anchor():
+    if feature.get_grid_node() == get_grid_node() && feature.anchor == anchor:
         if feature is GridEntity:
             _trigger(feature as GridEntity)
 
@@ -102,9 +102,9 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
         return
 
     var coords: Vector3i = DictionaryUtils.safe_getv3i(save_data, _COORDINATES_KEY)
-    var node: GridNode = level.get_grid_node(coords)
+    var load_node: GridNode = level.get_grid_node(coords)
 
-    if node == null:
+    if load_node == null:
         push_error("Trying to load encounter onto coordinates %s but there's no node there." % coords)
         _reset_starting_condition()
         return
@@ -117,12 +117,12 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
     _triggered = save_data[_TRIGGERED_KEY] if save_data.has(_TRIGGERED_KEY) else false
 
     if anchor_direction == CardinalDirections.CardinalDirection.NONE:
-        set_grid_node(node)
+        set_grid_node(load_node)
     else:
-        var anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
-        if anchor == null:
+        var load_anchor: GridAnchor = load_node.get_grid_anchor(anchor_direction)
+        if load_anchor == null:
             push_error("Trying to load encounter onto coordinates %s and anchor %s but node lacks anchor in that direction" % [coords, anchor_direction])
-        update_entity_anchorage(node, anchor, true)
+        update_entity_anchorage(load_node, load_anchor, true)
 
     if effect != null:
         if effect.hide_encounter_on_trigger && _triggered:

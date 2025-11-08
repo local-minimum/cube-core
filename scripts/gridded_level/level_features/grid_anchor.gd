@@ -20,7 +20,7 @@ var disabled: bool:
                 if entity == null || !is_instance_valid(entity) || !entity.is_inside_tree():
                     continue
 
-                if entity.get_grid_anchor() == self:
+                if entity.anchor == self:
                     # TODO: This might not actually work
                     entity.force_movement(Movement.MovementType.CENTER)
                     entity.transportation_mode.mode = TransportationMode.FLYING if entity.transportation_abilities.has_flag(TransportationMode.FLYING) else TransportationMode.FALLING

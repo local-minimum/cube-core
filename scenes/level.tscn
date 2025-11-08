@@ -55529,90 +55529,92 @@ max_trail_length = 50
 
 [node name="Enemies" type="Node3D" parent="."]
 
-[node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node", "_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 13.75, 15)
 hunting_activation_id = "industrial"
 spawn_node = NodePath("../../Geometry/Elevation 5/Node (-11, 5, 6)")
+_spawn_node = NodePath("../../Geometry/Elevation 5/Node (-11, 5, 6)")
 
-[node name="Industrial Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Industrial Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 6.25, 17.5)
 hunting_activation_id = "industrial"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (-13, 2, 7)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (-13, 2, 7)")
 
-[node name="Greenery Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Greenery Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 16.25, -15)
 hunting_activation_id = "greenery-1"
-spawn_node = NodePath("../../Geometry/Elevation 6/Node (-11, 6, -6)")
+_spawn_node = NodePath("../../Geometry/Elevation 6/Node (-11, 6, -6)")
 
-[node name="Greenery Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Greenery Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node", "_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 16.25, -32.5)
 hunting_activation_id = "greenery-2"
 spawn_node = NodePath("../../Geometry/Elevation 6/Node (-8, 6, -13)")
+_spawn_node = NodePath("../../Geometry/Elevation 6/Node (-8, 6, -13)")
 
-[node name="Greenery Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Greenery Enemy 3" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 18.75, -25)
 hunting_activation_id = "greenery-3"
-spawn_node = NodePath("../../Geometry/Elevation 7/Node (-7, 7, -10)")
+_spawn_node = NodePath("../../Geometry/Elevation 7/Node (-7, 7, -10)")
 
-[node name="Hall Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Hall Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 21.25, -17.5)
 hunting_activation_id = "hall-1"
-spawn_node = NodePath("../../Geometry/Elevation 8/Node (-5, 8, -7)")
+_spawn_node = NodePath("../../Geometry/Elevation 8/Node (-5, 8, -7)")
 
-[node name="Hall Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Hall Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 21.25, -20)
 hunting_activation_id = "hall-2"
-spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -8)")
+_spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -8)")
 
-[node name="Hall Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Hall Enemy 3" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 21.25, -10)
 hunting_activation_id = "hall-3"
-spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -4)")
+_spawn_node = NodePath("../../Geometry/Elevation 8/Node (-1, 8, -4)")
 
-[node name="Room Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Room Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 6.25, -25)
 hunting_activation_id = "room-1"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (9, 2, -10)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (9, 2, -10)")
 
-[node name="Room Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Room Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, -1.25, 0)
 hunting_activation_id = "room-2"
-spawn_node = NodePath("../../Geometry/Elevation -1/Node (7, -1, 0)")
+_spawn_node = NodePath("../../Geometry/Elevation -1/Node (7, -1, 0)")
 
-[node name="Room Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Room Enemy 3" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 6.25, 5)
 hunting_activation_id = "room-3"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (8, 2, 2)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (8, 2, 2)")
 
-[node name="Room Enemy 4" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Room Enemy 4" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.25, 20)
 hunting_activation_id = "room-4"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (4, 2, 8)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (4, 2, 8)")
 
-[node name="Maze Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Maze Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, -1.25, 22.5)
 hunting_activation_id = "maze-1"
-spawn_node = NodePath("../../Geometry/Elevation -1/Node (-1, -1, 9)")
+_spawn_node = NodePath("../../Geometry/Elevation -1/Node (-1, -1, 9)")
 
-[node name="Maze Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Maze Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 6.25, 10)
 hunting_activation_id = "maze-2"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (-3, 2, 4)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (-3, 2, 4)")
 
-[node name="Maze Enemy 3" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Maze Enemy 3" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.25, 20)
 hunting_activation_id = "maze-3"
-spawn_node = NodePath("../../Geometry/Elevation 0/Node (-4, 0, 8)")
+_spawn_node = NodePath("../../Geometry/Elevation 0/Node (-4, 0, 8)")
 
-[node name="Final Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Final Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1.25, -2.5)
 hunting_activation_id = "final-1"
-spawn_node = NodePath("../../Geometry/Elevation 0/Node (-8, 0, -1)")
+_spawn_node = NodePath("../../Geometry/Elevation 0/Node (-8, 0, -1)")
 
-[node name="Final Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Final Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.25, -12.5)
 hunting_activation_id = "final-1"
-spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
+_spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
 
 [node name="NPC Cat" parent="." node_paths=PackedStringArray("spawn_room", "greenery_subzone_locations", "room_location") instance=ExtResource("73_smfc2")]
 spawn_room = NodePath("../Geometry/Elevation -1/Node (3, -1, 0)")

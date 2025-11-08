@@ -62,8 +62,8 @@ func _ready() -> void:
 
 func sync_spawn() -> void:
     if _spawn_node != null:
-        var anchor: GridAnchor = _spawn_node.get_grid_anchor(_spawn_anchor_direction)
-        update_entity_anchorage(_spawn_node, anchor)
+        var spawn_anchor: GridAnchor = _spawn_node.get_grid_anchor(_spawn_anchor_direction)
+        update_entity_anchorage(_spawn_node, spawn_anchor)
         sync_position()
 
     orient()
@@ -258,24 +258,23 @@ func _handle_new_tween(tween: Tween, primary_tween: bool) -> void:
     else:
         _concurrent_tween = tween
 
-func update_entity_anchorage(node: GridNode, anchor: GridAnchor, deferred: bool = false) -> void:
-    if anchor != null:
-        set_grid_anchor(anchor, deferred)
+func update_entity_anchorage(new_node: GridNode, new_anchor: GridAnchor, deferred: bool = false) -> void:
+    if new_anchor != null:
+        set_grid_anchor(new_anchor, deferred)
         if transportation_abilities != null:
-            transportation_mode.mode = transportation_abilities.intersection(anchor.required_transportation_mode)
+            transportation_mode.mode = transportation_abilities.intersection(new_anchor.required_transportation_mode)
     else:
-        set_grid_node(node, deferred)
+        set_grid_node(new_node, deferred)
         if transportation_abilities != null:
             if cinematic || transportation_abilities.has_flag(TransportationMode.FLYING):
                 transportation_mode.mode = TransportationMode.FLYING
             else:
                 transportation_mode.mode = TransportationMode.NONE
 
-    print_debug("%s is now %s @ %s %s" % [name, transportation_mode.humanize() if transportation_mode != null else "static", node.name, CardinalDirections.name(anchor.direction) if anchor else "airbourne"])
+    print_debug("%s is now %s @ %s %s" % [name, transportation_mode.humanize() if transportation_mode != null else "static", new_node.name, CardinalDirections.name(new_anchor.direction) if new_anchor else "airbourne"])
     # print_stack()
 
 func sync_position() -> void:
-    var anchor: GridAnchor = get_grid_anchor()
     if anchor != null:
         global_position = anchor.global_position
         return
@@ -301,6 +300,19 @@ func orient() -> void:
         global_position + Vector3(CardinalDirections.direction_to_vectori(look_direction)),
         CardinalDirections.direction_to_vectori(CardinalDirections.invert(down)),
     )
+
+static func sync_entity_position(entity: GridEntity) -> void:
+    if entity.anchor != null:
+        entity.global_position = entity.anchor.global_position
+        return
+
+    var node: GridNode = entity.get_grid_node()
+    if node != null:
+        entity.global_position = node.get_center_pos()
+        return
+
+    push_error("%s doesn't have either a node or anchor set" % entity.name)
+    print_stack()
 
 static func find_entity_parent(current: Node, inclusive: bool = true) ->  GridEntity:
     if inclusive && current is GridEntity:

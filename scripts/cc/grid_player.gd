@@ -22,7 +22,7 @@ var _played_no_health: bool
 var hurt_to_walk: bool = true:
     set(value):
         hurt_to_walk = value
-        _previous_anchor = get_grid_anchor()
+        _previous_anchor = anchor
 
 func _ready() -> void:
     super._ready()
@@ -126,10 +126,10 @@ var _previous_anchor: GridAnchor
 var _on_trail_counter: int
 
 func _handle_move_end(entity: GridEntity) -> void:
-    if entity != self || entity.get_grid_anchor() == _previous_anchor:
+    if entity != self || anchor == _previous_anchor:
         return
 
-    _previous_anchor = entity.get_grid_anchor()
+    _previous_anchor = entity.anchor
 
     if only_hurt_if_not_on_trail && trail != null && trail.is_in_trail(_previous_anchor):
         _on_trail_counter += 1
