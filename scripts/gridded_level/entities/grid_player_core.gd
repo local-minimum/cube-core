@@ -22,6 +22,8 @@ var camera_wanted_position: Vector3:
 @export var key_ring: KeyRingCore
 
 func _ready() -> void:
+    super._ready()
+
     if __SignalBus.on_cinematic.connect(_handle_cinematic) != OK:
         push_error("Failed to connect to cinematic")
 
@@ -30,9 +32,6 @@ func _ready() -> void:
 
     _sync_level_entry()
 
-    # We do super afterwards to not get uneccesary warning about player not being
-    # preset as a child of a node
-    super()
 
 func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
     if entity == self:
@@ -42,13 +41,16 @@ func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
 
 func _sync_level_entry() -> void:
     var entry: LevelPortal = get_level().entry_portal
-    var spawn_node: GridNode = null
+    var spawn_node: GridNode = _spawn_node
+    var anchor: GridAnchor
 
     if entry == null:
         push_error("Level doesn't have an entry portal")
         down = CardinalDirections.CardinalDirection.DOWN
         look_direction = CardinalDirections.CardinalDirection.NORTH
         spawn_node = get_level().nodes()[0]
+        if spawn_node != null:
+            anchor = spawn_node.get_grid_anchor(_spawn_anchor_direction)
     else:
         down = entry.entry_down
         look_direction = entry.entry_lookdirection
@@ -57,13 +59,14 @@ func _sync_level_entry() -> void:
             var orthos: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(down)
             look_direction = orthos.pick_random()
         spawn_node = entry.get_grid_node()
+        if spawn_node != null:
+            anchor = spawn_node.get_grid_anchor(down)
 
     if spawn_node == null:
         push_error("Level has no node!")
         __SignalBus.on_critical_level_corrupt.emit(get_level().level_id)
         return
 
-    var anchor: GridAnchor = spawn_node.get_grid_anchor(down)
     update_entity_anchorage(spawn_node, anchor, true)
     sync_position()
     orient()

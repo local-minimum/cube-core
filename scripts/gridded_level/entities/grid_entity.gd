@@ -20,7 +20,7 @@ var cinematic: bool:
         __SignalBus.on_cinematic.emit(self, value)
         print_debug("%s is cinematic %s" % [name, cinematic])
 
-@export var look_direction: CardinalDirections.CardinalDirection:
+@export var look_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH:
     set(value):
         _old_look_direction = look_direction
         _emit_orientation = true
@@ -48,14 +48,25 @@ var cinematic: bool:
 
 @export var queue_moves: bool = true
 
+@export var _spawn_node: GridNode
+@export var _spawn_anchor_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
+
 var _active_movement: Movement.MovementType = Movement.MovementType.NONE
 var _concurrent_movement: Movement.MovementType = Movement.MovementType.NONE
 var _next_movement: Movement.MovementType = Movement.MovementType.NONE
 var _next_next_movement: Movement.MovementType = Movement.MovementType.NONE
 
 func _ready() -> void:
-    orient()
+    sync_spawn()
     get_level().grid_entities.append(self)
+
+func sync_spawn() -> void:
+    if _spawn_node != null:
+        var anchor: GridAnchor = _spawn_node.get_grid_anchor(_spawn_anchor_direction)
+        update_entity_anchorage(_spawn_node, anchor)
+        sync_position()
+
+    orient()
 
 func load_look_direction_and_down(load_look: CardinalDirections.CardinalDirection, load_down: CardinalDirections.CardinalDirection) -> void:
     look_direction = load_look
