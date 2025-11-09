@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cj2d53hfgd1uv"]
+
+[ext_resource type="Shader" uid="uid://cequov8mgbh3u" path="res://shaders/zoned_color_twosided.gdshader" id="1_vvfyc"]
+[ext_resource type="Texture2D" uid="uid://ctd0o3hi5v0oo" path="res://sprites/decorations/frames2-9.png" id="2_y7jvm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vvfyc")
+shader_parameter/main_tex = ExtResource("2_y7jvm")
+shader_parameter/dark_color = Color(0.05490196, 0.05490196, 0.05490196, 1)
+shader_parameter/light_color = Color(0.49803922, 0.050980393, 0.24705882, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=93 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -74,6 +74,7 @@
 [ext_resource type="Script" uid="uid://t4m0rh3c6e6l" path="res://scripts/cc/cat_help_zone.gd" id="44_ltwek"]
 [ext_resource type="PackedScene" uid="uid://8qm5lmt5657s" path="res://scenes/sides/ui-maze/maze_window.tscn" id="44_nj2gj"]
 [ext_resource type="Script" uid="uid://dg2tkxuuyitqr" path="res://scripts/cc/poem_event.gd" id="47_d5irf"]
+[ext_resource type="Material" uid="uid://cj2d53hfgd1uv" path="res://decoration_materials/spidernet.tres" id="49_clbla"]
 [ext_resource type="Script" uid="uid://l78dcf3q6gyv" path="res://scripts/cc/cat_help_subzone.gd" id="56_u5upv"]
 [ext_resource type="Material" uid="uid://bxtw5q2pew5de" path="res://decoration_materials/grass.tres" id="57_7kuto"]
 [ext_resource type="Material" uid="uid://bchr2inyse2ae" path="res://decoration_materials/vine1.tres" id="57_iij8i"]
@@ -82,6 +83,11 @@
 [ext_resource type="Script" uid="uid://bm0e0mu7y7xpn" path="res://scripts/cc/landing_area_manager.gd" id="68_jydfl"]
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ebg7i"]
+material = ExtResource("49_clbla")
+size = Vector2(1.25, 1.25)
+center_offset = Vector3(0, 0.625, 0)
 
 [sub_resource type="QuadMesh" id="QuadMesh_clbla"]
 material = ExtResource("38_k1glb")
@@ -5765,6 +5771,10 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 1/Node (-12, 1, 4)" instance=ExtResource("12_2e2fo")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (-12, 1, 4)" instance=ExtResource("11_w3o6u")]
+
+[node name="Spider Net" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (-12, 1, 4)"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, -2.9000015, 1.9000001, -1.3000002)
+mesh = SubResource("QuadMesh_ebg7i")
 
 [node name="Node (-13, 1, 4)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 2.5, 10)
@@ -28868,6 +28878,10 @@ direction = 2
 
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-13, 2, 7)" instance=ExtResource("11_w3o6u")]
 
+[node name="Spider Net" type="MeshInstance3D" parent="Geometry/Elevation 2/Node (-13, 2, 7)"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, 0, 1.9000001, -1.3000002)
+mesh = SubResource("QuadMesh_ebg7i")
+
 [node name="Node (-12, 2, 7)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 5, 17.5)
 coordinates = Vector3i(-12, 2, 7)
@@ -28897,6 +28911,14 @@ direction = 4
 [node name="Side UP" parent="Geometry/Elevation 2/Node (-11, 2, 7)" instance=ExtResource("12_2e2fo")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-11, 2, 7)" instance=ExtResource("11_w3o6u")]
+
+[node name="Spider Net" type="MeshInstance3D" parent="Geometry/Elevation 2/Node (-11, 2, 7)"]
+transform = Transform3D(4.3711392e-08, 1, -4.3711385e-08, 1, -4.371139e-08, 4.371139e-08, 4.3711385e-08, -4.371139e-08, -1, -1.2999992, 1.9000001, -1.2999992)
+mesh = SubResource("QuadMesh_ebg7i")
+
+[node name="Spider Net2" type="MeshInstance3D" parent="Geometry/Elevation 2/Node (-11, 2, 7)"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, -1.7000008, 1.9000001, -1.2999992)
+mesh = SubResource("QuadMesh_ebg7i")
 
 [node name="Node (-13, 2, 6)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 5, 15)
@@ -28945,6 +28967,10 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 2/Node (-8, 2, 5)" instance=ExtResource("12_2e2fo")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-8, 2, 5)" instance=ExtResource("11_w3o6u")]
+
+[node name="Spider Net" type="MeshInstance3D" parent="Geometry/Elevation 2/Node (-8, 2, 5)"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, 0, 1.9000001, -1.3000002)
+mesh = SubResource("QuadMesh_ebg7i")
 
 [node name="Node (-9, 2, 5)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 5, 12.5)
@@ -37330,6 +37356,18 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 6/Node (-9, 6, 5)" instance=ExtResource("12_2e2fo")]
 
 [node name="Side DOWN" parent="Geometry/Elevation 6/Node (-9, 6, 5)" instance=ExtResource("11_w3o6u")]
+
+[node name="Spider Net" type="MeshInstance3D" parent="Geometry/Elevation 6/Node (-9, 6, 5)/Side DOWN"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, 2.1000004, 1.8999996, -1.3000002)
+mesh = SubResource("QuadMesh_ebg7i")
+
+[node name="Spider Net2" type="MeshInstance3D" parent="Geometry/Elevation 6/Node (-9, 6, 5)/Side DOWN"]
+transform = Transform3D(4.3711385e-08, 4.3711392e-08, -1, 1, 1.3113416e-07, 4.3711392e-08, 1.3113417e-07, -1, -4.3711385e-08, -2.8999996, 1.8999996, 1.2999992)
+mesh = SubResource("QuadMesh_ebg7i")
+
+[node name="Spider Net3" type="MeshInstance3D" parent="Geometry/Elevation 6/Node (-9, 6, 5)/Side DOWN"]
+transform = Transform3D(-4.3711385e-08, -1, -4.3711392e-08, 1, -4.371139e-08, 4.371139e-08, -4.3711392e-08, -4.371139e-08, 1, 1, 1.8999996, -2.1000004)
+mesh = SubResource("QuadMesh_ebg7i")
 
 [node name="Node (-9, 6, 4)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 15, 10)
@@ -55807,7 +55845,7 @@ material = SubResource("ShaderMaterial_7agi7")
 decal_scale = Vector2(0.5, 0.5)
 random_normal_rotation = true
 snap_step = 45.0
-max_trail_length = 50
+max_trail_length = 90
 
 [node name="Enemies" type="Node3D" parent="."]
 
