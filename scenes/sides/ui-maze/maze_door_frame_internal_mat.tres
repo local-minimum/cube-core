@@ -10,6 +10,7 @@ shader_parameter/main_tex = ExtResource("2_maeyh")
 shader_parameter/dark_color = Color(0.07450981, 0.07058824, 0.09019608, 1)
 shader_parameter/light_color = Color(0.92156863, 0.76862746, 0.26666668, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/pasthrough_blend = 0.0
 shader_parameter/precision = 0.0
 shader_parameter/darken_north_south = 0.05000000074506
 

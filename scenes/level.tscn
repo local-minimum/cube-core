@@ -94,6 +94,8 @@ shader_parameter/main_tex = ExtResource("25_cmcjb")
 shader_parameter/dark_color = Color(0, 0, 0, 1)
 shader_parameter/light_color = Color(0, 0, 0, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
 shader_parameter/precision = 1.0
 shader_parameter/darken_north_south = 0.0
 
@@ -102,7 +104,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
+primary_entry_portal = NodePath("Geometry/Elevation 5/Node (4, 5, -6)/LevelPortal Room")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -55529,10 +55531,9 @@ max_trail_length = 50
 
 [node name="Enemies" type="Node3D" parent="."]
 
-[node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("spawn_node", "_spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 13.75, 15)
 hunting_activation_id = "industrial"
-spawn_node = NodePath("../../Geometry/Elevation 5/Node (-11, 5, 6)")
 _spawn_node = NodePath("../../Geometry/Elevation 5/Node (-11, 5, 6)")
 
 [node name="Industrial Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
@@ -55545,10 +55546,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 16.25, -15)
 hunting_activation_id = "greenery-1"
 _spawn_node = NodePath("../../Geometry/Elevation 6/Node (-11, 6, -6)")
 
-[node name="Greenery Enemy 2" parent="Enemies" node_paths=PackedStringArray("spawn_node", "_spawn_node") instance=ExtResource("7_64w2a")]
+[node name="Greenery Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 16.25, -32.5)
 hunting_activation_id = "greenery-2"
-spawn_node = NodePath("../../Geometry/Elevation 6/Node (-8, 6, -13)")
 _spawn_node = NodePath("../../Geometry/Elevation 6/Node (-8, 6, -13)")
 
 [node name="Greenery Enemy 3" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]

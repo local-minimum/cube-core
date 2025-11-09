@@ -49,6 +49,9 @@ func _ready() -> void:
 
         _sync_swapping_material()
 
+    if _anim != null:
+        _anim.play(_anim_deactivated)
+
 func register_broadcasts(contract: BroadcastContract) -> bool:
     var messages: int = contract.messages.size()
     if messages > 0 && messages <= 2:

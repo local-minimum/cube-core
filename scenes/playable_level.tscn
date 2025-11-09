@@ -228,6 +228,7 @@ grow_vertical = 2
 
 [node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas", "title_canvas", "title_label", "press_to_start_label")]
 script = ExtResource("19_subuw")
+start_cinematic = false
 intro_poem = "res://audio/voice/narration/intro.ogg"
 intro_response = "res://audio/voice/narration/intro-response.ogg"
 landing_poem = "res://audio/voice/narration/landing.ogg"
