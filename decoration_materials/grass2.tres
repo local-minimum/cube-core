@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c2g7qeaifnxd2"]
+
+[ext_resource type="Shader" uid="uid://cequov8mgbh3u" path="res://shaders/zoned_color_twosided.gdshader" id="1_k6ti6"]
+[ext_resource type="Texture2D" uid="uid://ba6pbs6ioxv84" path="res://sprites/decorations/vegatables-1.png" id="2_p4sgk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_k6ti6")
+shader_parameter/main_tex = ExtResource("2_p4sgk")
+shader_parameter/dark_color = Color(0.043137256, 0.19215687, 0.14509805, 1)
+shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
