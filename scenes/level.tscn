@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=120 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -77,7 +77,10 @@
 [ext_resource type="PackedScene" uid="uid://8qm5lmt5657s" path="res://scenes/sides/ui-maze/maze_window.tscn" id="44_nj2gj"]
 [ext_resource type="Texture2D" uid="uid://c6icujsurcd4r" path="res://sprites/decorations/frames2-15.png" id="44_p1qlp"]
 [ext_resource type="Script" uid="uid://dg2tkxuuyitqr" path="res://scripts/cc/poem_event.gd" id="47_d5irf"]
+[ext_resource type="Texture2D" uid="uid://b4ffevm4vhis" path="res://sprites/decorations/rykhath-tiles-30.png" id="49_5bunc"]
 [ext_resource type="Material" uid="uid://cj2d53hfgd1uv" path="res://decoration_materials/spidernet.tres" id="49_clbla"]
+[ext_resource type="Texture2D" uid="uid://deh7ehb5agbh6" path="res://sprites/decorations/rykhath-tiles-29.png" id="50_ty36l"]
+[ext_resource type="Texture2D" uid="uid://dto5eexa4kl38" path="res://sprites/decorations/rykhath-tiles-31.png" id="51_speit"]
 [ext_resource type="Script" uid="uid://l78dcf3q6gyv" path="res://scripts/cc/cat_help_subzone.gd" id="56_u5upv"]
 [ext_resource type="Material" uid="uid://bxtw5q2pew5de" path="res://decoration_materials/grass.tres" id="57_7kuto"]
 [ext_resource type="Material" uid="uid://bchr2inyse2ae" path="res://decoration_materials/vine1.tres" id="57_iij8i"]
@@ -127,6 +130,54 @@ shader_parameter/darken_north_south = 0.0
 material = SubResource("ShaderMaterial_tvrmj")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wb1uj"]
+render_priority = 0
+shader = ExtResource("58_4qdnu")
+shader_parameter/main_tex = ExtResource("49_5bunc")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_sy37w"]
+material = SubResource("ShaderMaterial_wb1uj")
+size = Vector2(0.625, 0.625)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f55ft"]
+render_priority = 0
+shader = ExtResource("58_4qdnu")
+shader_parameter/main_tex = ExtResource("50_ty36l")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ovgnb"]
+material = SubResource("ShaderMaterial_f55ft")
+size = Vector2(0.625, 0.625)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kwu62"]
+render_priority = 0
+shader = ExtResource("58_4qdnu")
+shader_parameter/main_tex = ExtResource("51_speit")
+shader_parameter/dark_color = Color(0.011764706, 0.08235294, 0.19215687, 1)
+shader_parameter/light_color = Color(0.40784314, 0.58431375, 0.8392157, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_y73rr"]
+material = SubResource("ShaderMaterial_kwu62")
+size = Vector2(0.625, 0.625)
 
 [sub_resource type="QuadMesh" id="QuadMesh_ebg7i"]
 material = ExtResource("49_clbla")
@@ -3475,6 +3526,20 @@ coordinates = Vector3i(7, 0, 0)
 
 [node name="Side UP" parent="Geometry/Elevation 0/Node (7, 0, 0)" instance=ExtResource("29_7iqcu")]
 
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (7, 0, 0)"]
+transform = Transform3D(-0.9659258, -8.444392e-08, 0.25881904, 8.742278e-08, -1, 0, 0.25881904, 2.262668e-08, 0.9659258, 0, 2.125, -0.4)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (7, 0, 0)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (7, 0, 0)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
+
 [node name="Node (7, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, 2.5)
 coordinates = Vector3i(7, 0, 1)
@@ -3574,6 +3639,20 @@ coordinates = Vector3i(8, 0, 2)
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (8, 0, 2)" instance=ExtResource("17_tcyu4")]
 
 [node name="Side UP" parent="Geometry/Elevation 0/Node (8, 0, 2)" instance=ExtResource("29_7iqcu")]
+
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (8, 0, 2)"]
+transform = Transform3D(-0.9659258, -8.444392e-08, -0.25881904, 8.742278e-08, -1, 0, -0.25881904, -2.262668e-08, 0.9659258, -0.6000004, 2.125, -0.4000001)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (8, 0, 2)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (8, 0, 2)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
 
 [node name="Node (8, 0, 3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 7.5)
@@ -6511,6 +6590,20 @@ coordinates = Vector3i(6, 1, -4)
 
 [node name="Side UP" parent="Geometry/Elevation 1/Node (6, 1, -4)" instance=ExtResource("29_7iqcu")]
 
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, -4)"]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 2.125, -0.4)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, -4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, -4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
+
 [node name="Node (6, 1, -3)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, -7.5)
 coordinates = Vector3i(6, 1, -3)
@@ -6580,6 +6673,20 @@ coordinates = Vector3i(6, 1, 4)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, 4)"]
+transform = Transform3D(-0.9659258, -8.444392e-08, -0.25881904, 8.742278e-08, -1, 0, -0.25881904, -2.262668e-08, 0.9659258, 0.10000038, 2.125, -0.8999996)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, 4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (6, 1, 4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
+
 [node name="Node (6, 1, 5)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.5, 12.5)
 coordinates = Vector3i(6, 1, 5)
@@ -6601,6 +6708,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 2.5, -12.5)
 coordinates = Vector3i(7, 1, -5)
 
 [node name="Side UP" parent="Geometry/Elevation 1/Node (7, 1, -5)" instance=ExtResource("29_7iqcu")]
+
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (7, 1, -5)"]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 2.125, -0.4)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (7, 1, -5)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (7, 1, -5)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
 
 [node name="Node (7, 1, -4)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 2.5, -10)
@@ -6702,6 +6823,20 @@ coordinates = Vector3i(8, 1, -4)
 
 [node name="Side UP" parent="Geometry/Elevation 1/Node (8, 1, -4)" instance=ExtResource("29_7iqcu")]
 
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, -4)"]
+transform = Transform3D(-0.8660254, -7.5710346e-08, -0.5, 8.742278e-08, -1, 0, -0.5, -4.371139e-08, 0.8660254, 0, 2.125, -0.39999962)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, -4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, -4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
+
 [node name="Node (8, 1, -3)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -7.5)
 coordinates = Vector3i(8, 1, -3)
@@ -6767,6 +6902,20 @@ coordinates = Vector3i(8, 1, 4)
 [node name="Side WEST" parent="Geometry/Elevation 1/Node (8, 1, 4)" instance=ExtResource("35_7iqcu")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 direction = 3
+
+[node name="Pipe" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, 4)"]
+transform = Transform3D(-0.86602545, -7.5710346e-08, 0.50000006, 8.742278e-08, -1, 0, 0.50000006, 4.371139e-08, 0.86602545, 0, 2.125, 0.70000076)
+mesh = SubResource("QuadMesh_sy37w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, 4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+mesh = SubResource("QuadMesh_ovgnb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation 1/Node (8, 1, 4)/Pipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+mesh = SubResource("QuadMesh_y73rr")
+skeleton = NodePath("../..")
 
 [node name="Node (8, 1, 5)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, 12.5)

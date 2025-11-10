@@ -102,9 +102,9 @@ func _get_release_anchor(entity: GridEntity) -> GridAnchor:
                 return null
 
         elif node.has_side(entity.look_direction) == GridNode.NodeSideState.SOLID:
-            var anchor: GridAnchor = node.get_grid_anchor(entity.look_direction)
-            if anchor != null && anchor.can_anchor(entity):
-                return anchor
+            var land_anchor: GridAnchor = node.get_grid_anchor(entity.look_direction)
+            if land_anchor != null && land_anchor.can_anchor(entity):
+                return land_anchor
 
     if _crashes_entity_down:
         if node.may_exit(entity, entity.down) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
@@ -116,9 +116,9 @@ func _get_release_anchor(entity: GridEntity) -> GridAnchor:
             else:
                 return null
 
-        var anchor: GridAnchor = node.get_grid_anchor(entity.down)
-        if anchor != null && anchor.can_anchor(entity):
-            return anchor
+        var land_anchor: GridAnchor = node.get_grid_anchor(entity.down)
+        if land_anchor != null && land_anchor.can_anchor(entity):
+            return land_anchor
 
     if _crash_direction != CardinalDirections.CardinalDirection.NONE:
         if node.may_exit(entity, _crash_direction) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
@@ -130,9 +130,9 @@ func _get_release_anchor(entity: GridEntity) -> GridAnchor:
             else:
                 return null
 
-        var anchor: GridAnchor = node.get_grid_anchor(_crash_direction)
-        if anchor != null && anchor.can_anchor(entity):
-            return anchor
+        var land_anchor: GridAnchor = node.get_grid_anchor(_crash_direction)
+        if land_anchor != null && land_anchor.can_anchor(entity):
+            return land_anchor
 
     return null
 

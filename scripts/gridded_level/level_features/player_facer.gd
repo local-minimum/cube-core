@@ -82,9 +82,9 @@ func _calculate_down() -> CardinalDirections.CardinalDirection:
     if entity != null:
         return entity.down
 
-    var anchor: GridAnchor = GridAnchor.find_anchor_parent(subject, false)
-    if anchor != null:
-        return anchor.direction
+    var parent_anchor: GridAnchor = GridAnchor.find_anchor_parent(subject, false)
+    if parent_anchor != null:
+        return parent_anchor.direction
 
     var level: GridLevelCore = get_level()
     if level == null:
