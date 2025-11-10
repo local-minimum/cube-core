@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=121 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -92,6 +92,7 @@
 [ext_resource type="Material" uid="uid://dfdyh6actv1wv" path="res://scenes/sides/hallways/wall_mat.tres" id="68_kbk4x"]
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
+[ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/mouse_cam.gd" id="83_ty36l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1sbqr"]
 render_priority = 0
@@ -56286,6 +56287,7 @@ metadata/_custom_type_script = "uid://meibvvwp8mvg"
 [node name="Eyes" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.40000004)
 fov = 80.0
+script = ExtResource("83_ty36l")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="Player/Eyes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.027929664, -2.9802322e-08)
