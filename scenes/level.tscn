@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=111 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -41,6 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://cddg7n7k37pbk" path="res://scenes/sides/the-room/room_wall_mid.tscn" id="20_bo6tc"]
 [ext_resource type="PackedScene" uid="uid://0br4acjbdk1b" path="res://scenes/sides/final-challenge/final_ceiling.tscn" id="20_d5irf"]
 [ext_resource type="PackedScene" uid="uid://c5402sxoyyywf" path="res://scenes/sides/greenery/grassbrick_floor.tscn" id="20_q4oe8"]
+[ext_resource type="Texture2D" uid="uid://b2g8a62qgtv8" path="res://sprites/decorations/shadows-7.png" id="23_bdomq"]
 [ext_resource type="PackedScene" uid="uid://ck0i4f6rf4ujb" path="res://scenes/sides/industry-zone/brick_ceiling.tscn" id="23_om2me"]
 [ext_resource type="PackedScene" uid="uid://bauhrkgcuuclt" path="res://scenes/end_blob.tscn" id="23_u5upv"]
 [ext_resource type="Script" uid="uid://dwg3ae02gnrt1" path="res://scripts/cc/trail.gd" id="24_3ies3"]
@@ -67,6 +68,7 @@
 [ext_resource type="PackedScene" uid="uid://yfx8a1fp54n3" path="res://scenes/sides/hallways/hall_internal_door.tscn" id="30_uhfbm"]
 [ext_resource type="PackedScene" uid="uid://bs2wjmt60q38g" path="res://scenes/sides/hallways/hall_window.tscn" id="31_uhfbm"]
 [ext_resource type="PackedScene" uid="uid://cmwck5ciilmqc" path="res://scenes/sides/catapult.tscn" id="34_v4d4p"]
+[ext_resource type="Material" uid="uid://013p72tb4x35" path="res://scenes/sides/final-challenge/final_floor_mat.tres" id="35_1sbqr"]
 [ext_resource type="PackedScene" uid="uid://dp3l4q4fh43cp" path="res://scenes/sides/the-room/room_wall_solo.tscn" id="35_7iqcu"]
 [ext_resource type="PackedScene" uid="uid://brdwygkej57nl" path="res://scenes/sides/the-room/room_door.tscn" id="35_30hdq"]
 [ext_resource type="Material" uid="uid://c2g7qeaifnxd2" path="res://decoration_materials/grass2.tres" id="38_k1glb"]
@@ -104,6 +106,27 @@ shader_parameter/darken_north_south = 0.0
 material = SubResource("ShaderMaterial_1sbqr")
 size = Vector2(1.25, 1.25)
 center_offset = Vector3(0, 0.05, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bdomq"]
+material = ExtResource("35_1sbqr")
+size = Vector3(0.625, 0.625, 0.625)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tvrmj"]
+render_priority = 0
+shader = ExtResource("58_4qdnu")
+shader_parameter/main_tex = ExtResource("23_bdomq")
+shader_parameter/dark_color = Color(0.2, 0.08235294, 0.16078432, 1)
+shader_parameter/light_color = Color(0.69411767, 0.58431375, 0.972549, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_7ujeh"]
+material = SubResource("ShaderMaterial_tvrmj")
+size = Vector2(2.5, 2.5)
+center_offset = Vector3(0, 1.25, 0)
 
 [sub_resource type="QuadMesh" id="QuadMesh_ebg7i"]
 material = ExtResource("49_clbla")
@@ -221,7 +244,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 8/Node (-7, 8, -10)/LevelPortal Halls")
+primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-3, 0, 2)/LevelPortal Final")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -1760,6 +1783,14 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation -1/Node (-3, -1, -1)" instance=ExtResource("19_u0n8q")]
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation -1/Node (-3, -1, -1)"]
+transform = Transform3D(-0.9659258, 0, -0.25881898, 0, 1, 0, 0.25881898, 0, -0.9659258, 1, 0.313, -0.6999998)
+mesh = SubResource("BoxMesh_bdomq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Geometry/Elevation -1/Node (-3, -1, -1)"]
+transform = Transform3D(-0.96592575, 0, 0.2588191, 0, 1, 0, -0.2588191, 0, -0.96592575, 0.5999999, 0.31299996, 0.70000017)
+mesh = SubResource("BoxMesh_bdomq")
+
 [node name="Node (-4, -1, -1)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -2.5, -2.5)
 coordinates = Vector3i(-4, -1, -1)
@@ -1839,6 +1870,10 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation -1/Node (-5, -1, -5)" instance=ExtResource("19_u0n8q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Ceiling Shadow" type="MeshInstance3D" parent="Geometry/Elevation -1/Node (-5, -1, -5)"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.25, 1.25, -1.25)
+mesh = SubResource("QuadMesh_7ujeh")
 
 [node name="Node (-5, -1, -6)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -2.5, -15)
@@ -4452,6 +4487,10 @@ _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-5, 0, 1)"]
+transform = Transform3D(-0.9659258, 0, -0.25881898, 0, 1, 0, 0.25881898, 0, -0.9659258, -0.6000004, 0.313, 0.7000003)
+mesh = SubResource("BoxMesh_bdomq")
+
 [node name="Node (-5, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -2.5)
 coordinates = Vector3i(-5, 0, -1)
@@ -4533,6 +4572,14 @@ direction = 3
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-8, 0, -2)" instance=ExtResource("19_u0n8q")]
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-8, 0, -2)"]
+transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, -0.5, 0.313, -0.6999998)
+mesh = SubResource("BoxMesh_bdomq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-8, 0, -2)"]
+transform = Transform3D(-0.9659258, 0, -0.25881898, 0, 1, 0, 0.25881898, 0, -0.9659258, 1, 0.313, -0.6999998)
+mesh = SubResource("BoxMesh_bdomq")
+
 [node name="Node (-8, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -2.5)
 coordinates = Vector3i(-8, 0, -1)
@@ -4549,6 +4596,10 @@ direction = 4
 
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-8, 0, -1)" instance=ExtResource("19_u0n8q")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Ceiling Shadow" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-8, 0, -1)"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.25, 1.25, -1.25)
+mesh = SubResource("QuadMesh_7ujeh")
 
 [node name="Node (-8, 0, 0)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
@@ -4600,6 +4651,10 @@ _enemy_activation_id = "final-1"
 _activator = 2
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
+
+[node name="Ceiling Shadow" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-6, 0, 0)"]
+transform = Transform3D(-4.371139e-08, 0, 1, 1, -4.371139e-08, 4.371139e-08, 4.371139e-08, 1, 1.9106855e-15, -1.2999992, 1.25, -1.25)
+mesh = SubResource("QuadMesh_7ujeh")
 
 [node name="Node (-5, 0, -6)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -15)
@@ -7244,6 +7299,7 @@ direction = 3
 
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-5, 1, -2)" instance=ExtResource("34_v4d4p")]
 _crash_direction = 6
+_trigger_entire_node = true
 
 [node name="Node (-4, 1, -2)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -5)
