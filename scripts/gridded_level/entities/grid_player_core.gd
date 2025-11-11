@@ -21,17 +21,34 @@ var camera_wanted_position: Vector3:
 
 @export var key_ring: KeyRingCore
 
-func _ready() -> void:
-    super._ready()
-
+func _enter_tree() -> void:
     if __SignalBus.on_cinematic.connect(_handle_cinematic) != OK:
         push_error("Failed to connect to cinematic")
+
+    if __SignalBus.on_toggle_freelook_camera.connect(_handle_free_look_camera) != OK:
+        push_error("Failed to connect to toggle free look camera")
+
+func _ready() -> void:
+    super._ready()
 
     camera_resting_position = camera.position
     camera_resting_rotation = camera.basis.get_rotation_quaternion()
 
     _sync_level_entry()
 
+enum FreeLookMode { INACTIVE, ACTIVE, ACTIVE_BLOCKING }
+var free_look: FreeLookMode = FreeLookMode.INACTIVE
+
+func _handle_free_look_camera(active: bool, cause: FreeLookCam.ToggleCause) -> void:
+    if active:
+        match free_look:
+            FreeLookMode.INACTIVE:
+                free_look = FreeLookMode.ACTIVE_BLOCKING if cause == FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR else FreeLookMode.ACTIVE
+            FreeLookMode.ACTIVE:
+                if cause == FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR:
+                    free_look = FreeLookMode.ACTIVE_BLOCKING
+    else:
+        free_look = FreeLookMode.INACTIVE
 
 func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
     if entity == self:
@@ -86,6 +103,9 @@ func kill() -> void:
     pass
 
 func _input(event: InputEvent) -> void:
+    if free_look == FreeLookMode.ACTIVE_BLOCKING:
+        return
+
     if transportation_mode.mode == TransportationMode.NONE:
         print_debug("[Grid Player %s] Lacking transportation mode!" % [name])
         return
@@ -112,10 +132,16 @@ func _input(event: InputEvent) -> void:
             clear_held_movement(Movement.MovementType.STRAFE_RIGHT)
 
         elif !cinematic && event.is_action_pressed("crawl_turn_left"):
+            if free_look == FreeLookMode.ACTIVE:
+                __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
+
             if !attempt_movement(Movement.MovementType.TURN_COUNTER_CLOCKWISE):
                 print_debug("Refused Rotate Left")
 
         elif !cinematic && event.is_action_pressed("crawl_turn_right"):
+            if free_look == FreeLookMode.ACTIVE:
+                __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
+
             if !attempt_movement(Movement.MovementType.TURN_CLOCKWISE):
                 print_debug("Refused Rotate Right")
         else:
@@ -129,11 +155,11 @@ func _input(event: InputEvent) -> void:
             # transportation_mode.humanize()])
 
 func hold_movement(movement: Movement.MovementType) -> void:
-    if cinematic:
+    if cinematic || free_look == FreeLookMode.ACTIVE_BLOCKING || get_level().paused:
         return
 
-    if get_level().paused:
-        return
+    if free_look == FreeLookMode.ACTIVE:
+        __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
 
     if !attempt_movement(movement):
         print_debug("Refused %s" % Movement.name(movement))
@@ -158,7 +184,7 @@ func clear_held_movement(movement: Movement.MovementType) -> void:
 var _next_move_repeat: float
 
 func _process(_delta: float) -> void:
-    if cinematic || falling():
+    if cinematic || free_look == FreeLookMode.ACTIVE_BLOCKING || falling():
         _repeat_movement.clear()
         return
 

@@ -92,7 +92,7 @@
 [ext_resource type="Material" uid="uid://dfdyh6actv1wv" path="res://scenes/sides/hallways/wall_mat.tres" id="68_kbk4x"]
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
-[ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/mouse_cam.gd" id="83_ty36l"]
+[ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/free_look_cam.gd" id="83_ty36l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1sbqr"]
 render_priority = 0

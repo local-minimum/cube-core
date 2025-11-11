@@ -49,6 +49,9 @@ signal on_gain_key(id: String, gained: int, total: int)
 signal on_consume_key(id: String, remaining: int)
 signal on_sync_keys(keys: Dictionary[String, int])
 
+# -> Camera
+signal on_toggle_freelook_camera(active: bool, cause: FreeLookCam.ToggleCause)
+
 # -> Grid Entity
 signal on_move_start(entity: GridEntity, from: Vector3i, translation_direction: CardinalDirections.CardinalDirection)
 signal on_move_end(entity: GridEntity)
