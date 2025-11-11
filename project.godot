@@ -29,7 +29,6 @@ __AudioHub="*res://scenes/globals/audio_hub.tscn"
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor_plugins]
 
