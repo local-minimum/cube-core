@@ -18,6 +18,11 @@ func _ready() -> void:
 
     hide()
 
+func _unhandled_input(event: InputEvent) -> void:
+    if visible && event is InputEventMouseButton:
+        if (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT && event.is_pressed():
+            hide()
+
 func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
     if entity is GridPlayer && visible:
         hide()

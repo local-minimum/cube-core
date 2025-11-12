@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=31 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://c76l8erbfe2p3" path="res://sprites/dice/gaming-2.png" id="23_2a1gl"]
 [ext_resource type="Texture2D" uid="uid://qe62qeadijcx" path="res://sprites/dice/gaming-1.png" id="24_42y26"]
 [ext_resource type="Texture2D" uid="uid://cwmil1624c4mn" path="res://sprites/dice/gaming-0.png" id="25_euxtm"]
+[ext_resource type="PackedScene" uid="uid://dcw0kg1kaar8j" path="res://scenes/menu.tscn" id="30_tdkqe"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -676,3 +677,8 @@ y_alignment_offset = -36
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Menu" type="CanvasLayer" parent="."]
+layer = 225
+
+[node name="Menu" parent="Menu" instance=ExtResource("30_tdkqe")]

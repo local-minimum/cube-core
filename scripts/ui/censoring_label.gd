@@ -1,3 +1,4 @@
+@tool
 extends Control
 class_name CensoringLabel
 
@@ -71,6 +72,7 @@ class_name CensoringLabel
     set (value):
         center_horisontally = value
         _sync_width()
+        queue_redraw()
 
 func _sync_width() -> void:
     if manage_label_width:
@@ -108,6 +110,10 @@ func _get_minimum_size() -> Vector2:
 
 func _draw() -> void:
     var pos: Vector2 = Vector2.UP * y_alignment_offset
+    if center_horisontally:
+        var text_width: float = (font_size + letter_spacing) * text.length() - (letter_spacing if letter_spacing > 0 else 0)
+        var container_width: float = get_rect().size.x
+        pos.x += (container_width  - text_width) / 2.0
 
     # print_debug(get_rect().size)
     for idx: int in range(text.length()):
