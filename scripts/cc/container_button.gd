@@ -29,12 +29,13 @@ signal on_change_interactable(button: ContainerButton)
                 else:
                     _focus_target.modulate = _default_color
             on_change_interactable.emit(self)
+        _sync_cursor()
 
 var focused: bool = false:
     set(value):
         if !interactable:
             if focused:
-                Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+                _sync_cursor()
                 if _focus_target != null:
                     _focus_target.modulate = _disabled_color
                 on_unfocus.emit(self)
@@ -88,8 +89,9 @@ func _ready() -> void:
         else:
             _focus_target.modulate = _default_color
 
-func _on_mouse_exited() -> void:
+    _sync_cursor()
 
+func _on_mouse_exited() -> void:
     if !_managed_unfocus:
         # print_debug("[Container Button %s] De-focused " % name)
         focused = false
