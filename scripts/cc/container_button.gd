@@ -64,7 +64,16 @@ var focused: bool = false:
             return false
         return focused
 
+func _enter_tree() -> void:
+    if !mouse_entered.is_connected(_on_mouse_entered) && mouse_entered.connect(_on_mouse_entered) != OK:
+        push_error("Failed to connect mouse entered")
+    if !mouse_exited.is_connected(_on_mouse_exited) && mouse_exited.connect(_on_mouse_exited) != OK:
+        push_error("Failed to connect mouse entered")
+
 func _ready() -> void:
+    mouse_filter = Control.MOUSE_FILTER_STOP
+    mouse_behavior_recursive = Control.MOUSE_BEHAVIOR_ENABLED
+
     _click_time = -_reclick_delay_msec
 
     if _focus_target != null:
@@ -77,14 +86,17 @@ func _ready() -> void:
 
 func _on_mouse_exited() -> void:
     if !_managed_unfocus:
+        # print_debug("[Container Button %s] De-focused " % name)
         focused = false
 
 func _on_mouse_entered() -> void:
+    # print_debug("[Container Button %s] Focused %s" % [name, interactable])
     if interactable:
         focused = true
 
 func _gui_input(event: InputEvent) -> void:
     if !visible || !focused || event.is_echo():
+        # print_debug("[Container Button %s] Visible %s Focused %s Echo %s" % [name, visible, focused, event.is_echo()])
         return
 
     if event is InputEventMouseButton:
@@ -102,5 +114,6 @@ func _click() -> void:
     if !interactable || Time.get_ticks_msec() < _click_time + _reclick_delay_msec:
         return
 
+    print_debug("[Container Button %s] Clicked" % name)
     _click_time = Time.get_ticks_msec()
     on_click.emit(self)

@@ -12,6 +12,9 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
 
 [node name="Word Button" type="PanelContainer" node_paths=PackedStringArray("_focus_target")]
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_7shjm")
 _focus_target = NodePath("NinePatchRect")

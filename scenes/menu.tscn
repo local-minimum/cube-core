@@ -15,14 +15,15 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
 
-[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider")]
-offset_right = 88.0
-offset_bottom = 104.0
+[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider", "labels")]
+offset_right = 396.0
+offset_bottom = 488.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_ufwb2")
 invert_y_btn = NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis")
 sensistivity_slider = NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider")
+labels = [NodePath("MarginContainer/VBoxContainer/Menu"), NodePath("MarginContainer/VBoxContainer/Mouse/Mouse"), NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y"), NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity"), NodePath("MarginContainer/VBoxContainer/Spoilers/Spoilers"), NodePath("MarginContainer/VBoxContainer/Spoilers/Battle/Battle"), NodePath("MarginContainer/VBoxContainer/Spoilers/Health/Health"), NodePath("MarginContainer/VBoxContainer/Spoilers/Cat/Cat"), NodePath("MarginContainer/VBoxContainer/Spoilers/Big Room/Big Room"), NodePath("MarginContainer/VBoxContainer/Actions/Quit/Hbox/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/Actions/Restart/Hbox/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/Actions/Resume/Hbox/CensoringLabel")]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
@@ -331,12 +332,16 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 2
 
 [node name="Quit" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
 custom_minimum_size = Vector2(100, 48)
 layout_mode = 2
 tooltip_text = "Quit game"
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
 script = ExtResource("11_mj5lg")
 _focus_target = NodePath("Hbox/CensoringLabel")
 metadata/_custom_type_script = "uid://bv1ceubowg00e"
@@ -363,12 +368,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Quit/Hbox"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+mouse_filter = 2
 script = ExtResource("3_70i5f")
 censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
 text = "QUIT"
@@ -377,7 +384,7 @@ letter_spacing = -12
 height_ratio = 2
 font = ExtResource("8_7jp70")
 color = Color(0.8392157, 0.6156863, 0.9764706, 1)
-live = false
+baseline_height = 2
 y_alignment_offset = -22
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
@@ -386,6 +393,9 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
 tooltip_text = "Start a new game from the title screen resetting all progress"
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
 script = ExtResource("11_mj5lg")
 _focus_target = NodePath("Hbox/CensoringLabel")
 metadata/_custom_type_script = "uid://bv1ceubowg00e"
@@ -412,12 +422,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Restart/Hbox"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+mouse_filter = 2
 script = ExtResource("3_70i5f")
 censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
 text = "RESTART"
@@ -426,7 +438,7 @@ letter_spacing = -12
 height_ratio = 2
 font = ExtResource("8_7jp70")
 color = Color(0.8392157, 0.6156863, 0.9764706, 1)
-live = false
+baseline_height = 2
 y_alignment_offset = -22
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
@@ -434,6 +446,9 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Resume" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
 script = ExtResource("11_mj5lg")
 _focus_target = NodePath("Hbox/CensoringLabel")
 metadata/_custom_type_script = "uid://bv1ceubowg00e"
@@ -460,12 +475,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Resume/Hbox"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+mouse_filter = 2
 script = ExtResource("3_70i5f")
 censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
 text = "RESUME"
@@ -474,7 +491,7 @@ letter_spacing = -12
 height_ratio = 2
 font = ExtResource("8_7jp70")
 color = Color(0.8392157, 0.6156863, 0.9764706, 1)
-live = false
+baseline_height = 2
 y_alignment_offset = -22
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"

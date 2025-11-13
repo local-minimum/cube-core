@@ -100,7 +100,7 @@ func _sync_horisontally(width: float) -> void:
 
         position.x = (parent_width - width) / 2.0
 
-        print_debug("[Censoring Label] Position %s because has width %s and parent width is %s" % [position.x, width, parent_width])
+        # print_debug("[Censoring Label] Position %s because has width %s and parent width is %s" % [position.x, width, parent_width])
 
 var _last_draw: int
 var _last_censor: Dictionary[int, int]

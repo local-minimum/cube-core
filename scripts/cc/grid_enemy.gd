@@ -62,7 +62,7 @@ func _handle_change_node(feature: GridNodeFeature) -> void:
         return
 
     _may_move = true
-    print_debug("[Grid Enemy] Detect player change node, may move self!")
+    # print_debug("[Grid Enemy] Detect player change node, may move self!")
 
 func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
     if entity is not GridPlayerCore:

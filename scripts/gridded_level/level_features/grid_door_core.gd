@@ -133,7 +133,7 @@ func _add_back_sentinel() -> void:
 
     neighbour.add_child(sentinel)
     neighbour.add_grid_event(sentinel)
-    print_debug("[Grid Door %s] Added sentinell %s to %s" % [name, sentinel.name, neighbour])
+    # print_debug("[Grid Door %s] Added sentinell %s to %s" % [name, sentinel.name, neighbour])
 
 func get_opening_automation(reader: GridDoorInteraction) -> OpenAutomation:
     if reader.is_negative_side:
