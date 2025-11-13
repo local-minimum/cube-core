@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcw0kg1kaar8j"]
+[gd_scene load_steps=14 format=3 uid="uid://dcw0kg1kaar8j"]
 
+[ext_resource type="Script" uid="uid://bracym81q4aif" path="res://scripts/cc/pause_menu.gd" id="1_ufwb2"]
 [ext_resource type="Texture2D" uid="uid://bkqlswvbga8rd" path="res://sprites/nine_rect_ui.png" id="2_i6lef"]
 [ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_70i5f"]
 [ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="4_mj5lg"]
@@ -10,14 +11,18 @@
 [ext_resource type="Texture2D" uid="uid://bn03rwm3il63t" path="res://sprites/walls/ui-simple-15.png" id="8_i6lef"]
 [ext_resource type="Texture2D" uid="uid://dstrk5ynsikw2" path="res://sprites/walls/ui-15.png" id="9_70i5f"]
 [ext_resource type="Theme" uid="uid://cnql2m0bdf5ol" path="res://menu_style.tres" id="10_70i5f"]
+[ext_resource type="Script" uid="uid://bv1ceubowg00e" path="res://scripts/cc/container_button.gd" id="11_mj5lg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
 
-[node name="Menu" type="PanelContainer"]
+[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider")]
 offset_right = 88.0
 offset_bottom = 104.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
+script = ExtResource("1_ufwb2")
+invert_y_btn = NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis")
+sensistivity_slider = NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
@@ -84,7 +89,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Y Axis" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Mouse"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
+[node name="Invert Y-Axis" type="TextureButton" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -100,6 +105,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Invert Y" type="Control" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -120,7 +126,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Sensitivity" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Mouse"]
 layout_mode = 2
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Mouse/Sensitivity"]
+[node name="Sensitivity Slider" type="HSlider" parent="MarginContainer/VBoxContainer/Mouse/Sensitivity"]
 custom_minimum_size = Vector2(150, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -178,7 +184,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Battle" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Battle"]
+[node name="Spoiler Battle" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Battle"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -215,7 +221,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Health" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Health"]
+[node name="Spoiler Health" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Health"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -252,7 +258,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Cat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Cat"]
+[node name="Spoiler Cat" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Cat"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -289,7 +295,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Big Room" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Big Room"]
+[node name="Spoiler Big Room" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Big Room"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
@@ -322,3 +328,163 @@ baseline_height = 3
 y_alignment_offset = -34
 manage_label_width = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Quit" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(100, 48)
+layout_mode = 2
+tooltip_text = "Quit game"
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Quit/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "QUIT"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+live = false
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Restart" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+tooltip_text = "Start a new game from the title screen resetting all progress"
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Restart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Restart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Restart/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RESTART"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+live = false
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Resume" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Resume"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Resume"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Resume/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RESUME"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+live = false
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[connection signal="toggled" from="MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis" to="." method="_on_invert_y_axis_toggled"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider" to="." method="_on_sensitivity_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Battle/Spoiler Battle" to="." method="_on_spoiler_battle_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Health/Spoiler Health" to="." method="_on_spoiler_health_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Cat/Spoiler Cat" to="." method="_on_spoiler_cat_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Big Room/Spoiler Big Room" to="." method="_on_spoiler_big_room_pressed"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Quit" to="." method="_on_quit_on_click"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Restart" to="." method="_on_restart_on_click"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Resume" to="." method="_on_resume_on_click"]

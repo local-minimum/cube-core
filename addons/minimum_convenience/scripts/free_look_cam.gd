@@ -6,9 +6,8 @@ enum ToggleCause { MOVEMENT, KEYBOARD_ACTIVATOR, MOUSE_ACTIVATOR }
 @export var _yaw_limit_degrees: float = 90
 @export var _pitch_limit_degrees: float = 80
 @export var _easeback_duration: float = 0.5
-@export var mouse_sensitivity: float = 0.3
+@export var mouse_sensitivity_factor: float = 0.3
 @export var keyboard_sensitivity: float = 60
-@export var invert_y: bool
 @export var _keyboard_activation_toggle: String = "toggle_free_look_cam"
 @export var _keyboard_up: String = "crawl_forward"
 @export var _keyboard_down: String = "crawl_backward"
@@ -20,6 +19,7 @@ var _keyboard_direction: Vector2 = Vector2.ZERO
 var _total_yaw: float = 0
 var _total_pitch: float = 0
 var _easeback_tween: Tween
+var _allow: bool = true
 var _looking: bool:
     set(value):
         _looking = value
@@ -32,6 +32,16 @@ var _looking: bool:
 func _enter_tree() -> void:
     if __SignalBus.on_toggle_freelook_camera.connect(_handle_toggle_freelook_camera) != OK:
         push_error("Cannot connect to toggle freelook camera")
+    if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
+        push_error("Cannot connect to level pause")
+
+func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
+    if _looking && !paused:
+        _looking = false
+    elif _looking && paused:
+        Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+    _allow = !paused
 
 func _handle_toggle_freelook_camera(active: bool, cause: ToggleCause) -> void:
     if active != _looking:
@@ -43,6 +53,9 @@ func _handle_toggle_freelook_camera(active: bool, cause: ToggleCause) -> void:
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _input(event: InputEvent) -> void:
+    if !_allow:
+        return
+
     if event is InputEventMouseButton:
         var mouse_btn_event: InputEventMouseButton = event
         if event.button_index == MOUSE_BUTTON_RIGHT:
@@ -108,7 +121,7 @@ func _process(delta: float) -> void:
         return
 
     if _mouse_offset != Vector2.ZERO:
-        _mouse_offset *= mouse_sensitivity
+        _mouse_offset *= mouse_sensitivity_factor * AccessibilitySettings.mouse_sensitivity
 
         _set_rotation(Vector2(
             _total_yaw + _mouse_offset.x,
@@ -132,4 +145,4 @@ func _set_rotation(orientation: Vector2) -> void:
 
     basis = Basis()
     rotate_object_local(Vector3.UP, deg_to_rad(-_total_yaw))
-    rotate_object_local(Vector3.LEFT, deg_to_rad(-_total_pitch if invert_y else _total_pitch))
+    rotate_object_local(Vector3.LEFT, deg_to_rad(-_total_pitch if AccessibilitySettings.mouse_inverted_y else _total_pitch))

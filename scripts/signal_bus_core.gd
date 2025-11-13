@@ -5,6 +5,8 @@ class_name SignalBusCore
 # Settings
 signal on_update_input_mode(method: BindingHints.InputMode)
 signal on_update_handedness(handedness: AccessibilitySettings.Handedness)
+signal on_update_mouse_y_inverted(inverted: bool)
+signal on_update_mouse_sensitivity(sensistivity: float)
 
 # Time
 signal on_update_day(year: int, month: int, day_of_month: int, days_until_end_of_month: int)
@@ -32,6 +34,7 @@ signal on_scene_transition_new_scene_ready()
 signal on_change_player(level: GridLevelCore, player: GridPlayerCore)
 signal on_level_loaded(level: GridLevelCore)
 signal on_level_unloaded(level: GridLevelCore)
+signal on_level_pause(level: GridLevelCore, paused: bool)
 
 # -> Grid Node
 signal on_add_anchor(node: GridNode, anchor: GridAnchor)

@@ -110,7 +110,7 @@ func _on_load_button_pressed() -> void:
     SaveSystemWrapper.load_last_save()
 
 func _on_handedness_toggled(toggled_on:bool) -> void:
-    settings.accessibility.set_handedness(AccessibilitySettings.Handedness.RIGHT if toggled_on else AccessibilitySettings.Handedness.LEFT)
+    AccessibilitySettings.handedness = AccessibilitySettings.Handedness.RIGHT if toggled_on else AccessibilitySettings.Handedness.LEFT
 
 func _on_reset_tutorials_pressed() -> void:
     settings.tutorial.reset_all_tutorials()

@@ -45,11 +45,33 @@ func get_settingi(key: String, default: int = 0) -> int:
         return value
     return default
 
+func get_settingb(key: String, default: bool = false) -> bool:
+    _load_cache()
+    var value: Variant = _cache.get(key, default)
+    if value is int:
+        return value != 0
+    return default
+
+func get_settingf(key: String, default: float = 0.0) -> float:
+    _load_cache()
+    var value: Variant = _cache.get(key, default)
+    if value is float:
+        return value
+    return default
+
 func set_setting(key: String, value: Variant) -> void:
     _cache[key] = value
     _store_cache()
 
 func set_settingi(key: String, value: int) -> void:
+    _cache[key] = value
+    _store_cache()
+
+func set_settingb(key: String, value: bool) -> void:
+    _cache[key] = 1 if value else 0
+    _store_cache()
+
+func set_settingf(key: String, value: float) -> void:
     _cache[key] = value
     _store_cache()
 
