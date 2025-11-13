@@ -59,6 +59,7 @@ func _get_title(mode: Mode) -> String:
             return "???"
 
 var _labels: Array[CensoringLabel]
+var _letter_buttons: Dictionary[String, ContainerButton]
 
 func _enter_tree() -> void:
     if __SignalBus.on_update_lost_letters.connect(_handle_lost_letters) != OK:
@@ -76,8 +77,12 @@ func _enter_tree() -> void:
             if btn_label.text.length() != 1:
                 continue
 
+            _letter_buttons[btn_label.text] = btn
+
             if btn.on_click.connect(
                 func (_btn: ContainerButton) -> void:
+                    btn.interactable = false
+
                     if __GlobalGameState.lost_letters.contains(btn_label.text):
                         __GlobalGameState.lost_letters = __GlobalGameState.lost_letters.erase(
                             __GlobalGameState.lost_letters.find(btn_label.text)
@@ -107,6 +112,10 @@ func show_dialog(
     _title.text = _get_title(mode).to_upper()
     var visible_parts: Array[Control] = _get_parts(mode)
 
+    if mode == Mode.RETURN_LETTERS:
+        for letter: String in _letter_buttons:
+            _letter_buttons[letter].interactable = __GlobalGameState.lost_letters.contains(letter)
+
     for part: Control in _all_parts:
         if visible_parts.has(part):
             part.show()
@@ -128,7 +137,6 @@ func show_dialog(
     _negative_callback = negative_callback
 
     size = Vector2.ZERO
-    set_anchors_preset.call_deferred(PRESET_CENTER)
     show()
 
 var _positive_callback: Variant
