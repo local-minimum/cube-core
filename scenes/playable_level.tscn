@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=32 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://qe62qeadijcx" path="res://sprites/dice/gaming-1.png" id="24_42y26"]
 [ext_resource type="Texture2D" uid="uid://cwmil1624c4mn" path="res://sprites/dice/gaming-0.png" id="25_euxtm"]
 [ext_resource type="PackedScene" uid="uid://dcw0kg1kaar8j" path="res://scenes/menu.tscn" id="30_tdkqe"]
+[ext_resource type="PackedScene" uid="uid://cqvjfyulxwegg" path="res://scenes/menu_dialog.tscn" id="31_2a1gl"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -705,7 +706,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 [node name="Menu" type="CanvasLayer" parent="."]
 layer = 225
 
-[node name="Menu" parent="Menu" instance=ExtResource("30_tdkqe")]
+[node name="Menu" parent="Menu" node_paths=PackedStringArray("menu_dialog") instance=ExtResource("30_tdkqe")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -715,5 +716,19 @@ offset_left = -198.0
 offset_top = -244.0
 offset_right = 198.0
 offset_bottom = 244.0
+grow_horizontal = 2
+grow_vertical = 2
+menu_dialog = NodePath("../Menu Dialog")
+
+[node name="Menu Dialog" parent="Menu" instance=ExtResource("31_2a1gl")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -331.0
+offset_top = -90.0
+offset_right = 331.0
+offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2

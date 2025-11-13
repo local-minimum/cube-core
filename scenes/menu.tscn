@@ -15,7 +15,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
 
-[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider", "labels")]
+[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider")]
 offset_right = 396.0
 offset_bottom = 488.0
 mouse_filter = 2
@@ -23,7 +23,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_ufwb2")
 invert_y_btn = NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis")
 sensistivity_slider = NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider")
-labels = [NodePath("MarginContainer/VBoxContainer/Menu"), NodePath("MarginContainer/VBoxContainer/Mouse/Mouse"), NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y"), NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity"), NodePath("MarginContainer/VBoxContainer/Spoilers/Spoilers"), NodePath("MarginContainer/VBoxContainer/Spoilers/Battle/Battle"), NodePath("MarginContainer/VBoxContainer/Spoilers/Health/Health"), NodePath("MarginContainer/VBoxContainer/Spoilers/Cat/Cat"), NodePath("MarginContainer/VBoxContainer/Spoilers/Big Room/Big Room"), NodePath("MarginContainer/VBoxContainer/Actions/Quit/Hbox/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/Actions/Restart/Hbox/CensoringLabel"), NodePath("MarginContainer/VBoxContainer/Actions/Resume/Hbox/CensoringLabel")]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
@@ -152,6 +151,63 @@ mouse_filter = 2
 script = ExtResource("3_70i5f")
 censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
 text = "SENSITIVY"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Game play" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Gameplay" type="Control" parent="MarginContainer/VBoxContainer/Game play"]
+custom_minimum_size = Vector2(350, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "GAMEPLAY"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letters" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Game play"]
+layout_mode = 2
+
+[node name="Letters Btn" type="TextureButton" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Letters" type="Control" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(252, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RETURN LETTERS"
 font_size = 36
 letter_spacing = -18
 height_ratio = 2
@@ -498,6 +554,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [connection signal="toggled" from="MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis" to="." method="_on_invert_y_axis_toggled"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider" to="." method="_on_sensitivity_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Game play/Letters/Letters Btn" to="." method="_on_letters_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Battle/Spoiler Battle" to="." method="_on_spoiler_battle_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Health/Spoiler Health" to="." method="_on_spoiler_health_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Cat/Spoiler Cat" to="." method="_on_spoiler_cat_pressed"]

@@ -42,14 +42,12 @@ var focused: bool = false:
             return
 
         if focused:
-            Input.set_default_cursor_shape(Input.CURSOR_ARROW)
             if !value:
                 if _focus_target != null:
                     _focus_target.modulate = _default_color
 
                 on_unfocus.emit(self)
         else:
-            Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
             if value:
                 if _focus_target != null:
                     _focus_target.modulate = _focus_color
@@ -63,6 +61,12 @@ var focused: bool = false:
         if !interactable:
             return false
         return focused
+
+func _sync_cursor() -> void:
+    if interactable:
+        mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+    else:
+        mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
 
 func _enter_tree() -> void:
     if !mouse_entered.is_connected(_on_mouse_entered) && mouse_entered.connect(_on_mouse_entered) != OK:
@@ -85,6 +89,7 @@ func _ready() -> void:
             _focus_target.modulate = _default_color
 
 func _on_mouse_exited() -> void:
+
     if !_managed_unfocus:
         # print_debug("[Container Button %s] De-focused " % name)
         focused = false
