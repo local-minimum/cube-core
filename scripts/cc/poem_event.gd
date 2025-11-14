@@ -3,6 +3,9 @@ class_name PoemEvent
 
 static var _played_poems: Array[String]
 
+static func clear_played_poems() -> void:
+    _played_poems.clear()
+
 @export var poem: String
 @export var poem_response: String
 @export var enqueue_if_busy: bool = true

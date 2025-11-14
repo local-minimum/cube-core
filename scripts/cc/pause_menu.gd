@@ -96,6 +96,7 @@ func _on_restart_on_click(_button: ContainerButton) -> void:
         "Restart",
         func () -> void:
             __AudioHub.clear_all_dialogues()
+            PoemEvent.clear_played_poems()
             get_tree().paused = false
             get_tree().reload_current_scene()
             ,

@@ -35,6 +35,7 @@ func _roll_credits() -> void:
     print_debug("[Credits] Over!")
 
     __AudioHub.clear_all_dialogues()
+    PoemEvent.clear_played_poems()
     get_tree().reload_current_scene()
 
 func _handle_censor(letters: String) -> void:
