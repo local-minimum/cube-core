@@ -58,6 +58,9 @@ func _enter_tree() -> void:
     if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
         push_error("Failed to connect level pause")
 
+    if sacrifice.on_click.connect(_handle_click_sacrifice) != OK:
+        push_error("Failed to connect sacrifice button")
+
 func _exit_tree() -> void:
     __SignalBus.on_start_sacrifice.disconnect(_handle_no_health)
     __SignalBus.on_start_offer.disconnect(_handle_start_offer)
@@ -67,12 +70,16 @@ func _exit_tree() -> void:
 func _ready() -> void:
     for child: CensoringLabel in sacrifice.find_children("", "CensoringLabel"):
         sacrifice_letter = child
-        sacrifice_letter.manage_label_width = false
-        sacrifice_letter.custom_minimum_size.x = sacrifice_letter.font_size / float(sacrifice_letter.height_ratio)
-        sacrifice_letter.update_minimum_size()
+    #    sacrifice_letter.manage_label_width = false
+    #    sacrifice_letter.custom_minimum_size.x = sacrifice_letter.font_size # / float(sacrifice_letter.height_ratio)
+    #    sacrifice_letter.update_minimum_size()
         break
 
     hide()
+
+func _handle_click_sacrifice(_btn: ContainerButton) -> void:
+    if !_sacrificial_letter.is_empty():
+        _handle_sacrifice_letter()
 
 var _visible_on_resume_level: bool
 func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
@@ -147,7 +154,7 @@ func _ready_ui() -> void:
     hint.censored_letters = __GlobalGameState.lost_letters
 
     sacrifice.interactable = false
-    sacrifice_letter.text = ""
+    sacrifice_letter.text = " "
     sacrifice_letter.censored_letters = __GlobalGameState.lost_letters
 
     sacrifice.interactable = false
@@ -204,7 +211,7 @@ func _offer_letter(letter: String) -> void:
             _sacrificial_letter = letter
 
     else:
-        sacrifice_letter.text = ""
+        sacrifice_letter.text = " "
         sacrifice.interactable = false
         hint.text = _get_nothing_entered_hint()
         _sacrificial_letter = ""
