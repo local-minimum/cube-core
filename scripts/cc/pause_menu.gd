@@ -95,8 +95,9 @@ func _on_restart_on_click(_button: ContainerButton) -> void:
         MenuDialog.Mode.WARN_RESTART,
         "Restart",
         func () -> void:
-            get_tree().reload_current_scene()
+            __AudioHub.clear_all_dialogues()
             get_tree().paused = false
+            get_tree().reload_current_scene()
             ,
         "Cancel",
         show,

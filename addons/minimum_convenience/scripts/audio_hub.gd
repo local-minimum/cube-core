@@ -140,7 +140,6 @@ var pause_dialogues: bool:
         for player: AudioStreamPlayer in _dialogue_running:
             player.stream_paused = pause_dialogues
 
-
 ## Returns all music resources currently playing
 func playing_music() -> PackedStringArray:
     return PackedStringArray(
@@ -150,6 +149,12 @@ func playing_music() -> PackedStringArray:
                 ,
         )
     )
+
+func clear_all_dialogues() -> void:
+    _clear_bus_queue(BUS_DIALOGUE)
+    for player: AudioStreamPlayer in _dialogue_running:
+        _clear_callbacks(player)
+        player.stop()
 
 func play_music(
     sound_resource_path: String,
@@ -244,3 +249,10 @@ func _check_oneshot_callbacks(player: AudioStreamPlayer, busy_property: String) 
         print_debug("[Audio Hub] Playes queued stream %s for bus %s" % [queued, player.bus])
         if queued is Callable:
             (queued as Callable).call()
+
+func _clear_bus_queue(bus: String) -> void:
+    if _queue.has(bus):
+        _queue[bus].clear()
+
+func _clear_callbacks(player: AudioStreamPlayer) -> void:
+    _oneshots.erase(player)

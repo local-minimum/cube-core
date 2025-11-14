@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dn88c6xiunk4h" path="res://addons/minimum_convenience/scripts/utils/binding_hints.gd" id="1_lasa4"]
 
 [node name="BindingHints" type="Node"]
+process_mode = 3
 script = ExtResource("1_lasa4")
 _joypad_button_translation_keys = Dictionary[int, String]({
 11: "D-UP",
