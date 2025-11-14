@@ -55,6 +55,15 @@ func _enter_tree() -> void:
     if __SignalBus.on_update_lost_letters.connect(_handle_lost_letters) != OK:
         push_error("Failed to connect update lost letters")
 
+    if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
+        push_error("Failed to connect level pause")
+
+func _exit_tree() -> void:
+    __SignalBus.on_start_sacrifice.disconnect(_handle_no_health)
+    __SignalBus.on_start_offer.disconnect(_handle_start_offer)
+    __SignalBus.on_update_lost_letters.disconnect(_handle_lost_letters)
+    __SignalBus.on_level_pause.disconnect(_handle_level_pause)
+
 func _ready() -> void:
     for child: CensoringLabel in sacrifice.find_children("", "CensoringLabel"):
         sacrifice_letter = child
@@ -64,6 +73,15 @@ func _ready() -> void:
         break
 
     hide()
+
+var _visible_on_resume_level: bool
+func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
+    if paused:
+        _visible_on_resume_level = visible
+        visible = false
+    else:
+        visible = _visible_on_resume_level
+        _visible_on_resume_level = false
 
 func _handle_start_offer(player: GridPlayer) -> void:
     _player = player

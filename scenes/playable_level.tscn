@@ -38,6 +38,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0011098385, -0.0027908087, 0.0007236004)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="Core Stats UI" type="GridContainer" parent="HUD" node_paths=PackedStringArray("health", "keys")]
 custom_minimum_size = Vector2(200, 0)
@@ -94,6 +95,7 @@ y_alignment_offset = -28
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Interactions UI" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 100
 
 [node name="InteractionUI" type="Control" parent="Interactions UI"]
@@ -110,6 +112,7 @@ _viz = ExtResource("8_mew3k")
 metadata/_custom_type_script = "uid://bvqfk07xb2q3f"
 
 [node name="KeyMasterCore" type="Node" parent="."]
+process_mode = 1
 script = ExtResource("4_pte0f")
 _key_descriptions = Dictionary[String, String]({
 "key": "key"
@@ -117,6 +120,7 @@ _key_descriptions = Dictionary[String, String]({
 metadata/_custom_type_script = "uid://ksorj7viigop"
 
 [node name="Word Game 1" type="CanvasLayer" parent="." node_paths=PackedStringArray("button_group")]
+process_mode = 1
 layer = 10
 script = ExtResource("9_7cjp0")
 button_group = NodePath("GridContainer")
@@ -154,6 +158,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Sacrifice" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 130
 
 [node name="Background" type="ColorRect" parent="Sacrifice" node_paths=PackedStringArray("alphabet", "hint", "sacrifice")]
@@ -230,22 +235,18 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Story Text" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 50
 
-[node name="Story Text" parent="Story Text" instance=ExtResource("18_l2weq")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -44.0
-offset_top = -166.0
-offset_right = 44.0
-offset_bottom = 166.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CenterContainer" type="CenterContainer" parent="Story Text"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Story Text" parent="Story Text/CenterContainer" instance=ExtResource("18_l2weq")]
+layout_mode = 2
 
 [node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas", "title_canvas", "title_label", "press_to_start_label", "skip_progress_ui", "skip_label", "skip_countdown")]
+process_mode = 1
 script = ExtResource("19_subuw")
 intro_poem = "res://audio/voice/narration/intro.ogg"
 intro_response = "res://audio/voice/narration/intro-response.ogg"
@@ -261,8 +262,8 @@ land_sequence_detector = Vector3(-1, 0, 0)
 landing_start_threshold = 0.7
 ui_canvas = NodePath("../HUD")
 title_canvas = NodePath("../Title")
-title_label = NodePath("../Title/Title Label")
-press_to_start_label = NodePath("../Title/Presss to start Label")
+title_label = NodePath("../Title/CenterContainer/Control/Title Label")
+press_to_start_label = NodePath("../Title/CenterContainer/Control/Presss to start Label")
 skip_progress_ui = NodePath("../Title/Skip UI")
 skip_label = NodePath("../Title/Skip UI/Skip Space")
 skip_countdown = NodePath("../Title/Skip UI/Skip Countdown")
@@ -276,6 +277,7 @@ managed = true
 metadata/_custom_type_script = "uid://uks443arie0d"
 
 [node name="Fader" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 200
 
 [node name="FaderUI" type="Node" parent="Fader" node_paths=PackedStringArray("color_rect")]
@@ -295,22 +297,23 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Title" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 150
 
-[node name="Title Label" type="Control" parent="Title"]
-custom_minimum_size = Vector2(324, 72)
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 445.0
-offset_top = -56.0
-offset_right = 805.0
-offset_bottom = 16.0
+[node name="CenterContainer" type="CenterContainer" parent="Title"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Control" type="VBoxContainer" parent="Title/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title Label" type="Control" parent="Title/CenterContainer/Control"]
+custom_minimum_size = Vector2(324, 72)
+layout_mode = 2
 script = ExtResource("3_ohew3")
 censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
 text = "CUBE CORE"
@@ -324,20 +327,9 @@ manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
-[node name="Presss to start Label" type="Control" parent="Title"]
+[node name="Presss to start Label" type="Control" parent="Title/CenterContainer/Control"]
 custom_minimum_size = Vector2(264, 24)
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 475.0
-offset_top = -32.0
-offset_right = 751.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_ohew3")
 censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
 text = "PRESS ANY KEY TO START"
@@ -347,7 +339,7 @@ height_ratio = 2
 font = ExtResource("3_7s1ja")
 color = Color(0.93681306, 0.34910473, 0.75913596, 1)
 baseline_height = 2
-y_alignment_offset = -140
+y_alignment_offset = -24
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
@@ -389,6 +381,7 @@ manage_label_width = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="End Screen And Credits" type="CanvasLayer" parent="." node_paths=PackedStringArray("labels")]
+process_mode = 1
 layer = 220
 script = ExtResource("22_hl18a")
 labels = [NodePath("The End"), NodePath("Game Design"), NodePath("Programming"), NodePath("Voice Acting"), NodePath("Poems"), NodePath("Other Text"), NodePath("Asset Pack"), NodePath("Asset Pack Makers 1"), NodePath("Asset Pack Makers 2"), NodePath("Asset Pack Makers 3"), NodePath("Thanks")]
@@ -704,6 +697,7 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Menu" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 225
 
 [node name="Menu" parent="Menu" node_paths=PackedStringArray("menu_dialog") instance=ExtResource("30_tdkqe")]

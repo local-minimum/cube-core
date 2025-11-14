@@ -133,6 +133,14 @@ func _end_dialogue_players():
 
     _dialogue_available.clear()
 
+var pause_dialogues: bool:
+    set(value):
+        pause_dialogues = value
+
+        for player: AudioStreamPlayer in _dialogue_running:
+            player.stream_paused = pause_dialogues
+
+
 ## Returns all music resources currently playing
 func playing_music() -> PackedStringArray:
     return PackedStringArray(

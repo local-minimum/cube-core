@@ -37,6 +37,8 @@ var paused: bool:
             player.disable_player()
         else:
             player.enable_player()
+
+        __AudioHub.pause_dialogues = value
         __SignalBus.on_level_pause.emit(self, value)
 
 var entry_portal: LevelPortal:

@@ -292,6 +292,7 @@ shader_parameter/precision = 1.0
 shader_parameter/darken_north_south = 0.0
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("level_geometry", "primary_entry_portal", "zones_parent", "broadcasts_parent", "player")]
+process_mode = 3
 script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
@@ -303,6 +304,7 @@ player = NodePath("Player")
 metadata/_custom_type_script = "uid://c74xugjiqdyyk"
 
 [node name="Geometry" type="Node3D" parent="."]
+process_mode = 1
 
 [node name="Elevation -1" type="Node3D" parent="Geometry"]
 
@@ -56202,8 +56204,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.5, 42.5, 42.5)
 coordinates = Vector3i(17, 17, 17)
 
 [node name="Zones" type="Node3D" parent="."]
+process_mode = 1
 
 [node name="Broadcasts" type="Node3D" parent="."]
+process_mode = 1
 
 [node name="Node" type="Node" parent="Broadcasts" node_paths=PackedStringArray("_broadcaster", "_receivers")]
 script = ExtResource("11_arp2o")
@@ -56266,6 +56270,7 @@ _receivers = [NodePath("../../Geometry/Elevation 0/Node (7, 0, -3)/Side DOWN")]
 _messages = Array[String](["toggle"])
 
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("trail", "camera", "key_ring", "planner")]
+process_mode = 1
 script = ExtResource("8_8iemx")
 trail = NodePath("Trail")
 camera = NodePath("Eyes")
@@ -56285,6 +56290,7 @@ entity = NodePath("..")
 metadata/_custom_type_script = "uid://meibvvwp8mvg"
 
 [node name="Eyes" type="Camera3D" parent="Player"]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.40000004)
 fov = 80.0
 script = ExtResource("83_ty36l")
@@ -56304,6 +56310,7 @@ snap_step = 45.0
 max_trail_length = 90
 
 [node name="Enemies" type="Node3D" parent="."]
+process_mode = 1
 
 [node name="Industrial Enemy 1" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 13.75, 15)
@@ -56391,6 +56398,7 @@ hunting_activation_id = "final-1"
 _spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
 
 [node name="NPC Cat" parent="." node_paths=PackedStringArray("spawn_room", "greenery_subzone_locations", "room_location") instance=ExtResource("73_smfc2")]
+process_mode = 1
 spawn_room = NodePath("../Geometry/Elevation -1/Node (3, -1, 0)")
 greenery_subzone_locations = {
 "first": NodePath("../Geometry/Elevation 6/Node (-8, 6, -10)"),
@@ -56400,6 +56408,7 @@ greenery_subzone_locations = {
 room_location = NodePath("../Geometry/Elevation 0/Node (8, 0, -6)")
 
 [node name="LandingAreaManager" type="Node" parent="." node_paths=PackedStringArray("pit_entry_node", "pit_trapped_node", "door_node")]
+process_mode = 1
 script = ExtResource("68_jydfl")
 pit_entry_node = NodePath("../Geometry/Elevation 2/Node (-15, 2, 0)")
 pit_trapped_node = NodePath("../Geometry/Elevation 2/Node (-12, 2, 0)")
@@ -56416,6 +56425,7 @@ door_open_poem = "res://audio/voice/narration/door-open.ogg"
 metadata/_custom_type_script = "uid://bm0e0mu7y7xpn"
 
 [node name="MoreStoryManager" type="Node" parent="."]
+process_mode = 1
 script = ExtResource("69_u0n8q")
 enemy_poem = "res://audio/voice/narration/enemy.ogg"
 enemy_response = "res://audio/voice/narration/enemy-response.ogg"

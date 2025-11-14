@@ -51,6 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
         _on_resume_on_click(null)
 
 func _show_menu() -> void:
+    get_tree().paused = true
     _show_time = Time.get_ticks_msec()
     show()
 
@@ -81,6 +82,7 @@ func _on_spoiler_big_room_pressed() -> void:
     menu_dialog.show_dialog(MenuDialog.Mode.HINT_ROOM, "Done", show)
 
 func _on_resume_on_click(_button: ContainerButton) -> void:
+    get_tree().paused = false
     print_debug("[Pause Menu] Resuming")
     hide()
     if _level != null:
@@ -94,6 +96,7 @@ func _on_restart_on_click(_button: ContainerButton) -> void:
         "Restart",
         func () -> void:
             get_tree().reload_current_scene()
+            get_tree().paused = false
             ,
         "Cancel",
         show,
