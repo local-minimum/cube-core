@@ -162,7 +162,7 @@ func _attempt_movement_from_queue() -> void:
         # ])
 
 func falling() -> bool:
-    return transportation_mode.mode == TransportationMode.NONE
+    return transportation_mode.mode == TransportationMode.FALLING
 
 var _tween: Tween
 var _concurrent_tween: Tween
@@ -269,7 +269,7 @@ func update_entity_anchorage(new_node: GridNode, new_anchor: GridAnchor, deferre
             if cinematic || transportation_abilities.has_flag(TransportationMode.FLYING):
                 transportation_mode.mode = TransportationMode.FLYING
             else:
-                transportation_mode.mode = TransportationMode.NONE
+                transportation_mode.mode = TransportationMode.FALLING
 
     print_debug("%s is now %s @ %s %s" % [name, transportation_mode.humanize() if transportation_mode != null else "static", new_node.name, CardinalDirections.name(new_anchor.direction) if new_anchor else "airbourne"])
     # print_stack()

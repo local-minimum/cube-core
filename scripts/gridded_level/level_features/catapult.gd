@@ -58,6 +58,7 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
         push_warning("Could not clear entity '%s' entry look direction" % entity.name)
 
     if !crash_player:
+        print_debug("[Catapult %s] Not crashing" % [coordinates()])
         return
 
     if _orient_entity:
@@ -66,22 +67,28 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
             player.stand_up()
 
     var crash_anchor: GridAnchor = _get_release_anchor(entity)
+
     if crash_anchor != null:
         print_debug("[Catapult %s] Attempting to anchor to %s" % [coordinates(), crash_anchor])
         # TODO: Animate this
         entity.set_grid_anchor(crash_anchor)
         entity.sync_position()
-        if entity.look_direction == crash_anchor.direction:
-            entity.look_direction = CardinalDirections.invert(entity.down)
-        elif entity.look_direction == CardinalDirections.invert(crash_anchor.direction):
-            entity.look_direction = entity.down
+        if CardinalDirections.is_parallell(entity.look_direction, crash_anchor.direction):
+            var options: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(crash_anchor.direction)
+            options.shuffle()
+            entity.look_direction = options[0]
         entity.down = crash_anchor.direction
 
         GridEntity.orient(entity)
         entity.transportation_mode.adopt(crash_anchor.required_transportation_mode)
+    elif entity.transportation_abilities.has_flag(TransportationMode.FLYING):
+        print_debug("[Catapult %s] Crashing into a flying" % [coordinates()])
+        entity.transportation_mode.mode = TransportationMode.FLYING
     elif entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+        print_debug("[Catapult %s] Crashing into a fall" % [coordinates()])
         entity.transportation_mode.mode = TransportationMode.FALLING
     else:
+        push_error("[Catapult %s] Crashing into a helpless situation for %s" % [coordinates(), entity])
         entity.transportation_mode.mode = TransportationMode.NONE
 
     if immediate_uncinematic:
@@ -219,10 +226,14 @@ func _handle_move_end(entity: GridEntity) -> void:
                 CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN),
             ])
 
-            if fly_direction == entity.look_direction && CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN):
+            if CardinalDirections.is_parallell(fly_direction, entity.look_direction) && CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN):
                 print_debug("[Catapult %s] %s adjusting down" % [coordinates(), entity.name])
                 var new_down: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN
                 var new_look: CardinalDirections.CardinalDirection = _entry_look_direction.get(entity, entity.look_direction)
+                if CardinalDirections.is_parallell(new_down, new_look):
+                    var options: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(new_down)
+                    options.shuffle()
+                    new_look = options[0]
                 var look_target: Quaternion = CardinalDirections.direction_to_rotation(CardinalDirections.invert(new_down), new_look)
 
                 var tween: Tween = create_tween()

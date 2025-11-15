@@ -9,7 +9,7 @@ class_name EntityFallBehavior
 var next_fall: int = 0
 
 func _process(_delta: float) -> void:
-    if entity.transportation_mode.mode != TransportationMode.NONE || entity.is_moving() || entity.cinematic:
+    if !entity.falling() || entity.is_moving() || entity.cinematic:
         next_fall = 0
         return
 

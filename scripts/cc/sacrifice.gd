@@ -70,9 +70,6 @@ func _exit_tree() -> void:
 func _ready() -> void:
     for child: CensoringLabel in sacrifice.find_children("", "CensoringLabel"):
         sacrifice_letter = child
-    #    sacrifice_letter.manage_label_width = false
-    #    sacrifice_letter.custom_minimum_size.x = sacrifice_letter.font_size # / float(sacrifice_letter.height_ratio)
-    #    sacrifice_letter.update_minimum_size()
         break
 
     hide()

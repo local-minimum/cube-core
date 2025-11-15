@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=122 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -93,6 +93,7 @@
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
 [ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/free_look_cam.gd" id="83_ty36l"]
+[ext_resource type="Script" uid="uid://c7chl5drkyuws" path="res://scripts/gridded_level/entities/entity_fall_behavior.gd" id="90_speit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1sbqr"]
 render_priority = 0
@@ -297,7 +298,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-2, 0, -6)/LevelPortal Ending")
+primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-3, 0, 2)/LevelPortal Final")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -56308,6 +56309,11 @@ decal_scale = Vector2(0.5, 0.5)
 random_normal_rotation = true
 snap_step = 45.0
 max_trail_length = 90
+
+[node name="EntityFallBehavior" type="Node3D" parent="Player" node_paths=PackedStringArray("entity")]
+script = ExtResource("90_speit")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://c7chl5drkyuws"
 
 [node name="Enemies" type="Node3D" parent="."]
 process_mode = 1
