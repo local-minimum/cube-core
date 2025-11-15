@@ -31,7 +31,7 @@ func move_entity(
         push_error("Player %s not inside dungeon")
         return null
 
-    var anchor: GridAnchor = entity.get_grid_anchor()
+    var anchor: GridAnchor = entity.anchor
     var tween: Tween = entity.create_tween().set_parallel()
 
     var was_excotic_walk: bool = entity.transportation_mode.has_any(TransportationMode.EXOTIC_WALKS)
@@ -111,7 +111,7 @@ func rotate_entity(
     tween.finished.connect(
         func () -> void:
             entity.look_direction = target_look_direction
-            entity.orient()
+            GridEntity.orient(entity)
             entity.end_movement(movement))
     @warning_ignore_restore("return_value_discarded")
 
@@ -124,7 +124,7 @@ func _refuse_translation(
     anchor: GridAnchor,
     move_direction: CardinalDirections.CardinalDirection,
 ) -> void:
-    var origin: Vector3 = anchor.global_position if anchor != null else node.get_center_pos()
+    var origin: Vector3 = anchor.global_position if anchor != null else GridNode.get_center_pos(node, node.level)
     var edge: Vector3 = anchor.get_edge_position(move_direction) if anchor != null else origin + CardinalDirections.direction_to_vector(move_direction) * node.get_level().node_size * 0.1
     var distance: float = _refuse_distance_factor * 0.15 if CardinalDirections.is_parallell(move_direction, entity.down) else _refuse_distance_factor
     print_debug("[Movement Planner] Refuse movement %s, using distance %s to edge" % [CardinalDirections.name(move_direction), distance])
@@ -169,7 +169,7 @@ func _handle_center(
 
     if anchor != null:
         if entity.cinematic || entity.transportation_abilities.has_flag(TransportationMode.FLYING):
-            var center: Vector3 = node.get_center_pos()
+            var center: Vector3 = GridNode.get_center_pos(node, node.level)
             var prop_tweener: PropertyTweener = tween.tween_property(
                 entity,
                 "global_position",
@@ -315,7 +315,7 @@ func _handle_node_transition(
             tween.tween_property(
                 entity,
                 "global_position",
-                target.get_center_pos(),
+                GridNode.get_center_pos(target, target.level),
                 translation_time / animation_speed)
 
             entity.update_entity_anchorage(target, null)
@@ -356,7 +356,7 @@ func _handle_node_transition(
                         entity.sync_position()
                         entity.look_direction = end_look_direction
                         entity.down = end_down
-                        entity.orient()
+                        GridEntity.orient(entity)
                         entity.remove_concurrent_movement_block()
                         entity.end_movement(movement))
 
@@ -559,7 +559,7 @@ func _handle_corner(
             entity.sync_position()
             entity.look_direction = updated_directions[0]
             entity.down = updated_directions[1]
-            entity.orient()
+            GridEntity.orient(entity)
             entity.remove_concurrent_movement_block()
             entity.end_movement(movement))
 

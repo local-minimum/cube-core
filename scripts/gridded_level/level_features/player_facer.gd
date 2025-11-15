@@ -22,9 +22,7 @@ class_name PlayerFacer
 
 var _local_anchor_position: Vector3
 
-func _ready() -> void:
-    _local_anchor_position = subject.position
-
+func _enter_tree() -> void:
     if __SignalBus.on_move_start.connect(_track_player) != OK:
         push_error("%s cannot track player during movement" % name)
 
@@ -34,13 +32,20 @@ func _ready() -> void:
     if __SignalBus.on_change_player.connect(_connect_player_tracking) != OK:
         push_error("Could not connect level player updating")
 
+func _exit_tree() -> void:
+    __SignalBus.on_move_start.disconnect(_track_player)
+    __SignalBus.on_move_end.disconnect(_end_track_player)
+    __SignalBus.on_change_player.disconnect(_connect_player_tracking)
+
+func _ready() -> void:
+    _local_anchor_position = subject.position
+
     _connect_player_tracking(get_level(), null)
 
 func _connect_player_tracking(level: GridLevelCore, _player: GridPlayerCore) -> void:
     if level == null:
         push_error("%s is not part of a level" % name)
         return
-
 
     _update_position_and_rotation.call_deferred(false)
 
@@ -82,9 +87,9 @@ func _calculate_down() -> CardinalDirections.CardinalDirection:
     if entity != null:
         return entity.down
 
-    var anchor: GridAnchor = GridAnchor.find_anchor_parent(subject, false)
-    if anchor != null:
-        return anchor.direction
+    var parent_anchor: GridAnchor = GridAnchor.find_anchor_parent(subject, false)
+    if parent_anchor != null:
+        return parent_anchor.direction
 
     var level: GridLevelCore = get_level()
     if level == null:
@@ -103,8 +108,11 @@ func _update_position_and_rotation(interpolate: bool = true) -> void:
     var level: GridLevelCore = get_level()
     if level == null || level.player == null || level.player.camera == null || subject == null:
         return
-    if !is_instance_valid(self) || !is_instance_valid(level) || !is_instance_valid(level.player):
+    if !is_instance_valid(self) || !is_instance_valid(level) || !is_instance_valid(level.player) || !is_instance_valid(level.player.camera) || !is_instance_valid(subject):
         return
+    if !is_inside_tree() || !level.is_inside_tree() || !level.player.is_inside_tree() || !level.player.camera.is_inside_tree() || !subject.is_inside_tree():
+        return
+
 
     if offset_if_on_same_tile && level.player.coordinates() == coordinates():
         var target: Vector3 = _local_anchor_position - offset_amount * level.node_size * level.player.camera.global_basis.z

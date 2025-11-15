@@ -10,5 +10,7 @@ shader_parameter/main_tex = ExtResource("2_j8kpp")
 shader_parameter/dark_color = Color(0, 0, 0, 1)
 shader_parameter/light_color = Color(0.9743716, 0.7375942, 0.7556329, 1)
 shader_parameter/passthrough = Color(0.72156864, 0.43529412, 0.3137255, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
 shader_parameter/precision = 0.85000001266602
 shader_parameter/darken_north_south = 0.0

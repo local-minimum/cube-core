@@ -19,32 +19,19 @@ enum EncounterType { ENEMY, NPC, OTHER }
 
 @export var graphics: MeshInstance3D
 
-@export var _spawn_node: GridNode
-
-@export var _start_anchor_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN
 @export var _start_look_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
 
 var _triggered: bool
 var _was_on_node: bool
 
-func _ready() -> void:
+func _enter_tree() -> void:
     if __SignalBus.on_change_anchor.connect(_check_colliding_anchor) != OK:
         push_error("%s failed to connect to anchor change signal" % name)
     if __SignalBus.on_change_node.connect(_check_colliding_node) != OK:
         push_error("%s failed to connect to node change signal" % name)
 
-    if _spawn_node != null:
-        look_direction = _start_look_direction
-
-        var anchor: GridAnchor = _spawn_node.get_grid_anchor(_start_anchor_direction)
-        if anchor == null:
-            push_error("%s doesn't have anchor in %s direction" % [
-                _spawn_node.name,
-                CardinalDirections.name(_start_anchor_direction),
-            ])
-        update_entity_anchorage(_spawn_node, anchor, true)
-        sync_position()
-
+func _ready() -> void:
+    look_direction = _start_look_direction
     super._ready()
 
     effect.prepare(self)
@@ -53,7 +40,7 @@ func _check_colliding_anchor(feature: GridNodeFeature) -> void:
     if feature is not GridPlayerCore || encounter_mode != EncounterMode.ANCHOR:
         return
 
-    if feature.get_grid_node() == get_grid_node() && feature.get_grid_anchor() == get_grid_anchor():
+    if feature.get_grid_node() == get_grid_node() && feature.anchor == anchor:
         if feature is GridEntity:
             _trigger(feature as GridEntity)
 
@@ -115,9 +102,9 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
         return
 
     var coords: Vector3i = DictionaryUtils.safe_getv3i(save_data, _COORDINATES_KEY)
-    var node: GridNode = level.get_grid_node(coords)
+    var load_node: GridNode = level.get_grid_node(coords)
 
-    if node == null:
+    if load_node == null:
         push_error("Trying to load encounter onto coordinates %s but there's no node there." % coords)
         _reset_starting_condition()
         return
@@ -130,35 +117,24 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
     _triggered = save_data[_TRIGGERED_KEY] if save_data.has(_TRIGGERED_KEY) else false
 
     if anchor_direction == CardinalDirections.CardinalDirection.NONE:
-        set_grid_node(node)
+        set_grid_node(load_node)
     else:
-        var anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
-        if anchor == null:
+        var load_anchor: GridAnchor = load_node.get_grid_anchor(anchor_direction)
+        if load_anchor == null:
             push_error("Trying to load encounter onto coordinates %s and anchor %s but node lacks anchor in that direction" % [coords, anchor_direction])
-        update_entity_anchorage(node, anchor, true)
+        update_entity_anchorage(load_node, load_anchor, true)
 
     if effect != null:
         if effect.hide_encounter_on_trigger && _triggered:
             visible = false
     sync_position()
-    orient()
+    orient(self)
 
     print_debug("Loaded %s from %s" % [encounter_id, save_data])
 
 func _reset_starting_condition() -> void:
     look_direction = _start_look_direction
-    down = _start_anchor_direction
-
-    if down == CardinalDirections.CardinalDirection.NONE:
-        set_grid_node(_spawn_node)
-    else:
-        var anchor: GridAnchor = _spawn_node.get_grid_anchor(down)
-        if anchor == null:
-            push_error("Trying to load encounter onto node %s and anchor %s but node lacks anchor in that direction" % [_spawn_node, down])
-        update_entity_anchorage(_spawn_node, anchor, true)
-
-    sync_position()
-    orient()
+    sync_spawn()
 
     _triggered = false
 

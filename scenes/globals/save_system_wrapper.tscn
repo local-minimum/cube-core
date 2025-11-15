@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctnwjagibvq72"]
-
-[ext_resource type="Script" uid="uid://dxldw3l7edknt" path="res://scripts/savesystem/save_system_wrapper.gd" id="1_iiddj"]
-
-[node name="SaveSystemWrapper" type="Node"]
-script = ExtResource("1_iiddj")
-metadata/_custom_type_script = "uid://dxldw3l7edknt"

@@ -5,6 +5,8 @@ class_name SignalBusCore
 # Settings
 signal on_update_input_mode(method: BindingHints.InputMode)
 signal on_update_handedness(handedness: AccessibilitySettings.Handedness)
+signal on_update_mouse_y_inverted(inverted: bool)
+signal on_update_mouse_sensitivity(sensistivity: float)
 
 # Time
 signal on_update_day(year: int, month: int, day_of_month: int, days_until_end_of_month: int)
@@ -32,6 +34,7 @@ signal on_scene_transition_new_scene_ready()
 signal on_change_player(level: GridLevelCore, player: GridPlayerCore)
 signal on_level_loaded(level: GridLevelCore)
 signal on_level_unloaded(level: GridLevelCore)
+signal on_level_pause(level: GridLevelCore, paused: bool)
 
 # -> Grid Node
 signal on_add_anchor(node: GridNode, anchor: GridAnchor)
@@ -48,6 +51,9 @@ signal on_door_state_chaged(door: GridDoorCore, from: GridDoorCore.LockState, to
 signal on_gain_key(id: String, gained: int, total: int)
 signal on_consume_key(id: String, remaining: int)
 signal on_sync_keys(keys: Dictionary[String, int])
+
+# -> Camera
+signal on_toggle_freelook_camera(active: bool, cause: FreeLookCam.ToggleCause)
 
 # -> Grid Entity
 signal on_move_start(entity: GridEntity, from: Vector3i, translation_direction: CardinalDirections.CardinalDirection)

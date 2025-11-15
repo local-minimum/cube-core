@@ -21,18 +21,34 @@ var camera_wanted_position: Vector3:
 
 @export var key_ring: KeyRingCore
 
-func _ready() -> void:
+func _enter_tree() -> void:
     if __SignalBus.on_cinematic.connect(_handle_cinematic) != OK:
         push_error("Failed to connect to cinematic")
+
+    if __SignalBus.on_toggle_freelook_camera.connect(_handle_free_look_camera) != OK:
+        push_error("Failed to connect to toggle free look camera")
+
+func _ready() -> void:
+    super._ready()
 
     camera_resting_position = camera.position
     camera_resting_rotation = camera.basis.get_rotation_quaternion()
 
     _sync_level_entry()
 
-    # We do super afterwards to not get uneccesary warning about player not being
-    # preset as a child of a node
-    super()
+enum FreeLookMode { INACTIVE, ACTIVE, ACTIVE_BLOCKING }
+var free_look: FreeLookMode = FreeLookMode.INACTIVE
+
+func _handle_free_look_camera(active: bool, cause: FreeLookCam.ToggleCause) -> void:
+    if active:
+        match free_look:
+            FreeLookMode.INACTIVE:
+                free_look = FreeLookMode.ACTIVE_BLOCKING if cause == FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR else FreeLookMode.ACTIVE
+            FreeLookMode.ACTIVE:
+                if cause == FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR:
+                    free_look = FreeLookMode.ACTIVE_BLOCKING
+    else:
+        free_look = FreeLookMode.INACTIVE
 
 func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
     if entity == self:
@@ -42,13 +58,16 @@ func _handle_cinematic(entity: GridEntity, _is_cinematic: bool) -> void:
 
 func _sync_level_entry() -> void:
     var entry: LevelPortal = get_level().entry_portal
-    var spawn_node: GridNode = null
+    var spawn_node: GridNode = _spawn_node
+    var spawn_anchor: GridAnchor
 
     if entry == null:
         push_error("Level doesn't have an entry portal")
         down = CardinalDirections.CardinalDirection.DOWN
         look_direction = CardinalDirections.CardinalDirection.NORTH
         spawn_node = get_level().nodes()[0]
+        if spawn_node != null:
+            spawn_anchor = spawn_node.get_grid_anchor(_spawn_anchor_direction)
     else:
         down = entry.entry_down
         look_direction = entry.entry_lookdirection
@@ -57,19 +76,20 @@ func _sync_level_entry() -> void:
             var orthos: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(down)
             look_direction = orthos.pick_random()
         spawn_node = entry.get_grid_node()
+        if spawn_node != null:
+            spawn_anchor = spawn_node.get_grid_anchor(down)
 
     if spawn_node == null:
         push_error("Level has no node!")
         __SignalBus.on_critical_level_corrupt.emit(get_level().level_id)
         return
 
-    var anchor: GridAnchor = spawn_node.get_grid_anchor(down)
-    update_entity_anchorage(spawn_node, anchor, true)
+    update_entity_anchorage(spawn_node, spawn_anchor, true)
     sync_position()
-    orient()
+    orient(self)
     print_debug("[Grid Player] %s anchors to %s in node %s and mode %s" % [
         name,
-        anchor,
+        spawn_anchor,
         spawn_node,
         transportation_mode.humanize()
     ])
@@ -83,6 +103,9 @@ func kill() -> void:
     pass
 
 func _input(event: InputEvent) -> void:
+    if free_look == FreeLookMode.ACTIVE_BLOCKING:
+        return
+
     if transportation_mode.mode == TransportationMode.NONE:
         print_debug("[Grid Player %s] Lacking transportation mode!" % [name])
         return
@@ -109,10 +132,16 @@ func _input(event: InputEvent) -> void:
             clear_held_movement(Movement.MovementType.STRAFE_RIGHT)
 
         elif !cinematic && event.is_action_pressed("crawl_turn_left"):
+            if free_look == FreeLookMode.ACTIVE:
+                __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
+
             if !attempt_movement(Movement.MovementType.TURN_COUNTER_CLOCKWISE):
                 print_debug("Refused Rotate Left")
 
         elif !cinematic && event.is_action_pressed("crawl_turn_right"):
+            if free_look == FreeLookMode.ACTIVE:
+                __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
+
             if !attempt_movement(Movement.MovementType.TURN_CLOCKWISE):
                 print_debug("Refused Rotate Right")
         else:
@@ -126,11 +155,11 @@ func _input(event: InputEvent) -> void:
             # transportation_mode.humanize()])
 
 func hold_movement(movement: Movement.MovementType) -> void:
-    if cinematic:
+    if cinematic || free_look == FreeLookMode.ACTIVE_BLOCKING || get_level().paused:
         return
 
-    if get_level().paused:
-        return
+    if free_look == FreeLookMode.ACTIVE:
+        __SignalBus.on_toggle_freelook_camera.emit(false, FreeLookCam.ToggleCause.KEYBOARD_ACTIVATOR)
 
     if !attempt_movement(movement):
         print_debug("Refused %s" % Movement.name(movement))
@@ -155,7 +184,7 @@ func clear_held_movement(movement: Movement.MovementType) -> void:
 var _next_move_repeat: float
 
 func _process(_delta: float) -> void:
-    if cinematic || falling():
+    if cinematic || free_look == FreeLookMode.ACTIVE_BLOCKING || falling():
         _repeat_movement.clear()
         return
 
@@ -296,15 +325,15 @@ func load_from_save(level: GridLevelCore, save_data: Dictionary) -> void:
         if anchor_direction == CardinalDirections.CardinalDirection.NONE:
             set_grid_node(node)
         else:
-            var anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
-            if anchor == null:
+            var load_anchor: GridAnchor = node.get_grid_anchor(anchor_direction)
+            if load_anchor == null:
                 push_error("Trying to load player onto coordinates %s and anchor %s but node lacks anchor in that direction" % [coords, anchor_direction])
                 set_grid_node(node)
             else:
-                set_grid_anchor(anchor)
+                set_grid_anchor(load_anchor)
 
         sync_position()
-        orient()
+        orient(self)
 
     camera.make_current()
     print_debug("[Grid Player] loaded player onto %s from %s" % [coords, save_data])

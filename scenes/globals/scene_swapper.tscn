@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://x52mu8scsy7m"]
-
-[ext_resource type="Script" uid="uid://dwl1o53cp3rtt" path="res://scripts/savesystem/scene_swapper.gd" id="1_qdv2b"]
-
-[node name="SceneSwapper" type="Node"]
-script = ExtResource("1_qdv2b")
-metadata/_custom_type_script = "uid://dwl1o53cp3rtt"

@@ -3,7 +3,6 @@ class_name GridEnemy
 
 @export var hunting_activation_id: String
 @export var move_on_turn: bool = false
-@export var spawn_node: GridNode
 @export var _lives: int = 3
 var lives: int:
     get():
@@ -38,11 +37,12 @@ func _enter_tree() -> void:
         push_error("Failed to connect activate player hunt")
 
 func _ready() -> void:
-    if spawn_node != null:
-        set_grid_node(spawn_node)
-        sync_position()
-
     super._ready()
+
+func sync_spawn() -> void:
+    super.sync_spawn()
+    if _spawn_node != null:
+        global_position = _spawn_node.global_position + Vector3.UP * get_level().node_size * 0.5
 
 var _may_move: bool
 
@@ -62,7 +62,7 @@ func _handle_change_node(feature: GridNodeFeature) -> void:
         return
 
     _may_move = true
-    print_debug("[Grid Enemy] Detect player change node, may move self!")
+    # print_debug("[Grid Enemy] Detect player change node, may move self!")
 
 func _handle_move_start(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
     if entity is not GridPlayerCore:

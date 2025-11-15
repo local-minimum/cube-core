@@ -19,10 +19,22 @@ func get_setting(_key: String, default: Variant = null) -> Variant:
 func get_settingi(_key: String, default: int = 0) -> int:
     return default
 
+func get_settingb(_key: String, default: bool = false) -> bool:
+    return default
+
+func get_settingf(_key: String, default: float = 0.0) -> float:
+    return default
+
 func set_setting(_key: String, _value: Variant) -> void:
     pass
 
 func set_settingi(_key: String, _value: int) -> void:
+    pass
+
+func set_settingb(_key: String, _value: bool) -> void:
+    pass
+
+func set_settingf(_key: String, _value: float) -> void:
     pass
 
 func remove_setting(key: String) -> void:

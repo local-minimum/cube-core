@@ -44,7 +44,7 @@ func execute(parameters: String, console: MinimumDevConsole) -> bool:
     player.down = down
 
     if duration == 0.0:
-        player.orient()
+        GridEntity.orient(player)
         console.output_info("Player now looking %s with %s down" % [CardinalDirections.name(look), CardinalDirections.name(down)])
         return true
 
@@ -63,10 +63,10 @@ func execute(parameters: String, console: MinimumDevConsole) -> bool:
 
     if tween.finished.connect(
         func () -> void:
-            player.orient()
+            GridEntity.orient(player)
     ) != OK:
         push_error("Failed to connect rotation done")
-        player.orient()
+        GridEntity.orient(player)
 
     console.output_info("Player rotates towards looking %s with %s down" % [CardinalDirections.name(look), CardinalDirections.name(down)])
     return true

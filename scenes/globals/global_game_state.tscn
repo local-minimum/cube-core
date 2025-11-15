@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://b8gh51cd7x7lq" path="res://scripts/cc/global_game_state.gd" id="1_e05ku"]
 
 [node name="GlobalGameState" type="Node"]
+process_mode = 3
 script = ExtResource("1_e05ku")
 metadata/_custom_type_script = "uid://b8gh51cd7x7lq"

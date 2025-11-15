@@ -50,22 +50,27 @@ func _ready() -> void:
     if __SignalBus.on_complete_sacrifice.connect(_handle_complete_sacrifice) != OK:
         push_error("Failed to connect to complete sacrifice")
 
-func _handle_response(response: String) -> void:
-    await get_tree().create_timer(0.3).timeout
-    __AudioHub.play_dialogue(response)
-
 func _handle_complete_sacrifice(letter: String) -> void:
     if !played_sacrifice_e && letter.to_upper() == "E":
         played_sacrifice_e = true
-        __AudioHub.play_dialogue(sacrifice_e_poem, _handle_response.bind(sacrifice_e_poem_response), true)
+        __AudioHub.play_dialogue(
+            sacrifice_e_poem,
+            func () -> void: __AudioHub.play_dialogue(sacrifice_e_poem_response, false, false, 0.3),
+        )
 
 func _handle_sacrifice(sac_player: GridPlayer) -> void:
     if sac_player.health == 0 && !played_no_health:
         played_no_health = true
-        __AudioHub.play_dialogue(no_health_poem, _handle_response.bind(no_health_response), true)
+        __AudioHub.play_dialogue(
+            no_health_poem,
+            func () -> void: __AudioHub.play_dialogue(no_health_response, false, false, 0.3),
+        )
     elif !played_sacrifice:
         played_sacrifice = true
-        __AudioHub.play_dialogue(sacrifice_poem, _handle_response.bind(sacrifice_poem_response), true)
+        __AudioHub.play_dialogue(
+            sacrifice_poem,
+            func () -> void: __AudioHub.play_dialogue(sacrifice_poem_response, false, false, 0.3),
+        )
 
 func _handle_nohurt_walk(_nohurt_player: GridPlayer, steps: int) -> void:
     if played_nohurt_walk || steps < nohurt_walk_threshold:
@@ -73,7 +78,10 @@ func _handle_nohurt_walk(_nohurt_player: GridPlayer, steps: int) -> void:
 
     played_nohurt_walk = true
     __SignalBus.on_track_back_on_trail.disconnect(_handle_nohurt_walk)
-    __AudioHub.play_dialogue(nohurt_walk_poem, _handle_response.bind(nohurt_walk_response), true)
+    __AudioHub.play_dialogue(
+        nohurt_walk_poem,
+        func () -> void: __AudioHub.play_dialogue(nohurt_walk_response, false, false, 0.3),
+    )
 
 func _handle_hurt_by_walk(hurt_player: GridPlayer) -> void:
     if played_hurt_walk || hurt_player.health > player_hurt_poem_threshold:
@@ -81,13 +89,19 @@ func _handle_hurt_by_walk(hurt_player: GridPlayer) -> void:
 
     __SignalBus.on_hurt_by_walk.disconnect(_handle_hurt_by_walk)
     played_hurt_walk = true
-    __AudioHub.play_dialogue(hurt_walk_poem, _handle_response.bind(hurt_walk_response), true)
+    __AudioHub.play_dialogue(
+        hurt_walk_poem,
+        func () -> void: __AudioHub.play_dialogue(hurt_walk_response, false, false, 0.3),
+    )
 
 func _handle_play_word_game(_enemy: GridEnemy, _player: GridPlayer) -> void:
     if played_word_game:
         return
 
-    __AudioHub.play_dialogue(word_game_poem, _handle_response.bind(word_game_response), true)
+    __AudioHub.play_dialogue(
+        word_game_poem,
+        func () -> void: __AudioHub.play_dialogue(word_game_response, false, false, 0.3),
+    )
 
     __SignalBus.on_play_exclude_word_game.disconnect(_handle_play_word_game)
 
@@ -116,6 +130,9 @@ func _check_play_poem():
 
         if VectorUtils.manhattan_distance(CardinalDirections.translate(player.coordinates(), player.look_direction), enemy.coordinates()) < distance:
             played_enemy = true
-            __AudioHub.play_dialogue(enemy_poem, _handle_response.bind(enemy_response), true)
+            __AudioHub.play_dialogue(
+                enemy_poem,
+                func () -> void: __AudioHub.play_dialogue(enemy_response, false, false, 0.3),
+            )
             __SignalBus.on_change_node.disconnect(_handle_change_node)
             return

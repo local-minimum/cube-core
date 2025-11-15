@@ -1,0 +1,1856 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqvjfyulxwegg"]
+
+[ext_resource type="Script" uid="uid://cmvere8txccip" path="res://scripts/cc/ui/menu_dialog.gd" id="1_d3swh"]
+[ext_resource type="Texture2D" uid="uid://bkqlswvbga8rd" path="res://sprites/nine_rect_ui.png" id="2_pkmka"]
+[ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_hr7gv"]
+[ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="4_y087k"]
+[ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="5_knx7p"]
+[ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="6_ug5w3"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="7_rgm7i"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="8_snl5m"]
+[ext_resource type="Script" uid="uid://bv1ceubowg00e" path="res://scripts/cc/container_button.gd" id="12_fgctr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
+
+[node name="Menu Dialog" type="PanelContainer" node_paths=PackedStringArray("_return_letters", "_hint_words", "_hint_exploration", "_hint_room", "_hint_cat", "_title", "_positive_button", "_positive_label", "_negative_button", "_negative_label")]
+offset_right = 382.0
+offset_bottom = 180.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
+script = ExtResource("1_d3swh")
+_return_letters = [NodePath("MarginContainer/VBoxContainer/Return Letters")]
+_hint_words = [NodePath("MarginContainer/VBoxContainer/Hint Battle Mechanics 1"), NodePath("MarginContainer/VBoxContainer/Hint Battle Mechanics 2"), NodePath("MarginContainer/VBoxContainer/Hint Battle Mechanics 3")]
+_hint_exploration = [NodePath("MarginContainer/VBoxContainer/Hint Exploration 1"), NodePath("MarginContainer/VBoxContainer/Hint Exploration 2"), NodePath("MarginContainer/VBoxContainer/Hint Exploration 3")]
+_hint_room = [NodePath("MarginContainer/VBoxContainer/Hint Room 1"), NodePath("MarginContainer/VBoxContainer/Hint Room 2"), NodePath("MarginContainer/VBoxContainer/Hint Room 3"), NodePath("MarginContainer/VBoxContainer/Hint Room 4"), NodePath("MarginContainer/VBoxContainer/Hint Room 5")]
+_hint_cat = [NodePath("MarginContainer/VBoxContainer/Hint Cat 1"), NodePath("MarginContainer/VBoxContainer/Hint Cat 2"), NodePath("MarginContainer/VBoxContainer/Hint Cat 3")]
+_title = NodePath("MarginContainer/VBoxContainer/Title")
+_positive_button = NodePath("MarginContainer/VBoxContainer/Actions/Positive")
+_positive_label = NodePath("MarginContainer/VBoxContainer/Actions/Positive/Hbox/Positive Label")
+_negative_button = NodePath("MarginContainer/VBoxContainer/Actions/Negative")
+_negative_label = NodePath("MarginContainer/VBoxContainer/Actions/Negative/Hbox/Negative Label")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 48)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "TITLE"
+font_size = 48
+letter_spacing = -24
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -45
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Battle Mechanics 1" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(576, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "THE WORD GAME ASKS YOU TO SELECT"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Battle Mechanics 2" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(558, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "THE WORD THAT DOESN'T BELONG TO"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Battle Mechanics 3" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(576, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "THE SAME CATEGORY AS THE OTHERS."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Exploration 1" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(576, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "EACH STEP YOU TAKE COSTS HEALTH,"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Exploration 2" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(540, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "BUT WALKING BACK ON YOUR TRACK"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Exploration 3" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(144, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "IS FREE."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Room 1" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(576, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "THERE ARE THREE ACTIVATORS CLOSE"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Room 2" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(612, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "TO EACHOTHER AT THE ROOM ENTRANCE."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Room 3" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(414, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "ONE OF THEM IS USELESS."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Room 4" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(576, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "NOT ALL ACTVATORS ON THE ISLANDS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Room 5" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(414, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "WILL BE HELPFUL EITHER."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Cat 1" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(648, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "A CAT CAN APPEAR AT DIFFERENT TIMES."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Cat 2" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(558, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "IT ONLY GUIDES YOU IN THE RIGHT"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Hint Cat 3" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "DIRECTION."
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Warn Progress" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(612, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("4_y087k"), ExtResource("5_knx7p"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "WARNING: ALL PROGRESS WILL BE LOST"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Return Letters" type="HFlowContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Letter Btn A" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn A"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn A"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn A/Hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "A"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn B" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn B"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn B"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn B/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "B"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn C" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn C"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn C"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn C/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "C"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn D" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn D"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn D"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn D/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "D"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn E" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn E"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn E"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn E/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "E"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn F" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn F"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn F"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn F/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "F"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn G" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn G"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn G"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn G/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "G"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn H" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn H"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn H"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn H/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "H"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn I" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn I"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn I"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn I/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "I"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn J" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn J"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn J"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn J/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "J"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn K" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn K"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn K"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn K/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "K"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn L" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn L"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn L"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn L/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "L"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn M" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn M"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn M"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn M/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "M"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn N" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn N"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn N"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn N/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "N"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn O" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn O"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn O"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn O/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "O"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn P" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn P"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn P"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn P/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "P"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn Q" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Q"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Q"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Q/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "Q"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn R" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn R"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn R"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn R/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "R"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn S" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn S"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn S"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn S/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "S"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn T" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn T"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn T"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn T/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "T"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn U" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn U"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn U"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn U/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "U"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn V" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn V"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn V"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn V/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "V"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn W" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn W"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn W"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn W/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "W"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn X" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn X"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn X"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn X/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "X"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn Y" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Y"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Y"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Y/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "Y"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letter Btn Z" type="Control" parent="MarginContainer/VBoxContainer/Return Letters" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(52, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Letter Btn")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Z"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Z"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letter Btn" type="Control" parent="MarginContainer/VBoxContainer/Return Letters/Letter Btn Z/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "Z"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Negative" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+tooltip_text = "Start a new game from the title screen resetting all progress"
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Negative Label")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Negative"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Negative"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Negative Label" type="Control" parent="MarginContainer/VBoxContainer/Actions/Negative/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "RESTART"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Positive" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("12_fgctr")
+_focus_target = NodePath("Hbox/Positive Label")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Positive"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pkmka")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Positive"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Positive Label" type="Control" parent="MarginContainer/VBoxContainer/Actions/Positive/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_hr7gv")
+censoring_textures = Array[Texture2D]([ExtResource("5_knx7p"), ExtResource("4_y087k"), ExtResource("6_ug5w3"), ExtResource("7_rgm7i")])
+text = "RESUME"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_snl5m")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Negative" to="." method="_on_restart_on_click"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Positive" to="." method="_on_resume_on_click"]

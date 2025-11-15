@@ -32,7 +32,7 @@ var _used_rewards: Array[String]
 
 var _playing: bool:
     get():
-        return !_sacrificing && _enemies.size() > 0
+        return !_visible_on_resume_level && !_sacrificing && _enemies.size() > 0
 
 class StoryReward:
     var after_bad: bool
@@ -81,9 +81,7 @@ class WordGroup:
             func (word: String) -> bool: return !in_group.words.has(word)
         )
 
-func _ready() -> void:
-    button_group.visible = false
-
+func _enter_tree() -> void:
     if __SignalBus.on_play_exclude_word_game.connect(_play_game) != OK:
         push_error("Failed to connect play exclude word game")
 
@@ -99,6 +97,19 @@ func _ready() -> void:
     if __SignalBus.on_complete_sacrifice.connect(_handle_complete_sacrifice) != OK:
         push_error("Failed to connect complete sacrifice")
 
+    if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
+        push_error("Failed to connect level pause")
+
+func _exit_tree() -> void:
+    __SignalBus.on_play_exclude_word_game.disconnect(_play_game)
+    __SignalBus.on_update_lost_letters.disconnect(_handle_update_lost_letters)
+    __SignalBus.on_start_sacrifice.disconnect(_handle_start_sacrifice)
+    __SignalBus.on_start_offer.disconnect(_handle_start_sacrifice)
+    __SignalBus.on_complete_sacrifice.disconnect(_handle_complete_sacrifice)
+    __SignalBus.on_level_pause.disconnect(_handle_level_pause)
+
+func _ready() -> void:
+    button_group.visible = false
     _load_words()
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -113,6 +124,15 @@ func _unhandled_key_input(event: InputEvent) -> void:
         _handle_hotkey_button(2)
     elif event.is_action_pressed("hot_key_4"):
         _handle_hotkey_button(3)
+
+var _visible_on_resume_level: bool
+func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
+    if paused:
+        _visible_on_resume_level = button_group.visible
+        button_group.visible = false
+    else:
+        button_group.visible = _visible_on_resume_level
+        _visible_on_resume_level = false
 
 func _handle_start_sacrifice(__player: GridPlayer) -> void:
     _sacrificing = true

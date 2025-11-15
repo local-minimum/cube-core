@@ -134,12 +134,13 @@ mesh = SubResource("QuadMesh_tkesk")
 skeleton = NodePath("../..")
 
 [node name="Crush Side Floor5" type="MeshInstance3D" parent="Side Mesh"]
-transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.3711385e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.5, 0)
+transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.3711385e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.495, 0)
+sorting_offset = -2.0
 mesh = SubResource("QuadMesh_tkesk")
 skeleton = NodePath("../..")
 
 [node name="Crush Side Floor4" type="MeshInstance3D" parent="Side Mesh"]
-transform = Transform3D(-1, 4.3711385e-08, -5.9604645e-08, 5.9604645e-08, 4.3711392e-08, -1, -4.371138e-08, -1, -4.3711395e-08, 0, 0, 0)
+transform = Transform3D(-1, 4.3711385e-08, -5.9604645e-08, 5.9604645e-08, 4.3711392e-08, -1, -4.371138e-08, -1, -4.3711395e-08, 0, 0.005, 0)
 mesh = SubResource("QuadMesh_tkesk")
 skeleton = NodePath("../..")
 

@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://1keqjvpsekq7" path="res://addons/minimum_convenience/scripts/audio_hub.gd" id="1_nnc5e"]
 
 [node name="AudioHub" type="Node"]
+process_mode = 3
 script = ExtResource("1_nnc5e")
 metadata/_custom_type_script = "uid://1keqjvpsekq7"

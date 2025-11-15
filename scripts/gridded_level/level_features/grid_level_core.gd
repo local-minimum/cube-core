@@ -38,6 +38,9 @@ var paused: bool:
         else:
             player.enable_player()
 
+        __AudioHub.pause_dialogues = value
+        __SignalBus.on_level_pause.emit(self, value)
+
 var entry_portal: LevelPortal:
     get():
         if entry_portal == null:
@@ -70,6 +73,10 @@ func _ready() -> void:
         print_debug("Level %s has %s nodes" % [name, _nodes.size()])
 
     active_level = self
+
+func _input(event: InputEvent) -> void:
+    if !paused && event.is_action_pressed("crawl_pause"):
+        paused = true
 
 func _process(_delta: float) -> void:
     if emit_loaded:

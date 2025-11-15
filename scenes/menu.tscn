@@ -1,0 +1,564 @@
+[gd_scene load_steps=14 format=3 uid="uid://dcw0kg1kaar8j"]
+
+[ext_resource type="Script" uid="uid://bracym81q4aif" path="res://scripts/cc/pause_menu.gd" id="1_ufwb2"]
+[ext_resource type="Texture2D" uid="uid://bkqlswvbga8rd" path="res://sprites/nine_rect_ui.png" id="2_i6lef"]
+[ext_resource type="Script" uid="uid://du2w5s28tkqje" path="res://scripts/ui/censoring_label.gd" id="3_70i5f"]
+[ext_resource type="Texture2D" uid="uid://ctt812akp5slj" path="res://sprites/tiles-56.png" id="4_mj5lg"]
+[ext_resource type="Texture2D" uid="uid://b7ueue5c14onv" path="res://sprites/tiles-55.png" id="5_ufwb2"]
+[ext_resource type="Texture2D" uid="uid://2s3flvufgyj" path="res://sprites/tiles-57.png" id="6_6cdou"]
+[ext_resource type="Texture2D" uid="uid://dr1moqdr47g2l" path="res://sprites/tiles-58.png" id="7_i42df"]
+[ext_resource type="FontFile" uid="uid://c63elhj8e8jcq" path="res://fonts/12px-Mx437_DOS-V_re_JPN12.ttf" id="8_7jp70"]
+[ext_resource type="Texture2D" uid="uid://bn03rwm3il63t" path="res://sprites/walls/ui-simple-15.png" id="8_i6lef"]
+[ext_resource type="Texture2D" uid="uid://dstrk5ynsikw2" path="res://sprites/walls/ui-15.png" id="9_70i5f"]
+[ext_resource type="Theme" uid="uid://cnql2m0bdf5ol" path="res://menu_style.tres" id="10_70i5f"]
+[ext_resource type="Script" uid="uid://bv1ceubowg00e" path="res://scripts/cc/container_button.gd" id="11_mj5lg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
+
+[node name="Menu" type="PanelContainer" node_paths=PackedStringArray("invert_y_btn", "sensistivity_slider")]
+offset_right = 396.0
+offset_bottom = 488.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
+script = ExtResource("1_ufwb2")
+invert_y_btn = NodePath("MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis")
+sensistivity_slider = NodePath("MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Menu" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 72)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "MENU"
+font_size = 72
+letter_spacing = -36
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+y_alignment_offset = -64
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Mouse" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Mouse" type="Control" parent="MarginContainer/VBoxContainer/Mouse"]
+custom_minimum_size = Vector2(350, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "MOUSE"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Y Axis" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Mouse"]
+layout_mode = 2
+
+[node name="Invert Y-Axis" type="TextureButton" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Invert Y" type="Control" parent="MarginContainer/VBoxContainer/Mouse/Y Axis"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "INVERT Y-AXIS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Sensitivity" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Mouse"]
+layout_mode = 2
+
+[node name="Sensitivity Slider" type="HSlider" parent="MarginContainer/VBoxContainer/Mouse/Sensitivity"]
+custom_minimum_size = Vector2(150, 24)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("10_70i5f")
+min_value = 0.05
+max_value = 10.0
+step = 0.05
+value = 4.0
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Mouse/Sensitivity"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sensitivity" type="Control" parent="MarginContainer/VBoxContainer/Mouse/Sensitivity"]
+custom_minimum_size = Vector2(162, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "SENSITIVY"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Game play" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Gameplay" type="Control" parent="MarginContainer/VBoxContainer/Game play"]
+custom_minimum_size = Vector2(350, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "GAMEPLAY"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Letters" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Game play"]
+layout_mode = 2
+
+[node name="Letters Btn" type="TextureButton" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Letters" type="Control" parent="MarginContainer/VBoxContainer/Game play/Letters"]
+custom_minimum_size = Vector2(252, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RETURN LETTERS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Spoilers" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spoilers" type="Control" parent="MarginContainer/VBoxContainer/Spoilers"]
+custom_minimum_size = Vector2(350, 36)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "SPOILERS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Battle" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
+layout_mode = 2
+
+[node name="Spoiler Battle" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Battle"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Battle"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Battle" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Battle"]
+custom_minimum_size = Vector2(288, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "BATTLE MECHANICS"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Health" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
+layout_mode = 2
+
+[node name="Spoiler Health" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Health"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Health"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Health" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Health"]
+custom_minimum_size = Vector2(306, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "HEALTH MANAGEMENT"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Cat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
+layout_mode = 2
+
+[node name="Spoiler Cat" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Cat"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Cat"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Cat" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Cat"]
+custom_minimum_size = Vector2(126, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "THE CAT"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Big Room" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Spoilers"]
+layout_mode = 2
+
+[node name="Spoiler Big Room" type="TextureButton" parent="MarginContainer/VBoxContainer/Spoilers/Big Room"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("8_i6lef")
+texture_pressed = ExtResource("9_70i5f")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Big Room"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Big Room" type="Control" parent="MarginContainer/VBoxContainer/Spoilers/Big Room"]
+custom_minimum_size = Vector2(144, 36)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("4_mj5lg"), ExtResource("5_ufwb2"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "BIG ROOM"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8378091, 0.61697197, 0.97542435, 1)
+baseline_height = 3
+y_alignment_offset = -34
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Quit" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(100, 48)
+layout_mode = 2
+tooltip_text = "Quit game"
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Quit/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "QUIT"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Restart" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+tooltip_text = "Start a new game from the title screen resetting all progress"
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Restart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Restart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Restart/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RESTART"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Resume" type="Control" parent="MarginContainer/VBoxContainer/Actions" node_paths=PackedStringArray("_focus_target")]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
+script = ExtResource("11_mj5lg")
+_focus_target = NodePath("Hbox/CensoringLabel")
+metadata/_custom_type_script = "uid://bv1ceubowg00e"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/Actions/Resume"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i6lef")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Hbox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Actions/Resume"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CensoringLabel" type="Control" parent="MarginContainer/VBoxContainer/Actions/Resume/Hbox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("3_70i5f")
+censoring_textures = Array[Texture2D]([ExtResource("5_ufwb2"), ExtResource("4_mj5lg"), ExtResource("6_6cdou"), ExtResource("7_i42df")])
+text = "RESUME"
+font_size = 24
+letter_spacing = -12
+height_ratio = 2
+font = ExtResource("8_7jp70")
+color = Color(0.8392157, 0.6156863, 0.9764706, 1)
+baseline_height = 2
+y_alignment_offset = -22
+center_horisontally = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[connection signal="toggled" from="MarginContainer/VBoxContainer/Mouse/Y Axis/Invert Y-Axis" to="." method="_on_invert_y_axis_toggled"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/Mouse/Sensitivity/Sensitivity Slider" to="." method="_on_sensitivity_slider_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Game play/Letters/Letters Btn" to="." method="_on_letters_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Battle/Spoiler Battle" to="." method="_on_spoiler_battle_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Health/Spoiler Health" to="." method="_on_spoiler_health_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Cat/Spoiler Cat" to="." method="_on_spoiler_cat_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Spoilers/Big Room/Spoiler Big Room" to="." method="_on_spoiler_big_room_pressed"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Quit" to="." method="_on_quit_on_click"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Restart" to="." method="_on_restart_on_click"]
+[connection signal="on_click" from="MarginContainer/VBoxContainer/Actions/Resume" to="." method="_on_resume_on_click"]

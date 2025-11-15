@@ -24,6 +24,7 @@ metadata/_custom_type_script = "uid://c6733p4qj68p"
 
 [node name="Side Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2.5, -1.25)
+sorting_offset = 1.0
 mesh = SubResource("QuadMesh_xhqb5")
 
 [node name="Side Anchor" type="Node3D" parent="."]

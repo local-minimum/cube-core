@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cnql2m0bdf5ol"]
+
+[ext_resource type="Texture2D" uid="uid://dstrk5ynsikw2" path="res://sprites/walls/ui-15.png" id="1_xawqr"]
+[ext_resource type="Texture2D" uid="uid://bn03rwm3il63t" path="res://sprites/walls/ui-simple-15.png" id="2_kxgih"]
+[ext_resource type="Texture2D" uid="uid://bg6r435mra0nf" path="res://sprites/uibox/ui-19.png" id="3_jsjd3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pash2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xawqr"]
+
+[resource]
+HSlider/constants/center_grabber = 1
+HSlider/icons/grabber = ExtResource("1_xawqr")
+HSlider/icons/grabber_disabled = ExtResource("2_kxgih")
+HSlider/icons/grabber_highlight = ExtResource("1_xawqr")
+HSlider/icons/tick = ExtResource("3_jsjd3")
+HSlider/styles/grabber_area = SubResource("StyleBoxEmpty_pash2")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxEmpty_xawqr")

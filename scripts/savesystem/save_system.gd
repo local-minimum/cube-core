@@ -209,14 +209,14 @@ func _load_slot_into_cache(slot: int) -> bool:
     _current_save = data
     return true
 
-func can_load_cach_onto_this_level() -> bool:
+func can_load_cache_onto_this_level() -> bool:
     return level_saver != null && get_loading_level_id() == level_saver.get_level_id()
 
 func load_slot(slot: int) -> bool:
     if !_load_slot_into_cache(slot):
         return false
 
-    if !can_load_cach_onto_this_level():
+    if !can_load_cache_onto_this_level():
         push_error("Failed to load from slot %s using %s because of next scene id missmach %s vs %s" % [
             slot,
             storage_provider,

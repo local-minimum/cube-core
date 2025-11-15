@@ -12,6 +12,9 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohew3"]
 
 [node name="Word Button" type="PanelContainer" node_paths=PackedStringArray("_focus_target")]
+focus_mode = 2
+focus_behavior_recursive = 2
+mouse_behavior_recursive = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ohew3")
 script = ExtResource("1_7shjm")
 _focus_target = NodePath("NinePatchRect")
@@ -36,20 +39,23 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(32, 0)
+[node name="Spacer" type="Control" parent="MarginContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 mouse_filter = 2
 
-[node name="CensoringLabel" type="Control" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 72)
+[node name="CensoringLabel" type="Control" parent="MarginContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(36, 72)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -57,7 +63,7 @@ size_flags_stretch_ratio = 0.0
 mouse_filter = 2
 script = ExtResource("3_dxonn")
 censoring_textures = Array[Texture2D]([ExtResource("4_6tgct"), ExtResource("5_lrn36"), ExtResource("6_w72wn"), ExtResource("7_2bllg")])
-censored_letters = "AE"
+text = " "
 font_size = 72
 letter_spacing = -36
 height_ratio = 2
@@ -67,14 +73,16 @@ y_alignment_offset = -64
 manage_label_width = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(16, 0)
+[node name="Spacer2" type="Control" parent="MarginContainer/CenterContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 mouse_filter = 2
 
 [node name="CensoringLabel" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("3_dxonn")

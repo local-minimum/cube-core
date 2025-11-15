@@ -55,15 +55,37 @@ func _enter_tree() -> void:
     if __SignalBus.on_update_lost_letters.connect(_handle_lost_letters) != OK:
         push_error("Failed to connect update lost letters")
 
+    if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
+        push_error("Failed to connect level pause")
+
+    if sacrifice.on_click.connect(_handle_click_sacrifice) != OK:
+        push_error("Failed to connect sacrifice button")
+
+func _exit_tree() -> void:
+    __SignalBus.on_start_sacrifice.disconnect(_handle_no_health)
+    __SignalBus.on_start_offer.disconnect(_handle_start_offer)
+    __SignalBus.on_update_lost_letters.disconnect(_handle_lost_letters)
+    __SignalBus.on_level_pause.disconnect(_handle_level_pause)
+
 func _ready() -> void:
     for child: CensoringLabel in sacrifice.find_children("", "CensoringLabel"):
         sacrifice_letter = child
-        sacrifice_letter.manage_label_width = false
-        sacrifice_letter.custom_minimum_size.x = sacrifice_letter.font_size / float(sacrifice_letter.height_ratio)
-        sacrifice_letter.update_minimum_size()
         break
 
     hide()
+
+func _handle_click_sacrifice(_btn: ContainerButton) -> void:
+    if !_sacrificial_letter.is_empty():
+        _handle_sacrifice_letter()
+
+var _visible_on_resume_level: bool
+func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
+    if paused:
+        _visible_on_resume_level = visible
+        visible = false
+    else:
+        visible = _visible_on_resume_level
+        _visible_on_resume_level = false
 
 func _handle_start_offer(player: GridPlayer) -> void:
     _player = player
@@ -79,6 +101,10 @@ func _handle_lost_letters(letters: String) -> void:
     alphabet.censored_letters = letters
 
 func show_sacrifice() -> void:
+    if visible:
+        # We are already showing, presumably because the show_offer has been called
+        return
+
     if _exhausted_all_letters:
         __SignalBus.on_complete_sacrifice.emit("")
         return
@@ -90,7 +116,10 @@ func show_sacrifice() -> void:
         all_lost.erase("E")
         __GlobalGameState.lost_letters = "".join(all_lost)
         if !regain_e_poem.is_empty():
-            __AudioHub.play_dialogue(regain_e_poem, _handle_play_regain_e_response, true)
+            __AudioHub.play_dialogue(
+                regain_e_poem,
+                func() -> void: __AudioHub.play_dialogue(regain_e_poem_response, false, false, 0.3),
+            )
         __SignalBus.on_complete_sacrifice.emit("")
         return
 
@@ -98,14 +127,13 @@ func show_sacrifice() -> void:
     hint.text = hint_sacrifice
     _ready_ui()
 
-func _handle_play_regain_e_response() -> void:
-    await get_tree().create_timer(0.3).timeout
-
-    if !regain_e_poem_response.is_empty():
-        __AudioHub.play_dialogue(regain_e_poem_response)
-
 func show_offer() -> void:
     mode = Mode.NPC_OFFER
+
+    if visible:
+        # If show_sacrifice has been called we shouldn't make a new guess but we should
+        # change the offer mode to npc so that we get the better rate!
+        return
 
     if alphabet.text.length() <= __GlobalGameState.lost_letters.length():
         __SignalBus.on_reward_message.emit("No more value")
@@ -123,7 +151,7 @@ func _ready_ui() -> void:
     hint.censored_letters = __GlobalGameState.lost_letters
 
     sacrifice.interactable = false
-    sacrifice_letter.text = ""
+    sacrifice_letter.text = " "
     sacrifice_letter.censored_letters = __GlobalGameState.lost_letters
 
     sacrifice.interactable = false
@@ -180,7 +208,7 @@ func _offer_letter(letter: String) -> void:
             _sacrificial_letter = letter
 
     else:
-        sacrifice_letter.text = ""
+        sacrifice_letter.text = " "
         sacrifice.interactable = false
         hint.text = _get_nothing_entered_hint()
         _sacrificial_letter = ""

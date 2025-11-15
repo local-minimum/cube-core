@@ -11,7 +11,14 @@ var _loading_scene_id: String
 var _loading_resource_path: String
 var _wait_for_new_level_load: bool
 
-func _ready() -> void:
+static var _instance: SceneSwapper
+
+func _enter_tree() -> void:
+    if _instance != null && _instance != self:
+        _instance.queue_free()
+
+    _instance = self
+
     if __SignalBus.on_scene_transition_new_scene_ready.connect(_handle_new_scene_ready) != OK:
         push_error("Failed to connect new scene ready")
 
@@ -20,6 +27,14 @@ func _ready() -> void:
 
     if __SignalBus.on_load_fail.connect(_handle_new_level_load_fail) != OK:
         push_error("Could not connect to load fail")
+
+func _exit_tree() -> void:
+    if _instance == self:
+        _instance = null
+
+    __SignalBus.on_scene_transition_new_scene_ready.disconnect(_handle_new_scene_ready)
+    __SignalBus.on_load_complete.disconnect(_handle_new_level_load_complete)
+    __SignalBus.on_load_fail.disconnect(_handle_new_level_load_fail)
 
 func _process(_delta: float) -> void:
     match _phase:
@@ -43,12 +58,18 @@ func _handle_new_level_load_fail() -> void:
 func _handle_new_scene_ready() -> void:
     if _wait_for_new_level_load:
         print_debug("[SceneSwapper] New scene ready, loading cached save")
-        __SaveSystemWrapper.load_cached_save()
+        SaveSystemWrapper.load_cached_save()
     else:
         print_debug("[SceneSwapper] Scene swap complete")
         _phase = Phase.SWAPPING_COMPLETE
 
-func transition_to_next_scene(wait_for_new_level_load: bool = true) -> bool:
+static func transition_to_next_scene(wait_for_new_level_load: bool = true) -> bool:
+    if _instance == null:
+        return false
+
+    return _instance._transition_to_next_scene(wait_for_new_level_load)
+
+func _transition_to_next_scene(wait_for_new_level_load: bool = true) -> bool:
     if _phase != Phase.IDLE:
         return false
 

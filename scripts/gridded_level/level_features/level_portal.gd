@@ -30,7 +30,7 @@ func exit_level() -> void:
         push_warning("Failed to connect fail load")
         setup = false
 
-    __SaveSystemWrapper.autosave()
+    SaveSystemWrapper.autosave()
 
     if !setup:
         _fail_exit_level()
@@ -38,7 +38,7 @@ func exit_level() -> void:
 func _handle_saved() -> void:
     __SignalBus.on_save_complete.disconnect(_handle_saved)
 
-    if !(__SceneSwapper as SceneSwapper).transition_to_next_scene():
+    if !SceneSwapper.transition_to_next_scene():
         _fail_exit_level()
         return
 

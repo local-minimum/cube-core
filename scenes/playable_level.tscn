@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=32 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -20,8 +20,17 @@
 [ext_resource type="PackedScene" uid="uid://ngdx83l2y2oh" path="res://scenes/story_text.tscn" id="18_l2weq"]
 [ext_resource type="Script" uid="uid://liai8tbelc0r" path="res://scripts/cc/intro.gd" id="19_subuw"]
 [ext_resource type="Script" uid="uid://uks443arie0d" path="res://scripts/cc/orbiter.gd" id="20_4bpgt"]
+[ext_resource type="Texture2D" uid="uid://cweq2tsgr85st" path="res://sprites/icons-27.png" id="20_vsi5o"]
+[ext_resource type="Texture2D" uid="uid://coohpjhnd1a2w" path="res://sprites/dice/gaming-5.png" id="20_ymihr"]
 [ext_resource type="Script" uid="uid://b8eg248j7jnfr" path="res://scripts/ui/effects/fader_ui.gd" id="21_20guh"]
+[ext_resource type="Texture2D" uid="uid://dwdcsp17uvtcj" path="res://sprites/dice/gaming-4.png" id="21_vsi5o"]
 [ext_resource type="Script" uid="uid://cqtinggwxxad5" path="res://scripts/cc/end_and_credits.gd" id="22_hl18a"]
+[ext_resource type="Texture2D" uid="uid://dkop770blpb3u" path="res://sprites/dice/gaming-3.png" id="22_tdkqe"]
+[ext_resource type="Texture2D" uid="uid://c76l8erbfe2p3" path="res://sprites/dice/gaming-2.png" id="23_2a1gl"]
+[ext_resource type="Texture2D" uid="uid://qe62qeadijcx" path="res://sprites/dice/gaming-1.png" id="24_42y26"]
+[ext_resource type="Texture2D" uid="uid://cwmil1624c4mn" path="res://sprites/dice/gaming-0.png" id="25_euxtm"]
+[ext_resource type="PackedScene" uid="uid://dcw0kg1kaar8j" path="res://scenes/menu.tscn" id="30_tdkqe"]
+[ext_resource type="PackedScene" uid="uid://cqvjfyulxwegg" path="res://scenes/menu_dialog.tscn" id="31_2a1gl"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -29,6 +38,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0011098385, -0.0027908087, 0.0007236004)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="Core Stats UI" type="GridContainer" parent="HUD" node_paths=PackedStringArray("health", "keys")]
 custom_minimum_size = Vector2(200, 0)
@@ -53,6 +63,7 @@ expand_mode = 4
 stretch_mode = 4
 
 [node name="Health Value" type="Control" parent="HUD/Core Stats UI"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -72,6 +83,7 @@ expand_mode = 4
 stretch_mode = 4
 
 [node name="Keys Count" type="Control" parent="HUD/Core Stats UI"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -83,6 +95,7 @@ y_alignment_offset = -28
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Interactions UI" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 100
 
 [node name="InteractionUI" type="Control" parent="Interactions UI"]
@@ -99,6 +112,7 @@ _viz = ExtResource("8_mew3k")
 metadata/_custom_type_script = "uid://bvqfk07xb2q3f"
 
 [node name="KeyMasterCore" type="Node" parent="."]
+process_mode = 1
 script = ExtResource("4_pte0f")
 _key_descriptions = Dictionary[String, String]({
 "key": "key"
@@ -106,6 +120,7 @@ _key_descriptions = Dictionary[String, String]({
 metadata/_custom_type_script = "uid://ksorj7viigop"
 
 [node name="Word Game 1" type="CanvasLayer" parent="." node_paths=PackedStringArray("button_group")]
+process_mode = 1
 layer = 10
 script = ExtResource("9_7cjp0")
 button_group = NodePath("GridContainer")
@@ -143,6 +158,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Sacrifice" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 130
 
 [node name="Background" type="ColorRect" parent="Sacrifice" node_paths=PackedStringArray("alphabet", "hint", "sacrifice")]
@@ -158,8 +174,12 @@ hint = NodePath("Hint Text")
 sacrifice = NodePath("Sacrifice Slot")
 
 [node name="The Alphabet" type="Control" parent="Sacrifice/Background"]
+custom_minimum_size = Vector2(1144, 72)
 layout_mode = 1
 anchors_preset = 0
+offset_left = 4.0
+offset_right = 1176.0
+offset_bottom = 72.0
 script = ExtResource("3_ohew3")
 censoring_textures = Array[Texture2D]([ExtResource("12_vmorf"), ExtResource("13_af07b"), ExtResource("14_mew3k"), ExtResource("15_l2weq")])
 text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -180,21 +200,25 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -36.0
+offset_left = -66.0
 offset_top = -52.0
-offset_right = 36.0
+offset_right = 66.0
 offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 _managed_unfocus = false
 
 [node name="Hint Text" type="Control" parent="Sacrifice/Background"]
+custom_minimum_size = Vector2(792, 72)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -396.0
+offset_top = -72.0
+offset_right = 424.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
@@ -211,22 +235,21 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Story Text" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 50
 
-[node name="Story Text" parent="Story Text" instance=ExtResource("18_l2weq")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -44.0
-offset_top = -166.0
-offset_right = 44.0
-offset_bottom = 166.0
+[node name="CenterContainer" type="CenterContainer" parent="Story Text"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas", "title_canvas", "title_label", "press_to_start_label")]
+[node name="Story Text" parent="Story Text/CenterContainer" instance=ExtResource("18_l2weq")]
+layout_mode = 2
+
+[node name="Intro Manager" type="Node" parent="." node_paths=PackedStringArray("orbiter", "ui_canvas", "title_canvas", "title_label", "press_to_start_label", "skip_progress_ui", "skip_label", "skip_countdown")]
+process_mode = 1
 script = ExtResource("19_subuw")
 intro_poem = "res://audio/voice/narration/intro.ogg"
 intro_response = "res://audio/voice/narration/intro-response.ogg"
@@ -242,8 +265,13 @@ land_sequence_detector = Vector3(-1, 0, 0)
 landing_start_threshold = 0.7
 ui_canvas = NodePath("../HUD")
 title_canvas = NodePath("../Title")
-title_label = NodePath("../Title/Title Label")
-press_to_start_label = NodePath("../Title/Presss to start Label")
+title_label = NodePath("../Title/CenterContainer/Control/Title Label")
+press_to_start_label = NodePath("../Title/CenterContainer/Control/Presss to start Label")
+skip_progress_ui = NodePath("../Title/Skip UI")
+skip_label = NodePath("../Title/Skip UI/Skip Space")
+skip_countdown = NodePath("../Title/Skip UI/Skip Countdown")
+not_skipping_texture = ExtResource("20_vsi5o")
+skip_countdown_textures = Array[Texture2D]([ExtResource("20_ymihr"), ExtResource("21_vsi5o"), ExtResource("22_tdkqe"), ExtResource("23_2a1gl"), ExtResource("24_42y26"), ExtResource("25_euxtm")])
 _censor_interval = 1500
 
 [node name="Orbiter" type="Node3D" parent="Intro Manager"]
@@ -252,6 +280,7 @@ managed = true
 metadata/_custom_type_script = "uid://uks443arie0d"
 
 [node name="Fader" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 200
 
 [node name="FaderUI" type="Node" parent="Fader" node_paths=PackedStringArray("color_rect")]
@@ -271,21 +300,23 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Title" type="CanvasLayer" parent="."]
+process_mode = 1
 layer = 150
 
-[node name="Title Label" type="Control" parent="Title"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+[node name="CenterContainer" type="CenterContainer" parent="Title"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Control" type="VBoxContainer" parent="Title/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title Label" type="Control" parent="Title/CenterContainer/Control"]
+custom_minimum_size = Vector2(324, 72)
+layout_mode = 2
 script = ExtResource("3_ohew3")
 censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
 text = "CUBE CORE"
@@ -299,19 +330,9 @@ manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
-[node name="Presss to start Label" type="Control" parent="Title"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Presss to start Label" type="Control" parent="Title/CenterContainer/Control"]
+custom_minimum_size = Vector2(264, 24)
+layout_mode = 2
 script = ExtResource("3_ohew3")
 censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
 text = "PRESS ANY KEY TO START"
@@ -321,12 +342,49 @@ height_ratio = 2
 font = ExtResource("3_7s1ja")
 color = Color(0.93681306, 0.34910473, 0.75913596, 1)
 baseline_height = 2
-y_alignment_offset = -140
+y_alignment_offset = -24
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
+[node name="Skip UI" type="HBoxContainer" parent="Title"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -60.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(1, 0)
+
+[node name="Skip Countdown" type="TextureRect" parent="Title/Skip UI"]
+layout_mode = 2
+texture = ExtResource("20_ymihr")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Skip Space" type="Control" parent="Title/Skip UI"]
+custom_minimum_size = Vector2(216, 36)
+layout_mode = 2
+script = ExtResource("3_ohew3")
+censoring_textures = Array[Texture2D]([ExtResource("14_mew3k"), ExtResource("15_l2weq"), ExtResource("13_af07b"), ExtResource("12_vmorf")])
+text = "SKIP [SPACE]"
+font_size = 36
+letter_spacing = -18
+height_ratio = 2
+font = ExtResource("3_7s1ja")
+color = Color(0.93681306, 0.34910473, 0.75913596, 1)
+baseline_height = 3
+y_alignment_offset = -36
+manage_label_width = true
+metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
 [node name="End Screen And Credits" type="CanvasLayer" parent="." node_paths=PackedStringArray("labels")]
+process_mode = 1
 layer = 220
 script = ExtResource("22_hl18a")
 labels = [NodePath("The End"), NodePath("Game Design"), NodePath("Programming"), NodePath("Voice Acting"), NodePath("Poems"), NodePath("Other Text"), NodePath("Asset Pack"), NodePath("Asset Pack Makers 1"), NodePath("Asset Pack Makers 2"), NodePath("Asset Pack Makers 3"), NodePath("Thanks")]
@@ -334,16 +392,17 @@ roll_speed = -40.0
 roll_duration = 36.0
 
 [node name="The End" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(504, 144)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = 355.0
+offset_top = -92.0
+offset_right = 931.0
+offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -361,16 +420,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Game Design" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(468, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 340.0
-offset_right = 16.0
-offset_bottom = 380.0
+offset_left = 373.0
+offset_top = 322.0
+offset_right = 859.0
+offset_bottom = 358.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -388,16 +448,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Programming" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(468, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 404.0
-offset_right = 16.0
-offset_bottom = 444.0
+offset_left = 373.0
+offset_top = 386.0
+offset_right = 859.0
+offset_bottom = 422.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -415,16 +476,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Voice Acting" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(486, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 468.0
-offset_right = 16.0
-offset_bottom = 508.0
+offset_left = 364.0
+offset_top = 450.0
+offset_right = 868.0
+offset_bottom = 486.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -442,16 +504,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Poems" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(288, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 532.0
-offset_right = 16.0
-offset_bottom = 572.0
+offset_left = 463.0
+offset_top = 514.0
+offset_right = 769.0
+offset_bottom = 550.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -469,16 +532,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Other Text" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(828, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 596.0
-offset_right = 16.0
-offset_bottom = 636.0
+offset_left = 193.0
+offset_top = 578.0
+offset_right = 1039.0
+offset_bottom = 614.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -496,16 +560,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Asset Pack" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(648, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 660.0
-offset_right = 16.0
-offset_bottom = 700.0
+offset_left = 283.0
+offset_top = 642.0
+offset_right = 949.0
+offset_bottom = 678.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -523,16 +588,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Asset Pack Makers 1" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(684, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 724.0
-offset_right = 16.0
-offset_bottom = 764.0
+offset_left = 265.0
+offset_top = 706.0
+offset_right = 967.0
+offset_bottom = 742.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -550,16 +616,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Asset Pack Makers 2" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(684, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 788.0
-offset_right = 16.0
-offset_bottom = 828.0
+offset_left = 265.0
+offset_top = 770.0
+offset_right = 967.0
+offset_bottom = 806.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -577,16 +644,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Asset Pack Makers 3" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(234, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 852.0
-offset_right = 16.0
-offset_bottom = 892.0
+offset_left = 490.0
+offset_top = 834.0
+offset_right = 742.0
+offset_bottom = 870.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -604,16 +672,17 @@ center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
 
 [node name="Thanks" type="Control" parent="End Screen And Credits"]
+custom_minimum_size = Vector2(324, 36)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = 956.0
-offset_right = 16.0
-offset_bottom = 996.0
+offset_left = 445.0
+offset_top = 938.0
+offset_right = 787.0
+offset_bottom = 974.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ohew3")
@@ -629,3 +698,34 @@ y_alignment_offset = -36
 manage_label_width = true
 center_horisontally = true
 metadata/_custom_type_script = "uid://du2w5s28tkqje"
+
+[node name="Menu" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 225
+
+[node name="Menu" parent="Menu" node_paths=PackedStringArray("menu_dialog") instance=ExtResource("30_tdkqe")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -244.0
+offset_right = 198.0
+offset_bottom = 244.0
+grow_horizontal = 2
+grow_vertical = 2
+menu_dialog = NodePath("../CenterContainer/Menu Dialog")
+
+[node name="CenterContainer" type="CenterContainer" parent="Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_behavior_recursive = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+
+[node name="Menu Dialog" parent="Menu/CenterContainer" instance=ExtResource("31_2a1gl")]
+layout_mode = 2

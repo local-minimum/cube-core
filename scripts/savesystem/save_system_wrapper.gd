@@ -3,7 +3,7 @@ class_name SaveSystemWrapper
 
 # TODO: Why is this not a static class?
 
-func autosave() -> void:
+static func autosave() -> void:
     if SaveSystem.instance == null:
         push_error("No save system loaded")
         return
@@ -14,7 +14,7 @@ func autosave() -> void:
 
     __SignalBus.on_save_complete.emit()
 
-func load_last_save() -> void:
+static func load_last_save() -> void:
     if SaveSystem.instance == null:
         push_error("No save system loaded")
         __SignalBus.on_load_fail.emit()
@@ -27,15 +27,21 @@ func load_last_save() -> void:
         __SignalBus.on_load_fail.emit()
         return
 
-    if !SaveSystem.instance.can_load_cach_onto_this_level():
-        if !(__SceneSwapper as SceneSwapper).transition_to_next_scene():
+    if !SaveSystem.instance.can_load_cache_onto_this_level():
+        # TODO: Describe better what causes next scene to be correct...
+        if !SceneSwapper.transition_to_next_scene():
             push_error("Failed to transition to next scene")
+            __SignalBus.on_load_fail.emit()
+            return
+
     elif !SaveSystem.instance.load_cached_save():
         push_error("Failed to load cached save")
+        __SignalBus.on_load_fail.emit()
+        return
 
     __SignalBus.on_load_complete.emit()
 
-func load_cached_save() -> void:
+static func load_cached_save() -> void:
     if !SaveSystem.instance.load_cached_save():
         push_error("Failed to load last save")
         __SignalBus.on_load_fail.emit()

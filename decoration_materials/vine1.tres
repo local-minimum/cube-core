@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bchr2inyse2ae"]
+
+[ext_resource type="Shader" uid="uid://cequov8mgbh3u" path="res://shaders/zoned_color_twosided.gdshader" id="1_dkbpo"]
+[ext_resource type="Texture2D" uid="uid://bbdh6qiyig2rk" path="res://sprites/decorations/tiles-49.png" id="2_7hsqn"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dkbpo")
+shader_parameter/main_tex = ExtResource("2_7hsqn")
+shader_parameter/dark_color = Color(0.043137256, 0.19215687, 0.14509805, 1)
+shader_parameter/light_color = Color(0.3647059, 0.7372549, 0.69411767, 1)
+shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
+shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
