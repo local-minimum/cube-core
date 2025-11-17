@@ -18,8 +18,7 @@ func _process(_delta: float) -> void:
         if entity.orient_with_gravity_in_air && entity.down != gravity:
             _orient_entity(gravity, gravity)
 
-        # TODO: This is wrong!
-        if !entity.force_movement(Movement.MovementType.ABS_DOWN):
+        if !entity.force_movement(Movement.direction_to_abs_movement(gravity)):
             push_warning("[Falling] %s is falling, but cannot fall down" % entity.name)
         else:
             print_debug("[Falling] %s fell" % entity.name)

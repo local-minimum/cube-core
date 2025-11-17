@@ -10,6 +10,10 @@ enum MovementType {
     TURN_COUNTER_CLOCKWISE,
     ABS_DOWN,
     ABS_UP,
+    ABS_NORTH,
+    ABS_SOUTH,
+    ABS_WEST,
+    ABS_EAST,
     CENTER,
 }
 
@@ -42,8 +46,33 @@ static func to_direction(
             return CardinalDirections.CardinalDirection.DOWN
         MovementType.ABS_UP:
             return CardinalDirections.CardinalDirection.UP
+        MovementType.ABS_NORTH:
+            return CardinalDirections.CardinalDirection.NORTH
+        MovementType.ABS_SOUTH:
+            return CardinalDirections.CardinalDirection.SOUTH
+        MovementType.ABS_WEST:
+            return CardinalDirections.CardinalDirection.WEST
+        MovementType.ABS_EAST:
+            return CardinalDirections.CardinalDirection.EAST
 
     return CardinalDirections.CardinalDirection.NONE
+
+static func direction_to_abs_movement(direction: CardinalDirections.CardinalDirection) -> MovementType:
+    match direction:
+        CardinalDirections.CardinalDirection.UP:
+            return MovementType.ABS_UP
+        CardinalDirections.CardinalDirection.DOWN:
+            return MovementType.ABS_DOWN
+        CardinalDirections.CardinalDirection.WEST:
+            return MovementType.ABS_WEST
+        CardinalDirections.CardinalDirection.EAST:
+            return MovementType.ABS_EAST
+        CardinalDirections.CardinalDirection.NORTH:
+            return MovementType.ABS_NORTH
+        CardinalDirections.CardinalDirection.SOUTH:
+            return MovementType.ABS_SOUTH
+        _:
+            return MovementType.NONE
 
 static func from_directions(
     direction: CardinalDirections.CardinalDirection,

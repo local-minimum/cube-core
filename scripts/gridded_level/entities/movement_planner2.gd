@@ -85,11 +85,6 @@ class MovementPlan:
         end_time_msec = start_time_msec + roundi(duration * 1000)
         move_direction = direction
 
-    # Returns true if interpolation is completed
-    func interpolate(_entity: GridEntity, _progress: float) -> bool:
-        # This is where you
-        return false
-
 func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan:
     if Movement.is_translation(movement):
         var translation_direction: CardinalDirections.CardinalDirection = Movement.to_direction(
