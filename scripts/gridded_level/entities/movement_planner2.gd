@@ -90,9 +90,6 @@ class MovementPlan:
         # This is where you
         return false
 
-# TODO: Look through all down so they don't confuse anchor directions!
-
-
 func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan:
     if Movement.is_translation(movement):
         var translation_direction: CardinalDirections.CardinalDirection = Movement.to_direction(
@@ -179,6 +176,7 @@ func _create_translate_center(
         plan.from = EntityParameters.from_entity(entity)
         plan.to = EntityParameters.from_entity(entity)
         plan.to.anchor = CardinalDirections.CardinalDirection.NONE
+        plan.to.standing = StandMode.AIRBOURNE
         var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
         if entity.orient_with_gravity_in_air && CardinalDirections.ALL_DIRECTIONS.has(gravity):
             plan.to.down = gravity
@@ -205,28 +203,28 @@ func _create_translate_land_simple(
             move_direction,
         )
 
+        var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
+        var standing: StandMode = StandMode.NORMAL
         var down: CardinalDirections.CardinalDirection = land_anchor.direction
         var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
         if land_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
+            standing = StandMode.SIDE_FACING
             if CardinalDirections.is_parallell(land_anchor.inherrent_axis_down, gravity):
                 down = gravity
             else:
                 down = land_anchor.inherrent_axis_down
-
+            look_direction = land_anchor.direction
 
         plan.from = EntityParameters.from_entity(entity)
-        var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
         if CardinalDirections.is_parallell(look_direction, land_anchor.direction):
-            var options: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(land_anchor.direction)
-            options.shuffle()
-            look_direction = options[0]
+            look_direction = CardinalDirections.orthogonals(land_anchor.direction).pick_random()
 
         plan.to = EntityParameters.new(
             node.coordinates,
             look_direction,
             down,
             land_anchor.direction,
-            StandMode.NORMAL,
+            standing,
         )
 
         return plan
@@ -264,7 +262,7 @@ func _create_translate_nodes(
             if (
                 neighbour_anchor == null &&
                 entity.transportation_abilities.has_any([TransportationMode.FALLING, TransportationMode.FLYING]) &&
-                (entity.down == gravity && entity.can_jump_off_floor || entity.can_jump_off_all)
+                (entity.get_grid_anchor_direction() == gravity && entity.can_jump_off_floor || entity.can_jump_off_all)
             ):
                 plan = MovementPlan.new(
                     MovementMode.TRANSLATE_JUMP,
@@ -312,22 +310,22 @@ func _create_translate_outer_corner(
             entity,
             from,
             move_direction,
-            entity.down,
+            entity.get_grid_anchor_direction(),
             true,
         )
     ):
         return null
 
-    var target: GridNode = intermediate.neighbour(entity.down)
+    var target: GridNode = intermediate.neighbour(entity.get_grid_anchor_direction())
     if target == null:
         return null
 
     var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.calculate_outer_corner(
-        move_direction, entity.look_direction, entity.down)
+        move_direction, entity.look_direction, entity.get_grid_anchor_direction())
 
-    if !target.may_enter(entity, intermediate, entity.down, updated_directions[1], false, false, true):
+    if !target.may_enter(entity, intermediate, entity.get_grid_anchor_direction(), updated_directions[1], false, false, true):
         # print_debug("We may not enter %s from %s" % [target.name, entity.down])
-        if target._entry_blocking_events(entity, from, move_direction, entity.down):
+        if target._entry_blocking_events(entity, from, move_direction, entity.get_grid_anchor_direction()):
             return _create_translate_refused(entity, move_direction)
         return null
 
@@ -406,7 +404,7 @@ func _create_translate_inner_corner(
 
     else:
         var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.calculate_innner_corner(
-            move_direction, entity.look_direction, entity.down)
+            move_direction, entity.look_direction, entity.get_grid_anchor_direction())
 
         plan.to = EntityParameters.new(
             from.coordinates,
