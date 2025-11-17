@@ -60,7 +60,7 @@ func _sync() -> void:
     fov.value = level.player.camera.fov
     handedness.button_pressed = AccessibilitySettings.handedness == AccessibilitySettings.Handedness.RIGHT
 
-    jump_off.button_pressed = level.player.can_jump_off_walls
+    jump_off.button_pressed = level.player.can_jump_off_all
 
     inited = true
 
@@ -88,7 +88,7 @@ func _on_tank_animations_toggled(toggled_on: bool) -> void:
 
 
 func _on_jump_off_walls_toggled(toggled_on: bool) -> void:
-    level.player.can_jump_off_walls = toggled_on
+    level.player.can_jump_off_all = toggled_on
 
 
 func _on_speed_slider_value_changed(value: float) -> void:

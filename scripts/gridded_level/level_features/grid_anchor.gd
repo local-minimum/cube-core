@@ -13,6 +13,9 @@ class_name GridAnchor
 ## If it is possible to pass through the anchor into the node
 @export var pass_through_reverse: bool
 
+## For example a wall mounted ladder will have an inherent down with the direction of gravity in most cases
+@export var inherrent_axis_down: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
+
 var disabled: bool:
     set(value):
         if !disabled && value:

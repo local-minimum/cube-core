@@ -12,6 +12,8 @@ const UNKNOWN_LEVEL_ID: String = "--unknown--"
 
 @export var node_spacing: Vector3 = Vector3.ZERO
 
+@export var gravity: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN
+
 @export var level_geometry: Node3D
 
 @export var primary_entry_portal: LevelPortal
@@ -91,6 +93,10 @@ func _exit_tree() -> void:
 
 #endregion Life-cycle
 #region Grid Nodes
+func get_position_from_float_coordinates(float_coords: Vector3) -> Vector3:
+    var node_coordinates: Vector3i = Vector3i(float_coords.floor())
+    var node_root: Vector3 = node_position_from_coordinates(self, node_coordinates)
+    return node_root + (float_coords - Vector3(node_coordinates)) * node_size
 
 ## Find the node which the position is inside if any.
 func get_grid_node_by_position(pos: Vector3) -> GridNode:
