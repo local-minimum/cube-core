@@ -65,8 +65,6 @@ class EntityParameters:
             mode,
         )
 
-# TODO: Events that manage movement not handled well
-
 class MovementPlan:
     var start_time_msec: int
     var end_time_msec: int
@@ -100,6 +98,47 @@ func create_plan(entity: GridEntity, movement: Movement.MovementType) -> Movemen
             entity.down,
         )
         return _create_translation_plan(entity, movement, translation_direction)
+
+    if Movement.is_turn(movement):
+        return _create_rotation_plan(entity, movement)
+
+    return null
+
+func _create_rotation_plan(
+    entity: GridEntity,
+    movement: Movement.MovementType,
+) -> MovementPlan:
+    var node: GridNode = entity.get_grid_node()
+    if node == null:
+        push_error("Player %s not inside dungeon")
+        return null
+
+    var look_direction: CardinalDirections.CardinalDirection
+    match movement:
+        Movement.MovementType.TURN_CLOCKWISE:
+            look_direction = CardinalDirections.yaw_cw(entity.look_direction, entity.down)[0]
+        Movement.MovementType.TURN_COUNTER_CLOCKWISE:
+            look_direction = CardinalDirections.yaw_ccw(entity.look_direction, entity.down)[0]
+        _:
+            push_error("Movement %s is not a rotation" % Movement.name(movement))
+            return null
+
+    var plan: MovementPlan = MovementPlan.new(
+        MovementMode.ROTATE,
+        turn_duration * animation_speed,
+        CardinalDirections.CardinalDirection.NONE,
+    )
+    plan.from = EntityParameters.from_entity(entity)
+    if plan.from.standing == StandMode.SIDE_FACING:
+        return null
+
+    plan.to = EntityParameters.new(
+        node.coordinates,
+        look_direction,
+        entity.down,
+        entity.get_grid_anchor_direction(),
+        StandMode.SIDE_FACING if CardinalDirections.is_parallell(look_direction, entity.get_grid_anchor_direction()) else StandMode.NORMAL,
+    )
 
     return null
 
