@@ -270,7 +270,7 @@ func _handle_node_transition(
 
             var neighbour_anchor: GridAnchor = null if is_flying else target.get_grid_anchor(entity.down)
 
-            if was_excotic_walk && !entity.can_jump_off_walls && neighbour_anchor == null:
+            if was_excotic_walk && !entity.can_jump_off_all && neighbour_anchor == null:
                 return _UNHANDLED
 
             var events: Array[GridEvent] = target.triggering_events(

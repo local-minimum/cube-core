@@ -250,6 +250,7 @@ static func roll_cw(look_direction: CardinalDirection, down: CardinalDirection) 
     var result: Vector3i = VectorUtils.rotate_cw(v_down, v_direction_as_up)
     return [look_direction, vector_to_direction(result)]
 
+## Returns new look and down
 static func calculate_innner_corner(
     move_direction: CardinalDirection,
     look_direction: CardinalDirection,
@@ -270,6 +271,7 @@ static func calculate_innner_corner(
         print_stack()
         return [look_direction, down]
 
+## Returns new look and down
 static func calculate_outer_corner(
     move_direction: CardinalDirection,
     look_direction: CardinalDirection,

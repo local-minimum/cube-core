@@ -58,7 +58,12 @@ func remove_cinematic_cause(cause: Node) -> void:
 @export var transportation_abilities: TransportationMode
 @export var transportation_mode: TransportationMode
 
-@export var can_jump_off_walls: bool
+@export var can_jump_off_floor: bool:
+    get():
+        return can_jump_off_floor || can_jump_off_all
+
+@export var can_jump_off_all: bool
+@export var orient_with_gravity_in_air: bool = true
 
 @export var planner: MovementPlanner
 
