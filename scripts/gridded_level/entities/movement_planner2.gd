@@ -16,6 +16,7 @@ enum MovementMode {
     TRANSLATE_LAND,
     TRANSLATE_INNER_CORNER,
     TRANSLATE_OUTER_CORNER,
+    TRANSLATE_FALL_LATERAL,
     TRANSLATE_REFUSE,
 }
 
@@ -116,7 +117,9 @@ func _create_translation_plan(
     if plan != null:
         return plan
 
-    # TODO: Land lateral
+    plan = _create_translate_fall_diagonal(entity, direction)
+    if plan != null:
+        return plan
 
     plan = _create_translate_land_simple(entity, direction)
     if plan != null:
@@ -228,6 +231,103 @@ func _create_translate_land_simple(
         )
 
         return plan
+
+    return null
+
+func _create_translate_fall_diagonal(
+    entity: GridEntity,
+    move_direction: CardinalDirections.CardinalDirection,
+) -> MovementPlan:
+    var from: GridNode = entity.get_grid_node()
+    var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
+
+    if (
+        entity.anchor != null ||
+        !entity.transportation_mode.has_flag(TransportationMode.FALLING) ||
+        from == null ||
+        move_direction != gravity
+    ):
+        return null
+
+    var options: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(move_direction)
+    options.shuffle()
+    for lateral: CardinalDirections.CardinalDirection in options:
+        if !from.may_exit(entity, lateral, false, true):
+            continue
+
+        var neighbour: GridNode = from.neighbour(lateral)
+        if neighbour == null:
+            continue
+
+        if neighbour.may_enter(entity, from, lateral, move_direction, false, false, true):
+            var anchor: GridAnchor = neighbour.get_grid_anchor(move_direction)
+            if anchor != null:
+                # Landing on a lateral tile
+                if anchor.can_anchor(entity):
+                    var plan: MovementPlan = MovementPlan.new(
+                        MovementMode.TRANSLATE_LAND,
+                        fall_duration * animation_speed,
+                    )
+                    plan.from = EntityParameters.from_entity(entity)
+                    var down: CardinalDirections.CardinalDirection = anchor.direction
+                    var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
+                    var mode: StandMode = StandMode.NORMAL
+
+                    if anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
+                        down = anchor.inherrent_axis_down
+                        look_direction = anchor.direction
+                        mode = StandMode.SIDE_FACING
+
+                    if CardinalDirections.is_parallell(look_direction, down):
+                        # We got pushed away from our default landing spot, thus we
+                        look_direction = lateral
+
+                    plan.to = EntityParameters.new(
+                        neighbour.coordinates,
+                        look_direction,
+                        down,
+                        anchor.direction,
+                        mode,
+                    )
+
+                    return plan
+                else:
+                    continue
+
+        var target: GridNode = neighbour.neighbour(move_direction)
+        if (
+            target != null &&
+            neighbour.may_transit(
+                entity,
+                from,
+                lateral,
+                move_direction,
+                true,
+            ) &&
+            target.may_enter(
+                entity,
+                neighbour,
+                move_direction,
+                CardinalDirections.CardinalDirection.NONE,
+                false,
+                false,
+                true,
+            )
+        ):
+            # We can fall to the side here
+            var plan: MovementPlan = MovementPlan.new(
+                MovementMode.TRANSLATE_FALL_LATERAL,
+                fall_duration * animation_speed,
+            )
+            plan.from = EntityParameters.from_entity(entity)
+            plan.to = EntityParameters.new(
+                target.coordinates,
+                entity.look_direction,
+                entity.down,
+                CardinalDirections.CardinalDirection.NONE,
+                StandMode.AIRBOURNE,
+            )
+            return plan
 
     return null
 
