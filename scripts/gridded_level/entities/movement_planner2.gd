@@ -24,6 +24,7 @@ enum StandMode {
     NORMAL,
     AIRBOURNE,
     SIDE_FACING,
+    EVENT_CONTROLLED,
 }
 
 class EntityParameters:
@@ -78,7 +79,7 @@ class MovementPlan:
     func _init(
         mode: MovementMode,
         duration: float,
-        direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE,
+        direction: CardinalDirections.CardinalDirection,
     ) -> void:
         @warning_ignore_restore("shadowed_variable")
         self.mode = mode
@@ -156,6 +157,7 @@ func _create_no_movement(entity: GridEntity) -> MovementPlan:
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.NONE,
         0.0,
+        CardinalDirections.CardinalDirection.NONE,
     )
     plan.from = EntityParameters.from_entity(entity)
     plan.to = EntityParameters.from_entity(entity)
@@ -169,12 +171,38 @@ func _create_translate_center(
     if movement != Movement.MovementType.CENTER:
         return null
 
+    var move_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(entity.get_grid_anchor_direction())
+    var from: GridNode = entity.get_grid_node()
+
     if entity.anchor != null && (entity.cinematic || entity.transportation_abilities.has_flag(TransportationMode.FLYING)):
+        var events: Array[GridEvent] = from.triggering_events(
+            entity,
+            from,
+            entity.get_grid_anchor_direction(),
+            move_direction,
+        )
+        for event: GridEvent in events:
+            if event.manages_triggering_translation():
+                var evented_plan: MovementPlan = MovementPlan.new(
+                    MovementMode.TRANSLATE_CENTER,
+                    translation_duration * 0.5 * animation_speed,
+                    move_direction,
+                )
+                evented_plan.from = EntityParameters.from_entity(entity)
+                evented_plan.to = EntityParameters.new(
+                    from.coordinates,
+                    entity.look_direction,
+                    entity.down,
+                    CardinalDirections.CardinalDirection.NONE,
+                    StandMode.EVENT_CONTROLLED,
+                )
+                return evented_plan
+
         var plan: MovementPlan = MovementPlan.new(
             MovementMode.TRANSLATE_CENTER,
             # Because it is half the distance of a translation we use half duration
             translation_duration * 0.5 * animation_speed,
-            CardinalDirections.invert(entity.anchor.direction),
+            move_direction,
         )
         plan.from = EntityParameters.from_entity(entity)
         plan.to = EntityParameters.from_entity(entity)
@@ -199,38 +227,62 @@ func _create_translate_land_simple(
         return null
 
     var land_anchor: GridAnchor = node.get_grid_anchor(move_direction)
-    if land_anchor != null && land_anchor.can_anchor(entity):
-        var plan: MovementPlan = MovementPlan.new(
-            MovementMode.TRANSLATE_LAND,
-            (fall_duration if entity.transportation_mode.has_flag(TransportationMode.FALLING) else translation_duration) * animation_speed,
+    if land_anchor != null:
+        var events: Array[GridEvent] = node.triggering_events(
+            entity,
+            node,
+            entity.get_grid_anchor_direction(),
             move_direction,
         )
+        for event: GridEvent in events:
+            if event.manages_triggering_translation():
+                var evented_plan: MovementPlan = MovementPlan.new(
+                    MovementMode.TRANSLATE_LAND,
+                    (fall_duration if entity.transportation_mode.has_flag(TransportationMode.FALLING) else translation_duration) * animation_speed,
+                    move_direction,
+                )
+                evented_plan.from = EntityParameters.from_entity(entity)
+                evented_plan.to = EntityParameters.new(
+                    node.coordinates,
+                    entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
+                    move_direction,
+                    move_direction,
+                    StandMode.EVENT_CONTROLLED,
+                )
+                return evented_plan
 
-        var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
-        var standing: StandMode = StandMode.NORMAL
-        var down: CardinalDirections.CardinalDirection = land_anchor.direction
-        var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
-        if land_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
-            standing = StandMode.SIDE_FACING
-            if CardinalDirections.is_parallell(land_anchor.inherrent_axis_down, gravity):
-                down = gravity
-            else:
-                down = land_anchor.inherrent_axis_down
-            look_direction = land_anchor.direction
+        if land_anchor.can_anchor(entity):
+            var plan: MovementPlan = MovementPlan.new(
+                MovementMode.TRANSLATE_LAND,
+                (fall_duration if entity.transportation_mode.has_flag(TransportationMode.FALLING) else translation_duration) * animation_speed,
+                move_direction,
+            )
 
-        plan.from = EntityParameters.from_entity(entity)
-        if CardinalDirections.is_parallell(look_direction, land_anchor.direction):
-            look_direction = CardinalDirections.orthogonals(land_anchor.direction).pick_random()
+            var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
+            var standing: StandMode = StandMode.NORMAL
+            var down: CardinalDirections.CardinalDirection = land_anchor.direction
+            var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
+            if land_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
+                standing = StandMode.SIDE_FACING
+                if CardinalDirections.is_parallell(land_anchor.inherrent_axis_down, gravity):
+                    down = gravity
+                else:
+                    down = land_anchor.inherrent_axis_down
+                look_direction = land_anchor.direction
 
-        plan.to = EntityParameters.new(
-            node.coordinates,
-            look_direction,
-            down,
-            land_anchor.direction,
-            standing,
-        )
+            plan.from = EntityParameters.from_entity(entity)
+            if CardinalDirections.is_parallell(look_direction, land_anchor.direction):
+                look_direction = CardinalDirections.orthogonals(land_anchor.direction).pick_random()
 
-        return plan
+            plan.to = EntityParameters.new(
+                node.coordinates,
+                look_direction,
+                down,
+                land_anchor.direction,
+                standing,
+            )
+
+            return plan
 
     return null
 
@@ -263,10 +315,34 @@ func _create_translate_fall_diagonal(
             var anchor: GridAnchor = neighbour.get_grid_anchor(move_direction)
             if anchor != null:
                 # Landing on a lateral tile
+                var events: Array[GridEvent] = neighbour.triggering_events(
+                    entity,
+                    from,
+                    entity.get_grid_anchor_direction(),
+                    move_direction,
+                )
+                for event: GridEvent in events:
+                    if event.manages_triggering_translation():
+                        var evented_plan: MovementPlan = MovementPlan.new(
+                            MovementMode.TRANSLATE_LAND,
+                            fall_duration * animation_speed,
+                            move_direction,
+                        )
+                        evented_plan.from = EntityParameters.from_entity(entity)
+                        evented_plan.to = EntityParameters.new(
+                            neighbour.coordinates,
+                            entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
+                            move_direction,
+                            move_direction,
+                            StandMode.EVENT_CONTROLLED,
+                        )
+                        return evented_plan
+
                 if anchor.can_anchor(entity):
                     var plan: MovementPlan = MovementPlan.new(
                         MovementMode.TRANSLATE_LAND,
                         fall_duration * animation_speed,
+                        move_direction,
                     )
                     plan.from = EntityParameters.from_entity(entity)
                     var down: CardinalDirections.CardinalDirection = anchor.direction
@@ -314,10 +390,34 @@ func _create_translate_fall_diagonal(
                 true,
             )
         ):
+            var events: Array[GridEvent] = target.triggering_events(
+                entity,
+                from,
+                entity.get_grid_anchor_direction(),
+                CardinalDirections.CardinalDirection.NONE,
+            )
+            for event: GridEvent in events:
+                if event.manages_triggering_translation():
+                    var evented_plan: MovementPlan = MovementPlan.new(
+                        MovementMode.TRANSLATE_FALL_LATERAL,
+                        fall_duration * animation_speed,
+                        move_direction,
+                    )
+                    evented_plan.from = EntityParameters.from_entity(entity)
+                    evented_plan.to = EntityParameters.new(
+                        target.coordinates,
+                        entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
+                        move_direction,
+                        CardinalDirections.CardinalDirection.NONE,
+                        StandMode.EVENT_CONTROLLED,
+                    )
+                    return evented_plan
+
             # We can fall to the side here
             var plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_FALL_LATERAL,
                 fall_duration * animation_speed,
+                move_direction,
             )
             plan.from = EntityParameters.from_entity(entity)
             plan.to = EntityParameters.new(
@@ -356,6 +456,29 @@ func _create_translate_nodes(
             false,
             true
         ):
+            var events: Array[GridEvent] = target.triggering_events(
+                entity,
+                from,
+                entity.get_grid_anchor_direction(),
+                entity.get_grid_anchor_direction(),
+            )
+            for event: GridEvent in events:
+                if event.manages_triggering_translation():
+                    var evented_plan: MovementPlan = MovementPlan.new(
+                        MovementMode.TRANSLATE_PLANAR,
+                        translation_duration * animation_speed,
+                        move_direction,
+                    )
+                    evented_plan.from = EntityParameters.from_entity(entity)
+                    evented_plan.to = EntityParameters.new(
+                        target.coordinates,
+                        entity.look_direction,
+                        entity.down,
+                        entity.get_grid_anchor_direction(),
+                        StandMode.EVENT_CONTROLLED,
+                    )
+                    return evented_plan
+
             var neighbour_anchor: GridAnchor = null if is_flying else target.get_grid_anchor(entity.get_grid_anchor_direction())
             var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
 
@@ -429,7 +552,29 @@ func _create_translate_outer_corner(
             return _create_translate_refused(entity, move_direction)
         return null
 
-    # TODO: Events that override need for anchor in the expected direction not handled properly here
+    # In the case that any event manages the transition we no longer require more than entry
+    var events: Array[GridEvent] = target.triggering_events(
+        entity,
+        from,
+        entity.get_grid_anchor_direction(),
+        updated_directions[1],
+    )
+    for event: GridEvent in events:
+        if event.manages_triggering_translation():
+            var evented_plan: MovementPlan = MovementPlan.new(
+                MovementMode.TRANSLATE_OUTER_CORNER,
+                translation_duration * animation_speed,
+                move_direction,
+            )
+            evented_plan.from = EntityParameters.from_entity(entity)
+            evented_plan.to = EntityParameters.new(
+                target.coordinates,
+                updated_directions[0],
+                updated_directions[1],
+                updated_directions[1],
+                StandMode.EVENT_CONTROLLED,
+            )
+            return evented_plan
 
     var target_anchor: GridAnchor = target.get_grid_anchor(updated_directions[1])
     if target_anchor == null:
@@ -475,11 +620,38 @@ func _create_translate_inner_corner(
 ) -> MovementPlan:
     var from: GridNode = entity.get_grid_node()
     var target_anchor: GridAnchor = from.get_grid_anchor(move_direction)
-    if (
-        target_anchor == null ||
-        entity.get_grid_anchor_direction() == CardinalDirections.CardinalDirection.NONE ||
-        !target_anchor.can_anchor(entity)
-    ):
+
+    if entity.get_grid_anchor_direction() == CardinalDirections.CardinalDirection.NONE || target_anchor == null:
+        return null
+
+    var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.calculate_innner_corner(
+        move_direction, entity.look_direction, entity.get_grid_anchor_direction())
+
+    # In the case that any event manages the transition we no longer require more than existance of anchor
+    var events: Array[GridEvent] = from.triggering_events(
+        entity,
+        from,
+        entity.get_grid_anchor_direction(),
+        move_direction,
+    )
+    for event: GridEvent in events:
+        if event.manages_triggering_translation():
+            var evented_plan: MovementPlan = MovementPlan.new(
+                MovementMode.TRANSLATE_INNER_CORNER,
+                translation_duration * animation_speed,
+                move_direction,
+            )
+            evented_plan.from = EntityParameters.from_entity(entity)
+            evented_plan.to = EntityParameters.new(
+                from.coordinates,
+                updated_directions[0],
+                updated_directions[1],
+                updated_directions[1],
+                StandMode.EVENT_CONTROLLED,
+            )
+            return evented_plan
+
+    if !target_anchor.can_anchor(entity):
         return null
 
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
@@ -503,8 +675,6 @@ func _create_translate_inner_corner(
         )
 
     else:
-        var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.calculate_innner_corner(
-            move_direction, entity.look_direction, entity.get_grid_anchor_direction())
 
         plan.to = EntityParameters.new(
             from.coordinates,
