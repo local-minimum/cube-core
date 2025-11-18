@@ -3,7 +3,7 @@ class_name MovementPlanner2
 
 @export var translation_duration: float = 0.4
 @export var fall_duration: float = 0.25
-@export var exotic_translation_duration: float = 0.5
+@export var corner_translation_duration: float = 0.5
 @export var turn_duration: float = 0.3
 @export var animation_speed: float = 1.0
 
@@ -508,7 +508,7 @@ func _create_translate_outer_corner(
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_OUTER_CORNER,
-                translation_duration * animation_speed,
+                corner_translation_duration * animation_speed,
                 move_direction,
             )
             evented_plan.from = EntityParameters.from_entity(entity)
@@ -533,7 +533,7 @@ func _create_translate_outer_corner(
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.TRANSLATE_OUTER_CORNER,
-        translation_duration * animation_speed,
+        corner_translation_duration * animation_speed,
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
@@ -583,7 +583,7 @@ func _create_translate_inner_corner(
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_INNER_CORNER,
-                translation_duration * animation_speed,
+                corner_translation_duration * animation_speed,
                 move_direction,
             )
             evented_plan.from = EntityParameters.from_entity(entity)
@@ -602,7 +602,7 @@ func _create_translate_inner_corner(
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.TRANSLATE_INNER_CORNER,
-        translation_duration * animation_speed,
+        corner_translation_duration * animation_speed,
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
