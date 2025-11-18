@@ -96,6 +96,9 @@ class MovementPlan:
         move_direction = direction
 
     func equals(other: MovementPlan) -> bool:
+        if other == null:
+            return false
+
         return (
             start_time_msec == other.start_time_msec &&
             end_time_msec == other.end_time_msec &&

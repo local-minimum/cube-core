@@ -7,64 +7,103 @@ class_name MovementExecutor
 @export var _refuse_distance_factor_forward: float = 0.55
 @export var _refuse_distance_factor_reverse: float = 0.1
 
-var _active_plan: MovementPlannerBase.MovementPlan
-var _active_plan_prio: int
-var _tween: Tween
+var _active_plan_a: MovementPlannerBase.MovementPlan
+var _active_plan_prio_a: int
+var _tween_a: Tween
 
+var _active_plan_b: MovementPlannerBase.MovementPlan
+var _active_plan_prio_b: int
+var _tween_b: Tween
 
+var active_plan_prio: int:
+    get():
+        if _active_plan_b == null && _active_plan_a != null && _active_plan_a.running:
+            return _active_plan_prio_a
+        if _active_plan_a == null && _active_plan_b != null && _active_plan_b.running:
+            return _active_plan_prio_b
+        if _active_plan_a != null && _active_plan_b != null && _active_plan_a.running && _active_plan_b.running:
+            return maxi(_active_plan_prio_a, _active_plan_prio_b)
+
+        return -1
+
+var has_concurrency_slot: bool:
+    get():
+        return (
+            _active_plan_a == null ||
+            _active_plan_b == null ||
+            !_active_plan_a.running ||
+            !_active_plan_b.running
+        )
 # TODO: Calling end movement is that needed? Probably?
 # TODO: Check concurrent movement block codes
 # TODO: Handle ducking and such
 
-func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int) -> void:
-    if _active_plan != null && _active_plan_prio > priority || plan == null || plan.equals(_active_plan):
+func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
+    if !concurrent && priority < active_plan_prio || plan.equals(_active_plan_a) || plan.equals(_active_plan_b):
         return
 
-    if _active_plan.running:
-        _transition_plans(plan, priority)
+    if concurrent && !has_concurrency_slot:
+        return
+
+    elif concurrent:
+        if _active_plan_a == null || !_active_plan_a.running:
+            if _tween_a != null && _tween_a.is_running():
+                _tween_a.kill()
+
+            _tween_a = create_tween()
+            _active_plan_a = plan
+            _active_plan_prio_a = priority
+            _start_plan(plan, _tween_a)
+        else:
+            if _tween_b != null && _tween_b.is_running():
+                _tween_b.kill()
+
+            _tween_b = create_tween()
+            _active_plan_b = plan
+            _active_plan_prio_b = priority
+            _start_plan(plan, _tween_b)
+
     else:
-        _start_plan(plan, priority)
+        if _tween_a != null && _tween_a.is_running():
+            _tween_a.kill()
+        if _tween_b != null && _tween_b.is_running():
+            _tween_b.kill()
+        _active_plan_b = null
+        _active_plan_prio_b = -1
+        _tween_a = create_tween()
+        _active_plan_a = plan
+        _active_plan_prio_a = priority
+        _start_plan(plan, _tween_a)
 
-func _transition_plans(plan: MovementPlannerBase.MovementPlan, priority: int) -> void:
-    # In the future we could ease between in some way maybe
-    _start_plan(plan, priority)
-
-
-func _start_plan(plan: MovementPlannerBase.MovementPlan, priority: int) -> void:
-    _active_plan = plan
-    _active_plan_prio = priority
-    if _tween != null && _tween.is_running():
-        _tween.kill()
+func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
 
     if plan.to.mode == MovementPlannerBase.PositionMode.EVENT_CONTROLLED || plan.mode == MovementPlannerBase.MovementMode.NONE:
         return
 
-    _tween = create_tween()
-
     match plan.mode:
         MovementPlannerBase.MovementMode.ROTATE:
-            _create_rotation_tween(_tween, plan)
+            _create_rotation_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_PLANAR:
-            _create_translate_planar_tween(_tween, plan)
+            _create_translate_planar_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_CENTER:
-            _create_translate_center_tween(_tween, plan)
+            _create_translate_center_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_JUMP:
-            _create_translate_jump_tween(_tween, plan)
+            _create_translate_jump_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_LAND:
-            _create_translate_land_tween(_tween, plan)
+            _create_translate_land_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_OUTER_CORNER, MovementPlannerBase.MovementMode.TRANSLATE_INNER_CORNER:
-            _create_translate_corner_tween(_tween, plan)
+            _create_translate_corner_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_FALL_LATERAL:
-            _create_translate_fall_lateral_tween(_tween, plan)
+            _create_translate_fall_lateral_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.TRANSLATE_REFUSE:
-            _create_translate_refuse_tween(_tween, plan)
+            _create_translate_refuse_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.NONE:
             return
