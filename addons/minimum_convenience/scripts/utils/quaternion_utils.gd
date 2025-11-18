@@ -18,6 +18,22 @@ static func create_tween_rotation_method(node: Node3D, global_space: bool = true
     return func (value: Quaternion) -> void:
         node.rotation = value.get_euler()
 
+## Creates a tweener method taking quaternions as input
+static func create_tween_rotation_progress_method(
+    node: Node3D,
+    from: Quaternion,
+    to: Quaternion,
+    global_space: bool = true,
+) -> Callable:
+    if global_space:
+        return func (progress: float) -> void:
+            var value: Quaternion = lerp(from, to, progress)
+            node.global_rotation = value.get_euler()
+
+    return func (progress: float) -> void:
+        var value: Quaternion = lerp(from, to, progress)
+        node.rotation = value.get_euler()
+
 static func create_tween_lookat_method(node: Node3D, target: Node3D, up: Vector3 = Vector3.UP) -> Callable:
     var start_rotation: Quaternion = node.global_basis.get_rotation_quaternion()
 

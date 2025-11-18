@@ -1,4 +1,4 @@
-extends Node
+extends MovementPlannerBase
 class_name MovementPlanner2
 
 @export var translation_duration: float = 0.4
@@ -6,84 +6,6 @@ class_name MovementPlanner2
 @export var exotic_translation_duration: float = 0.5
 @export var turn_duration: float = 0.3
 @export var animation_speed: float = 1.0
-
-enum MovementMode {
-    NONE,
-    ROTATE,
-    TRANSLATE_PLANAR,
-    TRANSLATE_CENTER,
-    TRANSLATE_JUMP,
-    TRANSLATE_LAND,
-    TRANSLATE_INNER_CORNER,
-    TRANSLATE_OUTER_CORNER,
-    TRANSLATE_FALL_LATERAL,
-    TRANSLATE_REFUSE,
-}
-
-enum StandMode {
-    NORMAL,
-    AIRBOURNE,
-    SIDE_FACING,
-    EVENT_CONTROLLED,
-}
-
-class EntityParameters:
-    var coordinates: Vector3i
-    var down: CardinalDirections.CardinalDirection
-    var look_direction: CardinalDirections.CardinalDirection
-    var anchor: CardinalDirections.CardinalDirection
-    var standing: StandMode
-
-    @warning_ignore_start("shadowed_variable")
-    func _init(
-        coordinates: Vector3i,
-        look_direction: CardinalDirections.CardinalDirection,
-        down: CardinalDirections.CardinalDirection,
-        anchor: CardinalDirections.CardinalDirection,
-        standing: StandMode,
-    ) -> void:
-        @warning_ignore_restore("shadowed_variable")
-        self.coordinates = coordinates
-        self.look_direction = look_direction
-        self.down = down
-        self.anchor = anchor
-        self.standing = standing
-
-    static func from_entity(entity: GridEntity) -> EntityParameters:
-        var mode: StandMode = StandMode.NORMAL
-        var anchor_direction: CardinalDirections.CardinalDirection = entity.get_grid_anchor_direction()
-        if anchor_direction == CardinalDirections.CardinalDirection.NONE:
-            mode = StandMode.AIRBOURNE
-        elif CardinalDirections.is_parallell(anchor_direction, entity.look_direction):
-            mode = StandMode.SIDE_FACING
-
-        return EntityParameters.new(
-            entity.coordinates(),
-            entity.look_direction,
-            entity.down,
-            anchor_direction,
-            mode,
-        )
-
-class MovementPlan:
-    var start_time_msec: int
-    var end_time_msec: int
-    var mode: MovementMode
-    var from: EntityParameters
-    var to: EntityParameters
-    var move_direction: CardinalDirections.CardinalDirection
-
-    @warning_ignore_start("shadowed_variable")
-    func _init(
-        mode: MovementMode,
-        duration: float,
-        direction: CardinalDirections.CardinalDirection,
-    ) -> void:
-        @warning_ignore_restore("shadowed_variable")
-        self.mode = mode
-        start_time_msec = Time.get_ticks_msec()
-        end_time_msec = start_time_msec + roundi(duration * 1000)
-        move_direction = direction
 
 func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan:
     if Movement.is_translation(movement):
@@ -98,6 +20,7 @@ func create_plan(entity: GridEntity, movement: Movement.MovementType) -> Movemen
         return _create_rotation_plan(entity, movement)
 
     return null
+
 
 func _create_rotation_plan(
     entity: GridEntity,
@@ -124,7 +47,7 @@ func _create_rotation_plan(
         CardinalDirections.CardinalDirection.NONE,
     )
     plan.from = EntityParameters.from_entity(entity)
-    if plan.from.standing == StandMode.SIDE_FACING:
+    if plan.from.mode == PositionMode.SIDE_FACING:
         return null
 
     plan.to = EntityParameters.new(
@@ -132,7 +55,7 @@ func _create_rotation_plan(
         look_direction,
         entity.down,
         entity.get_grid_anchor_direction(),
-        StandMode.SIDE_FACING if CardinalDirections.is_parallell(look_direction, entity.get_grid_anchor_direction()) else StandMode.NORMAL,
+        PositionMode.SIDE_FACING if CardinalDirections.is_parallell(look_direction, entity.get_grid_anchor_direction()) else PositionMode.NORMAL,
     )
 
     return null
@@ -185,18 +108,6 @@ func _create_translate_refused(
     plan.to = EntityParameters.from_entity(entity)
     return plan
 
-## Requested movement isn't allowed even to be attempted
-## Imagine as example rotating on a ladder or trying to jump up into the air to fly but not being able to
-func _create_no_movement(entity: GridEntity) -> MovementPlan:
-    var plan: MovementPlan = MovementPlan.new(
-        MovementMode.NONE,
-        0.0,
-        CardinalDirections.CardinalDirection.NONE,
-    )
-    plan.from = EntityParameters.from_entity(entity)
-    plan.to = EntityParameters.from_entity(entity)
-    return plan
-
 ## If entity is cinematic or can fly get into the center of the tile
 func _create_translate_center(
     entity: GridEntity,
@@ -228,7 +139,7 @@ func _create_translate_center(
                     entity.look_direction,
                     entity.down,
                     CardinalDirections.CardinalDirection.NONE,
-                    StandMode.EVENT_CONTROLLED,
+                    PositionMode.EVENT_CONTROLLED,
                 )
                 return evented_plan
 
@@ -241,7 +152,7 @@ func _create_translate_center(
         plan.from = EntityParameters.from_entity(entity)
         plan.to = EntityParameters.from_entity(entity)
         plan.to.anchor = CardinalDirections.CardinalDirection.NONE
-        plan.to.standing = StandMode.AIRBOURNE
+        plan.to.mode = PositionMode.AIRBOURNE
         var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
         if entity.orient_with_gravity_in_air && CardinalDirections.ALL_DIRECTIONS.has(gravity):
             plan.to.down = gravity
@@ -281,7 +192,7 @@ func _create_translate_land_simple(
                     entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
                     move_direction,
                     move_direction,
-                    StandMode.EVENT_CONTROLLED,
+                    PositionMode.EVENT_CONTROLLED,
                 )
                 return evented_plan
 
@@ -293,11 +204,11 @@ func _create_translate_land_simple(
             )
 
             var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
-            var standing: StandMode = StandMode.NORMAL
+            var standing: PositionMode = PositionMode.NORMAL
             var down: CardinalDirections.CardinalDirection = land_anchor.direction
             var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
             if land_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
-                standing = StandMode.SIDE_FACING
+                standing = PositionMode.SIDE_FACING
                 if CardinalDirections.is_parallell(land_anchor.inherrent_axis_down, gravity):
                     down = gravity
                 else:
@@ -368,7 +279,7 @@ func _create_translate_fall_diagonal(
                             entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
                             move_direction,
                             move_direction,
-                            StandMode.EVENT_CONTROLLED,
+                            PositionMode.EVENT_CONTROLLED,
                         )
                         return evented_plan
 
@@ -381,12 +292,12 @@ func _create_translate_fall_diagonal(
                     plan.from = EntityParameters.from_entity(entity)
                     var down: CardinalDirections.CardinalDirection = anchor.direction
                     var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
-                    var mode: StandMode = StandMode.NORMAL
+                    var mode: PositionMode = PositionMode.NORMAL
 
                     if anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
                         down = anchor.inherrent_axis_down
                         look_direction = anchor.direction
-                        mode = StandMode.SIDE_FACING
+                        mode = PositionMode.SIDE_FACING
 
                     if CardinalDirections.is_parallell(look_direction, down):
                         # We got pushed away from our default landing spot, thus we
@@ -443,7 +354,7 @@ func _create_translate_fall_diagonal(
                         entity.look_direction if !CardinalDirections.is_parallell(move_direction, entity.look_direction) else CardinalDirections.orthogonals(move_direction).pick_random(),
                         move_direction,
                         CardinalDirections.CardinalDirection.NONE,
-                        StandMode.EVENT_CONTROLLED,
+                        PositionMode.EVENT_CONTROLLED,
                     )
                     return evented_plan
 
@@ -459,7 +370,7 @@ func _create_translate_fall_diagonal(
                 entity.look_direction,
                 entity.down,
                 CardinalDirections.CardinalDirection.NONE,
-                StandMode.AIRBOURNE,
+                PositionMode.AIRBOURNE,
             )
             return plan
 
@@ -509,7 +420,7 @@ func _create_translate_nodes(
                         entity.look_direction,
                         entity.down,
                         entity.get_grid_anchor_direction(),
-                        StandMode.EVENT_CONTROLLED,
+                        PositionMode.EVENT_CONTROLLED,
                     )
                     return evented_plan
 
@@ -536,7 +447,7 @@ func _create_translate_nodes(
                     entity.look_direction,
                     down,
                     CardinalDirections.CardinalDirection.NONE,
-                    StandMode.AIRBOURNE,
+                    PositionMode.AIRBOURNE,
                 )
 
             plan = MovementPlan.new(
@@ -550,7 +461,7 @@ func _create_translate_nodes(
                 entity.look_direction,
                 entity.down,
                 entity.get_grid_anchor_direction(),
-                StandMode.NORMAL,
+                PositionMode.NORMAL,
             )
 
     return null
@@ -606,7 +517,7 @@ func _create_translate_outer_corner(
                 updated_directions[0],
                 updated_directions[1],
                 updated_directions[1],
-                StandMode.EVENT_CONTROLLED,
+                PositionMode.EVENT_CONTROLLED,
             )
             return evented_plan
 
@@ -635,7 +546,7 @@ func _create_translate_outer_corner(
             target_anchor.direction,
             gravity,
             target_anchor.direction,
-            StandMode.SIDE_FACING,
+            PositionMode.SIDE_FACING,
         )
     else:
         plan.to = EntityParameters.new(
@@ -643,7 +554,7 @@ func _create_translate_outer_corner(
             updated_directions[0],
             updated_directions[1],
             target_anchor.direction,
-            StandMode.NORMAL,
+            PositionMode.NORMAL,
         )
 
     return plan
@@ -681,7 +592,7 @@ func _create_translate_inner_corner(
                 updated_directions[0],
                 updated_directions[1],
                 updated_directions[1],
-                StandMode.EVENT_CONTROLLED,
+                PositionMode.EVENT_CONTROLLED,
             )
             return evented_plan
 
@@ -705,7 +616,7 @@ func _create_translate_inner_corner(
             target_anchor.direction,
             gravity,
             target_anchor.direction,
-            StandMode.SIDE_FACING,
+            PositionMode.SIDE_FACING,
         )
 
     else:
@@ -715,7 +626,7 @@ func _create_translate_inner_corner(
             updated_directions[0],
             updated_directions[1],
             target_anchor.direction,
-            StandMode.NORMAL
+            PositionMode.NORMAL
         )
 
     return null
