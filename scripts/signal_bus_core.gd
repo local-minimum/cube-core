@@ -56,6 +56,7 @@ signal on_sync_keys(keys: Dictionary[String, int])
 signal on_toggle_freelook_camera(active: bool, cause: FreeLookCam.ToggleCause)
 
 # -> Grid Entity
+signal on_move_plan(entity: GridEntity, movement: Movement.MovementType)
 signal on_move_start(entity: GridEntity, from: Vector3i, translation_direction: CardinalDirections.CardinalDirection)
 signal on_move_end(entity: GridEntity)
 signal on_update_orientation(

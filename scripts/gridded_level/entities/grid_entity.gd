@@ -46,6 +46,7 @@ var cinematic: bool:
 @export var orient_with_gravity_in_air: bool = true
 
 @export var planner: MovementPlanner
+@export var executor: MovementExecutor
 
 @export var instant_step: bool
 
@@ -97,6 +98,9 @@ func block_concurrent_movement() -> void:
 
 func remove_concurrent_movement_block() -> void:
     _block_concurrent = false
+
+func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int) -> void:
+    executor.execute_plan(plan, priority)
 
 func force_movement(movement: Movement.MovementType) -> bool:
     if _start_movement(movement, true):
