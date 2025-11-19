@@ -12,13 +12,34 @@ var _old_down: CardinalDirections.CardinalDirection
 var _emit_orientation: bool
 
 ## If cinematic, AI or player shouldn't be allowed to do inputs
+var _cinematics: Array[Node]
 var cinematic: bool:
+    get():
+        return !_cinematics.is_empty()
+
     set (value):
-        cinematic = value
-        if value:
-            clear_queue()
-        __SignalBus.on_cinematic.emit(self, value)
-        print_debug("%s is cinematic %s" % [name, cinematic])
+        if true:
+            cause_cinematic(self)
+        else:
+            remove_cinematic_cause(self)
+        push_warning("%s is cinematic %s due to unspecific cause" % [name, cinematic])
+
+func cause_cinematic(cause: Node) -> void:
+    if cause == null || _cinematics.has(cause):
+        return
+    _cinematics.append(cause)
+    if _cinematics.size() == 1:
+        __SignalBus.on_cinematic.emit(self, true)
+        clear_queue()
+
+func remove_cinematic_cause(cause: Node) -> void:
+    if _cinematics.is_empty():
+        return
+
+    _cinematics.erase(cause)
+    if _cinematics.is_empty():
+        __SignalBus.on_cinematic.emit(self, false)
+
 
 @export var look_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH:
     set(value):

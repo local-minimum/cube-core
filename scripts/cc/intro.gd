@@ -45,7 +45,7 @@ func _ready() -> void:
     skip_progress_ui.hide()
     if start_cinematic:
         orbiter.disabled = true
-        player.cinematic = true
+        player.cause_cinematic(self)
         ui_canvas.visible = false
         title_label.hide()
         press_to_start_label.hide()
@@ -277,7 +277,7 @@ func _finalize_landing() -> void:
     _finalized = true
     player.camera.global_position = _cam_position
     player.camera.global_rotation = _cam_rotation
-    player.cinematic = false
+    player.remove_cinematic_cause(self)
     ui_canvas.show()
     __GlobalGameState.lost_letters = ""
     _oribing = false

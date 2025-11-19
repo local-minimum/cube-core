@@ -8,7 +8,7 @@ class_name CameraPuller
 var _tween: Tween
 
 func grab_player(player: GridPlayerCore, on_grabbed_complete: Variant = null, auto_release: bool = false, speed: float = 1.0) -> void:
-    player.cinematic = true
+    player.cause_cinematic(self)
 
     var cam: Camera3D = player.camera
 
@@ -56,7 +56,11 @@ func grab_player(player: GridPlayerCore, on_grabbed_complete: Variant = null, au
             @warning_ignore_restore("unsafe_cast")
 
 
-func release_player(player: GridPlayerCore, on_released_complete: Variant = null, speed: float = 1.0, release_from_cinematic: bool = true) -> void:
+func release_player(
+    player: GridPlayerCore,
+    on_released_complete: Variant = null,
+    speed: float = 1.0,
+) -> void:
     var cam: Camera3D = player.camera
 
     if _tween != null:
@@ -78,8 +82,7 @@ func release_player(player: GridPlayerCore, on_released_complete: Variant = null
     if _tween.connect(
         "finished",
         func () -> void:
-            if release_from_cinematic:
-                player.cinematic = false
+            player.remove_cinematic_cause(self)
 
             if on_released_complete != null && on_released_complete is Callable:
                 @warning_ignore_start("unsafe_cast")
@@ -88,8 +91,7 @@ func release_player(player: GridPlayerCore, on_released_complete: Variant = null
     ) != OK:
         await get_tree().create_timer(speed * tween_duration).timeout
 
-        if release_from_cinematic:
-            player.cinematic = false
+        player.remove_cinematic_cause(self)
 
         if on_released_complete != null && on_released_complete is Callable:
             @warning_ignore_start("unsafe_cast")

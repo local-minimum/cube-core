@@ -56,7 +56,7 @@ func _handle_change_node(feature: GridNodeFeature) -> void:
     if feature == self:
         var player: GridPlayerCore = get_level().player
         if feature.coordinates() == player.coordinates() && !player.is_moving():
-            player.cinematic = true
+            player.cause_cinematic(self)
 
     if feature is not GridPlayerCore:
         return
@@ -195,6 +195,10 @@ var _killed: bool = false
 func kill() -> void:
     if _killed:
         return
+
+    var player: GridPlayerCore = get_level().player
+    if player != null:
+        player.remove_cinematic_cause(self)
 
     _killed = true
     _lives = 0

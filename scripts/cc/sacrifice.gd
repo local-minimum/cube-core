@@ -41,7 +41,6 @@ var mode: Mode = Mode.SACRIFICE
 
 var _sacrificial_letter: String
 var _player: GridPlayer
-var _entered_cinematic: bool
 var _allow_input_time: int
 var _exhausted_all_letters: bool
 
@@ -162,8 +161,7 @@ func _ready_ui() -> void:
 
     _sacrificial_letter = ""
 
-    _entered_cinematic = _player.cinematic
-    _player.cinematic = true
+    _player.cause_cinematic(self)
     _allow_input_time = Time.get_ticks_msec() + 500
     show()
 
@@ -191,7 +189,7 @@ func _handle_sacrifice_letter() -> void:
 
     __AudioHub.play_sfx(offer_sfx)
     _sacrificial_letter = ""
-    _player.cinematic = _entered_cinematic
+    _player.remove_cinematic_cause(self)
 
     __SignalBus.on_complete_sacrifice.emit(letter)
 

@@ -200,7 +200,7 @@ func _play_game(enemy: GridEnemy, player: GridPlayer) -> void:
     if _enemies.size() == 1:
         _player = player
 
-        player.cinematic = true
+        player.cause_cinematic(self)
 
         _make_next_word_set()
 
@@ -394,7 +394,7 @@ func _handle_hurt_enemy(button: ContainerButton) -> void:
 
             await get_tree().create_timer(0.5 * delays_factor).timeout
 
-            _player.cinematic = false
+            _player.remove_cinematic_cause(self)
 
             _player = null
             _enemies.clear()

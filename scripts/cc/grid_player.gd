@@ -61,7 +61,7 @@ func _handle_end_word_game() -> void:
     _in_word_game = false
     print_debug("[Grid Player] end words Cine %s, Word %s, Sacri %s" % [cinematic, _in_word_game, _in_sacrifice])
     if cinematic && !_in_sacrifice:
-        cinematic = false
+        remove_cinematic_cause(self)
 
 func _handle_start_sacrifice(_player: GridPlayer) -> void:
     _in_sacrifice = true
@@ -70,7 +70,7 @@ func _handle_end_sacrifice(_letter: String) -> void:
     _in_sacrifice = false
     print_debug("[Grid Player] end sacri Cine %s, Word %s, Sacri %s" % [cinematic, _in_word_game, _in_sacrifice])
     if cinematic && !_in_word_game:
-        cinematic = false
+        cause_cinematic(self)
 
 func _handle_move_from(entity: GridEntity, _from: Vector3i, _direction: CardinalDirections.CardinalDirection) -> void:
     if entity != self || entity.cinematic || !entity.transportation_mode.has_any([TransportationMode.WALKING, TransportationMode.WALL_WALKING, TransportationMode.CEILING_WALKING]):

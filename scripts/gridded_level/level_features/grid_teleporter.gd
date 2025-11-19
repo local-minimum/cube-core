@@ -104,7 +104,7 @@ func trigger(entity: GridEntity, movement: Movement.MovementType) -> void:
 
     _show_effect(entity)
 
-    entity.cinematic = true
+    entity.cause_cinematic(self)
 
 func _show_effect(entity: GridEntity) -> void:
     if effect == null || exit == null:
@@ -153,7 +153,7 @@ func _handle_teleport(entity: GridEntity) -> void:
             _arrive_entity(entity)
             entity.clear_queue()
             await get_tree().create_timer(mid_time_delay_uncinematic).timeout
-            entity.cinematic = false
+            entity.remove_cinematic_cause(self)
             ,
         func () -> void:
             _teleporting.erase(entity)
@@ -174,7 +174,7 @@ func _arrive_entity(entity: GridEntity) -> void:
 
     var exit_node: GridNode = exit.get_grid_node()
     if exit_node == null:
-        entity.cinematic = false
+        entity.remove_cinematic_cause(self)
         push_error("Failed to teleport because there was no exit")
         return
 

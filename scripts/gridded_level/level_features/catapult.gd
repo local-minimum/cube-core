@@ -144,7 +144,7 @@ func _get_release_anchor(entity: GridEntity) -> GridAnchor:
     return null
 
 func _cleanup_entity(entity: GridEntity) -> void:
-        entity.cinematic = false
+        entity.remove_cinematic_cause(self)
         entity.clear_queue()
         print_debug("[Catapult %s] Cleaned up %s, transportation %s, moving %s, cinematic %s" % [
             coordinates(),
@@ -273,7 +273,7 @@ func trigger(entity: GridEntity, _movement: Movement.MovementType) -> void:
 
     print_debug("[Catapult %s] Grabbing %s" % [coordinates(), entity.name])
 
-    entity.cinematic = true
+    entity.cause_cinematic(self)
 
     if !_managed_entities.has(entity):
         _claim_entity(entity)

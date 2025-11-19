@@ -18,7 +18,7 @@ func exit_level() -> void:
     _triggered = true
 
     var level: GridLevelCore = get_level()
-    level.player.cinematic = true
+    level.player.cause_cinematic(self)
     level.activated_exit_portal = self
 
     var setup: bool = true
@@ -52,7 +52,7 @@ func _fail_exit_level() -> void:
     if level.activated_exit_portal == self:
         level.activated_exit_portal = null
 
-    level.player.cinematic = false
+    level.player.remove_cinematic_cause(self)
 
     if __SignalBus.on_load_fail.is_connected(_fail_exit_level):
         __SignalBus.on_load_fail.disconnect(_fail_exit_level)
