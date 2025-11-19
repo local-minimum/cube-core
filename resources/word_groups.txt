@@ -43,7 +43,7 @@ happy,sad,angry,frustrated,upset,disgusted,disappointed,bitter
 [!] these so called emotions are a mystery to us as well
 
 -Movement
-dance, run, jump, crawl, swim, stroll,
+dance, run, jump, crawl, swim, stroll, sprint
 [*] so many ways to use those fleshy protrusions
 
 -Desserts
@@ -72,7 +72,7 @@ Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
 [*] why do you need even one?
 
 - Palindromes
-Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Abba,Deified,
+Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Abba,Deified,Civic,Poop
 [*] amusing! we have similar games. we will show you.
 [*] !kwryppppppyrwk! !ihi! !qwertytrewq! 
 

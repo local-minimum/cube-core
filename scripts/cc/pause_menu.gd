@@ -2,9 +2,15 @@ extends Control
 class_name PauseMenus
 
 var _show_time: int
-var _level: GridLevelCore
+var _level: GridLevelCore:
+    get():
+        if _level == null:
+            _level = GridLevelCore.active_level
+        return _level
+
 var _labels: Array[CensoringLabel]
 
+@export var menu_button: Button
 @export var invert_y_btn: BaseButton
 @export var sensistivity_slider: Slider
 @export var menu_dialog: MenuDialog
@@ -88,6 +94,7 @@ func _on_resume_on_click(_button: ContainerButton) -> void:
     if _level != null:
         _level.paused = false
         _level = null
+        menu_button.show()
 
 func _on_restart_on_click(_button: ContainerButton) -> void:
     hide()
@@ -115,3 +122,7 @@ func _on_quit_on_click(_button: ContainerButton) -> void:
         "Cancel",
         show,
     )
+
+func _on_menu_button_pressed() -> void:
+    _level.paused = true
+    menu_button.hide()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bwvhld6uu1ngc"]
+[gd_scene load_steps=38 format=3 uid="uid://bwvhld6uu1ngc"]
 
 [ext_resource type="PackedScene" uid="uid://m0dgwrqqt0la" path="res://scenes/level.tscn" id="1_vpfqi"]
 [ext_resource type="Script" uid="uid://ciafyibychmbt" path="res://scripts/cc/ui/core_stats_ui.gd" id="2_ohew3"]
@@ -31,6 +31,17 @@
 [ext_resource type="Texture2D" uid="uid://cwmil1624c4mn" path="res://sprites/dice/gaming-0.png" id="25_euxtm"]
 [ext_resource type="PackedScene" uid="uid://dcw0kg1kaar8j" path="res://scenes/menu.tscn" id="30_tdkqe"]
 [ext_resource type="PackedScene" uid="uid://cqvjfyulxwegg" path="res://scenes/menu_dialog.tscn" id="31_2a1gl"]
+[ext_resource type="Texture2D" uid="uid://bmcue5tvowc87" path="res://sprites/ui-icons-0.png" id="32_42y26"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_euxtm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aut6i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wx2dw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rd32w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_incsw"]
 
 [node name="PlayableLevel" type="Node"]
 
@@ -708,7 +719,7 @@ metadata/_custom_type_script = "uid://du2w5s28tkqje"
 process_mode = 3
 layer = 225
 
-[node name="Menu" parent="Menu" node_paths=PackedStringArray("menu_dialog") instance=ExtResource("30_tdkqe")]
+[node name="Menu" parent="Menu" node_paths=PackedStringArray("menu_button", "menu_dialog") instance=ExtResource("30_tdkqe")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -720,6 +731,7 @@ offset_right = 198.0
 offset_bottom = 244.0
 grow_horizontal = 2
 grow_vertical = 2
+menu_button = NodePath("../MenuButton")
 menu_dialog = NodePath("../CenterContainer/Menu Dialog")
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu"]
@@ -734,3 +746,27 @@ mouse_behavior_recursive = 1
 
 [node name="Menu Dialog" parent="Menu/CenterContainer" instance=ExtResource("31_2a1gl")]
 layout_mode = 2
+
+[node name="MenuButton" type="Button" parent="Menu"]
+process_mode = 3
+custom_minimum_size = Vector2(24, 24)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -36.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 36.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_euxtm")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_aut6i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wx2dw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_rd32w")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_incsw")
+icon = ExtResource("32_42y26")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="Menu/MenuButton" to="Menu/Menu" method="_on_menu_button_pressed"]
