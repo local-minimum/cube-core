@@ -137,9 +137,13 @@ text = "Align all nodes with grid"
 layout_mode = 2
 text = "Set all wall directions from rotation"
 
-[node name="Position All Enemies" type="Button" parent="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions"]
+[node name="Position All Entities" type="Button" parent="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions"]
 layout_mode = 2
-text = "Position all enemies"
+text = "Position all entities"
+
+[node name="Infer Spawn Of Entities" type="Button" parent="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions"]
+layout_mode = 2
+text = "Infer spawn of all entities"
 
 [node name="Organize Nodes By Elevation" type="CheckButton" parent="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions"]
 layout_mode = 2
@@ -792,7 +796,8 @@ save_file_pattern = "res://.godot/gld_settings.json"
 [connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Refresh level nodes" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_refresh_level_nodes_pressed"]
 [connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Align All Nodes" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_align_all_nodes_pressed"]
 [connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Set All Wall Rotations" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_set_all_wall_rotations_pressed"]
-[connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Position All Enemies" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_position_all_enemies_pressed"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Position All Entities" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_position_all_enemies_pressed"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Infer Spawn Of Entities" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_infer_spawn_of_entities_pressed"]
 [connection signal="toggled" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Organize Nodes By Elevation" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_organize_nodes_by_elevation_toggled"]
 [connection signal="pressed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/Organize Nodes Button" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_organize_nodes_button_pressed"]
 [connection signal="value_changed" from="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions/HBoxContainer/Ceiling Layer" to="VBoxContainer/TabContainer/Level/ScrollContainer/VBoxContainer/GridLevelActions" method="_on_ceiling_layer_value_changed"]

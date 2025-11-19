@@ -208,10 +208,12 @@ func doors() -> Array[GridDoorCore]:
 
 #region Static methos
 
-static func node_coordinates_from_position(level: GridLevelCore, grid_node: GridNode) -> Vector3i:
-    var relative_pos: Vector3 = grid_node.global_position - level.global_position
+static func node_coordinates_from_position(level: GridLevelCore, node: Node3D, floor_position: bool = false) -> Vector3i:
+    var relative_pos: Vector3 = node.global_position - level.global_position
     var size: Vector3 = level.node_size + level.node_spacing
     var raw_coords: Vector3 = relative_pos / size
+    if floor_position:
+        return Vector3i(floori(raw_coords.x), floori(raw_coords.y), floori(raw_coords.z))
     return Vector3i(roundi(raw_coords.x), roundi(raw_coords.y), roundi(raw_coords.z))
 
 static func node_position_from_coordinates(level: GridLevelCore, coordinates: Vector3i) -> Vector3:

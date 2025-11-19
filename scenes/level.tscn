@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://c2cd8hwgen7kp" path="res://scripts/gridded_level/level_features/grid_teleporter.gd" id="8_wu01b"]
 [ext_resource type="PackedScene" uid="uid://cmqap1n7p47a" path="res://scenes/sides/industry-zone/brick_wall.tscn" id="9_kih21"]
 [ext_resource type="Script" uid="uid://v5vk4n110r8p" path="res://scripts/gridded_level/key_ring_core.gd" id="9_olg7q"]
-[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="9_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://cp81faaee4738" path="res://scenes/sides/plates/plate_shell_ceiling.tscn" id="9_wu01b"]
 [ext_resource type="PackedScene" uid="uid://dr68l5q6q3gme" path="res://scenes/sides/plates/plate_shell_floor.tscn" id="10_3ies3"]
 [ext_resource type="PackedScene" uid="uid://cdgq6usntnddv" path="res://scenes/key_loot.tscn" id="10_7agi7"]
@@ -92,6 +91,7 @@
 [ext_resource type="Material" uid="uid://dfdyh6actv1wv" path="res://scenes/sides/hallways/wall_mat.tres" id="68_kbk4x"]
 [ext_resource type="Script" uid="uid://gtsiv5pxttgp" path="res://scripts/more_story_manager.gd" id="69_u0n8q"]
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
+[ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="80_speit"]
 [ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/free_look_cam.gd" id="83_ty36l"]
 [ext_resource type="Script" uid="uid://c7chl5drkyuws" path="res://scripts/gridded_level/entities/entity_fall_behavior.gd" id="90_speit"]
 
@@ -271,13 +271,13 @@ shader_parameter/darken_north_south = 0.0
 material = SubResource("ShaderMaterial_kbk4x")
 size = Vector2(2.5, 2.5)
 
-[sub_resource type="Resource" id="Resource_8iemx"]
-script = ExtResource("9_t1rx8")
-mode = 157
+[sub_resource type="Resource" id="Resource_wb1uj"]
+script = ExtResource("80_speit")
+mode = 153
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 
-[sub_resource type="Resource" id="Resource_64w2a"]
-script = ExtResource("9_t1rx8")
+[sub_resource type="Resource" id="Resource_sy37w"]
+script = ExtResource("80_speit")
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7agi7"]
@@ -298,7 +298,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
+primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-3, 0, 2)/LevelPortal Final")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -1801,6 +1801,16 @@ transform = Transform3D(1.1920929e-07, 0, 1, 0, 1, 0, -1, 0, 1.1920929e-07, 0, 0
 [node name="Catapult" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("34_v4d4p")]
 _crash_direction = 6
 _trigger_entire_node = true
+
+[node name="Fence" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("28_u0n8q")]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.25, 1.25, 0)
+door_down = 4
+block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
+
+[node name="Fence2" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("28_u0n8q")]
+transform = Transform3D(5.9604645e-08, -0.99999994, 0, 0.99999994, 5.9604645e-08, 0, 0, 0, 1, 1.25, 1.25, 0)
+door_down = 4
+block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
 
 [node name="Node (-4, -1, -2)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -2.5, -5)
@@ -4585,6 +4595,11 @@ direction = 3
 [node name="Node (-5, 0, -2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -5)
 coordinates = Vector3i(-5, 0, -2)
+
+[node name="Fence" parent="Geometry/Elevation 0/Node (-5, 0, -2)" instance=ExtResource("28_u0n8q")]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.25, 1.25, 0)
+door_down = 4
+block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
 
 [node name="Node (-5, 0, -3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -7.5)
@@ -56270,15 +56285,16 @@ _broadcaster = NodePath("../../Geometry/Elevation 0/Node (6, 0, -6)/Side DOWN")
 _receivers = [NodePath("../../Geometry/Elevation 0/Node (7, 0, -3)/Side DOWN")]
 _messages = Array[String](["toggle"])
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("trail", "camera", "key_ring", "planner")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("trail", "camera", "key_ring", "planner", "_spawn_node")]
 process_mode = 1
 script = ExtResource("8_8iemx")
 trail = NodePath("Trail")
 camera = NodePath("Eyes")
 key_ring = NodePath("KeyRingCore")
-transportation_abilities = SubResource("Resource_8iemx")
-transportation_mode = SubResource("Resource_64w2a")
+transportation_abilities = SubResource("Resource_wb1uj")
+transportation_mode = SubResource("Resource_sy37w")
 planner = NodePath("MovementPlanner")
+_spawn_node = NodePath("../Geometry/Elevation 0/Node (0, 0, 0)")
 metadata/_custom_type_script = "uid://dlbq7x82ejv6e"
 
 [node name="KeyRingCore" type="Node" parent="Player"]
@@ -56400,10 +56416,10 @@ _spawn_node = NodePath("../../Geometry/Elevation 0/Node (-8, 0, -1)")
 
 [node name="Final Enemy 2" parent="Enemies" node_paths=PackedStringArray("_spawn_node") instance=ExtResource("7_64w2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.25, -12.5)
-hunting_activation_id = "final-1"
+hunting_activation_id = "final-2"
 _spawn_node = NodePath("../../Geometry/Elevation 2/Node (-4, 2, -5)")
 
-[node name="NPC Cat" parent="." node_paths=PackedStringArray("spawn_room", "greenery_subzone_locations", "room_location") instance=ExtResource("73_smfc2")]
+[node name="NPC Cat" parent="." node_paths=PackedStringArray("spawn_room", "greenery_subzone_locations", "room_location", "_spawn_node") instance=ExtResource("73_smfc2")]
 process_mode = 1
 spawn_room = NodePath("../Geometry/Elevation -1/Node (3, -1, 0)")
 greenery_subzone_locations = {
@@ -56412,6 +56428,7 @@ greenery_subzone_locations = {
 "third": NodePath("../Geometry/Elevation 2/Node (-9, 2, -11)")
 }
 room_location = NodePath("../Geometry/Elevation 0/Node (8, 0, -6)")
+_spawn_node = NodePath("../Geometry/Elevation 0/Node (0, 0, 0)")
 
 [node name="LandingAreaManager" type="Node" parent="." node_paths=PackedStringArray("pit_entry_node", "pit_trapped_node", "door_node")]
 process_mode = 1

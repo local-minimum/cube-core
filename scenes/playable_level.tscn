@@ -244,6 +244,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Story Text" parent="Story Text/CenterContainer" instance=ExtResource("18_l2weq")]
 layout_mode = 2

@@ -188,3 +188,16 @@ func _on_position_all_enemies_pressed() -> void:
 
     if unsaved:
         EditorInterface.mark_scene_as_unsaved()
+
+func _on_infer_spawn_of_entities_pressed() -> void:
+    var level: GridLevelCore = panel.level
+    for entity: GridEntity in panel.level.find_children("", "GridEntity", true, false):
+        var coordinates: Vector3i = GridLevelCore.node_coordinates_from_position(level, entity, true)
+        var idx: int = panel.all_level_nodes.find_custom(func (grid_node: GridNode) -> bool: return grid_node.coordinates == coordinates)
+        if idx < 0:
+            entity._spawn_node = null
+            entity._spawn_anchor_direction = CardinalDirections.CardinalDirection.NONE
+        else:
+            entity._spawn_node = panel.all_level_nodes[idx]
+
+    EditorInterface.mark_scene_as_unsaved()

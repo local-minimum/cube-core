@@ -35,7 +35,6 @@ var cinematic: bool:
         delay_emit.call_deferred()
 
 @export var transportation_abilities: TransportationMode
-
 @export var transportation_mode: TransportationMode
 
 @export var can_jump_off_walls: bool
