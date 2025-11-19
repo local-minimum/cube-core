@@ -55,6 +55,7 @@ static func phase_from_int(phase_value: int) -> Phase:
 
 var _phase: Phase = Phase.RETRACTED:
     set(value):
+        var updated: bool = _phase != value
         _phase = value
         match _phase:
             Phase.RETRACTED:
@@ -78,6 +79,9 @@ var _phase: Phase = Phase.RETRACTED:
 
             _:
                 _sync_blocking_retracted()
+
+        if updated:
+            __SignalBus.on_change_crusher_phase.emit(self, value)
 
 var _phase_ticks: int
 var _exposed: Array[GridEntity]

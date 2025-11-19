@@ -15,7 +15,7 @@ var _dialogue_playing: bool:
     get():
         return !_dialogue_running.is_empty()
 
-var _dialogue_busy: bool:
+var dialogue_busy: bool:
     get():
         return !_queue.get(BUS_DIALOGUE, []).is_empty() || !_dialogue_running.is_empty()
 
@@ -92,7 +92,7 @@ func play_dialogue(
     if silence_others:
         _end_dialogue_players()
 
-    if enqueue && _dialogue_busy:
+    if enqueue && dialogue_busy:
         _enqueue_stream(
             BUS_DIALOGUE,
             sound_resource_path,

@@ -72,7 +72,7 @@ Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
 [*] why do you need even one?
 
 - Palindromes
-Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Emma,Abba
+Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Abba,Deified,
 [*] amusing! we have similar games. we will show you.
 [*] !kwryppppppyrwk! !ihi! !qwertytrewq! 
 
@@ -296,5 +296,5 @@ Pair,Straight,Flush,House,Two Pair,Three Pair
 [*] why is betting on chance so intriguing to you?
 
 - Buildings
-House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise
+House,Barn,Church,Temple,Shed,Factory,Tower,Fort,Castle,High-rise,
 [*] diverse non-cube-based structures of primitive cultures

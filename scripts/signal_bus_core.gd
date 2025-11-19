@@ -79,4 +79,6 @@ signal on_teleporter_arrive_entity(teleporter: GridTeleporter, entity: GridEntit
 signal on_allow_interactions(interactable: Interactable)
 signal on_disallow_interactions(interactable: Interactable)
 
+# -> Crusher
+signal on_change_crusher_phase(crusher: Crusher, phase: Crusher.Phase)
 @warning_ignore_restore("unused_signal")
