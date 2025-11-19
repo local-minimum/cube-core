@@ -135,7 +135,8 @@ func _handle_move_plan(entity: GridEntity, movement: Movement.MovementType) -> v
         plan = _create_no_movement(entity)
 
     if plan != null:
-        entity.execute_plan(plan, priority)
+        # TODO: Decide somehow if a plan is concurrent or no
+        entity.execute_plan(plan, priority, false)
 
 func create_plan(_entity: GridEntity, _movement: Movement.MovementType) -> MovementPlan:
     return null
