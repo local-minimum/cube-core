@@ -319,10 +319,7 @@ func _sync_words(words: Array[String]) -> void:
 
             button.visible = true
             button.interactable = true
-            if idx == 0:
-                button.focused = true
-            else:
-                button.focused = false
+            button.focused = false
         else:
             button.visible = false
 

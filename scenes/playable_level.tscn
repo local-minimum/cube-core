@@ -147,15 +147,19 @@ buttons = [NodePath("Word Button 1"), NodePath("Word Button 2"), NodePath("Word 
 
 [node name="Word Button 1" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
 layout_mode = 2
+_managed_unfocus = false
 
 [node name="Word Button 2" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
 layout_mode = 2
+_managed_unfocus = false
 
 [node name="Word Button 3" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
 layout_mode = 2
+_managed_unfocus = false
 
 [node name="Word Button 4" parent="Word Game 1/GridContainer" instance=ExtResource("9_f4dbq")]
 layout_mode = 2
+_managed_unfocus = false
 
 [node name="Sacrifice" type="CanvasLayer" parent="."]
 process_mode = 1
