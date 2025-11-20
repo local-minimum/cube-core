@@ -34,27 +34,23 @@ func _handle_load_letters(letters: String) -> void:
     for label: CensoringLabel  in _labels:
         label.censored_letters = letters
 
-func _wanted_wrap(message: String) -> int:
-    if message.length() < 30:
-        return 10
-    elif message.length() < 40:
+func _wanted_wrap(message_length: int) -> int:
+    if message_length < 20:
         return 12
-    elif message.length() < 50:
-        return 16
-    elif message.length() < 60:
-        return 20
+    elif message_length < 30:
+        return 15
     else:
-        return 24
+        return 20
 
 func _handle_text(message: String) -> void:
     if enforce_uppercase:
         message = message.to_upper()
 
-    var lines: PackedStringArray = TextUtils.word_wrap(message, _wanted_wrap(message))
+    var lines: PackedStringArray = TextUtils.word_wrap(message, _wanted_wrap(message.length()))
     if lines.size() > _labels.size():
-        lines = TextUtils.word_wrap(message, 24)
+        lines = TextUtils.word_wrap(message, 22)
 
-    print_debug("[Story Text] message '%s' -> %s" % [message, lines])
+    print_debug("[Story Text] message '%s' -> %s (%s -> %s)" % [message, lines, message.length(), _wanted_wrap(message.length())])
 
     var idx: int = 0
     for label: CensoringLabel in _labels:

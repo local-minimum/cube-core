@@ -20,7 +20,7 @@
 # Note: They refer to themselves as "we"
 #
 # Note: If "Round things" contains "ball" if we later add a "Football" category, then "ball" must be included in that one too!
-# 
+#
 # Note: The category title (e.g. Weapons, emotions) is not limited to 11 characters, and is only for clarity / logging.
 
 [*] Subject exhausted. New knowledge acquired.
@@ -74,7 +74,7 @@ Zeus,Ares,Artemis,Athena,Demeter,Hera,Hermes
 - Palindromes
 Madam,Kayak,Level,Radar,Reviver,Tenet,Rotator,Refer,Noon,Abba,Deified,Civic,Poop
 [*] amusing! we have similar games. we will show you.
-[*] !kwryppppppyrwk! !ihi! !qwertytrewq! 
+[*] !kwryppppppyrwk! !ihi! !qwertytrewq!
 
 
 - Scientists
@@ -102,7 +102,7 @@ Skibidi,gyatt,rizz,six seven,mew,sigma,bussin,gooning,fanum tax,aura farming
 [*] These are obvious
 [*] We will have a lot of use for these concepts
 [!] Subject seems to be experiencing pain
-[!] It would be beneficial to acquire a fresher sample 
+[!] It would be beneficial to acquire a fresher sample
 
 - Programming Languages
 C,Pascal,Python,GDScript,Java,Ruby,Rust,Golang,Fortran
@@ -131,7 +131,7 @@ Python, Viper, Cobra, Rattlesnake, Mamba, Anaconda, Copperhead, Sidewinder
 [*] Simple and elegant, we approve
 
 - Insects
-Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse, Mosquito, 
+Ladybird, Horse fly, Scarab, Cicada, Swallowtail, Head louse, Mosquito,
 [*] The most popular life form on your home planet
 
 - Molluscs
@@ -184,7 +184,7 @@ Downforce,Chicane,Diffuser,Backmarker,Flatspot,DRS,Brake Bias
 
 - Stock Market
 Bear,Bull,Dividend,IPO,ETF,Bond,Margin,Broker,Liquidity,Arbitrage, Short
-[*] hm we must further investigate money 
+[*] hm we must further investigate money
 [*] this abstract entity makes humans squabble more than love. How curious!
 
 - Video Games
@@ -196,16 +196,16 @@ Everest,K2,Kilimanjaro,Vesuvius,Mont Blanc,Matterhorn,Mauna Kea,Lhotse
 [*] horrible! why not make them decently cube shaped instead
 [*] made completely out of stone? disgusting
 
-- Planets 
+- Planets
 Earth,Mars,Jupiter,Saturn,Mars,Venus,Uranus,Mercury,Neptune
-[*] We like the gaseous the most. Soft and warm. 
+[*] We like the gaseous the most. Soft and warm.
 
 - Rocketry
 Booster,Payload,Thrust,Apogee,Perigee,Nose Cone,Altimeter
-[*] So aggressive, this rocketry 
+[*] So aggressive, this rocketry
 
 - Diseases
-Influenza,COVID,Malaria,Diabetes,Cancer,Cirrhosis,Cold,Plague, Ebola, 
+Influenza,COVID,Malaria,Diabetes,Cancer,Cirrhosis,Cold,Plague, Ebola,
 [*] This type of body seems highly vulnerable and impractical
 
 - Star Signs (Space racism)
@@ -228,7 +228,7 @@ Jazz,Folk,Blues,Metal,Country,Funk,Reggae,Trance,Rock,Hip Hop,Garage,Classical,H
 Asia,Africa,Americas, Antarctica, Europe, Australia
 [*] Why do almost these start with A? Does it mean something?
 
-- Intelligence Agencies 
+- Intelligence Agencies
 MI5,MI6,CIA,FSB,GRU,GCHQ,FBI,NSA,MOSSAD
 [*] gathering information is a noble quest
 [*] hiding information is ciminal
@@ -281,7 +281,7 @@ Tolstoy,Orwell,Tolkien,Shakespeare,Bronte,Alcott,Proust,Homer,Dante
 
 - Peripherals
 Monitor,Keyboard,Mouse,Printer,Speakers,Microphone,Headphones
-[*] inferior to direct hyphal communication, but show remarkable adaptations 
+[*] inferior to direct hyphal communication, but show remarkable adaptations
 
 - Cooking methods
 Roasting,Steaming,Poaching,Baking,Frying,Sauteing,Sous Vide
