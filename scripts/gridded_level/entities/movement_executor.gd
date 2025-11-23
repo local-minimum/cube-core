@@ -2,10 +2,7 @@ extends Node
 class_name MovementExecutor
 
 @export var _entity: GridEntity
-@export var tank_movement: bool
-@export var _refuse_distance_factor_lateral: float = 0.45
-@export var _refuse_distance_factor_forward: float = 0.55
-@export var _refuse_distance_factor_reverse: float = 0.1
+@export var _settings: MovementExecutorSettings
 
 var _active_plan_a: MovementPlannerBase.MovementPlan
 var _active_plan_prio_a: int
@@ -158,7 +155,7 @@ func _make_rotation_tween(
     )
 
     @warning_ignore_start("return_value_discarded")
-    if !tank_movement:
+    if !_settings.tank_movement:
          method_tweener.set_trans(tween_trans).set_ease(tween_ease)
     @warning_ignore_restore("return_value_discarded")
 
@@ -196,7 +193,7 @@ func _make_linear_translation_tween(
         plan.remaining_seconds,
     )
 
-    if !tank_movement && !force_tank_movement:
+    if !_settings.tank_movement && !force_tank_movement:
         method_tweener.set_trans(tween_trans).set_ease(tween_ease)
 
     return tween
@@ -227,7 +224,7 @@ func _make_midpoint_translation_tween(
         duration if !bounce_back else duration * 0.5,
     )
 
-    if !tank_movement && !force_tank_movement:
+    if !_settings.tank_movement && !force_tank_movement:
         method_tweener.set_trans(tween_trans).set_ease(tween_ease)
 
     if bounce_back:
@@ -238,7 +235,7 @@ func _make_midpoint_translation_tween(
             duration * 0.5,
         )
 
-    if !tank_movement && !force_tank_movement:
+    if !_settings.tank_movement && !force_tank_movement:
         method_tweener.set_trans(tween_trans).set_ease(tween_ease)
 
     return tween
@@ -370,11 +367,11 @@ func _create_translate_refuse_tween(tween: Tween, plan: MovementPlannerBase.Move
         origin = anchor.global_position
         edge = anchor.get_edge_position(plan.move_direction)
 
-    var distance: float = _refuse_distance_factor_lateral
+    var distance: float = _settings.refuse_distance_factor_lateral
     if plan.from.look_direction == plan.move_direction:
-        distance = _refuse_distance_factor_forward
+        distance = _settings.refuse_distance_factor_forward
     elif CardinalDirections.is_parallell(plan.from.look_direction, plan.move_direction):
-        distance = _refuse_distance_factor_reverse
+        distance = _settings.refuse_distance_factor_reverse
 
     tween = _make_midpoint_translation_tween(
         tween,

@@ -1,11 +1,7 @@
 extends MovementPlannerBase
 class_name MovementPlanner2
 
-@export var translation_duration: float = 0.4
-@export var fall_duration: float = 0.25
-@export var corner_translation_duration: float = 0.5
-@export var turn_duration: float = 0.3
-@export var animation_speed: float = 1.0
+@export var _settings: MovementExecutorSettings
 
 func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan:
     if Movement.is_translation(movement):
@@ -43,7 +39,7 @@ func _create_rotation_plan(
 
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.ROTATE,
-        turn_duration * animation_speed,
+        _settings.turn_duration_scaledd,
         CardinalDirections.CardinalDirection.NONE,
     )
     plan.from = EntityParameters.from_entity(entity)
@@ -101,7 +97,7 @@ func _create_translate_refused(
 ) -> MovementPlan:
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.TRANSLATE_REFUSE,
-        translation_duration * animation_speed,
+        _settings.translation_duration_scaled,
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
@@ -130,7 +126,7 @@ func _create_translate_center(
             if event.manages_triggering_translation():
                 var evented_plan: MovementPlan = MovementPlan.new(
                     MovementMode.TRANSLATE_CENTER,
-                    translation_duration * 0.5 * animation_speed,
+                    _settings.translation_duration_scaled * 0.5,
                     move_direction,
                 )
                 evented_plan.from = EntityParameters.from_entity(entity)
@@ -146,7 +142,7 @@ func _create_translate_center(
         var plan: MovementPlan = MovementPlan.new(
             MovementMode.TRANSLATE_CENTER,
             # Because it is half the distance of a translation we use half duration
-            translation_duration * 0.5 * animation_speed,
+            _settings.translation_duration_scaled * 0.5,
             move_direction,
         )
         plan.from = EntityParameters.from_entity(entity)
@@ -183,7 +179,7 @@ func _create_translate_land_simple(
             if event.manages_triggering_translation():
                 var evented_plan: MovementPlan = MovementPlan.new(
                     MovementMode.TRANSLATE_LAND,
-                    (fall_duration if entity.transportation_mode.has_flag(TransportationMode.FALLING) else translation_duration) * animation_speed,
+                    _settings.fall_duration_scaled if entity.transportation_mode.has_flag(TransportationMode.FALLING) else _settings.translation_duration_scaled,
                     move_direction,
                 )
                 evented_plan.from = EntityParameters.from_entity(entity)
@@ -199,7 +195,7 @@ func _create_translate_land_simple(
         if land_anchor.can_anchor(entity):
             var plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_LAND,
-                (fall_duration if entity.transportation_mode.has_flag(TransportationMode.FALLING) else translation_duration) * animation_speed,
+                _settings.fall_duration_scaled if entity.transportation_mode.has_flag(TransportationMode.FALLING) else _settings.translation_duration_scaled,
                 move_direction,
             )
 
@@ -270,7 +266,7 @@ func _create_translate_fall_diagonal(
                     if event.manages_triggering_translation():
                         var evented_plan: MovementPlan = MovementPlan.new(
                             MovementMode.TRANSLATE_LAND,
-                            fall_duration * animation_speed,
+                            _settings.fall_duration_scaled,
                             move_direction,
                         )
                         evented_plan.from = EntityParameters.from_entity(entity)
@@ -286,7 +282,7 @@ func _create_translate_fall_diagonal(
                 if anchor.can_anchor(entity):
                     var plan: MovementPlan = MovementPlan.new(
                         MovementMode.TRANSLATE_LAND,
-                        fall_duration * animation_speed,
+                        _settings.fall_duration_scaled,
                         move_direction,
                     )
                     plan.from = EntityParameters.from_entity(entity)
@@ -345,7 +341,7 @@ func _create_translate_fall_diagonal(
                 if event.manages_triggering_translation():
                     var evented_plan: MovementPlan = MovementPlan.new(
                         MovementMode.TRANSLATE_FALL_LATERAL,
-                        fall_duration * animation_speed,
+                        _settings.fall_duration_scaled,
                         move_direction,
                     )
                     evented_plan.from = EntityParameters.from_entity(entity)
@@ -361,7 +357,7 @@ func _create_translate_fall_diagonal(
             # We can fall to the side here
             var plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_FALL_LATERAL,
-                fall_duration * animation_speed,
+                _settings.fall_duration_scaled,
                 move_direction,
             )
             plan.from = EntityParameters.from_entity(entity)
@@ -411,7 +407,7 @@ func _create_translate_nodes(
                 if event.manages_triggering_translation():
                     var evented_plan: MovementPlan = MovementPlan.new(
                         MovementMode.TRANSLATE_PLANAR,
-                        translation_duration * animation_speed,
+                        _settings.translation_duration_scaled,
                         move_direction,
                     )
                     evented_plan.from = EntityParameters.from_entity(entity)
@@ -434,7 +430,7 @@ func _create_translate_nodes(
             ):
                 plan = MovementPlan.new(
                     MovementMode.TRANSLATE_JUMP,
-                    translation_duration * animation_speed,
+                    _settings.translation_duration_scaled,
                     move_direction,
                 )
                 plan.from = EntityParameters.from_entity(entity)
@@ -452,7 +448,7 @@ func _create_translate_nodes(
 
             plan = MovementPlan.new(
                 MovementMode.TRANSLATE_PLANAR,
-                translation_duration * animation_speed,
+                _settings.translation_duration_scaled,
                 move_direction,
             )
             plan.from = EntityParameters.from_entity(entity)
@@ -508,7 +504,7 @@ func _create_translate_outer_corner(
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_OUTER_CORNER,
-                corner_translation_duration * animation_speed,
+                _settings.corner_translation_duration_scaled,
                 move_direction,
             )
             evented_plan.from = EntityParameters.from_entity(entity)
@@ -533,7 +529,7 @@ func _create_translate_outer_corner(
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.TRANSLATE_OUTER_CORNER,
-        corner_translation_duration * animation_speed,
+        _settings.corner_translation_duration_scaled,
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
@@ -583,7 +579,7 @@ func _create_translate_inner_corner(
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
                 MovementMode.TRANSLATE_INNER_CORNER,
-                corner_translation_duration * animation_speed,
+                _settings.corner_translation_duration_scaled,
                 move_direction,
             )
             evented_plan.from = EntityParameters.from_entity(entity)
@@ -602,7 +598,7 @@ func _create_translate_inner_corner(
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.TRANSLATE_INNER_CORNER,
-        corner_translation_duration * animation_speed,
+        _settings.corner_translation_duration_scaled,
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
