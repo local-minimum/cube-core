@@ -59,6 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _show_menu() -> void:
     get_tree().paused = true
     _show_time = Time.get_ticks_msec()
+    menu_button.hide()
     show()
 
 func _on_sensitivity_slider_value_changed(value: float) -> void:
@@ -125,4 +126,3 @@ func _on_quit_on_click(_button: ContainerButton) -> void:
 
 func _on_menu_button_pressed() -> void:
     _level.paused = true
-    menu_button.hide()
