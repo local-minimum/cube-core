@@ -77,6 +77,7 @@ class EntityParameters:
         )
 
 class MovementPlan:
+    var movement: Movement.MovementType
     var start_time_msec: int
     var end_time_msec: int
     var mode: MovementMode
@@ -86,11 +87,13 @@ class MovementPlan:
 
     @warning_ignore_start("shadowed_variable")
     func _init(
+        movement: Movement.MovementType,
         mode: MovementMode,
         duration: float,
         direction: CardinalDirections.CardinalDirection,
     ) -> void:
         @warning_ignore_restore("shadowed_variable")
+        self.movement = movement
         self.mode = mode
         start_time_msec = Time.get_ticks_msec()
         end_time_msec = start_time_msec + roundi(duration * 1000)
@@ -126,8 +129,9 @@ class MovementPlan:
 
 ## Requested movement isn't allowed even to be attempted
 ## Imagine as example rotating on a ladder or trying to jump up into the air to fly but not being able to
-func create_no_movement(entity: GridEntity) -> MovementPlan:
+func create_no_movement(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan:
     var plan: MovementPlan = MovementPlan.new(
+        movement,
         MovementMode.NONE,
         0.0,
         CardinalDirections.CardinalDirection.NONE,

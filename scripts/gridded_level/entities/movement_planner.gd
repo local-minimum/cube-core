@@ -44,8 +44,9 @@ func _create_rotation_plan(
             return null
 
     var plan: MovementPlan = MovementPlan.new(
+        movement,
         MovementMode.ROTATE,
-        _settings.turn_duration_scaledd,
+        _settings.turn_duration_scaled,
         CardinalDirections.CardinalDirection.NONE,
     )
     plan.from = EntityParameters.from_entity(entity)
@@ -89,7 +90,7 @@ func _create_translation_plan(
             ])
         return plan
 
-    plan = _create_translate_land_simple(entity, direction)
+    plan = _create_translate_land_simple(entity, movement, direction)
     if plan != null:
         if _verbose:
             print_debug("[Movement Planner %s] Translates %s lands simple (%s / %s)" % [
@@ -100,7 +101,7 @@ func _create_translation_plan(
             ])
         return plan
 
-    plan = _create_translate_fall_diagonal(entity, direction)
+    plan = _create_translate_fall_diagonal(entity, movement, direction)
     if plan != null:
         if _verbose:
             print_debug("[Movement Planner %s] Translates %s fall diagonally (%s / %s)" % [
@@ -111,7 +112,7 @@ func _create_translation_plan(
             ])
         return plan
 
-    plan = _create_translate_nodes(entity, direction)
+    plan = _create_translate_nodes(entity, movement, direction)
     if plan != null:
         if _verbose:
             print_debug("[Movement Planner %s] Translates %s to new node (%s / %s)" % [
@@ -122,7 +123,7 @@ func _create_translation_plan(
             ])
         return plan
 
-    plan = _create_translate_inner_corner(entity, direction)
+    plan = _create_translate_inner_corner(entity, movement, direction)
     if plan != null:
         if _verbose:
             print_debug("[Movement Planner %s] Translates %s node internal corner (%s / %s)" % [
@@ -140,15 +141,17 @@ func _create_translation_plan(
             Movement.name(movement),
             CardinalDirections.name(direction),
         ])
-    return _create_translate_refused(entity, direction)
+    return _create_translate_refused(entity, movement, direction)
 
 ## Attempted translation in one direction but move is refused so return to
 ## movement origin
 func _create_translate_refused(
     entity: GridEntity,
+    movement: Movement.MovementType,
     move_direction: CardinalDirections.CardinalDirection,
 ) -> MovementPlan:
     var plan: MovementPlan = MovementPlan.new(
+        movement,
         MovementMode.TRANSLATE_REFUSE,
         _settings.translation_duration_scaled,
         move_direction,
@@ -178,6 +181,7 @@ func _create_translate_center(
         for event: GridEvent in events:
             if event.manages_triggering_translation():
                 var evented_plan: MovementPlan = MovementPlan.new(
+                    movement,
                     MovementMode.TRANSLATE_CENTER,
                     _settings.translation_duration_scaled * 0.5,
                     move_direction,
@@ -193,6 +197,7 @@ func _create_translate_center(
                 return evented_plan
 
         var plan: MovementPlan = MovementPlan.new(
+            movement,
             MovementMode.TRANSLATE_CENTER,
             # Because it is half the distance of a translation we use half duration
             _settings.translation_duration_scaled * 0.5,
@@ -207,10 +212,11 @@ func _create_translate_center(
             plan.to.down = gravity
         return plan
 
-    return create_no_movement(entity)
+    return create_no_movement(entity, movement)
 
 func _create_translate_land_simple(
     entity: GridEntity,
+    movement: Movement.MovementType,
     move_direction: CardinalDirections.CardinalDirection,
 ) -> MovementPlan:
     if entity.anchor != null:
@@ -231,6 +237,7 @@ func _create_translate_land_simple(
         for event: GridEvent in events:
             if event.manages_triggering_translation():
                 var evented_plan: MovementPlan = MovementPlan.new(
+                    movement,
                     MovementMode.TRANSLATE_LAND,
                     _settings.fall_duration_scaled if entity.transportation_mode.has_flag(TransportationMode.FALLING) else _settings.translation_duration_scaled,
                     move_direction,
@@ -247,6 +254,7 @@ func _create_translate_land_simple(
 
         if land_anchor.can_anchor(entity):
             var plan: MovementPlan = MovementPlan.new(
+                movement,
                 MovementMode.TRANSLATE_LAND,
                 _settings.fall_duration_scaled if entity.transportation_mode.has_flag(TransportationMode.FALLING) else _settings.translation_duration_scaled,
                 move_direction,
@@ -282,6 +290,7 @@ func _create_translate_land_simple(
 
 func _create_translate_fall_diagonal(
     entity: GridEntity,
+    movement: Movement.MovementType,
     move_direction: CardinalDirections.CardinalDirection,
 ) -> MovementPlan:
     var from: GridNode = entity.get_grid_node()
@@ -318,6 +327,7 @@ func _create_translate_fall_diagonal(
                 for event: GridEvent in events:
                     if event.manages_triggering_translation():
                         var evented_plan: MovementPlan = MovementPlan.new(
+                            movement,
                             MovementMode.TRANSLATE_LAND,
                             _settings.fall_duration_scaled,
                             move_direction,
@@ -334,6 +344,7 @@ func _create_translate_fall_diagonal(
 
                 if anchor.can_anchor(entity):
                     var plan: MovementPlan = MovementPlan.new(
+                        movement,
                         MovementMode.TRANSLATE_LAND,
                         _settings.fall_duration_scaled,
                         move_direction,
@@ -393,6 +404,7 @@ func _create_translate_fall_diagonal(
             for event: GridEvent in events:
                 if event.manages_triggering_translation():
                     var evented_plan: MovementPlan = MovementPlan.new(
+                        movement,
                         MovementMode.TRANSLATE_FALL_LATERAL,
                         _settings.fall_duration_scaled,
                         move_direction,
@@ -409,6 +421,7 @@ func _create_translate_fall_diagonal(
 
             # We can fall to the side here
             var plan: MovementPlan = MovementPlan.new(
+                movement,
                 MovementMode.TRANSLATE_FALL_LATERAL,
                 _settings.fall_duration_scaled,
                 move_direction,
@@ -427,6 +440,7 @@ func _create_translate_fall_diagonal(
 
 func _create_translate_nodes(
     entity: GridEntity,
+    movement: Movement.MovementType,
     move_direction: CardinalDirections.CardinalDirection
 ) -> MovementPlan:
     var from: GridNode = entity.get_grid_node()
@@ -436,7 +450,7 @@ func _create_translate_nodes(
         if target == null:
             return null
 
-        var plan: MovementPlan = _create_translate_outer_corner(entity, from, move_direction, target)
+        var plan: MovementPlan = _create_translate_outer_corner(entity, movement, from, move_direction, target)
         if plan != null:
             return plan
 
@@ -459,6 +473,7 @@ func _create_translate_nodes(
             for event: GridEvent in events:
                 if event.manages_triggering_translation():
                     var evented_plan: MovementPlan = MovementPlan.new(
+                        movement,
                         MovementMode.TRANSLATE_PLANAR,
                         _settings.translation_duration_scaled,
                         move_direction,
@@ -482,6 +497,7 @@ func _create_translate_nodes(
                 (entity.get_grid_anchor_direction() == gravity && entity.can_jump_off_floor || entity.can_jump_off_all)
             ):
                 plan = MovementPlan.new(
+                    movement,
                     MovementMode.TRANSLATE_JUMP,
                     _settings.translation_duration_scaled,
                     move_direction,
@@ -500,6 +516,7 @@ func _create_translate_nodes(
                 )
 
             plan = MovementPlan.new(
+                movement,
                 MovementMode.TRANSLATE_PLANAR,
                 _settings.translation_duration_scaled,
                 move_direction,
@@ -519,6 +536,7 @@ func _create_translate_nodes(
 
 func _create_translate_outer_corner(
     entity: GridEntity,
+    movement: Movement.MovementType,
     from: GridNode,
     move_direction: CardinalDirections.CardinalDirection,
     intermediate: GridNode
@@ -545,7 +563,7 @@ func _create_translate_outer_corner(
     if !target.may_enter(entity, intermediate, entity.get_grid_anchor_direction(), updated_directions[1], false, false, true):
         # print_debug("We may not enter %s from %s" % [target.name, entity.down])
         if target._entry_blocking_events(entity, from, move_direction, entity.get_grid_anchor_direction()):
-            return _create_translate_refused(entity, move_direction)
+            return _create_translate_refused(entity, movement, move_direction)
         return null
 
     # In the case that any event manages the transition we no longer require more than entry
@@ -558,6 +576,7 @@ func _create_translate_outer_corner(
     for event: GridEvent in events:
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
+                movement,
                 MovementMode.TRANSLATE_OUTER_CORNER,
                 _settings.corner_translation_duration_scaled,
                 move_direction,
@@ -583,6 +602,7 @@ func _create_translate_outer_corner(
 
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
+        movement,
         MovementMode.TRANSLATE_OUTER_CORNER,
         _settings.corner_translation_duration_scaled,
         move_direction,
@@ -612,6 +632,7 @@ func _create_translate_outer_corner(
 
 func _create_translate_inner_corner(
     entity: GridEntity,
+    movement: Movement.MovementType,
     move_direction: CardinalDirections.CardinalDirection,
 ) -> MovementPlan:
     var from: GridNode = entity.get_grid_node()
@@ -633,6 +654,7 @@ func _create_translate_inner_corner(
     for event: GridEvent in events:
         if event.manages_triggering_translation():
             var evented_plan: MovementPlan = MovementPlan.new(
+                movement,
                 MovementMode.TRANSLATE_INNER_CORNER,
                 _settings.corner_translation_duration_scaled,
                 move_direction,
@@ -652,6 +674,7 @@ func _create_translate_inner_corner(
 
     var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
     var plan: MovementPlan = MovementPlan.new(
+        movement,
         MovementMode.TRANSLATE_INNER_CORNER,
         _settings.corner_translation_duration_scaled,
         move_direction,

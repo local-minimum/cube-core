@@ -31,7 +31,6 @@ var has_concurrency_slot: bool:
             !_active_plan_a.running ||
             !_active_plan_b.running
         )
-# TODO: Calling end movement is that needed? Probably?
 # TODO: Check concurrent movement block codes
 # TODO: Handle ducking and such
 
@@ -169,7 +168,7 @@ func _create_rotation_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan
         func () -> void:
             _entity.look_direction = plan.to.look_direction
             GridEntity.orient(_entity)
-            # _entity.end_movement(movement)
+            _entity.end_movement(plan.movement)
     )
     @warning_ignore_restore("return_value_discarded")
 
@@ -253,7 +252,7 @@ func _create_translate_planar_tween(tween: Tween, plan: MovementPlannerBase.Move
         func () -> void:
             _entity.sync_position()
             _entity.remove_concurrent_movement_block()
-            #_entity.end_movement(movement)
+            _entity.end_movement(plan.movement)
     )
 
 func _add_rotation_and_finalize_simple_translation_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan) -> void:
@@ -267,7 +266,7 @@ func _add_rotation_and_finalize_simple_translation_tween(tween: Tween, plan: Mov
                 GridEntity.orient(_entity)
                 _entity.sync_position()
                 _entity.remove_concurrent_movement_block()
-                # _entity.end_movement(movement)
+                _entity.end_movement(plan.movement)
         )
         return
 
@@ -275,7 +274,7 @@ func _add_rotation_and_finalize_simple_translation_tween(tween: Tween, plan: Mov
         func () -> void:
             _entity.sync_position()
             _entity.remove_concurrent_movement_block()
-            #_entity.end_movement(movement)
+            _entity.end_movement(plan.movement)
     )
     @warning_ignore_restore("return_value_discarded")
 
@@ -339,7 +338,7 @@ func _create_translate_corner_tween(tween: Tween, plan: MovementPlannerBase.Move
             GridEntity.orient(_entity)
             _entity.sync_position()
             _entity.remove_concurrent_movement_block()
-            # _entity.end_movement(movement)
+            _entity.end_movement(plan.movement)
     )
     @warning_ignore_restore("return_value_discarded")
 
