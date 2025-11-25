@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://nix6ry5bmoyk"]
+[gd_scene load_steps=19 format=3 uid="uid://nix6ry5bmoyk"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_tk8md"]
 [ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="4_d2tw4"]
+[ext_resource type="Script" uid="uid://dsq3qb6waenpd" path="res://scripts/gridded_level/entities/entity_filter.gd" id="4_gra1c"]
 [ext_resource type="Material" uid="uid://jjmgfca557m3" path="res://scenes/sides/plates/plate_alt_mat.tres" id="4_x60jp"]
 [ext_resource type="Material" uid="uid://crrbvopyu6oe5" path="res://scenes/sides/plates/plate_mat.tres" id="5_fvkk3"]
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="6_lpaat"]
@@ -12,6 +13,10 @@
 material = ExtResource("5_fvkk3")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_k7v70"]
+script = ExtResource("4_gra1c")
+metadata/_custom_type_script = "uid://dsq3qb6waenpd"
 
 [sub_resource type="QuadMesh" id="QuadMesh_e8f7j"]
 material = ExtResource("4_x60jp")
@@ -129,6 +134,7 @@ _crushing_sound = "res://audio/sfx/effect_13.ogg"
 _crushed_sound = "res://audio/sfx/Hit2.ogg"
 _live = 3
 _add_anchors_when_extended = true
+_activator_filter = SubResource("Resource_k7v70")
 _repeatable = false
 
 [node name="Crush Side 1" type="MeshInstance3D" parent="Side Mesh"]

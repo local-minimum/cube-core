@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cmuo3pqtyhbe3"]
+[gd_scene load_steps=22 format=3 uid="uid://cmuo3pqtyhbe3"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_evhj2"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_s46lk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_g0miv"]
 [ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="4_s46lk"]
 [ext_resource type="Texture2D" uid="uid://dt4exkfips7ya" path="res://sprites/walls/rykhath-tiles-7.png" id="5_g0miv"]
+[ext_resource type="Script" uid="uid://dsq3qb6waenpd" path="res://scripts/gridded_level/entities/entity_filter.gd" id="5_hm2bs"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_juioo"]
 [ext_resource type="Script" uid="uid://coe1i68jqote4" path="res://scripts/gridded_level/broadcasts/broadcast_receiver.gd" id="7_15ity"]
 
@@ -16,12 +17,19 @@ shader_parameter/main_tex = ExtResource("3_15ity")
 shader_parameter/dark_color = Color(0.17108878, 0.022582948, 0.13546178, 1)
 shader_parameter/light_color = Color(0.14267296, 0.40233573, 0.6492776, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_xhqb5"]
 material = SubResource("ShaderMaterial_a605k")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_ptcn8"]
+script = ExtResource("5_hm2bs")
+metadata/_custom_type_script = "uid://dsq3qb6waenpd"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_evhj2"]
 render_priority = 0
@@ -30,7 +38,10 @@ shader_parameter/main_tex = ExtResource("5_g0miv")
 shader_parameter/dark_color = Color(0.21003243, 0.15258512, 0.44122362, 1)
 shader_parameter/light_color = Color(0.8914593, 0.6955937, 0.67372566, 1)
 shader_parameter/passthrough = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
+shader_parameter/passthrough_blend = 0.0
 shader_parameter/precision = 0.0
+shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_s46lk"]
 material = SubResource("ShaderMaterial_evhj2")
@@ -145,6 +156,7 @@ _always_block_crusher_side = false
 _anim = NodePath("../AnimationPlayer")
 _live = 3
 _add_anchors_when_extended = true
+_activator_filter = SubResource("Resource_ptcn8")
 _repeatable = false
 
 [node name="Crush Side Floor" type="MeshInstance3D" parent="Side Mesh"]

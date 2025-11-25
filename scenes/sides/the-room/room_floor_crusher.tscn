@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bklkseyhcnc7f"]
+[gd_scene load_steps=19 format=3 uid="uid://bklkseyhcnc7f"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_xm1w6"]
 [ext_resource type="Script" uid="uid://d3xa8nv1yfkg5" path="res://scripts/gridded_level/level_features/crusher.gd" id="3_8ddm3"]
 [ext_resource type="Material" uid="uid://cmtsxuvpguikk" path="res://scenes/sides/the-room/room_floor_a_mat.tres" id="4_44ral"]
+[ext_resource type="Script" uid="uid://dsq3qb6waenpd" path="res://scripts/gridded_level/entities/entity_filter.gd" id="4_gpkhy"]
 [ext_resource type="Material" uid="uid://jjmgfca557m3" path="res://scenes/sides/plates/plate_alt_mat.tres" id="5_fftn8"]
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="7_uwu43"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="8_6xscd"]
@@ -12,6 +13,10 @@
 material = ExtResource("4_44ral")
 size = Vector2(2.5, 2.5)
 center_offset = Vector3(0, 1.25, 0)
+
+[sub_resource type="Resource" id="Resource_xm1w6"]
+script = ExtResource("4_gpkhy")
+metadata/_custom_type_script = "uid://dsq3qb6waenpd"
 
 [sub_resource type="QuadMesh" id="QuadMesh_tkesk"]
 material = ExtResource("5_fftn8")
@@ -129,6 +134,7 @@ _crushing_sound = "res://audio/sfx/effect_13.ogg"
 _crushed_sound = "res://audio/sfx/Hit2.ogg"
 _live = 3
 _add_anchors_when_extended = true
+_activator_filter = SubResource("Resource_xm1w6")
 
 [node name="Crush Side Floor2" type="MeshInstance3D" parent="Side Mesh"]
 transform = Transform3D(8.742277e-08, 4.371139e-08, -1, 1, -4.3711385e-08, 8.742277e-08, -4.371138e-08, -1, -4.3711395e-08, -1.25, 1.25, 0)
