@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dt2s24ea60mxd"]
+[gd_scene load_steps=16 format=3 uid="uid://dt2s24ea60mxd"]
 
 [ext_resource type="Script" uid="uid://bb1mx2o8q1o42" path="res://scripts/cc/cat.gd" id="1_br55f"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="2_4eub0"]
@@ -6,6 +6,8 @@
 [ext_resource type="Material" uid="uid://b3v4ybmaigp6f" path="res://scenes/cat_mat.tres" id="4_ckb5j"]
 [ext_resource type="Texture2D" uid="uid://bksyyhv8yi43m" path="res://sprites/monsters-24.png" id="5_w6ktl"]
 [ext_resource type="Texture2D" uid="uid://crlbwn6aiaps1" path="res://sprites/monsters-25.png" id="6_ckb5j"]
+[ext_resource type="Script" uid="uid://d1e0odws2w1g1" path="res://scripts/gridded_level/entities/movement_executor.gd" id="7_onyt2"]
+[ext_resource type="Script" uid="uid://crv5isbs0cdmp" path="res://scripts/gridded_level/entities/movement_executor_settings.gd" id="8_6dbve"]
 
 [sub_resource type="Resource" id="Resource_4qdnu"]
 script = ExtResource("2_4eub0")
@@ -55,7 +57,11 @@ _data = {
 &"RESET": SubResource("Animation_6dbve")
 }
 
-[node name="NPC Cat" type="Node3D" node_paths=PackedStringArray("anim_player", "player", "greenery_subzone_locations")]
+[sub_resource type="Resource" id="Resource_lvt0j"]
+script = ExtResource("8_6dbve")
+metadata/_custom_type_script = "uid://crv5isbs0cdmp"
+
+[node name="NPC Cat" type="Node3D" node_paths=PackedStringArray("anim_player", "player", "greenery_subzone_locations", "executor")]
 script = ExtResource("1_br55f")
 anim_player = NodePath("AnimationPlayer")
 calling_sounds = Array[String](["res://audio/voice/cat/bosse3_2.mp3"])
@@ -67,9 +73,9 @@ greenery_subzone_locations = {
 "second": null,
 "third": null
 }
-look_direction = 1
 transportation_abilities = SubResource("Resource_4qdnu")
 transportation_mode = SubResource("Resource_7kuto")
+executor = NodePath("MovementExecutor")
 metadata/_custom_type_script = "uid://bb1mx2o8q1o42"
 
 [node name="PlayerFacer" type="Node3D" parent="."]
@@ -90,3 +96,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_lvt0j")
 }
 next/Idle = &"Idle"
+
+[node name="MovementExecutor" type="Node" parent="." node_paths=PackedStringArray("_entity")]
+script = ExtResource("7_onyt2")
+_entity = NodePath("..")
+_settings = SubResource("Resource_lvt0j")
+metadata/_custom_type_script = "uid://d1e0odws2w1g1"

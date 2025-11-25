@@ -129,7 +129,7 @@ func _add_back_sentinel() -> void:
     # Don't know but looks more reasonable to copy, else we should explain why not here
     sentinel._repeatable = _repeatable
     sentinel._trigger_entire_node = _trigger_entire_node
-    sentinel._activator = _activator
+    sentinel._activator_filter = _activator_filter
 
     neighbour.add_child(sentinel)
     neighbour.add_grid_event(sentinel)

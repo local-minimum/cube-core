@@ -1,9 +1,7 @@
 extends Node3D
 class_name LevelZone
 
-enum EntityFilter { ENTITIES, PLAYER, ENEMIES }
-
-@export var filter: EntityFilter = EntityFilter.ENTITIES
+@export var filter: EntityFilter
 @export var nodes: Array[GridNode]
 @export var limits_mapping: bool
 
@@ -18,27 +16,11 @@ func get_level() -> GridLevelCore:
         return GridLevelCore.find_level_parent(self, false)
     return nodes[0].get_level()
 
-func _passes_filter(feature: GridNodeFeature) -> bool:
-    match filter:
-        EntityFilter.ENTITIES:
-            return feature is GridEntity
-        EntityFilter.PLAYER:
-            return feature is GridPlayerCore
-        EntityFilter.ENEMIES:
-            if feature is GridEncounterCore:
-                var encounter: GridEncounterCore = feature
-                return encounter.encounter_type == GridEncounterCore.EncounterType.ENEMY
-
-            return false
-        _:
-            push_error("Entity Filter %s not handled" % filter)
-            return false
-
 func covers(coordinates: Vector3i) -> bool:
     return nodes.any(func (node: GridNode) -> bool: return node.coordinates == coordinates)
 
 func _handle_change_node(feature: GridNodeFeature) -> void:
-    if feature is not GridEntity || !_passes_filter(feature):
+    if feature is not GridEntity || !filter.applies(feature):
         return
 
     var entity: GridEntity = feature

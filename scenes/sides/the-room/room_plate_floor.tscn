@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cke1jh67xm2g0"]
+[gd_scene load_steps=16 format=3 uid="uid://cke1jh67xm2g0"]
 
 [ext_resource type="Script" uid="uid://c6733p4qj68p" path="res://scripts/gridded_level/level_features/grid_node_side.gd" id="1_j2gfq"]
 [ext_resource type="Shader" uid="uid://b5frkncq3gh1q" path="res://shaders/zoned_color.gdshader" id="2_x5pli"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bsjvh2o2oob57" path="res://scripts/gridded_level/level_features/grid_anchor.gd" id="4_g56er"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="5_y62rg"]
 [ext_resource type="Script" uid="uid://xomgxrqjqsyd" path="res://scripts/gridded_level/level_features/pressure_plate.gd" id="6_lx43s"]
+[ext_resource type="Resource" uid="uid://c604du4f7br8s" path="res://scenes/player_filter.tres" id="7_sfiju"]
 [ext_resource type="Script" uid="uid://dbu1ha67elq8" path="res://scripts/gridded_level/broadcasts/broadcaster.gd" id="8_js87s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sfiju"]
@@ -29,22 +30,6 @@ center_offset = Vector3(0, 1.25, 0)
 script = ExtResource("5_y62rg")
 mode = 9
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
-
-[sub_resource type="Animation" id="Animation_c21tp"]
-resource_name = "inactive"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Side Mesh:mesh:material:shader_parameter/passthrough_blend")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.03, 1.2, 1.2666667, 2.7, 2.8700001, 2.9366667, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.999999977648, 0.999999977648, 0.95999997854208, 0.999999977648, 0.999999977648, 0.95999997854208, 0.999999977648, 0.999999977648]
-}
 
 [sub_resource type="Animation" id="Animation_sfiju"]
 length = 0.001
@@ -74,6 +59,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.3999999910592, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_c21tp"]
+resource_name = "inactive"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Side Mesh:mesh:material:shader_parameter/passthrough_blend")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.03, 1.2, 1.2666667, 2.7, 2.8700001, 2.9366667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.999999977648, 0.999999977648, 0.95999997854208, 0.999999977648, 0.999999977648, 0.95999997854208, 0.999999977648, 0.999999977648]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ui0r8"]
@@ -109,7 +110,7 @@ _anim_activate = "active"
 _anim_active = "active"
 _anim_deactivate = "inactive"
 _anim_deactivated = "inactive"
-_activator = 2
+_activator_filter = ExtResource("7_sfiju")
 metadata/_custom_type_script = "uid://xomgxrqjqsyd"
 
 [node name="Broadcaster" type="Node" parent="." node_paths=PackedStringArray("sender")]
@@ -121,6 +122,6 @@ metadata/_custom_type_script = "uid://dbu1ha67elq8"
 libraries = {
 &"": SubResource("AnimationLibrary_ui0r8")
 }
-next/inactive = &"inactive"
 next/active = &"active"
+next/inactive = &"inactive"
 blend_times = [&"active", &"inactive", 0.3, &"inactive", &"active", 0.3]

@@ -67,7 +67,7 @@ func should_trigger(
     _from_side: CardinalDirections.CardinalDirection,
     _to_side: CardinalDirections.CardinalDirection,
 ) -> bool:
-    if exit == null || !available() || !activates(feature):
+    if exit == null || !available() || !_activator_filter.applies(feature):
         return false
 
     return true

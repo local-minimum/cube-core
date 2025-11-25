@@ -1,3 +1,4 @@
+@abstract
 extends Node
 class_name MovementPlannerBase
 
@@ -120,30 +121,12 @@ class MovementPlan:
         get():
             return maxi(0, end_time_msec - Time.get_ticks_msec()) * 0.001
 
-@export var priority: int = 0
-
-func _enter_tree() -> void:
-    if __SignalBus.on_move_plan.connect(_handle_move_plan) != OK:
-        push_error("Cannot connect to move plan")
-
-func _exit_tree() -> void:
-    __SignalBus.on_move_plan.disconnect(_handle_move_plan)
-
-func _handle_move_plan(entity: GridEntity, movement: Movement.MovementType) -> void:
-    var plan: MovementPlan = create_plan(entity, movement)
-    if plan == null:
-        plan = _create_no_movement(entity)
-
-    if plan != null:
-        # TODO: Decide somehow if a plan is concurrent or no
-        entity.execute_plan(plan, priority, false)
-
-func create_plan(_entity: GridEntity, _movement: Movement.MovementType) -> MovementPlan:
-    return null
+@abstract func plans_for(entity: GridEntity) -> bool
+@abstract func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan
 
 ## Requested movement isn't allowed even to be attempted
 ## Imagine as example rotating on a ladder or trying to jump up into the air to fly but not being able to
-func _create_no_movement(entity: GridEntity) -> MovementPlan:
+func create_no_movement(entity: GridEntity) -> MovementPlan:
     var plan: MovementPlan = MovementPlan.new(
         MovementMode.NONE,
         0.0,

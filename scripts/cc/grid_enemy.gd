@@ -1,4 +1,4 @@
-extends GridEntity
+extends GridEnemyCore
 class_name GridEnemy
 
 @export var hunting_activation_id: String
@@ -186,7 +186,7 @@ func check_fight_music(player: GridPlayerCore):
         battle_music_playing = true
         __AudioHub.play_music(battle_music, crossfade_time)
 
-func hurt() -> void:
+func hurt(_amount: int = 1) -> void:
     _lives -= 1
     for shroom: Node3D in _mushrooms.slice(_lives):
         shroom.visible = false

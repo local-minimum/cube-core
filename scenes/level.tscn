@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://m0dgwrqqt0la"]
+[gd_scene load_steps=131 format=3 uid="uid://m0dgwrqqt0la"]
 
 [ext_resource type="Script" uid="uid://c74xugjiqdyyk" path="res://scripts/gridded_level/level_features/grid_level_core.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://6rt1quqs30co" path="res://scenes/node.tscn" id="2_8gofh"]
@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://c1kpbe72unfxp" path="res://scenes/sides/pressure_plate_invisible.tscn" id="11_3ies3"]
 [ext_resource type="PackedScene" uid="uid://cke1jh67xm2g0" path="res://scenes/sides/the-room/room_plate_floor.tscn" id="11_7iqcu"]
 [ext_resource type="Script" uid="uid://huxje2j21g1c" path="res://scripts/gridded_level/broadcasts/broadcast_contract.gd" id="11_arp2o"]
-[ext_resource type="Script" uid="uid://meibvvwp8mvg" path="res://scripts/gridded_level/entities/movement_planner.gd" id="11_t1rx8"]
+[ext_resource type="Script" uid="uid://blerqhoie555h" path="res://scripts/gridded_level/entities/movement_planner.gd" id="11_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://dquuxgjoy6xl" path="res://scenes/sides/industry-zone/stone_floor.tscn" id="11_w3o6u"]
 [ext_resource type="PackedScene" uid="uid://cy2wepsheqjvp" path="res://scenes/sides/industry-zone/wood_ceiling.tscn" id="12_2e2fo"]
 [ext_resource type="PackedScene" uid="uid://nix6ry5bmoyk" path="res://scenes/sides/plates/plate_crusher_ceiling.tscn" id="12_3ies3"]
@@ -72,6 +72,7 @@
 [ext_resource type="PackedScene" uid="uid://brdwygkej57nl" path="res://scenes/sides/the-room/room_door.tscn" id="35_30hdq"]
 [ext_resource type="Material" uid="uid://c2g7qeaifnxd2" path="res://decoration_materials/grass2.tres" id="38_k1glb"]
 [ext_resource type="PackedScene" uid="uid://ci5dh4f50umf0" path="res://scenes/sides/ui-maze/maze_door_internal.tscn" id="43_5ga6x"]
+[ext_resource type="Resource" uid="uid://c604du4f7br8s" path="res://scenes/player_filter.tres" id="44_kwu62"]
 [ext_resource type="Script" uid="uid://t4m0rh3c6e6l" path="res://scripts/cc/cat_help_zone.gd" id="44_ltwek"]
 [ext_resource type="PackedScene" uid="uid://8qm5lmt5657s" path="res://scenes/sides/ui-maze/maze_window.tscn" id="44_nj2gj"]
 [ext_resource type="Texture2D" uid="uid://c6icujsurcd4r" path="res://sprites/decorations/frames2-15.png" id="44_p1qlp"]
@@ -93,7 +94,12 @@
 [ext_resource type="PackedScene" uid="uid://dt2s24ea60mxd" path="res://scenes/npc_cat.tscn" id="73_smfc2"]
 [ext_resource type="Script" uid="uid://b8a6yvndcxtpa" path="res://scripts/gridded_level/transportation_mode.gd" id="80_speit"]
 [ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/free_look_cam.gd" id="83_ty36l"]
+[ext_resource type="Script" uid="uid://d1e0odws2w1g1" path="res://scripts/gridded_level/entities/movement_executor.gd" id="90_f55ft"]
 [ext_resource type="Script" uid="uid://c7chl5drkyuws" path="res://scripts/gridded_level/entities/entity_fall_behavior.gd" id="90_speit"]
+[ext_resource type="Script" uid="uid://crv5isbs0cdmp" path="res://scripts/gridded_level/entities/movement_executor_settings.gd" id="91_ovgnb"]
+[ext_resource type="Script" uid="uid://bpoh6yp18x1ne" path="res://scripts/gridded_level/entities/movement_planner_settings.gd" id="95_wb1uj"]
+[ext_resource type="Script" uid="uid://dqwpy4k402w15" path="res://scripts/gridded_level/entities/movement_planning_coordinator.gd" id="96_ovgnb"]
+[ext_resource type="Script" uid="uid://dsq3qb6waenpd" path="res://scripts/gridded_level/entities/entity_filter.gd" id="100_y73rr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1sbqr"]
 render_priority = 0
@@ -291,6 +297,21 @@ shader_parameter/passthrough_blend_color = Color(0, 0, 0, 1)
 shader_parameter/passthrough_blend = 0.0
 shader_parameter/precision = 1.0
 shader_parameter/darken_north_south = 0.0
+
+[sub_resource type="Resource" id="Resource_kwu62"]
+script = ExtResource("91_ovgnb")
+metadata/_custom_type_script = "uid://crv5isbs0cdmp"
+
+[sub_resource type="Resource" id="Resource_f55ft"]
+script = ExtResource("95_wb1uj")
+translation_duration = 0.25
+fall_duration = 0.1
+turn_duration = 0.1
+metadata/_custom_type_script = "uid://bpoh6yp18x1ne"
+
+[sub_resource type="Resource" id="Resource_i7b3e"]
+script = ExtResource("100_y73rr")
+metadata/_custom_type_script = "uid://dsq3qb6waenpd"
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("level_geometry", "primary_entry_portal", "zones_parent", "broadcasts_parent", "player")]
 process_mode = 3
@@ -535,6 +556,7 @@ exit = NodePath("../../../Elevation 4/Node (-16, 4, -2)/Rim Teleporter Down Exit
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, -1)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -551,6 +573,7 @@ exit = NodePath("../../../Elevation 4/Node (-16, 4, -1)/Rim Teleporter Down Exit
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 0)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -567,6 +590,7 @@ exit = NodePath("../../../Elevation 4/Node (-16, 4, 0)/Rim Teleporter Down Exit"
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 1)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -583,6 +607,7 @@ exit = NodePath("../../../Elevation 4/Node (-16, 4, 1)/Rim Teleporter Down Exit"
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 2)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -599,6 +624,7 @@ exit = NodePath("../../../Elevation 4/Node (-16, 4, 2)/Rim Teleporter Down Exit"
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, -1, 3)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
@@ -1650,7 +1676,7 @@ inherent_forward_direction = 3
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -1689,7 +1715,7 @@ direction = 4
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation -1/Node (-3, -1, 12)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "maze-1"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
@@ -1800,17 +1826,20 @@ transform = Transform3D(1.1920929e-07, 0, 1, 0, 1, 0, -1, 0, 1.1920929e-07, 0, 0
 
 [node name="Catapult" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("34_v4d4p")]
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 
 [node name="Fence" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("28_u0n8q")]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.25, 1.25, 0)
 door_down = 4
 block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Fence2" parent="Geometry/Elevation -1/Node (-5, -1, -2)" instance=ExtResource("28_u0n8q")]
 transform = Transform3D(5.9604645e-08, -0.99999994, 0, 0.99999994, 5.9604645e-08, 0, 0, 0, 1, 1.25, 1.25, 0)
 door_down = 4
 block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-4, -1, -2)" parent="Geometry/Elevation -1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -2.5, -5)
@@ -1884,6 +1913,7 @@ direction = 3
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.3000002, 1.4, 0)
 _crashes_entity_down = false
 _crash_direction = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([6])
 
@@ -2126,7 +2156,7 @@ direction = 4
 script = ExtResource("24_s1acf")
 duration = 20.0
 decay = 3.0
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://b6p7xcjq7u3tw"
 
@@ -2136,7 +2166,7 @@ poem = "res://audio/voice/narration/end.ogg"
 poem_response = "res://audio/voice/narration/end-response.ogg"
 enqueue_if_busy = false
 silence_others = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -2158,6 +2188,7 @@ direction = 4
 [node name="Catapult" parent="Geometry/Elevation 0/Node (0, 0, -6)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([1])
 
@@ -2192,6 +2223,7 @@ direction = 3
 [node name="LevelPortal Ending" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, -6)"]
 script = ExtResource("10_wu01b")
 entry_lookdirection = 2
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-2, 0, -5)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2211,6 +2243,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-2, 0, -5)" instance=ExtResource("6_wu01b")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 0/Node (-2, 0, -5)" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-2, 0, -4)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -10)
@@ -2351,6 +2384,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, -2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2367,6 +2401,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter South Exit" type="Node3D" parent="Geometry/Elevation 0/Node (-16, 0, -2)"]
@@ -2375,6 +2410,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2391,6 +2427,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 0)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2407,6 +2444,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2423,6 +2461,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2439,6 +2478,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter North Exit" type="Node3D" parent="Geometry/Elevation 0/Node (-16, 0, 2)"]
@@ -2447,6 +2487,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -2464,6 +2505,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 0, 4)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -3557,7 +3599,7 @@ skeleton = NodePath("../..")
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 0/Node (7, 0, 0)"]
 script = ExtResource("44_ltwek")
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -3972,7 +4014,7 @@ inherent_forward_direction = 3
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -4048,7 +4090,7 @@ inherent_forward_direction = 1
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -4160,6 +4202,7 @@ direction = 3
 
 [node name="Catapult" parent="Geometry/Elevation 0/Node (-5, 0, 6)" instance=ExtResource("34_v4d4p")]
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 
 [node name="Node (-4, 0, 6)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -4193,6 +4236,7 @@ direction = 4
 [node name="Catapult" parent="Geometry/Elevation 0/Node (1, 0, 5)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([4])
 
@@ -4239,11 +4283,12 @@ direction = 3
 [node name="Window" parent="Geometry/Elevation 0/Node (-2, 0, 5)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 5)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "maze-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_sides = Array[int]([6])
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -4277,11 +4322,12 @@ direction = 4
 [node name="Window" parent="Geometry/Elevation 0/Node (-2, 0, 6)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-2, 0, 6)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "maze-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_sides = Array[int]([6])
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -4319,6 +4365,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-2, 0, 3)" instance=ExtResource("16_xmwm8")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 0/Node (-2, 0, 3)" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-2, 0, 2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
@@ -4415,6 +4462,7 @@ direction = 2
 [node name="LevelPortal Final" type="Node3D" parent="Geometry/Elevation 0/Node (-3, 0, 2)"]
 script = ExtResource("10_wu01b")
 entry_lookdirection = 3
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-4, 0, 2)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
@@ -4451,7 +4499,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/closetoend.ogg"
 poem_response = "res://audio/voice/narration/closetoend-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -4470,6 +4518,7 @@ direction = 4
 
 [node name="Fence" parent="Geometry/Elevation 0/Node (-4, 0, 0)" instance=ExtResource("28_u0n8q")]
 block_traversal_anchor_sides = Array[int]([6, 3, 4, 2])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-4, 0, -1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -2.5)
@@ -4491,11 +4540,13 @@ coordinates = Vector3i(-4, 0, -3)
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
 block_traversal_anchor_sides = Array[int]([6, 3, 4, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Fence2" parent="Geometry/Elevation 0/Node (-4, 0, -3)" instance=ExtResource("28_u0n8q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
 block_traversal_anchor_sides = Array[int]([6, 4, 2, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-3, 0, -3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, -7.5)
@@ -4511,6 +4562,7 @@ coordinates = Vector3i(-3, 0, -3)
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
 block_traversal_anchor_sides = Array[int]([6, 3, 4, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-2, 0, -3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -7.5)
@@ -4560,6 +4612,7 @@ coordinates = Vector3i(-5, 0, 0)
 
 [node name="Fence" parent="Geometry/Elevation 0/Node (-5, 0, 0)" instance=ExtResource("28_u0n8q")]
 block_traversal_anchor_sides = Array[int]([6, 3, 4, 2])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-5, 0, 1)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 2.5)
@@ -4582,7 +4635,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/closetoend.ogg"
 poem_response = "res://audio/voice/narration/closetoend-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -4607,6 +4660,7 @@ coordinates = Vector3i(-5, 0, -2)
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.25, 1.25, 0)
 door_down = 4
 block_traversal_anchor_sides = Array[int]([6, 4, 3, 2, 1])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-5, 0, -3)" parent="Geometry/Elevation 0" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -7.5)
@@ -4751,10 +4805,6 @@ direction = 2
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-6, 0, 0)" instance=ExtResource("19_u0n8q")]
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-6, 0, 0)"]
-script = ExtResource("17_w3o6u")
-_enemy_activation_id = "final-1"
-_activator = 2
-_trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Ceiling Shadow" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-6, 0, 0)"]
@@ -4780,10 +4830,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-5, 0, -6)"]
-script = ExtResource("17_w3o6u")
-_enemy_activation_id = "final-2"
-_activator = 2
-_trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Elevation 1" type="Node3D" parent="Geometry"]
@@ -5000,13 +5046,7 @@ coordinates = Vector3i(-16, 1, -3)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Rim Teleporter North" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, -3)" node_paths=PackedStringArray("exit")]
-script = ExtResource("8_wu01b")
-exit = NodePath("../../Node (-16, 1, 2)/Rim Teleporter North Exit")
-infer_look_direction = true
-inherent_forward_direction = 1
-anchor_direction = 4
-fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+[node name="Rim Teleporter North" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, -3)"]
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, -2)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -5018,11 +5058,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="Rim Teleporter South Exit" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, -2)"]
-script = ExtResource("8_wu01b")
-infer_look_direction = true
-inherent_forward_direction = 2
-anchor_direction = 4
-fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, -1)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -5058,11 +5093,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="Rim Teleporter North Exit" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, 2)"]
-script = ExtResource("8_wu01b")
-infer_look_direction = true
-inherent_forward_direction = 1
-anchor_direction = 4
-fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, 3)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -5073,13 +5103,7 @@ coordinates = Vector3i(-16, 1, 3)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 direction = 4
 
-[node name="Rim Teleporter South" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, 3)" node_paths=PackedStringArray("exit")]
-script = ExtResource("8_wu01b")
-exit = NodePath("../../Node (-16, 1, -2)/Rim Teleporter South Exit")
-infer_look_direction = true
-inherent_forward_direction = 2
-anchor_direction = 4
-fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+[node name="Rim Teleporter South" type="Node3D" parent="Geometry/Elevation 1/Node (-16, 1, 3)"]
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 1, 4)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -5965,6 +5989,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (-10, 1, 3)" instance=ExtResource("11_w3o6u")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 1/Node (-10, 1, 3)" instance=ExtResource("10_7agi7")]
+script = null
 
 [node name="Node (-10, 1, 4)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 10)
@@ -6332,11 +6357,6 @@ coordinates = Vector3i(7, 1, -10)
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (7, 1, -10)" instance=ExtResource("17_tcyu4")]
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -10)"]
-script = ExtResource("17_w3o6u")
-_enemy_activation_id = "room-1"
-_activator = 2
-_repeatable = false
-_trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Node (7, 1, -9)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -6430,19 +6450,9 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (7, 1, -8)" instance=ExtResource("10_421lv")]
 
 [node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -8)"]
-script = ExtResource("47_d5irf")
-poem = "res://audio/voice/narration/floating-islands.ogg"
-poem_response = "res://audio/voice/narration/floating-islands-response.ogg"
-_activator = 2
-_repeatable = false
-_trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -8)"]
-script = ExtResource("44_ltwek")
-zone = "room"
-_activator = 2
-_trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
 [node name="Node (7, 1, -7)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -6462,12 +6472,11 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (7, 1, -7)" instance=ExtResource("17_tcyu4")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 1/Node (7, 1, -7)" instance=ExtResource("10_7agi7")]
-_trigger_sides = Array[int]([6, 1, 2, 3, 4])
+script = null
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -7)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-2"
-_activator = 2
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -6476,7 +6485,7 @@ metadata/_custom_type_script = "uid://d1eun00e26qfu"
 script = ExtResource("44_ltwek")
 entered = true
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -6655,7 +6664,6 @@ direction = 2
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (6, 1, -1)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-3"
-_activator = 2
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -6663,7 +6671,7 @@ metadata/_custom_type_script = "uid://d1eun00e26qfu"
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 1/Node (6, 1, -1)"]
 script = ExtResource("44_ltwek")
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -6773,7 +6781,7 @@ coordinates = Vector3i(7, 1, -2)
 script = ExtResource("44_ltwek")
 entered = true
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -6883,7 +6891,6 @@ direction = 2
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-3"
-_activator = 2
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -6891,7 +6898,7 @@ metadata/_custom_type_script = "uid://d1eun00e26qfu"
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 1/Node (8, 1, -1)"]
 script = ExtResource("44_ltwek")
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -7202,7 +7209,6 @@ inherent_forward_direction = 3
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -7278,7 +7284,6 @@ inherent_forward_direction = 1
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -28023,6 +28028,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, -2)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -28039,6 +28045,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, -1)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -28054,6 +28061,7 @@ script = ExtResource("10_wu01b")
 entry_down = 4
 entry_anchor = 4
 entry_lookdirection = 2
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-16, 2, 0)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -28082,6 +28090,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, 3)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -28099,6 +28108,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 2, 4)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -28956,6 +28966,7 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 2/Node (-13, 2, 0)" instance=ExtResource("12_3ies3")]
 
 [node name="Pressure Plate Invisible" parent="Geometry/Elevation 2/Node (-13, 2, 0)" instance=ExtResource("11_3ies3")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-12, 2, 0)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 5, 0)
@@ -28972,6 +28983,7 @@ direction = 2
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("6_wu01b")]
 
 [node name="Pressure Plate Invisible" parent="Geometry/Elevation 2/Node (-12, 2, 0)" instance=ExtResource("11_3ies3")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-11, 2, 0)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 5, 0)
@@ -29002,6 +29014,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-11, 2, -1)" instance=ExtResource("11_w3o6u")]
 
 [node name="Door" parent="Geometry/Elevation 2/Node (-11, 2, -1)" instance=ExtResource("16_kih21")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-11, 2, -2)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 5, -5)
@@ -29021,6 +29034,7 @@ direction = 4
 
 [node name="LevelPortal Greenery" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, -2)"]
 script = ExtResource("10_wu01b")
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-11, 2, 1)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
@@ -29042,7 +29056,7 @@ direction = 4
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, 1)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "industrial"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -29178,6 +29192,7 @@ direction = 3
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (-14, 2, 7)" instance=ExtResource("11_w3o6u")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 2/Node (-14, 2, 7)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-13, 2, 7)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 5, 17.5)
@@ -29460,6 +29475,7 @@ direction = 2
 [node name="Side UP" parent="Geometry/Elevation 2/Node (-9, 2, -8)" instance=ExtResource("25_535f6")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 2/Node (-9, 2, -8)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 _trigger_sides = Array[int]([6, 1, 2, 3, 4])
 
 [node name="Grass6" type="MeshInstance3D" parent="Geometry/Elevation 2/Node (-9, 2, -8)"]
@@ -29547,7 +29563,7 @@ direction = 4
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 2/Node (-11, 2, -9)"]
 script = ExtResource("56_u5upv")
 subzone = "third"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -29569,14 +29585,14 @@ direction = 2
 script = ExtResource("44_ltwek")
 entered = true
 zone = "greenery"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 2/Node (-9, 2, -11)"]
 script = ExtResource("56_u5upv")
 subzone = "third"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -29958,7 +29974,7 @@ coordinates = Vector3i(6, 2, -2)
 script = ExtResource("44_ltwek")
 entered = true
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -29973,6 +29989,7 @@ coordinates = Vector3i(6, 2, 0)
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (6, 2, 0)" instance=ExtResource("17_tcyu4")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 2/Node (6, 2, 0)" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (6, 2, 1)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 2.5)
@@ -30037,7 +30054,7 @@ coordinates = Vector3i(7, 2, -1)
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 2/Node (7, 2, -1)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -30051,7 +30068,7 @@ coordinates = Vector3i(7, 2, 0)
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 2/Node (7, 2, 0)"]
 script = ExtResource("44_ltwek")
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -30096,6 +30113,7 @@ direction = 4
 [node name="Catapult" parent="Geometry/Elevation 2/Node (7, 2, 5)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([1])
 
@@ -30123,7 +30141,7 @@ coordinates = Vector3i(8, 2, -2)
 script = ExtResource("44_ltwek")
 entered = true
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -30348,7 +30366,7 @@ direction = 4
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 2/Node (7, 2, 8)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-4"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -30398,6 +30416,7 @@ direction = 2
 [node name="Door" parent="Geometry/Elevation 2/Node (4, 2, 8)" instance=ExtResource("35_30hdq")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (3, 2, 8)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 5, 20)
@@ -30405,6 +30424,7 @@ coordinates = Vector3i(3, 2, 8)
 
 [node name="LevelPortal Maze" type="Node3D" parent="Geometry/Elevation 2/Node (3, 2, 8)"]
 script = ExtResource("10_wu01b")
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Side NORTH" parent="Geometry/Elevation 2/Node (3, 2, 8)" instance=ExtResource("13_5ga6x")]
@@ -30440,12 +30460,13 @@ coordinates = Vector3i(1, 2, 8)
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (1, 2, 8)" instance=ExtResource("16_xmwm8")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 2/Node (1, 2, 8)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="PoemEvent" type="Node3D" parent="Geometry/Elevation 2/Node (1, 2, 8)"]
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/fork.ogg"
 poem_response = "res://audio/voice/narration/fork-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
 
@@ -30469,6 +30490,7 @@ direction = 4
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 locks = Array[int]([0])
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (1, 2, 7)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 17.5)
@@ -30488,6 +30510,7 @@ direction = 4
 
 [node name="Door" parent="Geometry/Elevation 2/Node (1, 2, 7)" instance=ExtResource("43_5ga6x")]
 locks = Array[int]([0])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (0, 2, 8)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 20)
@@ -30508,6 +30531,7 @@ direction = 3
 [node name="Side DOWN" parent="Geometry/Elevation 2/Node (0, 2, 8)" instance=ExtResource("16_xmwm8")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 2/Node (0, 2, 8)" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (1, 2, 10)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5, 25)
@@ -30687,7 +30711,7 @@ inherent_forward_direction = 1
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -30845,13 +30869,14 @@ exit = NodePath("../../Node (-3, 2, 3)/Maze Room Teleporter 4")
 look_direction = 1
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Window" parent="Geometry/Elevation 2/Node (-5, 2, 4)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-5, 2, 5)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 5, 12.5)
@@ -30892,6 +30917,7 @@ coordinates = Vector3i(-4, 2, 3)
 [node name="Window" parent="Geometry/Elevation 2/Node (-4, 2, 3)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 7" type="Node3D" parent="Geometry/Elevation 2/Node (-4, 2, 3)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -30899,7 +30925,7 @@ exit = NodePath("../../Node (-2, 2, 5)/Maze Room Teleporter 3")
 look_direction = 3
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -30914,6 +30940,7 @@ coordinates = Vector3i(-4, 2, 4)
 [node name="Window" parent="Geometry/Elevation 2/Node (-4, 2, 4)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 8" type="Node3D" parent="Geometry/Elevation 2/Node (-4, 2, 4)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -30921,13 +30948,14 @@ exit = NodePath("../../Node (-4, 2, 3)/Maze Room Teleporter 7")
 look_direction = 4
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Window2" parent="Geometry/Elevation 2/Node (-4, 2, 4)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-4, 2, 5)" parent="Geometry/Elevation 2" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 12.5)
@@ -30942,7 +30970,7 @@ script = ExtResource("8_wu01b")
 look_direction = 3
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -30971,6 +30999,7 @@ coordinates = Vector3i(-3, 2, 3)
 [node name="Window" parent="Geometry/Elevation 2/Node (-3, 2, 3)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 4" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 3)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -30978,7 +31007,7 @@ exit = NodePath("../../Node (-3, 2, 5)/Maze Room Teleporter 5")
 look_direction = 2
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31001,10 +31030,12 @@ coordinates = Vector3i(-3, 2, 5)
 [node name="Window" parent="Geometry/Elevation 2/Node (-3, 2, 5)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Window2" parent="Geometry/Elevation 2/Node (-3, 2, 5)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 5" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 5)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -31012,7 +31043,7 @@ exit = NodePath("../../Node (-4, 2, 4)/Maze Room Teleporter 8")
 look_direction = 3
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31031,6 +31062,7 @@ direction = 2
 [node name="Window" parent="Geometry/Elevation 2/Node (-3, 2, 6)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 6" type="Node3D" parent="Geometry/Elevation 2/Node (-3, 2, 6)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -31038,7 +31070,7 @@ exit = NodePath("../../Node (-4, 2, 5)/Maze Room Teleporter 10")
 look_direction = 3
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31055,10 +31087,12 @@ coordinates = Vector3i(-2, 2, 3)
 [node name="Window" parent="Geometry/Elevation 2/Node (-2, 2, 3)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Window2" parent="Geometry/Elevation 2/Node (-2, 2, 3)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 1" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 3)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -31067,7 +31101,7 @@ look_direction = 1
 infer_anchor_from_down = true
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31086,6 +31120,7 @@ direction = 4
 [node name="Window" parent="Geometry/Elevation 2/Node (-2, 2, 4)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 2" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 4)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -31093,7 +31128,7 @@ exit = NodePath("../../Node (-4, 2, 3)/Maze Room Teleporter 7")
 look_direction = 3
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31112,6 +31147,7 @@ direction = 4
 [node name="Window" parent="Geometry/Elevation 2/Node (-2, 2, 5)" instance=ExtResource("44_nj2gj")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 3
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Maze Room Teleporter 3" type="Node3D" parent="Geometry/Elevation 2/Node (-2, 2, 5)" node_paths=PackedStringArray("exit")]
 script = ExtResource("8_wu01b")
@@ -31119,7 +31155,7 @@ exit = NodePath("../../Node (-3, 2, 5)/Maze Room Teleporter 5")
 look_direction = 2
 anchor_direction = 6
 instant = true
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
@@ -31342,6 +31378,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, -2)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -31358,6 +31395,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, -1)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -31398,6 +31436,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, 3)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -31415,6 +31454,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 3, 4)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
@@ -32625,7 +32665,7 @@ direction = 4
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 3/Node (-8, 3, -11)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "greenery-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -32943,6 +32983,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 7.5, 2.5)
 coordinates = Vector3i(8, 3, 1)
 
 [node name="KeyLoot" parent="Geometry/Elevation 3/Node (8, 3, 1)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Side DOWN" parent="Geometry/Elevation 3/Node (8, 3, 1)" instance=ExtResource("11_7iqcu")]
 
@@ -32967,6 +33008,7 @@ coordinates = Vector3i(8, 3, 5)
 [node name="Side DOWN" parent="Geometry/Elevation 3/Node (8, 3, 5)" instance=ExtResource("17_tcyu4")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 3/Node (8, 3, 5)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (8, 3, 6)" parent="Geometry/Elevation 3" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 7.5, 15)
@@ -33096,7 +33138,7 @@ coordinates = Vector3i(7, 3, -3)
 script = ExtResource("44_ltwek")
 entered = true
 zone = "room"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -33225,6 +33267,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, -2)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33241,6 +33284,7 @@ infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter South Exit" type="Node3D" parent="Geometry/Elevation 4/Node (-16, 4, -2)"]
@@ -33249,6 +33293,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, -1)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33265,6 +33310,7 @@ infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 0)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33281,6 +33327,7 @@ infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 1)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33297,6 +33344,7 @@ infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 2)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33313,6 +33361,7 @@ infer_look_direction = true
 inherent_forward_direction = 6
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Rim Teleporter North Exit" type="Node3D" parent="Geometry/Elevation 4/Node (-16, 4, 2)"]
@@ -33321,6 +33370,7 @@ infer_look_direction = true
 inherent_forward_direction = 1
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 3)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -33338,6 +33388,7 @@ infer_look_direction = true
 inherent_forward_direction = 2
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 4, 4)" parent="Geometry/Elevation 4" instance=ExtResource("2_8gofh")]
@@ -34259,7 +34310,7 @@ direction = 4
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 4/Node (-11, 4, -11)"]
 script = ExtResource("56_u5upv")
 subzone = "third"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -34284,7 +34335,7 @@ direction = 3
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 4/Node (-8, 4, -8)"]
 script = ExtResource("56_u5upv")
 subzone = "first"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -35029,6 +35080,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, -1)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -35046,6 +35098,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 0)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -35063,6 +35116,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 1)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -35080,6 +35134,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 2)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -35097,6 +35152,7 @@ infer_look_direction = true
 inherent_forward_direction = 5
 anchor_direction = 4
 fade_color = Color(7.219613e-08, 0.103281654, 0.18304572, 1)
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://c2cd8hwgen7kp"
 
 [node name="Node (-16, 5, 3)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -35960,6 +36016,7 @@ coordinates = Vector3i(-12, 5, 5)
 [node name="Side DOWN" parent="Geometry/Elevation 5/Node (-12, 5, 5)" instance=ExtResource("11_w3o6u")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 5/Node (-12, 5, 5)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-12, 5, 6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 12.5, 15)
@@ -36081,7 +36138,7 @@ coordinates = Vector3i(-8, 5, -4)
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/npc.ogg"
 poem_response = "res://audio/voice/narration/npc-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -36113,6 +36170,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 5/Node (-7, 5, -4)" instance=ExtResource("20_q4oe8")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 5/Node (-7, 5, -4)/Side DOWN" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-7, 5, -3)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 12.5, -7.5)
@@ -36128,7 +36186,7 @@ direction = 4
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/npc.ogg"
 poem_response = "res://audio/voice/narration/npc-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -36310,6 +36368,7 @@ coordinates = Vector3i(-8, 5, -13)
 [node name="Side DOWN" parent="Geometry/Elevation 5/Node (-8, 5, -13)" instance=ExtResource("24_svjb4")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 5/Node (-8, 5, -13)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-8, 5, -12)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 12.5, -30)
@@ -36450,7 +36509,7 @@ direction = 2
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 5/Node (-7, 5, -10)"]
 script = ExtResource("44_ltwek")
 zone = "greenery"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -36474,6 +36533,7 @@ direction = 3
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 locks = Array[int]([1, 2])
 _door_face = 4
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (4, 5, -6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 12.5, -15)
@@ -36492,6 +36552,7 @@ direction = 2
 [node name="LevelPortal Room" type="Node3D" parent="Geometry/Elevation 5/Node (4, 5, -6)"]
 script = ExtResource("10_wu01b")
 entry_lookdirection = 4
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (5, 5, -6)" parent="Geometry/Elevation 5" instance=ExtResource("2_8gofh")]
@@ -37913,7 +37974,7 @@ direction = 4
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/npc.ogg"
 poem_response = "res://audio/voice/narration/npc-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -37957,7 +38018,7 @@ direction = 4
 [node name="CatHelpZone" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -5)"]
 script = ExtResource("44_ltwek")
 zone = "greenery"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
@@ -37992,7 +38053,7 @@ direction = 4
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -6)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "greenery-2"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -38001,14 +38062,14 @@ metadata/_custom_type_script = "uid://d1eun00e26qfu"
 script = ExtResource("44_ltwek")
 entered = true
 zone = "greenery"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://t4m0rh3c6e6l"
 
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -6)"]
 script = ExtResource("56_u5upv")
 subzone = "first"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -38097,7 +38158,7 @@ direction = 2
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 6/Node (-10, 6, -8)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "greenery-1"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -38153,6 +38214,7 @@ direction = 3
 [node name="Side UP" parent="Geometry/Elevation 6/Node (-11, 6, -6)" instance=ExtResource("19_2jdvr")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 6/Node (-11, 6, -6)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 _trigger_sides = Array[int]([6, 1, 2, 3, 3])
 
 [node name="Node (-8, 6, -10)" parent="Geometry/Elevation 6" instance=ExtResource("2_8gofh")]
@@ -38174,7 +38236,7 @@ direction = 4
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -10)"]
 script = ExtResource("56_u5upv")
 subzone = "first"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -38215,7 +38277,7 @@ direction = 4
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 6/Node (-8, 6, -11)"]
 script = ExtResource("56_u5upv")
 subzone = "second"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -38306,7 +38368,7 @@ direction = 2
 [node name="CatHelpSubZone" type="Node3D" parent="Geometry/Elevation 6/Node (-10, 6, -13)"]
 script = ExtResource("56_u5upv")
 subzone = "second"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://l78dcf3q6gyv"
 
@@ -39694,6 +39756,7 @@ direction = 3
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.25, -1.25)
 _door_face = 5
 door_down = 1
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (3, 7, -6)" parent="Geometry/Elevation 7" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 17.5, -15)
@@ -40712,6 +40775,7 @@ script = ExtResource("10_wu01b")
 entry_down = 1
 entry_anchor = 1
 entry_lookdirection = 4
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://cjhediv47ntbx"
 
 [node name="Node (-6, 8, -10)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
@@ -40732,7 +40796,7 @@ direction = 2
 script = ExtResource("47_d5irf")
 poem = "res://audio/voice/narration/windows.ogg"
 poem_response = "res://audio/voice/narration/windows-response.ogg"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://dg2tkxuuyitqr"
@@ -40750,11 +40814,12 @@ coordinates = Vector3i(-5, 8, -10)
 [node name="Window" parent="Geometry/Elevation 8/Node (-5, 8, -10)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-5, 8, -10)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "hall-1"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -40814,11 +40879,12 @@ coordinates = Vector3i(-3, 8, -8)
 [node name="Window" parent="Geometry/Elevation 8/Node (-3, 8, -8)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-3, 8, -8)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "hall-2"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -40879,6 +40945,7 @@ direction = 3
 
 [node name="Door" parent="Geometry/Elevation 8/Node (-5, 8, -6)" instance=ExtResource("30_uhfbm")]
 locks = Array[int]([0])
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-3, 8, -5)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 20, -12.5)
@@ -40911,11 +40978,12 @@ direction = 3
 [node name="Window" parent="Geometry/Elevation 8/Node (-3, 8, -4)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-3, 8, -4)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "hall-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -40961,11 +41029,12 @@ coordinates = Vector3i(-1, 8, -6)
 [node name="Window" parent="Geometry/Elevation 8/Node (-1, 8, -6)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 8/Node (-1, 8, -6)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "hall-3"
-_activator = 2
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -41149,6 +41218,7 @@ coordinates = Vector3i(-1, 8, -7)
 [node name="Window" parent="Geometry/Elevation 8/Node (-1, 8, -7)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (0, 8, -9)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, -22.5)
@@ -41219,6 +41289,7 @@ direction = 3
 [node name="Side DOWN" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("30_cr74b")]
 
 [node name="HealthNPC" parent="Geometry/Elevation 8/Node (-6, 8, -8)" instance=ExtResource("25_c1pbi")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-6, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 20, -17.5)
@@ -41245,6 +41316,7 @@ coordinates = Vector3i(-5, 8, -9)
 [node name="Side DOWN" parent="Geometry/Elevation 8/Node (-5, 8, -9)" instance=ExtResource("30_cr74b")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 8/Node (-5, 8, -9)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-5, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 20, -20)
@@ -41287,6 +41359,7 @@ coordinates = Vector3i(-4, 8, -8)
 [node name="Window" parent="Geometry/Elevation 8/Node (-4, 8, -8)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 _door_face = 4
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (-4, 8, -7)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 20, -17.5)
@@ -41425,6 +41498,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("30_cr74b")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 8/Node (0, 8, -4)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 _trigger_sides = Array[int]([6, 1, 2, 3, 4])
 
 [node name="Node (0, 8, -3)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
@@ -41558,6 +41632,7 @@ coordinates = Vector3i(3, 8, -8)
 [node name="Window" parent="Geometry/Elevation 8/Node (3, 8, -8)" instance=ExtResource("31_uhfbm")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 _door_face = 2
+_activator_filter = ExtResource("44_kwu62")
 
 [node name="Node (4, 8, -8)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, -20)
@@ -41608,6 +41683,7 @@ direction = 4
 [node name="Side DOWN" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("30_cr74b")]
 
 [node name="KeyLoot" parent="Geometry/Elevation 8/Node (5, 8, -7)" instance=ExtResource("10_7agi7")]
+_activator_filter = ExtResource("44_kwu62")
 _trigger_sides = Array[int]([6, 1, 2, 3, 4])
 
 [node name="Node (5, 8, -6)" parent="Geometry/Elevation 8" instance=ExtResource("2_8gofh")]
@@ -56317,7 +56393,7 @@ _broadcaster = NodePath("../../Geometry/Elevation 0/Node (6, 0, -6)/Side DOWN")
 _receivers = [NodePath("../../Geometry/Elevation 0/Node (7, 0, -3)/Side DOWN")]
 _messages = Array[String](["toggle"])
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("trail", "camera", "key_ring", "planner", "_spawn_node")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("trail", "camera", "key_ring", "executor", "_spawn_node")]
 process_mode = 1
 script = ExtResource("8_8iemx")
 trail = NodePath("Trail")
@@ -56325,18 +56401,13 @@ camera = NodePath("Eyes")
 key_ring = NodePath("KeyRingCore")
 transportation_abilities = SubResource("Resource_wb1uj")
 transportation_mode = SubResource("Resource_sy37w")
-planner = NodePath("MovementPlanner")
+executor = NodePath("MovementExecutor")
 _spawn_node = NodePath("../Geometry/Elevation 0/Node (0, 0, 0)")
 metadata/_custom_type_script = "uid://dlbq7x82ejv6e"
 
 [node name="KeyRingCore" type="Node" parent="Player"]
 script = ExtResource("9_olg7q")
 metadata/_custom_type_script = "uid://v5vk4n110r8p"
-
-[node name="MovementPlanner" type="Node3D" parent="Player" node_paths=PackedStringArray("entity")]
-script = ExtResource("11_t1rx8")
-entity = NodePath("..")
-metadata/_custom_type_script = "uid://meibvvwp8mvg"
 
 [node name="Eyes" type="Camera3D" parent="Player"]
 process_mode = 3
@@ -56362,6 +56433,12 @@ max_trail_length = 90
 script = ExtResource("90_speit")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c7chl5drkyuws"
+
+[node name="MovementExecutor" type="Node" parent="Player" node_paths=PackedStringArray("_entity")]
+script = ExtResource("90_f55ft")
+_entity = NodePath("..")
+_settings = SubResource("Resource_kwu62")
+metadata/_custom_type_script = "uid://d1e0odws2w1g1"
 
 [node name="Enemies" type="Node3D" parent="."]
 process_mode = 1
@@ -56499,3 +56576,21 @@ sacrifice_poem = "res://audio/voice/narration/sacrifice.ogg"
 sacrifice_poem_response = "res://audio/voice/narration/sacrifice-response.ogg"
 sacrifice_e_poem = "res://audio/voice/narration/sacrifice-e.ogg"
 sacrifice_e_poem_response = "res://audio/voice/narration/sacrifice-e-response.ogg"
+
+[node name="MovementPlanningCoordinator" type="Node" parent="." node_paths=PackedStringArray("planners")]
+script = ExtResource("96_ovgnb")
+planners = [NodePath("Player Planner"), NodePath("Catch All Planner")]
+metadata/_custom_type_script = "uid://dqwpy4k402w15"
+
+[node name="Player Planner" type="Node" parent="MovementPlanningCoordinator"]
+script = ExtResource("11_t1rx8")
+_filter = ExtResource("44_kwu62")
+_settings = SubResource("Resource_f55ft")
+_verbose = true
+metadata/_custom_type_script = "uid://blerqhoie555h"
+
+[node name="Catch All Planner" type="Node" parent="MovementPlanningCoordinator"]
+script = ExtResource("11_t1rx8")
+_filter = SubResource("Resource_i7b3e")
+_settings = SubResource("Resource_f55ft")
+metadata/_custom_type_script = "uid://blerqhoie555h"

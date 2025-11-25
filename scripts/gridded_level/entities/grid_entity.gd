@@ -65,7 +65,6 @@ func remove_cinematic_cause(cause: Node) -> void:
 @export var can_jump_off_all: bool
 @export var orient_with_gravity_in_air: bool = true
 
-@export var planner: MovementPlanner
 @export var executor: MovementExecutor
 
 @export var instant_step: bool
@@ -222,36 +221,39 @@ func attempt_movement(
     if force:
         clear_queue()
 
-    var primary_tween: bool = movement == _active_movement
-
-    if primary_tween:
-        if _tween:
-            _active_movement = Movement.MovementType.NONE
-            _tween.kill()
-    else:
-        if _concurrent_tween:
-            _concurrent_movement = Movement.MovementType.NONE
-            _concurrent_tween.kill()
-
-    var coords: Vector3i = coordinates()
-    var tween: Tween
-    var translation_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
-
-    if Movement.is_translation(movement):
-        translation_direction = Movement.to_direction(movement, look_direction, down)
-        tween = planner.move_entity(movement, translation_direction)
-    elif Movement.is_turn(movement):
-        tween = planner.rotate_entity(movement)
-
-    _handle_new_tween(tween, primary_tween)
-
-    if tween == null:
-        # This would become a stack overflow if set
-        end_movement(movement, false)
-        return false
-
-    __SignalBus.on_move_start.emit(self, coords, translation_direction)
+    __SignalBus.on_move_plan.emit(self, movement)
     return true
+
+    # var primary_tween: bool = movement == _active_movement
+
+    # if primary_tween:
+    #     if _tween:
+    #         _active_movement = Movement.MovementType.NONE
+    #         _tween.kill()
+    # else:
+    #     if _concurrent_tween:
+    #         _concurrent_movement = Movement.MovementType.NONE
+    #         _concurrent_tween.kill()
+
+    # var coords: Vector3i = coordinates()
+    # var tween: Tween
+    # var translation_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
+
+    # if Movement.is_translation(movement):
+    #     translation_direction = Movement.to_direction(movement, look_direction, down)
+    #     tween = planner.move_entity(movement, translation_direction)
+    # elif Movement.is_turn(movement):
+    #     tween = planner.rotate_entity(movement)
+
+    # _handle_new_tween(tween, primary_tween)
+
+    # if tween == null:
+    #     # This would become a stack overflow if set
+    #     end_movement(movement, false)
+    #     return false
+
+    # __SignalBus.on_move_start.emit(self, coords, translation_direction)
+    # return true
 
 func _enqeue_movement(movement: Movement.MovementType) -> void:
     if _next_movement != Movement.MovementType.NONE:
