@@ -160,13 +160,14 @@ func end_movement(movement: Movement.MovementType, start_next_from_queue: bool =
             ])
         return
 
-    # print_debug("%s ended, active are %s / %s" % [
-        # Movement.name(movement),
-        # Movement.name(_active_movement),
-        # Movement.name(_concurrent_movement),
-    # ])
+    print_debug("[Grid Entity] %s ended, active are %s / %s" % [
+        Movement.name(movement),
+        Movement.name(_active_movement),
+        Movement.name(_concurrent_movement),
+    ])
 
-    if movement != null || force_emit:
+    if movement != Movement.MovementType.NONE || force_emit:
+        print_debug("[Grid Entity] Emitting end move")
         __SignalBus.on_move_end.emit(self)
 
     if start_next_from_queue:

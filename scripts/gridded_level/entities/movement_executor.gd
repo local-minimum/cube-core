@@ -3,6 +3,7 @@ class_name MovementExecutor
 
 @export var _entity: GridEntity
 @export var _settings: MovementExecutorSettings
+@export var _verbose: bool
 
 var _active_plan_a: MovementPlannerBase.MovementPlan
 var _active_plan_prio_a: int
@@ -31,14 +32,19 @@ var has_concurrency_slot: bool:
             !_active_plan_a.running ||
             !_active_plan_b.running
         )
+
 # TODO: Check concurrent movement block codes
 # TODO: Handle ducking and such
 
 func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
     if !concurrent && priority < active_plan_prio || plan.equals(_active_plan_a) || plan.equals(_active_plan_b):
+        if _verbose:
+            print_debug("[Movement Executor %s] Discarding plan %s because of priority or currently running" % [name, plan.summarize()])
         return
 
     if concurrent && !has_concurrency_slot:
+        if _verbose:
+            print_debug("[Movement Executor %s] Discarding plan %s because no concurrent slot available" % [name, plan.summarize()])
         return
 
     elif concurrent:
@@ -71,10 +77,37 @@ func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurr
         _active_plan_prio_a = priority
         _start_plan(plan, _tween_a)
 
-func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
-
-    if plan.to.mode == MovementPlannerBase.PositionMode.EVENT_CONTROLLED || plan.mode == MovementPlannerBase.MovementMode.NONE:
+func _trigger_grid_events(plan: MovementPlannerBase.MovementPlan) -> void:
+    var to: GridNode = _get_node(plan.to)
+    var from: GridNode = _get_node(plan.from)
+    if to == null:
         return
+
+    var events: Array[GridEvent] = to.triggering_events(
+            _entity,
+            from,
+            _entity.get_grid_anchor_direction(),
+            plan.move_direction,
+        )
+
+    for event: GridEvent in events:
+        event.trigger(_entity, plan.movement)
+
+func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
+    if plan.mode == MovementPlannerBase.MovementMode.NONE:
+        if _verbose:
+            print_debug("[Movement Executor %s] Discarding plan %s of its mode" % [name, plan.summarize()])
+        return
+
+    _trigger_grid_events(plan)
+
+    if plan.to.mode == MovementPlannerBase.PositionMode.EVENT_CONTROLLED:
+        if _verbose:
+            print_debug("[Movement Executor %s] Discarding plan %s of its mode" % [name, plan.summarize()])
+        return
+
+    if _verbose:
+        print_debug("[Movement Executor %s] Executing plan %s" % [name, plan.summarize()])
 
     match plan.mode:
         MovementPlannerBase.MovementMode.ROTATE:
@@ -92,8 +125,21 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
         MovementPlannerBase.MovementMode.TRANSLATE_LAND:
             _create_translate_land_tween(tween, plan)
 
-        MovementPlannerBase.MovementMode.TRANSLATE_OUTER_CORNER, MovementPlannerBase.MovementMode.TRANSLATE_INNER_CORNER:
-            _create_translate_corner_tween(tween, plan)
+        MovementPlannerBase.MovementMode.TRANSLATE_OUTER_CORNER:
+            _create_translate_corner_tween(
+                tween,
+                plan,
+                Tween.TRANS_CUBIC,
+                Tween.TRANS_QUAD,
+            )
+
+        MovementPlannerBase.MovementMode.TRANSLATE_INNER_CORNER:
+            _create_translate_corner_tween(
+                tween,
+                plan,
+                Tween.TRANS_LINEAR,
+                Tween.TRANS_QUAD,
+            )
 
         MovementPlannerBase.MovementMode.TRANSLATE_FALL_LATERAL:
             _create_translate_fall_lateral_tween(tween, plan)
@@ -104,10 +150,36 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
         MovementPlannerBase.MovementMode.NONE:
             return
 
+        _:
+            push_error("[Movement Planner %s] got plan of unhandled movement type for %s" % [
+                name,
+                plan.summarize(),
+                _entity,
+            ])
+            return
+
+    __SignalBus.on_move_start.emit(_entity, plan.from.coordinates, plan.move_direction)
+
     if _updates_anchor(plan):
         var target: GridNode = _get_node(plan.to)
         if target != null:
-            _entity.update_entity_anchorage(target, target.get_grid_anchor(plan.to.anchor))
+            var anchor: GridAnchor = target.get_grid_anchor(plan.to.anchor)
+            if _verbose:
+                print_debug("[Movement Executor %s] Plan %s updates anchor of %s from <%s> to <%s>" % [
+                    name,
+                    plan.summarize(),
+                    _entity,
+                    GridAnchor.summarize(_entity.get_grid_anchor()),
+                    GridAnchor.summarize(anchor),
+                ])
+
+            _entity.down = plan.to.down
+            _entity.update_entity_anchorage(target, anchor, true)
+        else:
+            push_error("[Movement Executor %s] Plan %s target node cannot be found" % [name, plan.summarize()])
+    else:
+        if _verbose:
+            print_debug("[Movement Executor %s] Plan %s maintains anchor" % [name, plan.summarize()])
 
 func _updates_anchor(plan: MovementPlannerBase.MovementPlan) -> bool:
     var from: GridNode = _get_node(plan.from)
@@ -161,7 +233,7 @@ func _make_rotation_tween(
     return tween
 
 func _create_rotation_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan) -> void:
-    tween = _make_rotation_tween(tween, plan)
+    tween = _make_rotation_tween(tween, plan, Tween.TRANS_LINEAR)
 
     @warning_ignore_start("return_value_discarded")
     tween.finished.connect(
@@ -307,8 +379,8 @@ func _get_corner_midpoint(plan: MovementPlannerBase.MovementPlan) -> Vector3:
 
     match plan.mode:
         MovementPlannerBase.MovementMode.TRANSLATE_INNER_CORNER:
-            var to_edge: Vector3 = to_anchor.get_edge_position(plan.from.anchor)
-            var from_edge: Vector3 = from_anchor.get_edge_position(plan.to.anchor)
+            var to_edge: Vector3 = to_anchor.global_position.lerp(to_anchor.get_edge_position(plan.from.anchor), _settings.inner_corner_translation_fraction)
+            var from_edge: Vector3 = from_anchor.global_position.lerp(from_anchor.get_edge_position(plan.to.anchor), _settings.inner_corner_translation_fraction)
             return to_edge.lerp(from_edge, 0.5)
 
         MovementPlannerBase.MovementMode.TRANSLATE_OUTER_CORNER:
@@ -319,18 +391,18 @@ func _get_corner_midpoint(plan: MovementPlannerBase.MovementPlan) -> Vector3:
         _:
             return to_anchor.global_position.lerp(from_anchor.global_position, 0.5)
 
-func _create_translate_corner_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan) -> void:
+func _create_translate_corner_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan, move_trans: Tween.TransitionType, rotation_trans: Tween.TransitionType) -> void:
     tween = _make_midpoint_translation_tween(
         tween,
         plan,
         _get_corner_midpoint(plan),
-        Tween.TRANS_SINE,
+        move_trans,
         Tween.EASE_IN,
         true,
     )
 
     @warning_ignore_start("return_value_discarded")
-    _make_rotation_tween(tween.parallel(), plan, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+    _make_rotation_tween(tween.parallel(), plan, rotation_trans, Tween.EASE_IN_OUT)
 
     tween.finished.connect(
         func () -> void:

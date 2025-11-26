@@ -300,6 +300,8 @@ shader_parameter/darken_north_south = 0.0
 
 [sub_resource type="Resource" id="Resource_kwu62"]
 script = ExtResource("91_ovgnb")
+refuse_distance_factor_lateral = 0.3
+refuse_distance_factor_forward = 0.3
 metadata/_custom_type_script = "uid://crv5isbs0cdmp"
 
 [sub_resource type="Resource" id="Resource_f55ft"]
@@ -56586,7 +56588,6 @@ metadata/_custom_type_script = "uid://dqwpy4k402w15"
 script = ExtResource("11_t1rx8")
 _filter = ExtResource("44_kwu62")
 _settings = SubResource("Resource_f55ft")
-_verbose = true
 metadata/_custom_type_script = "uid://blerqhoie555h"
 
 [node name="Catch All Planner" type="Node" parent="MovementPlanningCoordinator"]

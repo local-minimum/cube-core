@@ -5,3 +5,4 @@ class_name MovementExecutorSettings
 @export var refuse_distance_factor_lateral: float = 0.45
 @export var refuse_distance_factor_forward: float = 0.55
 @export var refuse_distance_factor_reverse: float = 0.1
+@export var inner_corner_translation_fraction: float = 0.6

@@ -60,6 +60,15 @@ class EntityParameters:
             mode == other.mode
         )
 
+    func summarize() -> String:
+        return "[%s Look %s / Down %s / Anchor %s %s]" % [
+            coordinates,
+            CardinalDirections.name(look_direction),
+            CardinalDirections.name(down),
+            CardinalDirections.name(anchor),
+            PositionMode.find_key(mode),
+        ]
+
     static func from_entity(entity: GridEntity) -> EntityParameters:
         var position_mode: PositionMode = PositionMode.NORMAL
         var anchor_direction: CardinalDirections.CardinalDirection = entity.get_grid_anchor_direction()
@@ -123,6 +132,17 @@ class MovementPlan:
     var remaining_seconds: float:
         get():
             return maxi(0, end_time_msec - Time.get_ticks_msec()) * 0.001
+
+    func summarize() -> String:
+        return "%s - %s / %s / %s -> %s (%s - %s)" % [
+            from.summarize(),
+            MovementMode.find_key(mode),
+            Movement.name(movement),
+            CardinalDirections.name(move_direction),
+            to.summarize(),
+            start_time_msec,
+            end_time_msec,
+        ]
 
 @abstract func plans_for(entity: GridEntity) -> bool
 @abstract func create_plan(entity: GridEntity, movement: Movement.MovementType) -> MovementPlan

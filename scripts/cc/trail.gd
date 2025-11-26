@@ -38,17 +38,22 @@ func _handle_move_start(mover: GridEntity, _from: Vector3i, _translation_directi
         print_debug("[Trail] Mover %s is at same anchor as before %s" % [mover, anchor])
         return
 
-    if _last_anchor != null:
-        var mesh: MeshInstance3D = _get_meshinstance(_last_anchor)
-        _set_decal_position(mesh, _last_anchor)
-        _set_random_decal(mesh)
+    if anchor != null:
+        if !only_paint_anchor_once || !_anchor_trail.has(anchor):
+            var mesh: MeshInstance3D = _get_meshinstance(anchor)
+            _set_decal_position(mesh, anchor)
+            _set_random_decal(mesh)
+        else:
+            # Shift the crossed over to last
+            var idx: int = _anchor_trail.find(anchor)
+            _anchor_trail.pop_at(idx)
+            var mesh: MeshInstance3D = _trail.pop_at(idx)
+            _anchor_trail.append(anchor)
+            _trail.append(mesh)
     else:
         print_debug("[Trail] Mover %s is in the air" % [mover])
 
-    if !only_paint_anchor_once || !_anchor_trail.has(anchor):
-        _last_anchor = anchor
-    else:
-        _last_anchor = null
+    _last_anchor = anchor
 
 func _get_meshinstance(anchor: GridAnchor) -> MeshInstance3D:
     var mesh: MeshInstance3D

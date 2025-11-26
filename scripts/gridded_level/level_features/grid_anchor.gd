@@ -42,6 +42,13 @@ func get_grid_node() -> GridNode:
         return null
     return side.get_grid_node(self)
 
+var coordinates: Vector3i:
+    get():
+        var node: GridNode = get_grid_node()
+        if node == null:
+            push_error("Grid Anchor %s not part of any grid node" % self)
+            return Vector3i.ZERO
+        return node.coordinates
 
 func _ready() -> void:
     var node_side: GridNodeSide = get_node_side()
@@ -115,3 +122,9 @@ static func find_anchor_parent(current: Node, inclusive: bool = true) ->  GridAn
         return parent as GridAnchor
 
     return find_anchor_parent(parent, false)
+
+static func summarize(grid_anchor: GridAnchor) -> String:
+    if grid_anchor == null:
+        return "/NO ANCHOR/"
+
+    return "%s side %s of %s" % [grid_anchor, CardinalDirections.name(grid_anchor.direction), grid_anchor.coordinates]

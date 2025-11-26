@@ -703,4 +703,4 @@ func _create_translate_inner_corner(
             PositionMode.NORMAL
         )
 
-    return null
+    return plan
