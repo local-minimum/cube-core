@@ -127,6 +127,7 @@ _anim = NodePath("../AnimationPlayer")
 _crushing_sound = "res://audio/sfx/effect_13.ogg"
 _live = 3
 _add_anchors_when_extended = true
+_trigger_entire_node = true
 
 [node name="Crush Side Floor2" type="MeshInstance3D" parent="Side Mesh"]
 transform = Transform3D(8.742277e-08, 4.371139e-08, -1, 1, -4.3711385e-08, 8.742277e-08, -4.371138e-08, -1, -4.3711395e-08, -1.25, 1.25, 0)

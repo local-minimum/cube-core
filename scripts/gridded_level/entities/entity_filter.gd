@@ -1,7 +1,7 @@
 extends Resource
 class_name EntityFilter
 
-enum EntityType { NONE, ALWAYS, ANY_ENTITY, PLAYER, ENEMY, OTHER }
+enum EntityType { NEVER, ALWAYS, ANY_ENTITY, PLAYER, ENEMY, OTHER }
 
 @export var type: EntityType = EntityType.ANY_ENTITY
 
@@ -10,7 +10,7 @@ func applies(node: Node) -> bool:
 
 static func applies_for(entity_type: EntityType, node: Node) -> bool:
     match entity_type:
-        EntityType.NONE:
+        EntityType.NEVER:
             return false
         EntityType.ALWAYS:
             return true

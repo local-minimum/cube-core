@@ -136,6 +136,7 @@ _live = 3
 _add_anchors_when_extended = true
 _activator_filter = SubResource("Resource_k7v70")
 _repeatable = false
+_trigger_entire_node = true
 
 [node name="Crush Side 1" type="MeshInstance3D" parent="Side Mesh"]
 transform = Transform3D(1, -4.371139e-08, 1.3113416e-07, -1.3113416e-07, -4.371139e-08, 1, -4.371138e-08, -1, -4.3711395e-08, 0, 2.5, 0)

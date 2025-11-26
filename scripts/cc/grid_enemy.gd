@@ -49,6 +49,7 @@ var _may_move: bool
 func _handle_activate_hunting(id: String) -> void:
     if id == hunting_activation_id:
         if !hunting:
+            print_debug("[Grid Enemy %s] Start hunting" % name)
             __AudioHub.play_sfx(start_hunt_sound, 0.3)
         hunting = true
 

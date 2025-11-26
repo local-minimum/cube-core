@@ -33,6 +33,8 @@ func _ready() -> void:
     var side: GridNodeSide = GridNodeSide.find_node_side_parent(self, true)
     _repeatable = get_bool_override(side, "repeatable", _repeatable)
     _trigger_entire_node = get_bool_override(side, "trigger_entire_node", _trigger_entire_node)
+    if !_trigger_entire_node && _trigger_sides.is_empty():
+        push_warning("[Grid Event %s] Will never trigger because no side activates (Parentage: %s)" % [self, NodeUtils.parentage(self)])
 
 func get_bool_override(side: GridNodeSide, key: String, default: bool) -> bool:
     if side != null:

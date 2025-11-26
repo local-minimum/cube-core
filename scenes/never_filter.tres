@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EntityFilter" load_steps=2 format=3 uid="uid://3uja1jxqy10q"]
+
+[ext_resource type="Script" uid="uid://dsq3qb6waenpd" path="res://scripts/gridded_level/entities/entity_filter.gd" id="1_oea77"]
+
+[resource]
+script = ExtResource("1_oea77")
+type = 0
+metadata/_custom_type_script = "uid://dsq3qb6waenpd"

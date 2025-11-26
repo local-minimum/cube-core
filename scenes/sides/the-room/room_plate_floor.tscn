@@ -98,7 +98,7 @@ script = ExtResource("4_g56er")
 required_transportation_mode = SubResource("Resource_a605k")
 metadata/_custom_type_script = "uid://bsjvh2o2oob57"
 
-[node name="PressurePlate" type="Node3D" parent="." node_paths=PackedStringArray("_swapping_mesh", "_anim")]
+[node name="PressurePlate Room" type="Node3D" parent="." node_paths=PackedStringArray("_swapping_mesh", "_anim")]
 script = ExtResource("6_lx43s")
 infer_trigger_side = true
 _activation_sound_volume = 0.5
@@ -111,11 +111,12 @@ _anim_active = "active"
 _anim_deactivate = "inactive"
 _anim_deactivated = "inactive"
 _activator_filter = ExtResource("7_sfiju")
+_trigger_sides = Array[int]([6])
 metadata/_custom_type_script = "uid://xomgxrqjqsyd"
 
 [node name="Broadcaster" type="Node" parent="." node_paths=PackedStringArray("sender")]
 script = ExtResource("8_js87s")
-sender = NodePath("../PressurePlate")
+sender = NodePath("../PressurePlate Room")
 metadata/_custom_type_script = "uid://dbu1ha67elq8"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

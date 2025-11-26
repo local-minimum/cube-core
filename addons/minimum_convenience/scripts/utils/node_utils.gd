@@ -1,5 +1,13 @@
 class_name NodeUtils
 
+static func parentage(node: Node) -> Array[Node]:
+    var parents: Array[Node]
+    while node != null:
+        node = node.get_parent()
+        if node != null:
+            parents.append(node)
+    return parents
+
 static func find_parent_types(node: Node, types: Array[String]) -> Node:
     for type: String in types:
         var parent: Node = find_parent_type(node, type)
