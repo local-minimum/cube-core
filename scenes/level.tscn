@@ -4807,6 +4807,9 @@ direction = 2
 [node name="Side DOWN" parent="Geometry/Elevation 0/Node (-6, 0, 0)" instance=ExtResource("19_u0n8q")]
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-6, 0, 0)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "final-1"
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Ceiling Shadow" type="MeshInstance3D" parent="Geometry/Elevation 0/Node (-6, 0, 0)"]
@@ -4832,6 +4835,9 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0
 direction = 4
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 0/Node (-5, 0, -6)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "final-2"
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Elevation 1" type="Node3D" parent="Geometry"]
@@ -6359,6 +6365,9 @@ coordinates = Vector3i(7, 1, -10)
 [node name="Side DOWN" parent="Geometry/Elevation 1/Node (7, 1, -10)" instance=ExtResource("17_tcyu4")]
 
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -10)"]
+script = ExtResource("17_w3o6u")
+_enemy_activation_id = "room-1"
+_activator_filter = ExtResource("44_kwu62")
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
 
 [node name="Node (7, 1, -9)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -6479,6 +6488,7 @@ script = null
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (7, 1, -7)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-2"
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -6666,6 +6676,7 @@ direction = 2
 [node name="EnemiesActivator" type="Node3D" parent="Geometry/Elevation 1/Node (6, 1, -1)"]
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-3"
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"
@@ -6893,6 +6904,7 @@ direction = 2
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 script = ExtResource("17_w3o6u")
 _enemy_activation_id = "room-3"
+_activator_filter = ExtResource("44_kwu62")
 _repeatable = false
 _trigger_entire_node = true
 metadata/_custom_type_script = "uid://d1eun00e26qfu"

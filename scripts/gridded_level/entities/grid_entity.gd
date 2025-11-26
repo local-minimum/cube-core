@@ -126,7 +126,7 @@ func force_movement(movement: Movement.MovementType) -> bool:
 
 func _start_movement(movement: Movement.MovementType, force: bool) -> bool:
     if Movement.MovementType.NONE == movement || falling() && !force:
-        push_warning("%s Movement refused: not accepting movements" % name)
+        push_warning("[Grid Entity %s] Movement refused: not accepting movements" % name)
         return false
 
     if _active_movement == Movement.MovementType.NONE || force:
@@ -151,21 +151,23 @@ func end_movement(movement: Movement.MovementType, start_next_from_queue: bool =
         if force_emit:
             __SignalBus.on_move_end.emit(self)
         elif !cinematic:
-            push_warning("%s was not an active movement (%s / %s)" % [
+            push_warning("[Grid Entity %s] %s was not an active movement (%s / %s)" % [
+                name,
                 Movement.name(movement),
                 Movement.name(_active_movement),
                 Movement.name(_concurrent_movement),
             ])
         return
 
-    print_debug("[Grid Entity] %s ended, active are %s / %s" % [
+    print_debug("[Grid Entity %s] %s ended, active are %s / %s" % [
+        name,
         Movement.name(movement),
         Movement.name(_active_movement),
         Movement.name(_concurrent_movement),
     ])
 
     if movement != Movement.MovementType.NONE || force_emit:
-        print_debug("[Grid Entity] Emitting end move")
+        # print_debug("[Grid Entity %s] Emitting end move" % name)
         __SignalBus.on_move_end.emit(self)
 
     if start_next_from_queue:
@@ -258,8 +260,7 @@ func update_entity_anchorage(new_node: GridNode, new_anchor: GridAnchor, deferre
             else:
                 transportation_mode.mode = TransportationMode.FALLING
 
-    print_debug("%s is now %s @ %s %s" % [name, transportation_mode.humanize() if transportation_mode != null else "static", new_node.name, CardinalDirections.name(new_anchor.direction) if new_anchor else "airbourne"])
-    # print_stack()
+    print_debug("[Grid Entity %s] Now %s @ %s %s" % [name, transportation_mode.humanize() if transportation_mode != null else "static", new_node.name, CardinalDirections.name(new_anchor.direction) if new_anchor else "airbourne"])
 
 func sync_position() -> void:
     if anchor != null:

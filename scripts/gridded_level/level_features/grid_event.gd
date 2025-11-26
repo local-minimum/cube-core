@@ -20,7 +20,7 @@ const GRID_EVENT_GROUP: String = "grid-events"
 
 func activates_for(entity: GridNodeFeature) -> bool:
     if _activator_filter == null:
-        push_warning("[Grid Event %s] lacks an activator filter, assuming it activates for everything")
+        push_warning("[Grid Event %s] lacks an activator filter, assuming it activates for everything on %s" % [self, entity])
         return EntityFilter.applies_for(EntityFilter.EntityType.ALWAYS, entity)
     return _activator_filter.applies(entity)
 
@@ -58,7 +58,7 @@ func should_trigger(
     from_side: CardinalDirections.CardinalDirection,
     to_side: CardinalDirections.CardinalDirection,
 ) -> bool:
-    if !available() || !_activator_filter.applies(feature):
+    if !available() || !activates_for(feature):
         return false
 
     if _trigger_entire_node:

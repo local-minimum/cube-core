@@ -37,6 +37,7 @@ var has_concurrency_slot: bool:
 # TODO: Handle ducking and such
 # TODO: Enemy starts to move but doesn't complete it / restarts for some reason
 # TODO: Catapult doesn't blow to end...
+# TODO: Adopting anchor tranportation modes on walk end not working
 
 func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
     if !concurrent && priority < active_plan_prio || plan.equals(_active_plan_a) || plan.equals(_active_plan_b):
