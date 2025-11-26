@@ -67,8 +67,6 @@ func remove_cinematic_cause(cause: Node) -> void:
 
 @export var executor: MovementExecutor
 
-@export var instant_step: bool
-
 @export var concurrent_turns: bool
 
 @export var queue_moves: bool = true
@@ -193,8 +191,11 @@ func _attempt_movement_from_queue() -> void:
 func falling() -> bool:
     return transportation_mode.mode == TransportationMode.FALLING
 
-var _tween: Tween
-var _concurrent_tween: Tween
+func duck() -> void:
+    pass
+
+func stand_up() -> void:
+    pass
 
 func attempt_movement(
     movement: Movement.MovementType,
@@ -209,7 +210,7 @@ func attempt_movement(
         print_stack()
         return false
 
-    print_debug("[Grid Entity] Attempt movement %s from %s" % [Movement.name(movement), coordinates()])
+    print_debug("[Grid Entity %s] Attempt movement %s from %s" % [name, Movement.name(movement), coordinates()])
 
     if !_start_movement(movement, force):
         if enqueue_if_occupied && queue_moves:
@@ -224,37 +225,6 @@ func attempt_movement(
 
     __SignalBus.on_move_plan.emit(self, movement)
     return true
-
-    # var primary_tween: bool = movement == _active_movement
-
-    # if primary_tween:
-    #     if _tween:
-    #         _active_movement = Movement.MovementType.NONE
-    #         _tween.kill()
-    # else:
-    #     if _concurrent_tween:
-    #         _concurrent_movement = Movement.MovementType.NONE
-    #         _concurrent_tween.kill()
-
-    # var coords: Vector3i = coordinates()
-    # var tween: Tween
-    # var translation_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
-
-    # if Movement.is_translation(movement):
-    #     translation_direction = Movement.to_direction(movement, look_direction, down)
-    #     tween = planner.move_entity(movement, translation_direction)
-    # elif Movement.is_turn(movement):
-    #     tween = planner.rotate_entity(movement)
-
-    # _handle_new_tween(tween, primary_tween)
-
-    # if tween == null:
-    #     # This would become a stack overflow if set
-    #     end_movement(movement, false)
-    #     return false
-
-    # __SignalBus.on_move_start.emit(self, coords, translation_direction)
-    # return true
 
 func _enqeue_movement(movement: Movement.MovementType) -> void:
     if _next_movement != Movement.MovementType.NONE:
@@ -274,21 +244,6 @@ func _enqeue_movement(movement: Movement.MovementType) -> void:
 func clear_queue() -> void:
     _next_movement = Movement.MovementType.NONE
     _next_next_movement = Movement.MovementType.NONE
-
-func _handle_new_tween(tween: Tween, primary_tween: bool) -> void:
-    if tween != null:
-        tween.play()
-
-        if instant_step:
-            var t: float = 999
-            while tween.custom_step(t):
-                t *= 2
-
-    # I don't know why this is an elif here but somehow it's very important
-    elif primary_tween:
-        _tween = tween
-    else:
-        _concurrent_tween = tween
 
 func update_entity_anchorage(new_node: GridNode, new_anchor: GridAnchor, deferred: bool = false) -> void:
     if new_anchor != null:

@@ -293,7 +293,7 @@ func _should_be_managed(entity: GridEntity) -> bool:
     if _managed_entities.get(entity) == self:
         return false
 
-    return _activator_filter.applies(entity)
+    return activates_for(entity)
 
 func _tick() -> void:
     pass

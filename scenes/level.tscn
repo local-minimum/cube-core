@@ -321,7 +321,7 @@ script = ExtResource("1_2q6dc")
 level_id = "the-level"
 node_size = Vector3(2.5, 2.5, 2.5)
 level_geometry = NodePath("Geometry")
-primary_entry_portal = NodePath("Geometry/Elevation 2/Node (-16, 2, -1)/LevelPortal Outside")
+primary_entry_portal = NodePath("Geometry/Elevation 0/Node (-3, 0, 2)/LevelPortal Final")
 zones_parent = NodePath("Zones")
 broadcasts_parent = NodePath("Broadcasts")
 player = NodePath("Player")
@@ -7460,6 +7460,7 @@ direction = 4
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-4, 1, 0)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([2])
 
@@ -7475,6 +7476,7 @@ direction = 3
 
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-5, 1, -2)" instance=ExtResource("34_v4d4p")]
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 
 [node name="Node (-4, 1, -2)" parent="Geometry/Elevation 1" instance=ExtResource("2_8gofh")]
@@ -7500,6 +7502,7 @@ direction = 2
 [node name="Catapult" parent="Geometry/Elevation 1/Node (-3, 1, -2)" instance=ExtResource("34_v4d4p")]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -1.1999998, 1.2, 0)
 _crash_direction = 6
+_activator_filter = ExtResource("44_kwu62")
 _trigger_entire_node = true
 _trigger_sides = Array[int]([5])
 

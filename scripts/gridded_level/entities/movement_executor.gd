@@ -35,6 +35,8 @@ var has_concurrency_slot: bool:
 
 # TODO: Check concurrent movement block codes
 # TODO: Handle ducking and such
+# TODO: Enemy starts to move but doesn't complete it / restarts for some reason
+# TODO: Catapult doesn't blow to end...
 
 func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
     if !concurrent && priority < active_plan_prio || plan.equals(_active_plan_a) || plan.equals(_active_plan_b):
@@ -93,6 +95,15 @@ func _trigger_grid_events(plan: MovementPlannerBase.MovementPlan) -> void:
     for event: GridEvent in events:
         event.trigger(_entity, plan.movement)
 
+func _handle_ducking(plan: MovementPlannerBase.MovementPlan) -> void:
+    if plan.to.mode == plan.from.mode:
+        return
+
+    if plan.to.mode == MovementPlannerBase.PositionMode.AIRBOURNE && _settings.ducking_in_the_air:
+        _entity.duck()
+    elif plan.from.mode == MovementPlanner.PositionMode.AIRBOURNE && _settings.ducking_in_the_air:
+        _entity.stand_up()
+
 func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
     if plan.mode == MovementPlannerBase.MovementMode.NONE:
         if _verbose:
@@ -108,6 +119,8 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
 
     if _verbose:
         print_debug("[Movement Executor %s] Executing plan %s" % [name, plan.summarize()])
+
+    _handle_ducking(plan)
 
     match plan.mode:
         MovementPlannerBase.MovementMode.ROTATE:
@@ -180,6 +193,14 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
     else:
         if _verbose:
             print_debug("[Movement Executor %s] Plan %s maintains anchor" % [name, plan.summarize()])
+
+    if _settings.instant_step:
+        _fast_forward_tween(tween, plan)
+
+func _fast_forward_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan) -> void:
+    var step: float = max((plan.end_time_msec - plan.start_time_msec) * 0.001, 1)
+    while tween.custom_step(step):
+        pass
 
 func _updates_anchor(plan: MovementPlannerBase.MovementPlan) -> bool:
     var from: GridNode = _get_node(plan.from)

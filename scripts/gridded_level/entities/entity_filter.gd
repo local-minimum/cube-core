@@ -6,7 +6,10 @@ enum EntityType { NONE, ALWAYS, ANY_ENTITY, PLAYER, ENEMY, OTHER }
 @export var type: EntityType = EntityType.ANY_ENTITY
 
 func applies(node: Node) -> bool:
-    match type:
+    return applies_for(type, node)
+
+static func applies_for(entity_type: EntityType, node: Node) -> bool:
+    match entity_type:
         EntityType.NONE:
             return false
         EntityType.ALWAYS:
@@ -21,5 +24,5 @@ func applies(node: Node) -> bool:
             # This exclues players and enemies by order in the switch statement
             return node is GridEntity
         _:
-            push_error("Entity Filter %s not handled" % type)
+            push_error("Entity Filter %s not handled" % entity_type)
             return false

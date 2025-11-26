@@ -61,7 +61,7 @@ func register_broadcasts(contract: BroadcastContract) -> bool:
     return false
 
 func _handle_feature_move(feature: GridNodeFeature) -> void:
-    if !available() || !_activator_filter.applies(feature):
+    if !available() || !activates_for(feature):
         return
 
     if !_triggering.has(feature) && coordinates() == feature.coordinates() &&  is_triggering_side(feature.get_grid_anchor_direction()):

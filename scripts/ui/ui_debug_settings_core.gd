@@ -52,7 +52,7 @@ func _sync() -> void:
     queue_moves.button_pressed = level.player.queue_moves
     replays.button_pressed = level.player.allow_replays
     replays_replace.button_pressed = !level.player.persist_repeat_moves
-    smooth_movement.button_pressed = !level.player.instant_step
+    smooth_movement.button_pressed = !level.player.executor._settings.instant_step
     concurrent_turns.button_pressed = level.player.concurrent_turns
     tank_movement.button_pressed = level.player.planner.tank_movement
     speed.value = level.player.planner.animation_speed
@@ -77,7 +77,7 @@ func _on_new_hold_replaces_toggled(toggled_on: bool) -> void:
 
 
 func _on_smooth_movement_toggled(toggled_on: bool) -> void:
-    level.player.instant_step = !toggled_on
+    level.player.executor._settings.instant_step = !toggled_on
 
 func _on_concurrent_turning_toggled(toggled_on: bool) -> void:
     level.player.concurrent_turns = toggled_on

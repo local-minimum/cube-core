@@ -379,4 +379,5 @@ metadata/_custom_type_script = "uid://dexigkhejxn1h"
 script = ExtResource("11_otmr2")
 _entity = NodePath("..")
 _settings = SubResource("Resource_j0cyh")
+_verbose = true
 metadata/_custom_type_script = "uid://d1e0odws2w1g1"

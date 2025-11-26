@@ -18,6 +18,12 @@ const GRID_EVENT_GROUP: String = "grid-events"
 ## Both attachment and entry from the side
 @export var _blocks_sides: Array[CardinalDirections.CardinalDirection]
 
+func activates_for(entity: GridNodeFeature) -> bool:
+    if _activator_filter == null:
+        push_warning("[Grid Event %s] lacks an activator filter, assuming it activates for everything")
+        return EntityFilter.applies_for(EntityFilter.EntityType.ALWAYS, entity)
+    return _activator_filter.applies(entity)
+
 var _triggered: bool
 
 func _init() -> void:
