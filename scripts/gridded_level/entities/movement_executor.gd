@@ -33,11 +33,7 @@ var has_concurrency_slot: bool:
             !_active_plan_b.running
         )
 
-# TODO: Check concurrent movement block codes. Not sure what this implies exactly but concurrency works
-# TODO: Enemy starts to move but doesn't complete it / restarts for some reason
-# TODO: Catapult doesn't blow to end...
-# TODO: Adopting anchor tranportation modes on walk end not working
-# TODO: Walking ceiling out into the air: E 0:00:14:198   step: Tween (bound to /root/PlayableLevel/Level/Player/MovementExecutor): started with no Tweeners.
+# TODO: Catapult exit doesn't match expectation
 
 
 func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
