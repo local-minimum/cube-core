@@ -455,6 +455,7 @@ func _create_translate_nodes(
             return plan
 
         var is_flying: bool = entity.transportation_mode.has_flag(TransportationMode.FLYING)
+
         if target.may_enter(
             entity,
             from,
@@ -491,10 +492,20 @@ func _create_translate_nodes(
             var neighbour_anchor: GridAnchor = null if is_flying else target.get_grid_anchor(entity.get_grid_anchor_direction())
             var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
 
+            if _verbose:
+                print_debug("[Grid Entity %s] Neighbour Anchor %s / Can be in air %s / is flying  %s / can jump from floor %s / can jump from any %s" % [
+                    name,
+                    neighbour_anchor,
+                    entity.transportation_abilities.has_any([TransportationMode.FALLING, TransportationMode.FLYING]),
+                    is_flying,
+                    entity.get_grid_anchor_direction() == gravity && entity.can_jump_off_floor,
+                    entity.can_jump_off_all,
+                ])
+
             if (
                 neighbour_anchor == null &&
                 entity.transportation_abilities.has_any([TransportationMode.FALLING, TransportationMode.FLYING]) &&
-                (entity.get_grid_anchor_direction() == gravity && entity.can_jump_off_floor || entity.can_jump_off_all)
+                (is_flying || entity.get_grid_anchor_direction() == gravity && entity.can_jump_off_floor || entity.can_jump_off_all)
             ):
                 plan = MovementPlan.new(
                     movement,
@@ -514,6 +525,11 @@ func _create_translate_nodes(
                     CardinalDirections.CardinalDirection.NONE,
                     PositionMode.AIRBOURNE,
                 )
+
+                return plan
+
+            elif neighbour_anchor == null:
+                return _create_translate_refused(entity, movement, move_direction)
 
             plan = MovementPlan.new(
                 movement,

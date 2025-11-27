@@ -33,8 +33,7 @@ var has_concurrency_slot: bool:
             !_active_plan_b.running
         )
 
-# TODO: Check concurrent movement block codes
-# TODO: Handle ducking and such
+# TODO: Check concurrent movement block codes. Not sure what this implies exactly but concurrency works
 # TODO: Enemy starts to move but doesn't complete it / restarts for some reason
 # TODO: Catapult doesn't blow to end...
 # TODO: Adopting anchor tranportation modes on walk end not working
@@ -111,6 +110,7 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
     if plan.mode == MovementPlannerBase.MovementMode.NONE:
         if _verbose:
             print_debug("[Movement Executor %s] Discarding plan %s of its mode" % [name, plan.summarize()])
+        tween.kill()
         return
 
     _trigger_grid_events(plan)
@@ -118,6 +118,7 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
     if plan.to.mode == MovementPlannerBase.PositionMode.EVENT_CONTROLLED:
         if _verbose:
             print_debug("[Movement Executor %s] Discarding plan %s of its mode" % [name, plan.summarize()])
+        tween.kill()
         return
 
     if _verbose:
@@ -164,6 +165,7 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
             _create_translate_refuse_tween(tween, plan)
 
         MovementPlannerBase.MovementMode.NONE:
+            tween.kill()
             return
 
         _:
@@ -172,6 +174,7 @@ func _start_plan(plan: MovementPlannerBase.MovementPlan, tween: Tween) -> void:
                 plan.summarize(),
                 _entity,
             ])
+            tween.kill()
             return
 
     __SignalBus.on_move_start.emit(_entity, plan.from.coordinates, plan.move_direction)
@@ -209,7 +212,7 @@ func _updates_anchor(plan: MovementPlannerBase.MovementPlan) -> bool:
     var from: GridNode = _get_node(plan.from)
     var to: GridNode = _get_node(plan.to)
 
-    return from == null || to == null || from.get_grid_anchor(plan.from.anchor) != to.get_grid_anchor(plan.to.anchor)
+    return from == null || to == null || from != to || from.get_grid_anchor(plan.from.anchor) != to.get_grid_anchor(plan.to.anchor)
 
 func _get_node(params: MovementPlannerBase.EntityParameters) -> GridNode:
     var level: GridLevelCore = _entity.get_level()
