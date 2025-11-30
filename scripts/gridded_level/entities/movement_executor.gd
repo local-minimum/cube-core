@@ -258,10 +258,12 @@ func _make_rotation_tween(
 func _create_rotation_tween(tween: Tween, plan: MovementPlannerBase.MovementPlan) -> void:
     tween = _make_rotation_tween(tween, plan, Tween.TRANS_LINEAR)
 
+    # This should not be in finished since we update logical look and down immediately and just let animations play catch up!
+    _entity.look_direction = plan.to.look_direction
+
     @warning_ignore_start("return_value_discarded")
     tween.finished.connect(
         func () -> void:
-            _entity.look_direction = plan.to.look_direction
             GridEntity.orient(_entity)
             _entity.end_movement(plan.movement)
     )
@@ -354,10 +356,12 @@ func _add_rotation_and_finalize_simple_translation_tween(tween: Tween, plan: Mov
     if plan.from.quaternion != plan.to.quaternion:
         _make_rotation_tween(tween.parallel(), plan)
 
+        # This should not be in finished since we update to new down right as we start the animation
+        _entity.look_direction = plan.to.look_direction
+
         @warning_ignore_start("return_value_discarded")
         tween.finished.connect(
             func () -> void:
-                _entity.look_direction = plan.to.look_direction
                 GridEntity.orient(_entity)
                 _entity.sync_position()
                 _entity.remove_concurrent_movement_block()
@@ -427,9 +431,11 @@ func _create_translate_corner_tween(tween: Tween, plan: MovementPlannerBase.Move
     @warning_ignore_start("return_value_discarded")
     _make_rotation_tween(tween.parallel(), plan, rotation_trans, Tween.EASE_IN_OUT)
 
+    # This should not be in finished since we update to new down right as we start the animation
+    _entity.look_direction = plan.to.look_direction
+
     tween.finished.connect(
         func () -> void:
-            _entity.look_direction = plan.to.look_direction
             GridEntity.orient(_entity)
             _entity.sync_position()
             _entity.remove_concurrent_movement_block()

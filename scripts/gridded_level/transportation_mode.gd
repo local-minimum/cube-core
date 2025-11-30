@@ -65,6 +65,9 @@ func can_walk(direction: CardinalDirections.CardinalDirection) -> bool:
         _:
             return has_flag(WALL_WALKING)
 
+func can_be_in_the_air() -> bool:
+    return has_any([FLYING, FALLING])
+
 static func get_flag_name(flag: int, localized: bool = false) -> String:
     match flag:
         NONE: return __GlobalGameState.tr("TRANSPORTATION_MODE_NONE") if localized else "None"

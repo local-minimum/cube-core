@@ -267,7 +267,7 @@ static func calculate_innner_corner(
         # print_debug("Moving %s is a clockwise yaw from look direction" % name(move_direction))
         return roll_cw(look_direction, down)
     else:
-        push_error("movement %s is not inner corner movement when %s is down" % [name(move_direction), down])
+        push_error("movement %s is not inner corner movement when %s is down" % [name(move_direction), name(down)])
         print_stack()
         return [look_direction, down]
 

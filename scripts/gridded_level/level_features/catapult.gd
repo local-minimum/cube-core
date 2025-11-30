@@ -3,11 +3,15 @@ class_name Catapult
 
 enum Phase { NONE, CENTERING, ORIENTING, FLYING, CRASHING }
 
+## Grabbing the entity will orient it. And usually that means looking in the direction we are flying
 @export var _orient_entity: bool = false
-@export var _prefer_orient_down_down: bool = true
+## If we prefer to orient down with gravity, then we might not look where we are flying
+@export var _prefer_orient_down_with_gravity: bool = true
 
 # TODO: Crash forward seems problematic at times
 # TODO: Crash relative down?
+
+## The direction we are looking at
 @export var _crashes_forward: bool = false
 @export var _crashes_entity_down: bool = false
 @export var _crash_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
@@ -61,14 +65,10 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
         print_debug("[Catapult %s] Not crashing" % [coordinates()])
         return
 
-    if _orient_entity:
-        if entity is GridPlayerCore:
-            var player: GridPlayerCore = entity
-            player.stand_up()
-
     var crash_anchor: GridAnchor = _get_release_anchor(entity)
 
     if crash_anchor != null:
+        entity.stand_up()
         print_debug("[Catapult %s] Attempting to anchor to %s" % [coordinates(), crash_anchor])
         # TODO: Animate this
         entity.set_grid_anchor(crash_anchor)
@@ -85,6 +85,7 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
         print_debug("[Catapult %s] Crashing into a flying" % [coordinates()])
         entity.transportation_mode.mode = TransportationMode.FLYING
     elif entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+        entity.stand_up()
         print_debug("[Catapult %s] Crashing into a fall" % [coordinates()])
         entity.transportation_mode.mode = TransportationMode.FALLING
     else:
@@ -94,14 +95,16 @@ func _release_entity(entity: GridEntity, immediate_uncinematic: bool = false, cr
     if immediate_uncinematic:
         _cleanup_entity(entity)
     else:
-        print_debug("[Catapult %s] %s delayed cledanup" % [coordinates(), entity.name])
+        print_debug("[Catapult %s] %s delayed clean up" % [coordinates(), entity.name])
         _cleanup_entity.call_deferred(entity)
 
 func _get_release_anchor(entity: GridEntity) -> GridAnchor:
     print_debug("[Catapult %s] %s getting release anchors" % [coordinates(), entity.name])
+    var can_be_in_the_air: bool = entity.transportation_abilities.can_be_in_the_air()
+
     var node: GridNode = entity.get_grid_node()
     if _crashes_forward:
-        if node.may_exit(entity, entity.look_direction) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+        if node.may_exit(entity, entity.look_direction) && can_be_in_the_air:
             print_debug("[Catapult %s] %s may exit %s forward %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.look_direction)])
             if !entity.force_movement(Movement.MovementType.FORWARD):
                 push_warning("Failed to crash entity %s forward" % entity.name)
@@ -111,35 +114,36 @@ func _get_release_anchor(entity: GridEntity) -> GridAnchor:
         elif node.has_side(entity.look_direction) == GridNode.NodeSideState.SOLID:
             var land_anchor: GridAnchor = node.get_grid_anchor(entity.look_direction)
             if land_anchor != null && land_anchor.can_anchor(entity):
+                print_debug("[Catapult %s] %s will anchor on wall forward wall %s / %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.look_direction)])
                 return land_anchor
 
     if _crashes_entity_down:
-        if node.may_exit(entity, entity.down) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
+        if node.may_exit(entity, entity.down) && can_be_in_the_air:
             print_debug("[Catapult %s] %s may exit %s entity down %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(entity.down)])
-            # TODO: Figure out movement down for entity...
             var movement: Movement.MovementType = Movement.from_directions(entity.down, entity.look_direction, entity.down)
             if !entity.force_movement(movement):
                 push_warning("Failed to crash entity %s down" % entity.name)
             else:
                 return null
 
-        var land_anchor: GridAnchor = node.get_grid_anchor(entity.down)
-        if land_anchor != null && land_anchor.can_anchor(entity):
-            return land_anchor
+        else:
+            var land_anchor: GridAnchor = node.get_grid_anchor(entity.down)
+            if land_anchor != null && land_anchor.can_anchor(entity):
+                return land_anchor
 
     if _crash_direction != CardinalDirections.CardinalDirection.NONE:
         if node.may_exit(entity, _crash_direction) && entity.transportation_abilities.has_flag(TransportationMode.FALLING):
             print_debug("[Catapult %s] %s may exit %s default direction %s" % [coordinates(), entity.name, node.coordinates, CardinalDirections.name(_crash_direction)])
-            # TODO: Figure out movement down for entity...
             var movement: Movement.MovementType = Movement.from_directions(_crash_direction, entity.look_direction, entity.down)
             if !entity.force_movement(movement):
                 push_warning("Failed to crash entity %s down" % entity.name)
             else:
                 return null
 
-        var land_anchor: GridAnchor = node.get_grid_anchor(_crash_direction)
-        if land_anchor != null && land_anchor.can_anchor(entity):
-            return land_anchor
+        else:
+            var land_anchor: GridAnchor = node.get_grid_anchor(_crash_direction)
+            if land_anchor != null && land_anchor.can_anchor(entity):
+                return land_anchor
 
     return null
 
@@ -160,25 +164,36 @@ func _handle_move_end(entity: GridEntity) -> void:
 
     match _entity_phases.get(entity, Phase.NONE):
         Phase.NONE:
-            print_debug("[Catapult %s] %s nothing" % [coordinates(), entity.name])
+            print_debug("[Catapult %s] %s initializing" % [coordinates(), entity.name])
             if entity.force_movement(Movement.MovementType.CENTER):
                 _entity_phases[entity] = Phase.CENTERING
             _prev_coordinates[entity] = entity.coordinates()
+
         Phase.CENTERING:
             print_debug("[Catapult %s] %s centered" % [coordinates(), entity.name])
+            entity.duck()
+
             if _orient_entity:
-                if entity is GridPlayerCore:
-                    var player: GridPlayerCore = entity
-                    player.duck()
-
                 var fly_direction: CardinalDirections.CardinalDirection = field_direction
-                if !CardinalDirections.is_parallell(fly_direction, entity.look_direction):
-                    var new_down: CardinalDirections.CardinalDirection = entity.look_direction
-                    if _prefer_orient_down_down && !CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN):
-                        new_down = CardinalDirections.CardinalDirection.DOWN
+                var gravity: CardinalDirections.CardinalDirection = get_level().gravity
+                var new_look: CardinalDirections.CardinalDirection = fly_direction
+                var new_down: CardinalDirections.CardinalDirection = entity.look_direction if CardinalDirections.is_parallell(new_look, entity.look_direction) else entity.down
 
-                    print_debug("[Catapult %s] orienting look %s, down %s" % [coordinates(), CardinalDirections.name(fly_direction), CardinalDirections.name(new_down)])
-                    var look_target: Quaternion = CardinalDirections.direction_to_rotation(CardinalDirections.invert(new_down), fly_direction)
+                if _prefer_orient_down_with_gravity:
+                    new_down = gravity
+
+                if CardinalDirections.is_parallell(new_down, new_look):
+                    if !CardinalDirections.is_parallell(new_down, fly_direction):
+                        new_look = fly_direction
+                    elif !CardinalDirections.is_parallell(new_down, entity.look_direction):
+                        new_look = entity.look_direction
+                    else:
+                        new_look = CardinalDirections.yaw_cw(entity.look_direction, entity.down)[0]
+
+                if new_down != entity.down || new_look != entity.look_direction:
+
+                    print_debug("[Catapult %s] orienting look %s, down %s" % [coordinates(), CardinalDirections.name(new_look), CardinalDirections.name(new_down)])
+                    var look_target: Quaternion = CardinalDirections.direction_to_rotation(CardinalDirections.invert(new_down), new_look)
                     var tween: Tween = create_tween()
                     var update_rotation: Callable = QuaternionUtils.create_tween_rotation_method(entity)
                     @warning_ignore_start("return_value_discarded")
@@ -191,7 +206,7 @@ func _handle_move_end(entity: GridEntity) -> void:
                     @warning_ignore_restore("return_value_discarded")
 
                     entity.down = new_down
-                    entity.look_direction = fly_direction
+                    entity.look_direction = new_look
 
                     if tween.finished.connect(
                         func () -> void:
@@ -207,15 +222,21 @@ func _handle_move_end(entity: GridEntity) -> void:
                 _entity_phases[entity] = Phase.CRASHING
             else:
                 _entity_phases[entity] = Phase.FLYING
+
         Phase.FLYING:
-            print_debug("[Catapult %s] %s flying from %s with look %s, %s down" % [coordinates(), entity.name, CardinalDirections.name(entity.get_grid_anchor_direction()), CardinalDirections.name(entity.look_direction), CardinalDirections.name(entity.down)])
+            print_debug("[Catapult %s] %s flying from anchor %s with look %s, %s down" % [coordinates(), entity.name, CardinalDirections.name(entity.get_grid_anchor_direction()), CardinalDirections.name(entity.look_direction), CardinalDirections.name(entity.down)])
             if !_fly(entity) || _prev_coordinates.get(entity, Vector3i.ZERO) == entity.coordinates():
                 print_debug("[Catapult %s] %s hit something %s" % [coordinates(), entity.name, CardinalDirections.name(entity.look_direction)])
                 _entity_phases[entity] = Phase.CRASHING
             else:
                 _prev_coordinates[entity] = entity.coordinates()
+
         Phase.CRASHING:
+            # TODO: This is bugged. We need to split into a cleanup phase too and make sense of the crashing directions which seem to happen in the release function and not here...
+            # TODO: We should here figure out where to go and when that movement is done we should do the release
+
             var fly_direction: CardinalDirections.CardinalDirection = field_direction
+            var gravity: CardinalDirections.CardinalDirection = get_level().gravity
 
             print_debug("[Catapult %s] %s crashing (%s == %s && %s para down %s)" % [
                 coordinates(),
@@ -223,17 +244,18 @@ func _handle_move_end(entity: GridEntity) -> void:
                 CardinalDirections.name(fly_direction),
                 CardinalDirections.name(entity.look_direction),
                 CardinalDirections.name(fly_direction),
-                CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN),
+                CardinalDirections.is_parallell(fly_direction, gravity),
             ])
 
-            if CardinalDirections.is_parallell(fly_direction, entity.look_direction) && CardinalDirections.is_parallell(fly_direction, CardinalDirections.CardinalDirection.DOWN):
+            if CardinalDirections.is_parallell(fly_direction, entity.look_direction) && CardinalDirections.is_parallell(fly_direction, gravity):
                 print_debug("[Catapult %s] %s adjusting down" % [coordinates(), entity.name])
-                var new_down: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN
-                var new_look: CardinalDirections.CardinalDirection = _entry_look_direction.get(entity, entity.look_direction)
+                var new_down: CardinalDirections.CardinalDirection = gravity
+                var new_look: CardinalDirections.CardinalDirection = entity.look_direction if !CardinalDirections.is_parallell(new_down, entity.look_direction) else _entry_look_direction.get(entity, entity.look_direction)
                 if CardinalDirections.is_parallell(new_down, new_look):
                     var options: Array[CardinalDirections.CardinalDirection] = CardinalDirections.orthogonals(new_down)
                     options.shuffle()
                     new_look = options[0]
+
                 var look_target: Quaternion = CardinalDirections.direction_to_rotation(CardinalDirections.invert(new_down), new_look)
 
                 var tween: Tween = create_tween()
@@ -263,6 +285,13 @@ func _fly(entity: GridEntity) -> bool:
         _release_entity(entity)
         return false
 
+    print_debug("[Catapult %s] Fly %s looking %s with down %s - move %s" % [
+        coordinates(),
+        entity.name,
+        CardinalDirections.name(entity.look_direction),
+        CardinalDirections.name(entity.down),
+        Movement.name(movement)
+    ])
     return entity.force_movement(movement)
 
 func trigger(entity: GridEntity, _movement: Movement.MovementType) -> void:

@@ -45,7 +45,14 @@ class StoryReward:
         self.message = message
 
     func matches(guesses: int) -> bool:
-        return (guesses > 2) == after_bad
+        return !after_bad || (guesses > 2)
+
+    func summarize() -> String:
+        return "<'%s' %s>" % [
+            message,
+            "BAD" if after_bad else "ANY",
+        ]
+
 
 class WordGroup:
     var title: String
@@ -416,7 +423,10 @@ func _reward_fight_end() -> void:
     options.append_array(_general_rewards.filter(_valid_reward))
 
     if options.is_empty():
-        push_warning("[Exclude Word Game] had no reward for active group %s" % _active_group)
+        push_warning("[Exclude Word Game] had no reward for active group '%s', nor is there a general one that matches in %s" % [
+            _active_group.title,
+            _general_rewards.map(func (r: StoryReward) -> String: return r.summarize()),
+        ])
         return
 
     var sorted: Array[StoryReward] = options.duplicate()

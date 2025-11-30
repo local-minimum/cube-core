@@ -168,10 +168,16 @@ func _create_translate_center(
     if movement != Movement.MovementType.CENTER:
         return null
 
+    if entity.get_grid_anchor_direction() == CardinalDirections.CardinalDirection.NONE:
+        push_warning("[Movement Planner] Requested centering of %s but they already don't have any anchor!" % [
+            entity.name
+        ])
+        return create_no_movement(entity, movement)
+
     var move_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(entity.get_grid_anchor_direction())
     var from: GridNode = entity.get_grid_node()
 
-    if entity.anchor != null && (entity.cinematic || entity.transportation_abilities.has_flag(TransportationMode.FLYING)):
+    if entity.anchor != null && (entity.cinematic || entity.transportation_abilities.can_be_in_the_air()):
         var events: Array[GridEvent] = from.triggering_events(
             entity,
             from,
@@ -208,8 +214,17 @@ func _create_translate_center(
         plan.to.anchor = CardinalDirections.CardinalDirection.NONE
         plan.to.mode = PositionMode.AIRBOURNE
         var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
-        if entity.orient_with_gravity_in_air && CardinalDirections.ALL_DIRECTIONS.has(gravity):
-            plan.to.down = gravity
+        if !entity.cinematic && entity.orient_with_gravity_in_air && CardinalDirections.ALL_DIRECTIONS.has(gravity):
+            if gravity == plan.to.look_direction:
+                var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.pitch_up(plan.to.look_direction, plan.to.down)
+                plan.to.look_direction = updated_directions[0]
+                plan.to.down = gravity
+            elif gravity == CardinalDirections.invert(plan.to.look_direction):
+                var updated_directions: Array[CardinalDirections.CardinalDirection] = CardinalDirections.pitch_down(plan.to.look_direction, plan.to.down)
+                plan.to.look_direction = updated_directions[0]
+                plan.to.down = gravity
+            else:
+                plan.to.down = gravity
         return plan
 
     return create_no_movement(entity, movement)

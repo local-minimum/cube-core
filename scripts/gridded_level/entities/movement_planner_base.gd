@@ -46,6 +46,14 @@ class EntityParameters:
 
     var quaternion: Quaternion:
         get():
+            if CardinalDirections.is_parallell(look_direction, down):
+                push_error("[Entity Parameters] Colinear look direction and down are invalid %s" % [summarize()])
+
+                return Transform3D.IDENTITY.looking_at(
+                    Vector3(CardinalDirections.direction_to_vectori(CardinalDirections.orthogonals(down)[0])),
+                    Vector3(CardinalDirections.direction_to_vectori(CardinalDirections.invert(down))),
+                ).basis.get_rotation_quaternion()
+
             return Transform3D.IDENTITY.looking_at(
                 Vector3(CardinalDirections.direction_to_vectori(look_direction)),
                 Vector3(CardinalDirections.direction_to_vectori(CardinalDirections.invert(down))),

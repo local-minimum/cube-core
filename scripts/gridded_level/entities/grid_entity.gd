@@ -46,14 +46,16 @@ func remove_cinematic_cause(cause: Node) -> void:
         _old_look_direction = look_direction
         _emit_orientation = true
         look_direction = value
-        delay_emit.call_deferred()
+        await get_tree().physics_frame
+        delay_emit()
 
 @export var down: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.DOWN:
     set(value):
         _old_down = down
         _emit_orientation = true
         down = value
-        delay_emit.call_deferred()
+        await get_tree().physics_frame
+        delay_emit()
 
 @export var transportation_abilities: TransportationMode
 @export var transportation_mode: TransportationMode
@@ -99,6 +101,13 @@ func load_look_direction_and_down(load_look: CardinalDirections.CardinalDirectio
     _old_down = CardinalDirections.CardinalDirection.NONE
 
 func delay_emit() -> void:
+    if CardinalDirections.is_parallell(down, look_direction):
+        push_error("[Entity %s] Has colinear look (%s) and down (%s)" % [
+            name,
+            CardinalDirections.name(look_direction),
+            CardinalDirections.name(down),
+        ])
+
     if _emit_orientation:
         _emit_orientation = false
         __SignalBus.on_update_orientation.emit(self, _old_down, down, _old_look_direction, look_direction)
