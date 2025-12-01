@@ -278,13 +278,13 @@ shader_parameter/darken_north_south = 0.0
 material = SubResource("ShaderMaterial_kbk4x")
 size = Vector2(2.5, 2.5)
 
+[sub_resource type="Resource" id="Resource_sy37w"]
+script = ExtResource("80_speit")
+metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
+
 [sub_resource type="Resource" id="Resource_wb1uj"]
 script = ExtResource("80_speit")
 mode = 153
-metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
-
-[sub_resource type="Resource" id="Resource_sy37w"]
-script = ExtResource("80_speit")
 metadata/_custom_type_script = "uid://b8a6yvndcxtpa"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7agi7"]
@@ -56522,8 +56522,8 @@ script = ExtResource("8_8iemx")
 trail = NodePath("Trail")
 camera = NodePath("Eyes")
 key_ring = NodePath("KeyRingCore")
-transportation_abilities = SubResource("Resource_wb1uj")
 transportation_mode = SubResource("Resource_sy37w")
+transportation_abilities = SubResource("Resource_wb1uj")
 executor = NodePath("MovementExecutor")
 _spawn_node = NodePath("../Geometry/Elevation 0/Node (0, 0, 0)")
 metadata/_custom_type_script = "uid://dlbq7x82ejv6e"
@@ -56709,11 +56709,11 @@ metadata/_custom_type_script = "uid://dqwpy4k402w15"
 script = ExtResource("11_t1rx8")
 _filter = ExtResource("44_kwu62")
 _settings = SubResource("Resource_f55ft")
+_verbose = true
 metadata/_custom_type_script = "uid://blerqhoie555h"
 
 [node name="Catch All Planner" type="Node" parent="MovementPlanningCoordinator"]
 script = ExtResource("11_t1rx8")
 _filter = SubResource("Resource_i7b3e")
 _settings = SubResource("Resource_f55ft")
-_verbose = true
 metadata/_custom_type_script = "uid://blerqhoie555h"

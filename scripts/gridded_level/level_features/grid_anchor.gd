@@ -16,6 +16,15 @@ class_name GridAnchor
 ## For example a wall mounted ladder will have an inherent down with the direction of gravity in most cases
 @export var inherrent_axis_down: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NONE
 
+func calculate_anchor_down(gravity: CardinalDirections.CardinalDirection, entity_down: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
+    if inherrent_axis_down == CardinalDirections.CardinalDirection.NONE || inherrent_axis_down == direction:
+        return direction
+    elif CardinalDirections.is_parallell(gravity, inherrent_axis_down):
+        return gravity
+    elif CardinalDirections.is_parallell(entity_down, inherrent_axis_down):
+        return entity_down
+    return inherrent_axis_down
+
 var disabled: bool:
     set(value):
         if !disabled && value:

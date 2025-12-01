@@ -57,8 +57,13 @@ func remove_cinematic_cause(cause: Node) -> void:
         await get_tree().physics_frame
         delay_emit()
 
-@export var transportation_abilities: TransportationMode
 @export var transportation_mode: TransportationMode
+var transportation_ability_override: TransportationMode
+@export var transportation_abilities: TransportationMode:
+    get():
+        if transportation_ability_override != null:
+            return transportation_ability_override
+        return transportation_abilities
 
 @export var can_jump_off_floor: bool:
     get():

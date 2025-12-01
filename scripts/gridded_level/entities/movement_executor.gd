@@ -33,9 +33,6 @@ var has_concurrency_slot: bool:
             !_active_plan_b.running
         )
 
-# TODO: Catapult exit doesn't match expectation
-
-
 func execute_plan(plan: MovementPlannerBase.MovementPlan, priority: int, concurrent: bool) -> void:
     if !concurrent && priority < active_plan_prio || plan.equals(_active_plan_a) || plan.equals(_active_plan_b):
         if _verbose:
@@ -472,6 +469,9 @@ func _create_translate_refuse_tween(tween: Tween, plan: MovementPlannerBase.Move
         distance = _settings.refuse_distance_factor_forward
     elif CardinalDirections.is_parallell(plan.from.look_direction, plan.move_direction):
         distance = _settings.refuse_distance_factor_reverse
+
+    if plan.from.mode == MovementPlannerBase.PositionMode.AIRBOURNE:
+        distance *= _settings.airbourne_refuse_distance_factor
 
     tween = _make_midpoint_translation_tween(
         tween,

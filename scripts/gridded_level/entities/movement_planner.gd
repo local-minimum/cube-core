@@ -160,7 +160,8 @@ func _create_translate_refused(
     plan.to = EntityParameters.from_entity(entity)
     return plan
 
-## If entity is cinematic or can fly get into the center of the tile
+## If entity can fly get into the center of the tile
+## Cinematic entities should have their abilities overridden if they can fly temporarily
 func _create_translate_center(
     entity: GridEntity,
     movement: Movement.MovementType,
@@ -177,7 +178,7 @@ func _create_translate_center(
     var move_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(entity.get_grid_anchor_direction())
     var from: GridNode = entity.get_grid_node()
 
-    if entity.anchor != null && (entity.cinematic || entity.transportation_abilities.can_be_in_the_air()):
+    if entity.anchor != null && entity.transportation_abilities.can_be_in_the_air():
         var events: Array[GridEvent] = from.triggering_events(
             entity,
             from,
@@ -277,19 +278,15 @@ func _create_translate_land_simple(
 
             var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
             var standing: PositionMode = PositionMode.NORMAL
-            var down: CardinalDirections.CardinalDirection = land_anchor.direction
             var gravity: CardinalDirections.CardinalDirection = entity.get_level().gravity
-            if land_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
+            var down: CardinalDirections.CardinalDirection = land_anchor.calculate_anchor_down(gravity, entity.down)
+            if !CardinalDirections.is_parallell(down, land_anchor.direction):
                 standing = PositionMode.SIDE_FACING
-                if CardinalDirections.is_parallell(land_anchor.inherrent_axis_down, gravity):
-                    down = gravity
-                else:
-                    down = land_anchor.inherrent_axis_down
                 look_direction = land_anchor.direction
 
             plan.from = EntityParameters.from_entity(entity)
-            if CardinalDirections.is_parallell(look_direction, land_anchor.direction):
-                look_direction = CardinalDirections.orthogonals(land_anchor.direction).pick_random()
+            if CardinalDirections.is_parallell(look_direction, down):
+                look_direction = CardinalDirections.orthogonals(down).pick_random()
 
             plan.to = EntityParameters.new(
                 node.coordinates,
@@ -365,14 +362,14 @@ func _create_translate_fall_diagonal(
                         move_direction,
                     )
                     plan.from = EntityParameters.from_entity(entity)
-                    var down: CardinalDirections.CardinalDirection = anchor.direction
+                    var down: CardinalDirections.CardinalDirection = anchor.calculate_anchor_down(gravity, entity.down)
                     var look_direction: CardinalDirections.CardinalDirection = entity.look_direction
                     var mode: PositionMode = PositionMode.NORMAL
 
-                    if anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE:
-                        down = anchor.inherrent_axis_down
-                        look_direction = anchor.direction
-                        mode = PositionMode.SIDE_FACING
+                    if anchor.direction != down:
+                        if !CardinalDirections.is_parallell(down, anchor.direction):
+                            look_direction = anchor.direction
+                            mode = PositionMode.SIDE_FACING
 
                     if CardinalDirections.is_parallell(look_direction, down):
                         # We got pushed away from our default landing spot, thus we
@@ -639,14 +636,15 @@ func _create_translate_outer_corner(
         move_direction,
     )
     plan.from = EntityParameters.from_entity(entity)
-    if (
-        target_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE &&
-        CardinalDirections.is_parallell(target_anchor.inherrent_axis_down, gravity)
-    ):
+
+    var target_down: CardinalDirections.CardinalDirection = target_anchor.calculate_anchor_down(gravity, updated_directions[1])
+    if target_down != target_anchor.direction:
+        var look_direction: CardinalDirections.CardinalDirection = target_anchor.direction if !CardinalDirections.is_parallell(target_down, target_anchor.direction) else CardinalDirections.orthogonals(target_down).pick_random()
+
         plan.to = EntityParameters.new(
             from.coordinates,
-            target_anchor.direction,
-            gravity,
+            look_direction,
+            target_down,
             target_anchor.direction,
             PositionMode.SIDE_FACING,
         )
@@ -654,7 +652,7 @@ func _create_translate_outer_corner(
         plan.to = EntityParameters.new(
             target.coordinates,
             updated_directions[0],
-            updated_directions[1],
+            target_down,
             target_anchor.direction,
             PositionMode.NORMAL,
         )
@@ -712,14 +710,14 @@ func _create_translate_inner_corner(
     )
     plan.from = EntityParameters.from_entity(entity)
 
-    if (
-        target_anchor.inherrent_axis_down != CardinalDirections.CardinalDirection.NONE &&
-        CardinalDirections.is_parallell(target_anchor.inherrent_axis_down, gravity)
-    ):
+    var target_down: CardinalDirections.CardinalDirection = target_anchor.calculate_anchor_down(gravity, updated_directions[1])
+    if target_down != target_anchor.direction:
+        var look_direction: CardinalDirections.CardinalDirection = target_anchor.direction if !CardinalDirections.is_parallell(target_down, target_anchor.direction) else CardinalDirections.orthogonals(target_down).pick_random()
+
         plan.to = EntityParameters.new(
             from.coordinates,
-            target_anchor.direction,
-            gravity,
+            look_direction,
+            target_down,
             target_anchor.direction,
             PositionMode.SIDE_FACING,
         )
@@ -729,7 +727,7 @@ func _create_translate_inner_corner(
         plan.to = EntityParameters.new(
             from.coordinates,
             updated_directions[0],
-            updated_directions[1],
+            target_down,
             target_anchor.direction,
             PositionMode.NORMAL
         )

@@ -18,6 +18,11 @@ const EXOTIC_WALKS: Array[int] = [WALL_WALKING, CEILING_WALKING]
 @export_flags("Walking", "Flying", "Climbing", "Wall Walking", "Ceiling Walking", "Squeezing", "Swimming", "Falling")
 var mode: int = 0
 
+func _init(flags: Array[int] = []) -> void:
+    mode = 0
+    for flag: int in flags:
+        mode |= flag
+
 func set_flag(flag: int) -> void:
     mode = mode | flag
 
